@@ -8,7 +8,8 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "prepare": "husky"
+    "pretty": "prettier --write .",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.10.1",
