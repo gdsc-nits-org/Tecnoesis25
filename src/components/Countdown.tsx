@@ -1,5 +1,3 @@
-'use client';
-
 import localFont from "next/font/local";
 import { Orbitron } from "next/font/google";
 import RcCountdown, { type CountdownRenderProps } from "react-countdown";
@@ -7,7 +5,8 @@ import RcCountdown, { type CountdownRenderProps } from "react-countdown";
 const tron = localFont({ src: "../../public/tron.ttf" });
 const digits = Orbitron({ subsets: ["latin"], weight: ["400", "700"] });
 
-const targetDate = new Date(2025, 9, 30, 17, 0, 0, 0);
+let targetDate = new Date(2025, 9, 30, 17, 0, 0, 0);
+
 
 function two(n: number) {
   return String(n).padStart(2, "0");
@@ -23,7 +22,7 @@ export default function Countdown() {
         textShadow: "0 0 6px rgba(56,189,248,.6), 0 0 12px rgba(56,189,248,.3)",
       }}
     >
-      <div className="flex flex-wrap items-baseline gap-4 sm:gap-6 md:gap-8 mt-0 pt-0 max-w-full">
+      <div className="flex items-baseline gap-4 sm:gap-6 md:gap-8 mt-0 pt-0 max-w-full">
         <RcCountdown
           date={targetDate}
           renderer={({ days, hours, minutes, seconds }: CountdownRenderProps) => (

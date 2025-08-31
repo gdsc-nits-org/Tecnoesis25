@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import Image from "next/image";
 import { useEffect } from "react";
 import Model from "~/components/VideoObj";
@@ -16,8 +16,7 @@ export default function Page() {
     <div className="h-screen w-screen">
       <Model />
       <div
-        className="animate-fade-in absolute bottom-0 h-60 w-screen transition-transform delay-1000"
-        style={{ transform: "-translateY(10rem)" }}
+        className="animate-fade-in fixed bottom-0 left-0 right-0 h-60 w-screen z-20 delay-1000 pointer-events-none"
       >
         <Image
           className="absolute bottom-0 h-full w-full select-none"
@@ -27,7 +26,7 @@ export default function Page() {
           alt="fkadshj"
         />
       </div>
-      {/* <Countdown /> */}
+      <Countdown />
     </div>
   );
 }
