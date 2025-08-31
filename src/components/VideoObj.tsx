@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, OrbitControls, useTexture } from "@react-three/drei";
+import { useGLTF, OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { mergeBufferGeometries } from "three-stdlib";
@@ -133,7 +133,7 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
     if (geometries.length === 0) return null;
 
     const mergedGeometry = mergeBufferGeometries(geometries);
-    if (!mergedGeometry || !mergedGeometry.attributes.position) return null;
+    if (!mergedGeometry?.attributes?.position) return null;
 
     const targetPositions = mergedGeometry.attributes.position
       .array as Float32Array;
@@ -160,7 +160,7 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
     const { clock } = state;
     if (pointsRef.current && interactionRef.current) {
       const mat = pointsRef.current.material as THREE.ShaderMaterial;
-      if (!mat || !mat.uniforms || !mat.uniforms.uTime) return;
+     if (!mat?.uniforms?.uTime) return;
       mat.uniforms.uTime.value = clock.getElapsedTime();
       if (!mat.uniforms.uInteractionStrength) return;
       const currentStrength = mat.uniforms.uInteractionStrength.value as number;

@@ -135,7 +135,7 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
     if (geometries.length === 0) return null;
 
     const mergedGeometry = mergeGeometries(geometries);
-    if (!mergedGeometry || !mergedGeometry.attributes.position) return null;
+    if (!mergedGeometry?.attributes?.position) return null;
 
     const targetPositions = mergedGeometry.attributes.position
       .array as Float32Array;
@@ -162,7 +162,7 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
     const { clock } = state;
     if (pointsRef.current && interactionRef.current) {
       const mat = pointsRef.current.material as THREE.ShaderMaterial;
-      if (!mat || !mat.uniforms || !mat.uniforms.uTime) return;
+      if (!mat?.uniforms?.uTime) return;
       mat.uniforms.uTime.value = clock.getElapsedTime();
       if (!mat.uniforms.uInteractionStrength) return;
       const currentStrength = mat.uniforms.uInteractionStrength.value as number;
