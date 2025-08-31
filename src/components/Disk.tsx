@@ -275,53 +275,53 @@ function CameraAnimation({ onAnimationEnd }: { onAnimationEnd: () => void }) {
 }
 
 // --- NEW: Hologram Component ---
-function Hologram({ visible }: { visible: boolean }) {
-  // NOTE: Make sure `logo.png` is in the public folder.
-  const texture = useTexture("/logo.jpg");
-  const materialRef = useRef<THREE.ShaderMaterial>(null);
+// function Hologram({ visible }: { visible: boolean }) {
+//   // NOTE: Make sure `logo.png` is in the public folder.
+//   const texture = useTexture("/logo.jpg");
+//   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
-  useFrame((state) => {
-    if (materialRef.current) {
-      materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
+//   useFrame((state) => {
+//     if (materialRef.current) {
+//       materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
 
-      // Animate opacity when it becomes visible
-      const targetOpacity = visible ? 0.75 : 0;
-      const currentOpacity = materialRef.current.uniforms.uOpacity.value;
-      materialRef.current.uniforms.uOpacity.value = THREE.MathUtils.lerp(
-        currentOpacity,
-        targetOpacity,
-        0.05,
-      );
-    }
-  });
+//       // Animate opacity when it becomes visible
+//       const targetOpacity = visible ? 0.75 : 0;
+//       const currentOpacity = materialRef.current.uniforms.uOpacity.value;
+//       materialRef.current.uniforms.uOpacity.value = THREE.MathUtils.lerp(
+//         currentOpacity,
+//         targetOpacity,
+//         0.05,
+//       );
+//     }
+//   });
 
-  // Set aspect ratio of the plane to match the image
-  const aspect = texture.image ? texture.image.width / texture.image.height : 1;
-  const planeSize = 10;
+//   // Set aspect ratio of the plane to match the image
+//   const aspect = texture.image ? texture.image.width / texture.image.height : 1;
+//   const planeSize = 10;
 
-  return (
-    <mesh
-      position={[0, 8, 0]}
-      rotation={[-Math.PI / 2, 0, 0]}
-      scale={[planeSize * aspect, planeSize, 1]}
-    >
-      <planeGeometry />
-      <shaderMaterial
-        ref={materialRef}
-        vertexShader={hologramVertexShader}
-        fragmentShader={hologramFragmentShader}
-        uniforms={{
-          uTime: { value: 0 },
-          uTexture: { value: texture },
-          uOpacity: { value: 0 },
-        }}
-        transparent
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </mesh>
-  );
-}
+//   return (
+//     <mesh
+//       position={[0, 8, 0]}
+//       rotation={[-Math.PI / 2, 0, 0]}
+//       scale={[planeSize * aspect, planeSize, 1]}
+//     >
+//       <planeGeometry />
+//       <shaderMaterial
+//         ref={materialRef}
+//         vertexShader={hologramVertexShader}
+//         fragmentShader={hologramFragmentShader}
+//         uniforms={{
+//           uTime: { value: 0 },
+//           uTexture: { value: texture },
+//           uOpacity: { value: 0 },
+//         }}
+//         transparent
+//         blending={THREE.AdditiveBlending}
+//         depthWrite={false}
+//       />
+//     </mesh>
+//   );
+// }
 
 // --- Main Scene Component (Modified) ---
 export default function Model() {

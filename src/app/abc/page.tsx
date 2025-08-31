@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Model from "~/components/VideoObj";
+import Countdown from "~/components/Countdown";
 
 export default function Page() {
   // const [isAnimating, setIsAnimating] = useState(false);
@@ -26,6 +27,7 @@ export default function Page() {
           alt="fkadshj"
         />
       </div>
+      {/* <Countdown /> */}
     </div>
   );
 }

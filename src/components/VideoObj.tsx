@@ -11,6 +11,7 @@ import { mergeBufferGeometries } from "three-stdlib";
 const vertexShader = `
   uniform float uTime;
   uniform float uInteractionStrength;
+  uniform vec2 uResolution;
   attribute vec3 aRandom;
   attribute vec3 aTargetPosition;
 
@@ -42,7 +43,7 @@ const vertexShader = `
       sin(aRandom.z * 5.0 + uTime * 0.2)
     );
 
-    scatterOffset = (scatterOffset - 0.5) * 15.0;
+    scatterOffset = (scatterOffset - 0.5) * 10.0;
 
     vec3 finalPosition = mix(basePosition, basePosition + scatterOffset, uInteractionStrength);
 
@@ -52,7 +53,7 @@ const vertexShader = `
 
     gl_Position = projectedPosition;
 
-    gl_PointSize = 15.0;
+    gl_PointSize = 350.0 +50.0*(2160.0/uResolution.x);
     gl_PointSize *= (1.0 / -viewPosition.z);
 
     vDistance = distance(finalPosition, vec3(0.0));
@@ -67,7 +68,7 @@ const fragmentShader = `
     strength = 1.0 - step(0.5, strength);
     strength = pow(strength, 3.0);
   
-    vec3 color = mix(vec3(1.0, 0.1, 0.3), vec3(0.3, 0.5, 1.0), vDistance / 3.0);
+    vec3 color = mix(vec3(1.0, 0.1, 0.3), vec3(0.3, 0.5, 1.0), vDistance / 50.0);
 
     gl_FragColor = vec4(color, strength);
   }
@@ -171,6 +172,8 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
         0.05,
       );
       mat.uniforms.uInteractionStrength.value = newStrength;
+      if(!mat.uniforms.uResolution) return;
+      mat.uniforms.uResolution.value = new THREE.Vector2(window.innerWidth, window.innerHeight);
     }
   });
 
@@ -209,6 +212,7 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
         uniforms={{
           uTime: { value: 0 },
           uInteractionStrength: { value: 0 },
+          uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
         }}
       />
     </points>
@@ -248,15 +252,7 @@ function CameraAnimation({ onAnimationEnd }: { onAnimationEnd: () => void }) {
       // Animate Y position to move the camera up
       camera.position.y = THREE.MathUtils.lerp(0, -150, progress);
       camera.position.z = THREE.MathUtils.lerp(0, 50, progress);
-    } else if (elapsedTime <= 10.0) {
-      // Lock Z position and X rotation to final states of phase 2
-      const progress = (elapsedTime - 8.0) / 2.0;
-      camera.rotation.x = THREE.MathUtils.lerp(
-        Math.PI / 2,
-        Math.PI / 2.75,
-        progress,
-      );
-    }
+    } 
     // End of Animation
     else {
       // Set the final camera state to be precise
@@ -272,67 +268,68 @@ function CameraAnimation({ onAnimationEnd }: { onAnimationEnd: () => void }) {
 }
 
 // --- NEW: Hologram Component ---
-function Hologram({ visible }: { visible: boolean }) {
-  // NOTE: Make sure `logo.png` is in the public folder.
-  const texture = useTexture("/logo.jpg");
-  const materialRef = useRef<THREE.ShaderMaterial>(null);
+// function Hologram({ visible }: { visible: boolean }) {
+//   // NOTE: Make sure `logo.png` is in the public folder.
+//   const texture = useTexture("/logo.jpg");
+//   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
-  useFrame((state) => {
-    if (materialRef.current) {
-      materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
+//   useFrame((state) => {
+//     if (materialRef.current) {
+//       materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
 
-      // Animate opacity when it becomes visible
-      const targetOpacity = visible ? 0.75 : 0;
-      const currentOpacity = materialRef.current.uniforms.uOpacity.value;
-      materialRef.current.uniforms.uOpacity.value = THREE.MathUtils.lerp(
-        currentOpacity,
-        targetOpacity,
-        0.05,
-      );
-    }
-  });
+//       // Animate opacity when it becomes visible
+//       const targetOpacity = visible ? 0.75 : 0;
+//       const currentOpacity = materialRef.current.uniforms.uOpacity.value;
+//       materialRef.current.uniforms.uOpacity.value = THREE.MathUtils.lerp(
+//         currentOpacity,
+//         targetOpacity,
+//         0.05,
+//       );
+//     }
+//   });
 
-  // Set aspect ratio of the plane to match the image
-  const aspect = texture.image ? texture.image.width / texture.image.height : 1;
-  const planeSize = 10;
+//   // Set aspect ratio of the plane to match the image
+//   const aspect = texture.image ? texture.image.width / texture.image.height : 1;
+//   const planeSize = 10;
 
-  return (
-    <mesh
-      position={[0, 8, 0]}
-      rotation={[-Math.PI / 2, 0, 0]}
-      scale={[planeSize * aspect, planeSize, 1]}
-    >
-      <planeGeometry />
-      <shaderMaterial
-        ref={materialRef}
-        vertexShader={hologramVertexShader}
-        fragmentShader={hologramFragmentShader}
-        uniforms={{
-          uTime: { value: 0 },
-          uTexture: { value: texture },
-          uOpacity: { value: 0 },
-        }}
-        transparent
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </mesh>
-  );
-}
+//   return (
+//     <mesh
+//       position={[0, 8, 0]}
+//       rotation={[-Math.PI / 2, 0, 0]}
+//       scale={[planeSize * aspect, planeSize, 1]}
+//     >
+//       <planeGeometry />
+//       <shaderMaterial
+//         ref={materialRef}
+//         vertexShader={hologramVertexShader}
+//         fragmentShader={hologramFragmentShader}
+//         uniforms={{
+//           uTime: { value: 0 },
+//           uTexture: { value: texture },
+//           uOpacity: { value: 0 },
+//         }}
+//         transparent
+//         blending={THREE.AdditiveBlending}
+//         depthWrite={false}
+//       />
+//     </mesh>
+//   );
+// }
 
 // --- Main Scene Component (Modified) ---
 export default function Model() {
-  const interactionRef = useRef<{ target: number }>({ target: 1 });
+  const interactionRef = useRef<{ target: number }>({ target: 0 });
   // State to track if the initial camera animation is playing
   const [isAnimating, setIsAnimating] = useState(true);
+  
   const [showHologram, setShowHologram] = useState(false);
 
   const handleInteractionStart = () => {
-    interactionRef.current.target = 0;
+    interactionRef.current.target = 1;
   };
 
   const handleInteractionEnd = () => {
-    interactionRef.current.target = 1;
+    interactionRef.current.target = 0;
   };
 
   const handleAnimationEnd = () => {
@@ -341,21 +338,22 @@ export default function Model() {
   };
 
   return (
-    <Canvas camera={{ position: [0, 0, 200], fov: 75 }}>
+    <Canvas camera={{ position: [0, 0, 200], fov: 75 }} className="w-[90%] h-[90%] mx-auto">
       <color attach="background" args={["#050505"]} />
 
       {/* Conditionally render the animation component */}
-      {isAnimating && (
-        <CameraAnimation onAnimationEnd={() => setIsAnimating(false)} />
-      )}
+      
+      <CameraAnimation onAnimationEnd={() => setIsAnimating(false)} />
       <ParticleModel interactionRef={interactionRef} />
-      <Hologram visible={true} />
+      {/* <Hologram visible={true} /> */}
 
       <OrbitControls
         // Disable controls during the initial animation
         // enabled={!isAnimating}
         onStart={handleInteractionStart}
         onEnd={handleInteractionEnd}
+        enableZoom={false}
+        maxPolarAngle={Math.PI / 2}
       />
 
       <EffectComposer>
