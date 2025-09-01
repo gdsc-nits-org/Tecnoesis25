@@ -3,7 +3,6 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
-
 export const metadata: Metadata = {
   title: "Tecnoesis 2025",
   description: "The Official Website of Tecnoesis 2025",

@@ -7,7 +7,6 @@ import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { mergeBufferGeometries } from "three-stdlib";
 
-
 // --- Shader Code ---
 const vertexShader = `
   uniform float uTime;

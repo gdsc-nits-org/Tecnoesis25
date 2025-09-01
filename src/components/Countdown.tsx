@@ -5,7 +5,6 @@ import localFont from "next/font/local";
 import { Orbitron } from "next/font/google";
 import RcCountdown from "react-countdown";
 
-
 const tron = localFont({ src: "../../public/tron.ttf" });
 const digits = Orbitron({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -30,16 +29,16 @@ export default function Countdown() {
         textShadow: "0 0 6px rgba(56,189,248,.6), 0 0 12px rgba(56,189,248,.3)",
       }}
     >
-      <div className="flex items-baseline gap-4 sm:gap-6 md:gap-8 max-w-full">
+      <div className="flex max-w-full items-baseline gap-4 sm:gap-6 md:gap-8">
         {isMounted ? (
           <RcCountdown
             date={targetDate}
             renderer={({ days, hours, minutes, seconds }) => (
               <>
                 <Item value={`${days}`} label="DAYS" />
-                <Item value={two(hours )} label="HRS" />
-                <Item value={two(minutes )} label="MIN" />
-                <Item value={two(seconds )} label="SEC" />
+                <Item value={two(hours)} label="HRS" />
+                <Item value={two(minutes)} label="MIN" />
+                <Item value={two(seconds)} label="SEC" />
               </>
             )}
           />
@@ -61,11 +60,11 @@ function Item({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex items-end gap-2">
       <span
-        className={`${digits.className} tabular-nums leading-none text-lg sm:text-3xl md:text-4xl lg:text-5xl tracking-[0.15em]`}
+        className={`${digits.className} text-lg tabular-nums leading-none tracking-[0.15em] sm:text-3xl md:text-4xl lg:text-5xl`}
       >
         {value}
       </span>
-      <span className="leading-none text-[10px] sm:text-xs md:text-sm tracking-[0.12em]">
+      <span className="text-[10px] leading-none tracking-[0.12em] sm:text-xs md:text-sm">
         {label}
       </span>
     </div>
