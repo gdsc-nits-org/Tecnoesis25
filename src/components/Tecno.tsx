@@ -28,7 +28,7 @@ const fragmentShader = `
         vec2 pixelToMouseDirection = centerOfPixel - u_mouse;
         float pixelDistanceToMouse = length(pixelToMouseDirection);
         float strength = smoothstep(0.3, 0.0, pixelDistanceToMouse);
- 
+
         vec2 uvOffset = strength * - mouseDirection * 0.2;
         vec2 uv = vUv - uvOffset;
 
@@ -36,7 +36,19 @@ const fragmentShader = `
         vec4 colorG = texture2D(u_texture, uv);
         vec4 colorB = texture2D(u_texture, uv - vec2(strength * u_aberrationIntensity * 0.01, 0.0));
 
-        gl_FragColor = vec4(colorR.r, colorG.g, colorB.b, 1.0);
+        // Combine the color channels
+        vec4 finalColor = vec4(colorR.r, colorG.g, colorB.b, 1.0);
+
+        // Define a small threshold to catch colors very close to black
+        float threshold = 0.05;
+
+        // If the sum of RGB values is less than the threshold, it's black
+        if (finalColor.r + finalColor.g + finalColor.b < threshold) {
+            // Set alpha to 0.0 to make it fully transparent
+            finalColor.a = 0.0;
+        }
+
+        gl_FragColor = finalColor;
     }
 `;
 
@@ -104,13 +116,15 @@ const Tecnoesis = (props: { bigScreen?: boolean; is4k?: boolean }) => {
           uniforms: shaderUniforms,
           vertexShader,
           fragmentShader,
+          transparent: true,
         }),
       );
       scene.add(planeMesh);
 
-      const renderer = new THREE.WebGLRenderer();
+      const renderer = new THREE.WebGLRenderer({ alpha: true, premultipliedAlpha: false })
       renderer.setSize(imageContainer.offsetWidth, imageContainer.offsetHeight);
       imageContainer.appendChild(renderer.domElement);
+       renderer.setClearColor(0x000000, 0);
 
       const mousePosition = new THREE.Vector2(0.5, 0.5);
       const targetMousePosition = new THREE.Vector2(0.5, 0.5);
