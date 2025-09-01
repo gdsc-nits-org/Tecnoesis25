@@ -1,6 +1,5 @@
 'use client';
 import Image from "next/image";
-import { useEffect } from "react";
 import Model from "~/components/VideoObj";
 import Countdown from "~/components/Countdown";
 
