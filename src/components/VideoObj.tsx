@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, OrbitControls, useTexture } from "@react-three/drei";
+import { useGLTF, OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { mergeBufferGeometries } from "three-stdlib";
@@ -133,7 +133,7 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
     if (geometries.length === 0) return null;
 
     const mergedGeometry = mergeBufferGeometries(geometries);
-    if (!mergedGeometry || !mergedGeometry.attributes.position) return null;
+    if (!mergedGeometry?.attributes?.position) return null;
 
     const targetPositions = mergedGeometry.attributes.position
       .array as Float32Array;
@@ -160,7 +160,7 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
     const { clock } = state;
     if (pointsRef.current && interactionRef.current) {
       const mat = pointsRef.current.material as THREE.ShaderMaterial;
-      if (!mat || !mat.uniforms || !mat.uniforms.uTime) return;
+     if (!mat?.uniforms?.uTime) return;
       mat.uniforms.uTime.value = clock.getElapsedTime();
       if (!mat.uniforms.uInteractionStrength) return;
       const currentStrength = mat.uniforms.uInteractionStrength.value as number;
@@ -220,53 +220,59 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
 }
 
 function CameraAnimation({ onAnimationEnd }: { onAnimationEnd: () => void }) {
-  const startTimeRef = useRef(Date.now());
-  const animationEndedRef = useRef(false);
-
-  useFrame(({ camera }) => {
-    // If the animation has already ended, do nothing.
-    if (animationEndedRef.current) return;
-
-    const elapsedTime = (Date.now() - startTimeRef.current) / 1000;
-
-    // --- Animation Sequence ---
-    // Phase 1: Move towards the model (0s -> 2s)
-    if (elapsedTime <= 2.0) {
-      const progress = elapsedTime / 2.0;
-      // Animate Z position from 200 to 30
-      camera.position.z = THREE.MathUtils.lerp(200, 0, progress);
-    }
-    // Phase 2: Look down (2s -> 4s)
-    else if (elapsedTime <= 4.0) {
-      // Lock Z position to the final state of phase 1
-      const progress = (elapsedTime - 2.0) / 2.0;
-      // Animate rotation around the X-axis to look down
-      camera.rotation.x = THREE.MathUtils.lerp(0, Math.PI / 2, progress);
-    }
-    // Phase 3: Move up (4s -> 6s)
-    else if (elapsedTime <= 8.0) {
-      // Lock Z position and X rotation to final states of phase 2
-      camera.position.z = 0;
-      camera.rotation.x = Math.PI / 2;
-      const progress = (elapsedTime - 4.0) / 2.0;
-      // Animate Y position to move the camera up
-      camera.position.y = THREE.MathUtils.lerp(0, -150, progress);
-      camera.position.z = THREE.MathUtils.lerp(0, 50, progress);
-    } 
-    // End of Animation
-    else {
-      // Set the final camera state to be precise
-      // camera.position.set(0, -150, 50);
-      // camera.rotation.set(Math.PI / 2.75, 0, 0);
-      // Call the onAnimationEnd callback once to re-enable controls
-      // onAnimationEnd();
-      animationEndedRef.current = true;
-    }
-  });
-
-  return null; // This component doesn't render any visible elements
-}
-
+    const startTimeRef = useRef(Date.now());
+    const animationEndedRef = useRef(false);
+  
+    useFrame(({ camera }) => {
+      // If the animation has already ended, do nothing.
+      if (animationEndedRef.current) return;
+  
+      const elapsedTime = (Date.now() - startTimeRef.current) / 1000;
+  
+      // --- Animation Sequence ---
+      // Phase 1: Move towards the model (0s -> 2s)
+      if (elapsedTime <= 2.0) {
+        const progress = elapsedTime / 2.0;
+        // Animate Z position from 200 to 30
+        camera.position.z = THREE.MathUtils.lerp(200, 0, progress);
+      }
+      // Phase 2: Look down (2s -> 4s)
+      else if (elapsedTime <= 4.0) {
+        // Lock Z position to the final state of phase 1
+        const progress = (elapsedTime - 2.0) / 2.0;
+        // Animate rotation around the X-axis to look down
+        camera.rotation.x = THREE.MathUtils.lerp(0, Math.PI / 2, progress);
+      }
+      // Phase 3: Move up (4s -> 6s)
+      else if (elapsedTime <= 8.0) {
+        // Lock Z position and X rotation to final states of phase 2
+        camera.position.z = 0;
+        camera.rotation.x = Math.PI / 2;
+        const progress = (elapsedTime - 4.0) / 4.0;
+        // Animate Y position to move the camera up
+        camera.position.y = THREE.MathUtils.lerp(0, -300, progress);
+        camera.position.z = THREE.MathUtils.lerp(0, 50, progress);
+      } 
+      else if (elapsedTime <= 10.0) {
+        const progress = (elapsedTime - 8.0) / 2.0;
+        camera.rotation.x = THREE.MathUtils.lerp(Math.PI / 2, 0, progress);
+        camera.position.y = THREE.MathUtils.lerp(-300, 0, progress);
+        camera.position.z = THREE.MathUtils.lerp(50, 350, progress);
+      }
+      // End of Animation
+      else {
+        camera.rotation.x = 0;
+        // Set the final camera state to be precise
+        // camera.position.set(0, -150, 50);
+        // camera.rotation.set(Math.PI / 2.75, 0, 0);
+        // Call the onAnimationEnd callback once to re-enable controls
+        onAnimationEnd();
+        animationEndedRef.current = true;
+      }
+    });
+  
+    return null; // This component doesn't render any visible elements
+  }
 // --- NEW: Hologram Component ---
 // function Hologram({ visible }: { visible: boolean }) {
 //   // NOTE: Make sure `logo.png` is in the public folder.
@@ -334,7 +340,7 @@ export default function Model() {
 
   const handleAnimationEnd = () => {
     setIsAnimating(false);
-    setShowHologram(true);
+    // setShowHologram(true);
   };
 
   return (
@@ -353,6 +359,7 @@ export default function Model() {
         onStart={handleInteractionStart}
         onEnd={handleInteractionEnd}
         enableZoom={false}
+        // enablePan={false}
         maxPolarAngle={Math.PI / 2}
       />
 
