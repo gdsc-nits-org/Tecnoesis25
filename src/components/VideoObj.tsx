@@ -266,7 +266,7 @@ function CameraAnimation({ onAnimationEnd }: { onAnimationEnd: () => void }) {
         // camera.position.set(0, -150, 50);
         // camera.rotation.set(Math.PI / 2.75, 0, 0);
         // Call the onAnimationEnd callback once to re-enable controls
-        onAnimationEnd();
+        // onAnimationEnd();
         animationEndedRef.current = true;
       }
     });
@@ -340,7 +340,7 @@ export default function Model() {
 
   const handleAnimationEnd = () => {
     setIsAnimating(false);
-    // setShowHologram(true);
+    setShowHologram(true);
   };
 
   return (
@@ -359,7 +359,7 @@ export default function Model() {
         onStart={handleInteractionStart}
         onEnd={handleInteractionEnd}
         enableZoom={false}
-        // enablePan={false}
+        enablePan={false}
         maxPolarAngle={Math.PI / 2}
       />
 
