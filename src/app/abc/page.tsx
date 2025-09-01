@@ -14,19 +14,15 @@ export default function Page() {
     const timer = setTimeout(() => {
       setShowBottomElements(true);
     }, 10000);
-    const upTimer = setTimeout(() => {
-      setShowTHead(true);
-    }, 2000);
 
     return () => {
       clearTimeout(timer);
-      clearTimeout(upTimer);
     };
   }, []);
 
   return (
     <div className="h-screen w-screen bg-black">
-      {showTHead && (
+      {showBottomElements && (
         <div className="absolute animate-fade-in z-20 left-[50%] h-80 w-[50vw] -translate-x-[50%] bg-transparent -top-[50px]">
           <Tecnoesis bigScreen={true} />
         </div>
