@@ -80,7 +80,9 @@ const Tecnoesis = (props: { bigScreen?: boolean; is4k?: boolean }) => {
       videoElement.autoplay = true;
       videoElement.playsInline = true;
       videoElement.crossOrigin = "anonymous";
-      videoElement.play();
+      videoElement
+        .play()
+        .catch((err) => console.error("Error playing video:", err));
 
       // ✅ Create VideoTexture
       const texture = new THREE.VideoTexture(videoElement);
