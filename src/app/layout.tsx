@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
-
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
+import MusicButton from "~/components/MusicButton";
 
 export const metadata: Metadata = {
   title: "Tecnoesis 2025",
@@ -16,7 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className="no-scrollbar">{children}</body>
+      <body className="min-h-screen flex flex-col no-scrollbar overflow-x-hidden">
+        {children}
+        <MusicButton />
+      </body>
     </html>
   );
 }
