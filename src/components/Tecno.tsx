@@ -193,10 +193,10 @@ const Tecnoesis = (props: { bigScreen?: boolean; is4k?: boolean }) => {
   }, [props.bigScreen, isResize]);
 
   return (
-    <section className="absolute h-full w-full overflow-hidden bg-transparent">
+    <section className="absolute  h-full w-full overflow-hidden bg-transparent scale-125 lg:scale-100">
       <div
         id="imageContainer"
-        className="relative mx-auto flex h-full w-full max-w-full items-center justify-center overflow-hidden bg-transparent"
+        className="relative mx-auto  flex h-full w-full max-w-full items-center justify-center overflow-hidden bg-transparent"
       />
     </section>
   );

@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { mergeBufferGeometries } from "three-stdlib";
-
 
 // --- Shader Code ---
 const vertexShader = `
@@ -19,7 +18,6 @@ const vertexShader = `
   varying float vDistance;
   varying float vInteractionStrength;
 
-  // Noise functions are not used in the final shader logic but are kept if needed later.
   float random(vec2 st) {
     return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
   }
@@ -57,7 +55,7 @@ const vertexShader = `
 
     gl_Position = projectedPosition;
 
-    gl_PointSize = 350.0 +50.0*(2160.0/uResolution.x);
+    gl_PointSize = 350.0 + 50.0 * (2160.0 / uResolution.x);
     gl_PointSize *= (1.0 / -viewPosition.z);
 
     vDistance = distance(finalPosition, vec3(0.0));
@@ -72,13 +70,11 @@ const fragmentShader = `
     float strength = distance(gl_PointCoord, vec2(0.5));
     strength = 1.0 - step(0.5, strength);
     strength = pow(strength, 3.0);
-  
+
     vec3 color = mix(vec3(1.0, 0.1, 0.3), vec3(0.3, 0.5, 1.0), vDistance / 50.0);
     gl_FragColor = vec4(color, strength);
   }
 `;
-
-// Hologram shaders are not used, so they are removed for clarity.
 
 // ---- Types ----
 type InteractionRef = React.MutableRefObject<{ target: number }>;
@@ -87,15 +83,11 @@ interface ParticleModelProps {
   interactionRef: InteractionRef;
 }
 
-// NOTE: Your ParticleModel component was already correct. No changes were needed here.
-// The final, corrected ParticleModel component
-
 function ParticleModel({ interactionRef }: ParticleModelProps) {
   const pointsRef = useRef<THREE.Points>(null);
   const { scene } = useGLTF("/tr.glb");
 
   const particlesData = useMemo(() => {
-    // ... no changes to this section ...
     const geometries: THREE.BufferGeometry[] = [];
     scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
@@ -124,7 +116,6 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
     };
   }, [scene]);
 
-  // ✅ THE FIX: Create a stable uniforms object that survives re-renders.
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
@@ -137,7 +128,6 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
   );
 
   useFrame((state) => {
-    // ... your useFrame logic is correct and remains unchanged ...
     if (pointsRef.current) pointsRef.current.rotation.x = Math.PI / 2;
     const { clock } = state;
     if (pointsRef.current && interactionRef.current) {
@@ -164,20 +154,19 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
   return (
     <points ref={pointsRef} position={[0, 0, 0]}>
       <bufferGeometry>
-        {/* Your buffer attributes are correct */}
         <bufferAttribute
           attach="attributes-position"
           count={particlesData.count}
           array={particlesData.target}
           itemSize={3}
-          args={[particlesData.target, 3]}
+          args={[particlesData.random, 3]}
         />
         <bufferAttribute
           attach="attributes-aTargetPosition"
           count={particlesData.count}
           array={particlesData.target}
           itemSize={3}
-          args={[particlesData.target, 3]}
+          args={[particlesData.random, 3]}
         />
         <bufferAttribute
           attach="attributes-aRandom"
@@ -187,7 +176,6 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
           args={[particlesData.random, 3]}
         />
       </bufferGeometry>
-      {/* Pass the stable uniforms object to the material */}
       <shaderMaterial
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -208,7 +196,6 @@ function CameraAnimation({ onAnimationEnd }: { onAnimationEnd: () => void }) {
 
     const elapsedTime = (Date.now() - startTimeRef.current) / 1000;
 
-    // Animation sequence remains unchanged
     if (elapsedTime <= 2.0) {
       const progress = elapsedTime / 2.0;
       camera.position.z = THREE.MathUtils.lerp(200, 0, progress);
@@ -226,10 +213,7 @@ function CameraAnimation({ onAnimationEnd }: { onAnimationEnd: () => void }) {
       camera.rotation.x = THREE.MathUtils.lerp(Math.PI / 2, 0, progress);
       camera.position.y = THREE.MathUtils.lerp(-300, 0, progress);
       camera.position.z = THREE.MathUtils.lerp(50, 350, progress);
-    }
-    else {
-      // ✅ CHANGE 1: Ensure onAnimationEnd is called only ONCE.
-      // This prevents multiple re-renders that could cause issues.
+    } else {
       if (!animationEndedRef.current) {
         onAnimationEnd();
         animationEndedRef.current = true;
@@ -258,10 +242,46 @@ function MouseSpeedController({ interactionRef, mouseDataRef }: MouseSpeedContro
     const DECAY_RATE = 0.05;
 
     const speedStrength = RESTING_STRENGTH + Math.min(speed * SENSITIVITY, 1.0);
-    const decayingStrength = THREE.MathUtils.lerp(interactionRef.current.target, RESTING_STRENGTH, DECAY_RATE);
+    const decayingStrength = THREE.MathUtils.lerp(
+      interactionRef.current.target,
+      RESTING_STRENGTH,
+      DECAY_RATE
+    );
 
     interactionRef.current.target = Math.max(speedStrength, decayingStrength);
     mouseDataRef.current.speed = 0;
+  });
+
+  return null;
+}
+
+// ScrollZoom uses useThree() to get the actual canvas camera.
+function ScrollZoom({ enabled = true }: { enabled?: boolean }) {
+  const scrollYRef = useRef(0);
+  const { camera } = useThree();
+
+  // Listen to page scroll (update stored scrollY)
+  useEffect(() => {
+    const handleScroll = () => {
+      scrollYRef.current = window.scrollY || window.pageYOffset || 0;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useFrame(() => {
+    if (!enabled) return;
+
+    // Configurable values
+    const baseZ = 200;
+    const sensitivity = 0.2; // change to taste
+    const minZ = 50;
+    const maxZ = 400;
+
+    const targetZ = THREE.MathUtils.clamp(baseZ - scrollYRef.current * sensitivity, minZ, maxZ);
+
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.06);
   });
 
   return null;
@@ -278,21 +298,21 @@ export default function Model() {
     lastTime: 0,
     speed: 0,
   });
-  
-  // ✅ NEW: A ref to track if the mouse button is down.
+
   const isDraggingRef = useRef(false);
 
   useEffect(() => {
     const handleMouseDown = () => {
       isDraggingRef.current = true;
     };
-    
+
     const handleMouseUp = () => {
       isDraggingRef.current = false;
+      // reset lastTime so drag starts fresh next time
+      mouseDataRef.current.lastTime = 0;
     };
 
     const handleMouseMove = (event: MouseEvent) => {
-      // Only calculate speed if the mouse is being dragged
       if (!isDraggingRef.current) return;
 
       const { clientX, clientY, timeStamp } = event;
@@ -311,7 +331,7 @@ export default function Model() {
       const deltaX = clientX - mouseData.lastX;
       const deltaY = clientY - mouseData.lastY;
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      
+
       mouseData.speed = distance / deltaTime;
 
       mouseData.lastX = clientX;
@@ -319,16 +339,14 @@ export default function Model() {
       mouseData.lastTime = timeStamp;
     };
 
-    // Add all three event listeners
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    // Clean up all three listeners on unmount
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mousemove", handleMouseMove);
+
     return () => {
-      window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
@@ -338,21 +356,23 @@ export default function Model() {
       camera={{ position: [0, 0, 200], fov: 75 }}
       className="mx-auto h-[90%] w-[90%]"
     >
+      {/* Camera animation runs at start */}
       {isAnimating && <CameraAnimation onAnimationEnd={() => setIsAnimating(false)} />}
-      
+
       <ParticleModel interactionRef={interactionRef} />
-      
+
       {!isAnimating && (
         <>
-          <OrbitControls enableZoom={false} enablePan={false} maxPolarAngle={Math.PI / 2} />
+          <OrbitControls enableZoom={true} enablePan={false} enableRotate={true} maxPolarAngle={Math.PI / 2} />
           <MouseSpeedController interactionRef={interactionRef} mouseDataRef={mouseDataRef} />
+          {/* enable scroll zoom only after animation ends */}
+          <ScrollZoom enabled={!isAnimating} />
         </>
       )}
-      
+
       <EffectComposer>
         <Bloom mipmapBlur luminanceThreshold={0.5} radius={0.8} intensity={0.2} />
       </EffectComposer>
     </Canvas>
   );
 }
-
