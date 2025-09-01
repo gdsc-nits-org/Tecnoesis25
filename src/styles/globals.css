@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 .no-scrollbar::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
+  display: none; /* For Chrome, Safari, and Opera */
 }
 
 .no-scrollbar {
-    -ms-overflow-style: none;  /* For IE and Edge */
-    scrollbar-width: none;  /* For Firefox */
+  -ms-overflow-style: none; /* For IE and Edge */
+  scrollbar-width: none; /* For Firefox */
 }
 
 @keyframes fadeIn {

@@ -6,7 +6,6 @@ import { useGLTF, OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { mergeBufferGeometries } from "three-stdlib";
-import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
 
 
 // --- Shader Code ---

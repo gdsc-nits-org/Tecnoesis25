@@ -31,16 +31,17 @@ export default function Loader() {
       <div className="w-full max-w-xl">
         {/* Title */}
         <div
-          className={`${tron.className} text-center text-cyan-300 mb-6 select-none text-lg sm:text-xl md:text-2xl tracking-[0.2em]`}
+          className={`${tron.className} mb-6 select-none text-center text-lg tracking-[0.2em] text-cyan-300 sm:text-xl md:text-2xl`}
           style={{
-            textShadow: "0 0 6px rgba(56,189,248,.6), 0 0 12px rgba(56,189,248,.3)",
+            textShadow:
+              "0 0 6px rgba(56,189,248,.6), 0 0 12px rgba(56,189,248,.3)",
           }}
         >
           INTO THE GRID
         </div>
 
         {/* Progress Bar */}
-        <div className="relative w-full h-3 sm:h-4 md:h-5 rounded-full bg-cyan-900/30 overflow-hidden ring-1 ring-cyan-400/40">
+        <div className="relative h-3 w-full overflow-hidden rounded-full bg-cyan-900/30 ring-1 ring-cyan-400/40 sm:h-4 md:h-5">
           <div
             className="h-full bg-cyan-400 transition-all duration-300 ease-out"
             style={{
@@ -52,12 +53,12 @@ export default function Loader() {
         </div>
 
         {/* Progress Percentage */}
-        <div className={`${tron.className} mt-3 text-center text-cyan-300 text-sm sm:text-base md:text-lg`}>
+        <div
+          className={`${tron.className} mt-3 text-center text-sm text-cyan-300 sm:text-base md:text-lg`}
+        >
           {Math.round(clampedProgress)}%
         </div>
       </div>
     </div>
   );
 }
-
-
