@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { mergeBufferGeometries } from "three-stdlib";
+
 
 // --- Shader Code ---
 const vertexShader = `
@@ -160,7 +161,7 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
     const { clock } = state;
     if (pointsRef.current && interactionRef.current) {
       const mat = pointsRef.current.material as THREE.ShaderMaterial;
-     if (!mat?.uniforms?.uTime) return;
+      if (!mat?.uniforms?.uTime) return;
       mat.uniforms.uTime.value = clock.getElapsedTime();
       if (!mat.uniforms.uInteractionStrength) return;
       const currentStrength = mat.uniforms.uInteractionStrength.value as number;
@@ -172,8 +173,11 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
         0.05,
       );
       mat.uniforms.uInteractionStrength.value = newStrength;
-      if(!mat.uniforms.uResolution) return;
-      mat.uniforms.uResolution.value = new THREE.Vector2(window.innerWidth, window.innerHeight);
+      if (!mat.uniforms.uResolution) return;
+      mat.uniforms.uResolution.value = new THREE.Vector2(
+        window.innerWidth,
+        window.innerHeight,
+      );
     }
   });
 
@@ -212,7 +216,9 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
         uniforms={{
           uTime: { value: 0 },
           uInteractionStrength: { value: 0 },
-          uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+          uResolution: {
+            value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+          },
         }}
       />
     </points>
@@ -220,114 +226,64 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
 }
 
 function CameraAnimation({ onAnimationEnd }: { onAnimationEnd: () => void }) {
-    const startTimeRef = useRef(Date.now());
-    const animationEndedRef = useRef(false);
-  
-    useFrame(({ camera }) => {
-      // If the animation has already ended, do nothing.
-      if (animationEndedRef.current) return;
-  
-      const elapsedTime = (Date.now() - startTimeRef.current) / 1000;
-  
-      // --- Animation Sequence ---
-      // Phase 1: Move towards the model (0s -> 2s)
-      if (elapsedTime <= 2.0) {
-        const progress = elapsedTime / 2.0;
-        // Animate Z position from 200 to 30
-        camera.position.z = THREE.MathUtils.lerp(200, 0, progress);
-      }
-      // Phase 2: Look down (2s -> 4s)
-      else if (elapsedTime <= 4.0) {
-        // Lock Z position to the final state of phase 1
-        const progress = (elapsedTime - 2.0) / 2.0;
-        // Animate rotation around the X-axis to look down
-        camera.rotation.x = THREE.MathUtils.lerp(0, Math.PI / 2, progress);
-      }
-      // Phase 3: Move up (4s -> 6s)
-      else if (elapsedTime <= 8.0) {
-        // Lock Z position and X rotation to final states of phase 2
-        camera.position.z = 0;
-        camera.rotation.x = Math.PI / 2;
-        const progress = (elapsedTime - 4.0) / 4.0;
-        // Animate Y position to move the camera up
-        camera.position.y = THREE.MathUtils.lerp(0, -300, progress);
-        camera.position.z = THREE.MathUtils.lerp(0, 50, progress);
-      } 
-      else if (elapsedTime <= 10.0) {
-        const progress = (elapsedTime - 8.0) / 2.0;
-        camera.rotation.x = THREE.MathUtils.lerp(Math.PI / 2, 0, progress);
-        camera.position.y = THREE.MathUtils.lerp(-300, 0, progress);
-        camera.position.z = THREE.MathUtils.lerp(50, 350, progress);
-      }
-      // End of Animation
-      else {
-        camera.rotation.x = 0;
-        // Set the final camera state to be precise
-        // camera.position.set(0, -150, 50);
-        // camera.rotation.set(Math.PI / 2.75, 0, 0);
-        // Call the onAnimationEnd callback once to re-enable controls
-        // onAnimationEnd();
-        animationEndedRef.current = true;
-      }
-    });
-  
-    return null; // This component doesn't render any visible elements
-  }
-// --- NEW: Hologram Component ---
-// function Hologram({ visible }: { visible: boolean }) {
-//   // NOTE: Make sure `logo.png` is in the public folder.
-//   const texture = useTexture("/logo.jpg");
-//   const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const startTimeRef = useRef(Date.now());
+  const animationEndedRef = useRef(false);
 
-//   useFrame((state) => {
-//     if (materialRef.current) {
-//       materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
+  useFrame(({ camera }) => {
+    // If the animation has already ended, do nothing.
+    if (animationEndedRef.current) return;
 
-//       // Animate opacity when it becomes visible
-//       const targetOpacity = visible ? 0.75 : 0;
-//       const currentOpacity = materialRef.current.uniforms.uOpacity.value;
-//       materialRef.current.uniforms.uOpacity.value = THREE.MathUtils.lerp(
-//         currentOpacity,
-//         targetOpacity,
-//         0.05,
-//       );
-//     }
-//   });
+    const elapsedTime = (Date.now() - startTimeRef.current) / 1000;
 
-//   // Set aspect ratio of the plane to match the image
-//   const aspect = texture.image ? texture.image.width / texture.image.height : 1;
-//   const planeSize = 10;
+    // --- Animation Sequence ---
+    // Phase 1: Move towards the model (0s -> 2s)
+    if (elapsedTime <= 2.0) {
+      const progress = elapsedTime / 2.0;
+      // Animate Z position from 200 to 30
+      camera.position.z = THREE.MathUtils.lerp(200, 0, progress);
+    }
+    // Phase 2: Look down (2s -> 4s)
+    else if (elapsedTime <= 4.0) {
+      // Lock Z position to the final state of phase 1
+      const progress = (elapsedTime - 2.0) / 2.0;
+      // Animate rotation around the X-axis to look down
+      camera.rotation.x = THREE.MathUtils.lerp(0, Math.PI / 2, progress);
+    }
+    // Phase 3: Move up (4s -> 6s)
+    else if (elapsedTime <= 8.0) {
+      // Lock Z position and X rotation to final states of phase 2
+      camera.position.z = 0;
+      camera.rotation.x = Math.PI / 2;
+      const progress = (elapsedTime - 4.0) / 4.0;
+      // Animate Y position to move the camera up
+      camera.position.y = THREE.MathUtils.lerp(0, -300, progress);
+      camera.position.z = THREE.MathUtils.lerp(0, 50, progress);
+    } else if (elapsedTime <= 10.0) {
+      const progress = (elapsedTime - 8.0) / 2.0;
+      camera.rotation.x = THREE.MathUtils.lerp(Math.PI / 2, 0, progress);
+      camera.position.y = THREE.MathUtils.lerp(-300, 0, progress);
+      camera.position.z = THREE.MathUtils.lerp(50, 350, progress);
+    }
+    // End of Animation
+    else {
+      camera.rotation.x = 0;
+      // Set the final camera state to be precise
+      // camera.position.set(0, -150, 50);
+      // camera.rotation.set(Math.PI / 2.75, 0, 0);
+      // Call the onAnimationEnd callback once to re-enable controls
+      onAnimationEnd();
+      animationEndedRef.current = true;
+    }
+  });
 
-//   return (
-//     <mesh
-//       position={[0, 8, 0]}
-//       rotation={[-Math.PI / 2, 0, 0]}
-//       scale={[planeSize * aspect, planeSize, 1]}
-//     >
-//       <planeGeometry />
-//       <shaderMaterial
-//         ref={materialRef}
-//         vertexShader={hologramVertexShader}
-//         fragmentShader={hologramFragmentShader}
-//         uniforms={{
-//           uTime: { value: 0 },
-//           uTexture: { value: texture },
-//           uOpacity: { value: 0 },
-//         }}
-//         transparent
-//         blending={THREE.AdditiveBlending}
-//         depthWrite={false}
-//       />
-//     </mesh>
-//   );
-// }
-
+  return null; // This component doesn't render any visible elements
+}
 // --- Main Scene Component (Modified) ---
 export default function Model() {
   const interactionRef = useRef<{ target: number }>({ target: 0 });
   // State to track if the initial camera animation is playing
   const [isAnimating, setIsAnimating] = useState(true);
-  
+
   const [showHologram, setShowHologram] = useState(false);
 
   const handleInteractionStart = () => {
@@ -343,26 +299,35 @@ export default function Model() {
     setShowHologram(true);
   };
 
+  useEffect(() => console.log(isAnimating), [isAnimating]);
+
   return (
-    <Canvas camera={{ position: [0, 0, 200], fov: 75 }} className="w-[90%] h-[90%] mx-auto">
-      <color attach="background" args={["#050505"]} />
+    <Canvas
+      // 1. Add the gl prop to enable transparency
+      gl={{ alpha: true }}
+      camera={{ position: [0, 0, 200], fov: 75 }}
+      className="mx-auto h-[90%] w-[90%]"
+    >
+      {/* 2. Remove the color element that sets the background */}
+      {/* <color attach="background" args={["#050505"]} /> */}
 
       {/* Conditionally render the animation component */}
-      
+
       <CameraAnimation onAnimationEnd={() => setIsAnimating(false)} />
       <ParticleModel interactionRef={interactionRef} />
       {/* <Hologram visible={true} /> */}
 
-      <OrbitControls
-        // Disable controls during the initial animation
-        // enabled={!isAnimating}
-        onStart={handleInteractionStart}
-        onEnd={handleInteractionEnd}
-        enableZoom={false}
-        enablePan={false}
-        maxPolarAngle={Math.PI / 2}
-      />
-
+      {!isAnimating && (
+        <OrbitControls
+          // Disable controls during the initial animation
+          // enabled={!isAnimating}
+          onStart={handleInteractionStart}
+          onEnd={handleInteractionEnd}
+          enableZoom={false}
+          enablePan={false}
+          maxPolarAngle={Math.PI / 2}
+        />
+      )}
       <EffectComposer>
         <Bloom
           mipmapBlur
