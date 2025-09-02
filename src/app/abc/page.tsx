@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Model from "~/components/VideoObj";
+import BgmButton from "~/components/BgmButton";
 
 export default function Page() {
   // const [isAnimating, setIsAnimating] = useState(false);
@@ -13,7 +14,8 @@ export default function Page() {
 
   return (
     <div className="h-screen w-screen">
-      <Model />
+      <BgmButton/>
+      {/* <Model />
       <div
         className="animate-fade-in absolute bottom-0 h-60 w-screen transition-transform delay-1000"
         style={{ transform: "-translateY(10rem)" }}
@@ -25,7 +27,7 @@ export default function Page() {
           height={100}
           alt="fkadshj"
         />
-      </div>
+      </div> */}
     </div>
   );
 }
