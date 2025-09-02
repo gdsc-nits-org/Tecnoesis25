@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, OrbitControls, useTexture } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useGLTF, OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { mergeBufferGeometries } from "three-stdlib";
@@ -11,10 +11,12 @@ import { mergeBufferGeometries } from "three-stdlib";
 const vertexShader = `
   uniform float uTime;
   uniform float uInteractionStrength;
+  uniform vec2 uResolution;
   attribute vec3 aRandom;
   attribute vec3 aTargetPosition;
 
   varying float vDistance;
+  varying float vInteractionStrength;
 
   float random(vec2 st) {
     return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
@@ -37,14 +39,15 @@ const vertexShader = `
     vec3 basePosition = aTargetPosition;
 
     vec3 scatterOffset = vec3(
-      sin(aRandom.x * 5.0 + uTime * 0.2),
-      sin(aRandom.y * 5.0 + uTime * 0.2),
-      sin(aRandom.z * 5.0 + uTime * 0.2)
+      noise(aTargetPosition.xy + uTime * 0.1),
+      noise(aTargetPosition.yz + uTime * 0.1),
+      noise(aTargetPosition.zx + uTime * 0.1)
     );
 
-    scatterOffset = (scatterOffset - 0.5) * 15.0;
+    scatterOffset = (scatterOffset - 0.5) * 100.0;
 
     vec3 finalPosition = mix(basePosition, basePosition + scatterOffset, uInteractionStrength);
+    vInteractionStrength = uInteractionStrength;
 
     vec4 modelPosition = modelMatrix * vec4(finalPosition, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
@@ -52,7 +55,7 @@ const vertexShader = `
 
     gl_Position = projectedPosition;
 
-    gl_PointSize = 15.0;
+    gl_PointSize = 350.0 + 50.0 * (2160.0 / uResolution.x);
     gl_PointSize *= (1.0 / -viewPosition.z);
 
     vDistance = distance(finalPosition, vec3(0.0));
@@ -61,47 +64,15 @@ const vertexShader = `
 
 const fragmentShader = `
   varying float vDistance;
+  varying float vInteractionStrength;
 
   void main() {
     float strength = distance(gl_PointCoord, vec2(0.5));
     strength = 1.0 - step(0.5, strength);
     strength = pow(strength, 3.0);
-  
-    vec3 color = mix(vec3(1.0, 0.1, 0.3), vec3(0.3, 0.5, 1.0), vDistance / 3.0);
 
+    vec3 color = mix(vec3(1.0, 0.1, 0.3), vec3(0.3, 0.5, 1.0), vDistance / 50.0);
     gl_FragColor = vec4(color, strength);
-  }
-`;
-
-// --- NEW: Hologram Shader Code ---
-const hologramVertexShader = `
-  varying vec2 vUv;
-  void main() {
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-const hologramFragmentShader = `
-  uniform sampler2D uTexture;
-  uniform float uTime;
-  uniform float uOpacity;
-  varying vec2 vUv;
-
-  void main() {
-    // Create a scanline effect
-    float scanline = sin(vUv.y * 300.0 - uTime * 5.0) * 0.1 + 0.9;
-    
-    // Sample the texture
-    vec4 textureColor = texture2D(uTexture, vUv);
-    
-    // Apply effects
-    vec3 finalColor = textureColor.rgb * scanline;
-    
-    // Make sure transparent parts of the PNG are not visible
-    float alpha = textureColor.a > 0.1 ? 1.0 : 0.0;
-    
-    gl_FragColor = vec4(finalColor, alpha * uOpacity);
   }
 `;
 
@@ -114,12 +85,10 @@ interface ParticleModelProps {
 
 function ParticleModel({ interactionRef }: ParticleModelProps) {
   const pointsRef = useRef<THREE.Points>(null);
-
   const { scene } = useGLTF("/tr.glb");
 
   const particlesData = useMemo(() => {
     const geometries: THREE.BufferGeometry[] = [];
-
     scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const mesh = child as THREE.Mesh;
@@ -128,25 +97,18 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
         geometries.push(transformedGeometry);
       }
     });
-
     if (geometries.length === 0) return null;
-
     const mergedGeometry = mergeBufferGeometries(geometries);
-    if (!mergedGeometry || !mergedGeometry.attributes.position) return null;
-
-    const targetPositions = mergedGeometry.attributes.position
-      .array as Float32Array;
-
+    if (!mergedGeometry?.attributes?.position) return null;
+    const targetPositions = mergedGeometry.attributes.position.array as Float32Array;
     const particleCount = targetPositions.length / 3;
     const randomPositions = new Float32Array(particleCount * 3);
-
     for (let i = 0; i < particleCount; i++) {
       randomPositions.set(
         [Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5],
-        i * 3,
+        i * 3
       );
     }
-
     return {
       target: targetPositions,
       random: randomPositions,
@@ -154,23 +116,36 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
     };
   }, [scene]);
 
+  const uniforms = useMemo(
+    () => ({
+      uTime: { value: 0 },
+      uInteractionStrength: { value: 0.15 },
+      uResolution: {
+        value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+      },
+    }),
+    []
+  );
+
   useFrame((state) => {
     if (pointsRef.current) pointsRef.current.rotation.x = Math.PI / 2;
     const { clock } = state;
     if (pointsRef.current && interactionRef.current) {
       const mat = pointsRef.current.material as THREE.ShaderMaterial;
-      if (!mat || !mat.uniforms || !mat.uniforms.uTime) return;
-      mat.uniforms.uTime.value = clock.getElapsedTime();
-      if (!mat.uniforms.uInteractionStrength) return;
-      const currentStrength = mat.uniforms.uInteractionStrength.value as number;
-      const targetStrength = interactionRef.current.target;
-
-      const newStrength = THREE.MathUtils.lerp(
-        currentStrength,
-        targetStrength,
-        0.05,
-      );
-      mat.uniforms.uInteractionStrength.value = newStrength;
+      if (!mat.uniforms) return;
+      if (mat.uniforms.uTime) {
+        mat.uniforms.uTime.value = clock.getElapsedTime();
+      }
+      if (mat.uniforms.uInteractionStrength) {
+        const currentStrength = mat.uniforms.uInteractionStrength.value as number;
+        const targetStrength = interactionRef.current.target;
+        const newStrength = THREE.MathUtils.lerp(
+          currentStrength,
+          targetStrength,
+          0.05
+        );
+        mat.uniforms.uInteractionStrength.value = newStrength;
+      }
     }
   });
 
@@ -184,21 +159,21 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
           count={particlesData.count}
           array={particlesData.target}
           itemSize={3}
-          args={[particlesData.target, 3]}
+          args={[particlesData.random, 3]}
         />
         <bufferAttribute
           attach="attributes-aTargetPosition"
           count={particlesData.count}
           array={particlesData.target}
           itemSize={3}
-          args={[particlesData.target, 3]}
+          args={[particlesData.random, 3]}
         />
         <bufferAttribute
           attach="attributes-aRandom"
           count={particlesData.count}
           array={particlesData.random}
           itemSize={3}
-          args={[particlesData.target, 3]}
+          args={[particlesData.random, 3]}
         />
       </bufferGeometry>
       <shaderMaterial
@@ -206,10 +181,7 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
         depthWrite={false}
         fragmentShader={fragmentShader}
         vertexShader={vertexShader}
-        uniforms={{
-          uTime: { value: 0 },
-          uInteractionStrength: { value: 0 },
-        }}
+        uniforms={uniforms}
       />
     </points>
   );
@@ -220,151 +192,186 @@ function CameraAnimation({ onAnimationEnd }: { onAnimationEnd: () => void }) {
   const animationEndedRef = useRef(false);
 
   useFrame(({ camera }) => {
-    // If the animation has already ended, do nothing.
     if (animationEndedRef.current) return;
 
     const elapsedTime = (Date.now() - startTimeRef.current) / 1000;
 
-    // --- Animation Sequence ---
-    // Phase 1: Move towards the model (0s -> 2s)
     if (elapsedTime <= 2.0) {
       const progress = elapsedTime / 2.0;
-      // Animate Z position from 200 to 30
       camera.position.z = THREE.MathUtils.lerp(200, 0, progress);
-    }
-    // Phase 2: Look down (2s -> 4s)
-    else if (elapsedTime <= 4.0) {
-      // Lock Z position to the final state of phase 1
+    } else if (elapsedTime <= 4.0) {
       const progress = (elapsedTime - 2.0) / 2.0;
-      // Animate rotation around the X-axis to look down
       camera.rotation.x = THREE.MathUtils.lerp(0, Math.PI / 2, progress);
-    }
-    // Phase 3: Move up (4s -> 6s)
-    else if (elapsedTime <= 8.0) {
-      // Lock Z position and X rotation to final states of phase 2
+    } else if (elapsedTime <= 8.0) {
       camera.position.z = 0;
       camera.rotation.x = Math.PI / 2;
-      const progress = (elapsedTime - 4.0) / 2.0;
-      // Animate Y position to move the camera up
-      camera.position.y = THREE.MathUtils.lerp(0, -150, progress);
+      const progress = (elapsedTime - 4.0) / 4.0;
+      camera.position.y = THREE.MathUtils.lerp(0, -300, progress);
       camera.position.z = THREE.MathUtils.lerp(0, 50, progress);
     } else if (elapsedTime <= 10.0) {
-      // Lock Z position and X rotation to final states of phase 2
       const progress = (elapsedTime - 8.0) / 2.0;
-      camera.rotation.x = THREE.MathUtils.lerp(
-        Math.PI / 2,
-        Math.PI / 2.75,
-        progress,
-      );
-    }
-    // End of Animation
-    else {
-      // Set the final camera state to be precise
-      // camera.position.set(0, -150, 50);
-      // camera.rotation.set(Math.PI / 2.75, 0, 0);
-      // Call the onAnimationEnd callback once to re-enable controls
-      // onAnimationEnd();
-      animationEndedRef.current = true;
+      camera.rotation.x = THREE.MathUtils.lerp(Math.PI / 2, 0, progress);
+      camera.position.y = THREE.MathUtils.lerp(-300, 0, progress);
+      camera.position.z = THREE.MathUtils.lerp(50, 350, progress);
+    } else {
+      if (!animationEndedRef.current) {
+        onAnimationEnd();
+        animationEndedRef.current = true;
+      }
     }
   });
 
-  return null; // This component doesn't render any visible elements
+  return null;
 }
 
-// --- NEW: Hologram Component ---
-function Hologram({ visible }: { visible: boolean }) {
-  // NOTE: Make sure `logo.png` is in the public folder.
-  const texture = useTexture("/logo.jpg");
-  const materialRef = useRef<THREE.ShaderMaterial>(null);
+interface MouseSpeedControllerProps {
+  interactionRef: InteractionRef;
+  mouseDataRef: React.MutableRefObject<{
+    lastX: number;
+    lastY: number;
+    lastTime: number;
+    speed: number;
+  }>;
+}
 
-  useFrame((state) => {
-    if (materialRef.current) {
-      materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
+function MouseSpeedController({ interactionRef, mouseDataRef }: MouseSpeedControllerProps) {
+  useFrame(() => {
+    const speed = mouseDataRef.current.speed;
+    const RESTING_STRENGTH = 0;
+    const SENSITIVITY = 0.2;
+    const DECAY_RATE = 0.05;
 
-      // Animate opacity when it becomes visible
-      const targetOpacity = visible ? 0.75 : 0;
-      const currentOpacity = materialRef.current.uniforms.uOpacity.value;
-      materialRef.current.uniforms.uOpacity.value = THREE.MathUtils.lerp(
-        currentOpacity,
-        targetOpacity,
-        0.05,
-      );
-    }
+    const speedStrength = RESTING_STRENGTH + Math.min(speed * SENSITIVITY, 1.0);
+    const decayingStrength = THREE.MathUtils.lerp(
+      interactionRef.current.target,
+      RESTING_STRENGTH,
+      DECAY_RATE
+    );
+
+    interactionRef.current.target = Math.max(speedStrength, decayingStrength);
+    mouseDataRef.current.speed = 0;
   });
 
-  // Set aspect ratio of the plane to match the image
-  const aspect = texture.image ? texture.image.width / texture.image.height : 1;
-  const planeSize = 10;
-
-  return (
-    <mesh
-      position={[0, 8, 0]}
-      rotation={[-Math.PI / 2, 0, 0]}
-      scale={[planeSize * aspect, planeSize, 1]}
-    >
-      <planeGeometry />
-      <shaderMaterial
-        ref={materialRef}
-        vertexShader={hologramVertexShader}
-        fragmentShader={hologramFragmentShader}
-        uniforms={{
-          uTime: { value: 0 },
-          uTexture: { value: texture },
-          uOpacity: { value: 0 },
-        }}
-        transparent
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </mesh>
-  );
+  return null;
 }
 
-// --- Main Scene Component (Modified) ---
+// ScrollZoom uses useThree() to get the actual canvas camera.
+function ScrollZoom({ enabled = true }: { enabled?: boolean }) {
+  const scrollYRef = useRef(0);
+  const { camera } = useThree();
+
+  // Listen to page scroll (update stored scrollY)
+  useEffect(() => {
+    const handleScroll = () => {
+      scrollYRef.current = window.scrollY || window.pageYOffset || 0;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useFrame(() => {
+    if (!enabled) return;
+
+    // Configurable values
+    const baseZ = 200;
+    const sensitivity = 0.2; // change to taste
+    const minZ = 50;
+    const maxZ = 400;
+
+    const targetZ = THREE.MathUtils.clamp(baseZ - scrollYRef.current * sensitivity, minZ, maxZ);
+
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.06);
+  });
+
+  return null;
+}
+
+// --- Main Scene Component ---
 export default function Model() {
-  const interactionRef = useRef<{ target: number }>({ target: 1 });
-  // State to track if the initial camera animation is playing
+  const interactionRef = useRef<{ target: number }>({ target: 0 });
   const [isAnimating, setIsAnimating] = useState(true);
-  const [showHologram, setShowHologram] = useState(false);
 
-  const handleInteractionStart = () => {
-    interactionRef.current.target = 0;
-  };
+  const mouseDataRef = useRef({
+    lastX: 0,
+    lastY: 0,
+    lastTime: 0,
+    speed: 0,
+  });
 
-  const handleInteractionEnd = () => {
-    interactionRef.current.target = 1;
-  };
+  const isDraggingRef = useRef(false);
 
-  const handleAnimationEnd = () => {
-    setIsAnimating(false);
-    setShowHologram(true);
-  };
+  useEffect(() => {
+    const handleMouseDown = () => {
+      isDraggingRef.current = true;
+    };
+
+    const handleMouseUp = () => {
+      isDraggingRef.current = false;
+      // reset lastTime so drag starts fresh next time
+      mouseDataRef.current.lastTime = 0;
+    };
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!isDraggingRef.current) return;
+
+      const { clientX, clientY, timeStamp } = event;
+      const mouseData = mouseDataRef.current;
+
+      if (mouseData.lastTime === 0) {
+        mouseData.lastX = clientX;
+        mouseData.lastY = clientY;
+        mouseData.lastTime = timeStamp;
+        return;
+      }
+
+      const deltaTime = timeStamp - mouseData.lastTime;
+      if (deltaTime === 0) return;
+
+      const deltaX = clientX - mouseData.lastX;
+      const deltaY = clientY - mouseData.lastY;
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      mouseData.speed = distance / deltaTime;
+
+      mouseData.lastX = clientX;
+      mouseData.lastY = clientY;
+      mouseData.lastTime = timeStamp;
+    };
+
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
   return (
-    <Canvas camera={{ position: [0, 0, 200], fov: 75 }}>
-      <color attach="background" args={["#050505"]} />
+    <Canvas
+      gl={{ alpha: true }}
+      camera={{ position: [0, 0, 200], fov: 75 }}
+      className="mx-auto h-[90%] w-[90%]"
+    >
+      {/* Camera animation runs at start */}
+      {isAnimating && <CameraAnimation onAnimationEnd={() => setIsAnimating(false)} />}
 
-      {/* Conditionally render the animation component */}
-      {isAnimating && (
-        <CameraAnimation onAnimationEnd={() => setIsAnimating(false)} />
-      )}
       <ParticleModel interactionRef={interactionRef} />
-      <Hologram visible={true} />
 
-      <OrbitControls
-        // Disable controls during the initial animation
-        // enabled={!isAnimating}
-        onStart={handleInteractionStart}
-        onEnd={handleInteractionEnd}
-      />
+      {!isAnimating && (
+        <>
+          <OrbitControls enableZoom={true} enablePan={false} enableRotate={true} maxPolarAngle={Math.PI / 2} />
+          <MouseSpeedController interactionRef={interactionRef} mouseDataRef={mouseDataRef} />
+          {/* enable scroll zoom only after animation ends */}
+          <ScrollZoom enabled={!isAnimating} />
+        </>
+      )}
 
       <EffectComposer>
-        <Bloom
-          mipmapBlur
-          luminanceThreshold={0.5}
-          radius={0.8}
-          intensity={0.2}
-        />
+        <Bloom mipmapBlur luminanceThreshold={0.5} radius={0.8} intensity={0.2} />
       </EffectComposer>
     </Canvas>
   );

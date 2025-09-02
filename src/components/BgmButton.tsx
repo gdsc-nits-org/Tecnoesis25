@@ -22,7 +22,7 @@ const BgmButton: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex fixed scale-75 hover:scale-90 md:scale-100 md:hover:scale-110  bottom-40 md:bottom-14 right-0 md:right-3 items-center justify-center transition-all duration-300 ease-out">
     
       <audio ref={audioRef} loop>
         <source src="/bgm.mp4" type="audio/mpeg" />
@@ -31,7 +31,7 @@ const BgmButton: React.FC = () => {
     
       <button
         onClick={togglePlay}
-        className="flex items-center gap-2 px-5 py-2  bg-black"
+        className="flex items-center gap-2 px-5 py-2 "
       >
         {isPlaying ? (
           <>
