@@ -81,9 +81,10 @@ type InteractionRef = React.MutableRefObject<{ target: number }>;
 
 interface ParticleModelProps {
   interactionRef: InteractionRef;
+  isDraggingRef: React.MutableRefObject<boolean>;
 }
 
-function ParticleModel({ interactionRef }: ParticleModelProps) {
+function ParticleModel({ interactionRef, isDraggingRef }: ParticleModelProps) {
   const pointsRef = useRef<THREE.Points>(null);
   const { scene } = useGLTF("/tr.glb");
 
@@ -100,13 +101,14 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
     if (geometries.length === 0) return null;
     const mergedGeometry = mergeBufferGeometries(geometries);
     if (!mergedGeometry?.attributes?.position) return null;
-    const targetPositions = mergedGeometry.attributes.position.array as Float32Array;
+    const targetPositions = mergedGeometry.attributes.position
+      .array as Float32Array;
     const particleCount = targetPositions.length / 3;
     const randomPositions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
       randomPositions.set(
         [Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5],
-        i * 3
+        i * 3,
       );
     }
     return {
@@ -124,11 +126,14 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
         value: new THREE.Vector2(window.innerWidth, window.innerHeight),
       },
     }),
-    []
+    [],
   );
 
   useFrame((state) => {
-    if (pointsRef.current) pointsRef.current.rotation.x = Math.PI / 2;
+    if (pointsRef.current) {
+      pointsRef.current.rotation.x = Math.PI / 2;
+      if (!isDraggingRef.current) pointsRef.current.rotation.y -= 0.09;
+    }
     const { clock } = state;
     if (pointsRef.current && interactionRef.current) {
       const mat = pointsRef.current.material as THREE.ShaderMaterial;
@@ -137,12 +142,13 @@ function ParticleModel({ interactionRef }: ParticleModelProps) {
         mat.uniforms.uTime.value = clock.getElapsedTime();
       }
       if (mat.uniforms.uInteractionStrength) {
-        const currentStrength = mat.uniforms.uInteractionStrength.value as number;
+        const currentStrength = mat.uniforms.uInteractionStrength
+          .value as number;
         const targetStrength = interactionRef.current.target;
         const newStrength = THREE.MathUtils.lerp(
           currentStrength,
           targetStrength,
-          0.05
+          0.05,
         );
         mat.uniforms.uInteractionStrength.value = newStrength;
       }
@@ -234,7 +240,10 @@ interface MouseSpeedControllerProps {
   }>;
 }
 
-function MouseSpeedController({ interactionRef, mouseDataRef }: MouseSpeedControllerProps) {
+function MouseSpeedController({
+  interactionRef,
+  mouseDataRef,
+}: MouseSpeedControllerProps) {
   useFrame(() => {
     const speed = mouseDataRef.current.speed;
     const RESTING_STRENGTH = 0;
@@ -245,7 +254,7 @@ function MouseSpeedController({ interactionRef, mouseDataRef }: MouseSpeedContro
     const decayingStrength = THREE.MathUtils.lerp(
       interactionRef.current.target,
       RESTING_STRENGTH,
-      DECAY_RATE
+      DECAY_RATE,
     );
 
     interactionRef.current.target = Math.max(speedStrength, decayingStrength);
@@ -279,7 +288,11 @@ function ScrollZoom({ enabled = true }: { enabled?: boolean }) {
     const minZ = 50;
     const maxZ = 400;
 
-    const targetZ = THREE.MathUtils.clamp(baseZ - scrollYRef.current * sensitivity, minZ, maxZ);
+    const targetZ = THREE.MathUtils.clamp(
+      baseZ - scrollYRef.current * sensitivity,
+      minZ,
+      maxZ,
+    );
 
     camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.06);
   });
@@ -357,21 +370,39 @@ export default function Model() {
       className="mx-auto h-[90%] w-[90%]"
     >
       {/* Camera animation runs at start */}
-      {isAnimating && <CameraAnimation onAnimationEnd={() => setIsAnimating(false)} />}
+      {isAnimating && (
+        <CameraAnimation onAnimationEnd={() => setIsAnimating(false)} />
+      )}
 
-      <ParticleModel interactionRef={interactionRef} />
+      <ParticleModel
+        interactionRef={interactionRef}
+        isDraggingRef={isDraggingRef}
+      />
 
       {!isAnimating && (
         <>
-          <OrbitControls enableZoom={true} enablePan={false} enableRotate={true} maxPolarAngle={Math.PI / 2} />
-          <MouseSpeedController interactionRef={interactionRef} mouseDataRef={mouseDataRef} />
+          <OrbitControls
+            enableZoom={true}
+            enablePan={false}
+            enableRotate={true}
+            maxPolarAngle={Math.PI / 2}
+          />
+          <MouseSpeedController
+            interactionRef={interactionRef}
+            mouseDataRef={mouseDataRef}
+          />
           {/* enable scroll zoom only after animation ends */}
           <ScrollZoom enabled={!isAnimating} />
         </>
       )}
 
       <EffectComposer>
-        <Bloom mipmapBlur luminanceThreshold={0.5} radius={0.8} intensity={0.2} />
+        <Bloom
+          mipmapBlur
+          luminanceThreshold={0.5}
+          radius={0.8}
+          intensity={0.2}
+        />
       </EffectComposer>
     </Canvas>
   );
