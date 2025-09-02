@@ -6,6 +6,7 @@ import { useGLTF, OrbitControls } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { mergeBufferGeometries } from "three-stdlib";
+import { isMobile } from "react-device-detect";
 
 // --- Shader Code ---
 const vertexShader = `
@@ -274,7 +275,7 @@ function ScrollZoom({ enabled = true }: { enabled?: boolean }) {
     if (!enabled) return;
 
     // Configurable values
-    const baseZ = 200;
+    const baseZ = 300;
     const sensitivity = 0.2; // change to taste
     const minZ = 50;
     const maxZ = 400;
@@ -353,8 +354,9 @@ export default function Model() {
   return (
     <Canvas
       gl={{ alpha: true }}
+      dpr={[1, 1.5]}
       camera={{ position: [0, 0, 200], fov: 75 }}
-      className="mx-auto h-[90%] w-[90%]"
+      className="mx-auto h-[90%] w-[90%] z-10"
     >
       {/* Camera animation runs at start */}
       {isAnimating && <CameraAnimation onAnimationEnd={() => setIsAnimating(false)} />}
@@ -370,9 +372,11 @@ export default function Model() {
         </>
       )}
 
-      <EffectComposer>
-        <Bloom mipmapBlur luminanceThreshold={0.5} radius={0.8} intensity={0.2} />
-      </EffectComposer>
+      {!isMobile && (
+        <EffectComposer>
+          <Bloom mipmapBlur luminanceThreshold={0.5} radius={0.8} intensity={0.2} />
+        </EffectComposer>
+      )}
     </Canvas>
   );
 }

@@ -31,7 +31,7 @@ export default function Page() {
       <Model />
       {showBottomElements && (
         <>
-          <div className="animate-fade-in pointer-events-none fixed bottom-0 left-0 right-0 z-20 h-60 w-screen">
+          <div className="animate-fade-in pointer-events-none fixed bottom-0 left-0 right-0 -z-0 h-60 w-screen">
             <Image
               className="absolute bottom-0 h-full w-full select-none"
               src="/abc.svg"
