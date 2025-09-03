@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Model from "~/components/VideoObj";
+import Model from "~/components/Model";
 import Countdown from "~/components/Countdown";
 import Loader from "~/components/Loader";
 import Tecnoesis from "~/components/Tecno";

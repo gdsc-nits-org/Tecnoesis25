@@ -52,7 +52,7 @@ const fragmentShader = `
     }
 `;
 
-const Tecnoesis = (props: { bigScreen?: boolean; is4k?: boolean }) => {
+const TecnoesisDesktop = ({ is4k }: { is4k: boolean }) => {
   const initialized = useRef(false);
   const [isResize, setIsResize] = useState(false);
 
@@ -66,7 +66,7 @@ const Tecnoesis = (props: { bigScreen?: boolean; is4k?: boolean }) => {
   }, []);
 
   useEffect(() => {
-    if (!props.bigScreen || initialized.current) return;
+    if (initialized.current) return;
 
     initialized.current = true;
 
@@ -86,7 +86,7 @@ const Tecnoesis = (props: { bigScreen?: boolean; is4k?: boolean }) => {
 
       // ✅ Create video element
       const videoElement = document.createElement("video");
-      videoElement.src = "/Tecno.mp4"; // your video path
+      videoElement.src = "/Tecno_Blue.mp4"; // your video path
       videoElement.muted = true;
       videoElement.loop = true;
       videoElement.autoplay = true;
@@ -109,7 +109,7 @@ const Tecnoesis = (props: { bigScreen?: boolean; is4k?: boolean }) => {
         u_texture: { value: texture },
       };
 
-      const size = props.is4k ? 40 : 13;
+      const size = is4k ? 40 : 13;
       const planeMesh = new THREE.Mesh(
         new THREE.PlaneGeometry(size, size),
         new THREE.ShaderMaterial({
@@ -121,16 +121,19 @@ const Tecnoesis = (props: { bigScreen?: boolean; is4k?: boolean }) => {
       );
       scene.add(planeMesh);
 
-      const renderer = new THREE.WebGLRenderer({ alpha: true, premultipliedAlpha: false })
+      const renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        premultipliedAlpha: false,
+      });
       renderer.setSize(imageContainer.offsetWidth, imageContainer.offsetHeight);
       imageContainer.appendChild(renderer.domElement);
-       renderer.setClearColor(0x000000, 0);
+      renderer.setClearColor(0x000000, 0);
 
       const mousePosition = new THREE.Vector2(0.5, 0.5);
       const targetMousePosition = new THREE.Vector2(0.5, 0.5);
       const prevPosition = new THREE.Vector2(0.5, 0.5);
-      let aberrationIntensity = 0.0;
-      let easeFactor = 0.02;
+      let aberrationIntensity = 1;
+      let easeFactor = 1;
 
       function animateScene() {
         requestAnimationFrame(animateScene);
@@ -190,10 +193,10 @@ const Tecnoesis = (props: { bigScreen?: boolean; is4k?: boolean }) => {
     };
 
     setTimeout(f, 1000);
-  }, [props.bigScreen, isResize]);
+  }, [is4k, isResize]);
 
   return (
-    <section className="absolute  h-full w-full overflow-hidden bg-transparent scale-125 lg:scale-100">
+    <section className="absolute  h-full w-full scale-125 overflow-hidden bg-transparent lg:scale-100">
       <div
         id="imageContainer"
         className="relative mx-auto  flex h-full w-full max-w-full items-center justify-center overflow-hidden bg-transparent"
@@ -201,5 +204,30 @@ const Tecnoesis = (props: { bigScreen?: boolean; is4k?: boolean }) => {
     </section>
   );
 };
+const TecnoesisMobile = () => {
+  return (
+    <div className="flex h-full w-full  justify-center bg-transparent">
+      <video
+        className="scale-150 mix-blend-screen"
+        autoPlay
+        loop
+        muted
+        playsInline
+      >
+        <source src="/Tecno_Blue.mp4" type="video/mp4" />
+      </video>
+    </div>
+  );
+};
 
+const Tecnoesis = ({
+  bigScreen,
+  is4k,
+}: {
+  bigScreen: boolean;
+  is4k?: boolean;
+}) => {
+  if (bigScreen) return <TecnoesisDesktop is4k={is4k ?? false} />;
+  return <TecnoesisMobile />;
+};
 export default Tecnoesis;
