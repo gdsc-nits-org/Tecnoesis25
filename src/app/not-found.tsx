@@ -1,11 +1,11 @@
-// This component defines the custom 404 page.
-// In the Next.js App Router, you should place this file at `app/not-found.tsx`.
-// It will automatically handle all unmatched routes.
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import localFont from "next/font/local";
 
-// A simple SVG component for a futuristic corner bracket decoration.
+const tron = localFont({ src: "../../public/tron.ttf" });
+import { Orbitron } from "next/font/google";
+const digits = Orbitron({ subsets: ["latin"], weight: ["400", "700"] });
 const CornerBracket = ({ className }: { className?: string }) => (
     <svg
         className={`absolute text-cyan-400/50 ${className}`}
@@ -29,7 +29,7 @@ const Quantum404 = () => {
 
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null;
-        let timeout: NodeJS.Timeout | null = null;
+        const timeout: NodeJS.Timeout | null = null;
         
         const scramble = () => {
             let iteration = 0;
@@ -54,9 +54,8 @@ const Quantum404 = () => {
             }, 50);
         };
         
-        scramble(); // Initial scramble
+        scramble();
 
-        // Periodically rescramble for a continuous effect
         const rescrambleInterval = setInterval(() => {
             scramble();
         }, 2000);
@@ -70,7 +69,7 @@ const Quantum404 = () => {
     }, []);
 
     return (
-         <h1 className="text-7xl md:text-9xl font-bold text-cyan-400 text-glow" style={{ minHeight: '1.2em' }}>
+         <h1 className={`${digits.className} text-7xl md:text-9xl font-bold text-cyan-400 text-glow`} style={{ minHeight: '1.2em' }}>
             {text}
         </h1>
     );
@@ -80,19 +79,7 @@ const Quantum404 = () => {
 export default function NotFound() {
     return (
         <>
-            {/* It's recommended to add the font link in your main layout file (`app/layout.tsx`),
-              but it's included here for a self-contained example.
-            */}
-            <style jsx global>{`
-                @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-                .font-orbitron {
-                    font-family: 'Orbitron', sans-serif;
-                }
-                .text-glow {
-                    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5), 0 0 10px rgba(0, 255, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.4), 0 0 40px rgba(255, 0, 255, 0.3);
-                }
-            `}</style>
-            <main className="bg-black text-white min-h-screen flex flex-col items-center justify-center font-orbitron p-4 overflow-hidden">
+            <main className={`${digits.className} bg-black text-white min-h-screen flex flex-col items-center justify-center font-orbitron p-4 overflow-hidden`}>
                 <div className="relative w-full max-w-2xl text-center flex flex-col items-center p-8 md:p-12 border-2 border-cyan-500/30 bg-black/30 rounded-lg">
                     {/* Decorative Corner Brackets */}
                     <CornerBracket className="top-2 left-2" />
@@ -107,10 +94,10 @@ export default function NotFound() {
                     </p>
 
                     <p className="mt-4 text-sm md:text-md text-gray-300 max-w-md">
-                        Connection failed. The quantum data-path has collapsed, or the sector address no longer exists within this reality.
+                        Connection failed. The quantum data-path has collapsed, this sector address no longer exists within this reality.
                     </p>
 
-                    <a href="/" className="mt-10 text-sm md:text-md inline-block border-2 border-cyan-400 text-cyan-400 uppercase tracking-widest px-8 py-3 rounded-md transition-all duration-300 hover:bg-cyan-400 hover:text-black hover:shadow-[0_0_20px_rgba(0,255,255,0.7)]">
+                    <a href="/" className={`${tron.className} mt-10 text-sm md:text-md inline-block border-2 border-cyan-400 text-cyan-400 uppercase tracking-widest px-8 py-3 rounded-md transition-all duration-300 hover:bg-cyan-400 hover:text-black hover:shadow-[0_0_20px_rgba(0,255,255,0.7)]`}>
                         Go Back to Reality
                     </a>
                 </div>

@@ -322,7 +322,6 @@ export default function Model() {
 
     const handleMouseUp = () => {
       isDraggingRef.current = false;
-      // reset lastTime so drag starts fresh next time
       mouseDataRef.current.lastTime = 0;
     };
 
@@ -357,10 +356,35 @@ export default function Model() {
     window.addEventListener("mouseup", handleMouseUp);
     window.addEventListener("mousemove", handleMouseMove);
 
+    window.addEventListener("touchstart", handleMouseDown);
+    window.addEventListener("touchend", handleMouseUp);
+    window.addEventListener("touchmove", (event) => {
+      if (event.touches.length > 0) {
+        const touch = event.touches[0];
+        if(touch)handleMouseMove({
+          clientX: touch.clientX ? touch.clientX : 0,
+          clientY: touch.clientY ? touch.clientY : 0,
+          timeStamp: event.timeStamp,
+        } as MouseEvent);
+      }
+    });
+
     return () => {
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchstart", handleMouseDown);
+      window.removeEventListener("touchend", handleMouseUp);
+      window.removeEventListener("touchmove", (event) => {
+        if (event.touches.length > 0) {
+          const touch = event.touches[0];
+          if (touch) handleMouseMove({
+            clientX: touch.clientX ? touch.clientX : 0,
+            clientY: touch.clientY ? touch.clientY : 0,
+            timeStamp: event.timeStamp,
+          } as MouseEvent);
+        }
+      });
     };
   }, []);
 
@@ -371,7 +395,6 @@ export default function Model() {
       camera={{ position: [0, 0, 200], fov: isMobile ? 100 : 75 }}
       className="mx-auto h-[90%] w-[90%] z-10"
     >
-      {/* Camera animation runs at start */}
       {isAnimating && (
         <CameraAnimation onAnimationEnd={() => setIsAnimating(false)} />
       )}
