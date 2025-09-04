@@ -1,3 +1,74 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* For IE and Edge */
+  scrollbar-width: none; /* For Firefox */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.tron-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(0, 229, 255, 0.1); /* subtle bluish glow */
+  transition: transform 0.3s;
+  animation: tronGlow 1.5s infinite alternate;
+}
+
+.tron-icon .icon {
+  color: #00e5ff; /* neon bluish cyan */
+  font-size: 28px;
+  transition: color 0.3s;
+  text-shadow:
+    0 0 5px #00e5ff,
+    0 0 10px #00e5ff,
+    0 0 20px #00e5ff80;
+}
+
+.tron-icon:hover {
+  transform: scale(1.2);
+}
+
+.tron-icon:hover .icon {
+  text-shadow:
+    0 0 10px #00e5ff,
+    0 0 20px #00e5ff,
+    0 0 30px #00e5ff90;
+}
+
+@keyframes tronGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 5px #00e5ff,
+      0 0 10px #00e5ff,
+      0 0 15px #00e5ff30;
+  }
+  50% {
+    box-shadow:
+      0 0 10px #00e5ff,
+      0 0 20px #00e5ff,
+      0 0 30px #00e5ff60;
+  }
+}
+
