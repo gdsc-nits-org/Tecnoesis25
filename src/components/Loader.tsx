@@ -58,6 +58,26 @@ export default function Loader() {
         >
           {Math.round(clampedProgress)}%
         </div>
+        <div className="mt-8 flex flex-col items-center">
+          {/* Headphone Icon */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="mb-2 h-7 w-7 text-cyan-300"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4 17v-3a8 8 0 0116 0v3m-2 0a2 2 0 11-4 0m-4 0a2 2 0 11-4 0"
+            />
+          </svg>
+          <span className={`${tron.className} text-xs text-cyan-300 opacity-80`}>
+            Use headphones for better experience
+          </span>
+        </div>
       </div>
     </div>
   );
