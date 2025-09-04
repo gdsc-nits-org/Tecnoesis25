@@ -1,6 +1,4 @@
-// This component defines the custom 404 page.
-// In the Next.js App Router, you should place this file at `app/not-found.tsx`.
-// It will automatically handle all unmatched routes.
+
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -29,7 +27,7 @@ const Quantum404 = () => {
 
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null;
-        let timeout: NodeJS.Timeout | null = null;
+        const timeout: NodeJS.Timeout | null = null;
         
         const scramble = () => {
             let iteration = 0;

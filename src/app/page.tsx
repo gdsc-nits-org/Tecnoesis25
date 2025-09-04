@@ -9,6 +9,7 @@ import { isMobile } from "react-device-detect";
 import Link from "next/link";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import SocialIcons from "~/components/LandingFooter";
+import DynamicMusicButton from "~/components/DynamicMusicButton";
 
 export default function Page() {
   const [showBottomElements, setShowBottomElements] = useState(false);
@@ -137,6 +138,7 @@ export default function Page() {
             </div>
           )}
           {!isMobile && <SocialIcons />}
+          {!isMobile && <DynamicMusicButton />}
 
           <div className="animate-fade-in flex flex-col">
             <Countdown />
