@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import localFont from "next/font/local";
 import { Orbitron } from "next/font/google";
 import RcCountdown from "react-countdown";
+import { isMobile } from "react-device-detect";
 
 const tron = localFont({ src: "../../public/tron.ttf" });
 const digits = Orbitron({ subsets: ["latin"], weight: ["400", "700"] });
@@ -23,7 +24,7 @@ export default function Countdown() {
 
   return (
     <div
-      className={`${tron.className} pointer-events-none fixed bottom-6 left-0 right-0 z-20 flex justify-center px-4 text-cyan-300`}
+      className={`${tron.className} pointer-events-none ${isMobile ? "fixed top-[20%] left-[50%] -translate-x-[50%]" : "fixed bottom-6 left-0 right-0"} z-20 flex justify-center px-4 text-cyan-300`}
       style={{
         contain: "paint",
         textShadow: "0 0 6px rgba(56,189,248,.6), 0 0 12px rgba(56,189,248,.3)",

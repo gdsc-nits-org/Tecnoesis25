@@ -368,7 +368,7 @@ export default function Model() {
     <Canvas
       gl={{ alpha: true }}
       dpr={[1, 1.5]}
-      camera={{ position: [0, 0, 200], fov: 75 }}
+      camera={{ position: [0, 0, 200], fov: isMobile ? 100 : 75 }}
       className="mx-auto h-[90%] w-[90%] z-10"
     >
       {/* Camera animation runs at start */}
@@ -387,7 +387,6 @@ export default function Model() {
             enableZoom={true}
             enablePan={false}
             enableRotate={true}
-            maxPolarAngle={Math.PI / 2}
           />
           <MouseSpeedController
             interactionRef={interactionRef}

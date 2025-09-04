@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import { isMobile } from "react-device-detect";
 
 const BgmButton: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -33,7 +34,7 @@ const BgmButton: React.FC = () => {
       }
     }
   }, [isPlaying, isInitialized]);
-
+  if (isMobile) return null;
   return (
     <div className="flex fixed scale-75 hover:scale-90 md:scale-100 md:hover:scale-110 bottom-40 md:bottom-14 right-0 md:right-3 items-center justify-center transition-all duration-300 ease-out z-50">
       
