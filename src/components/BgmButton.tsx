@@ -9,7 +9,7 @@ const BgmButton: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const musicSrc = "/bgm.mp4"; 
+  const musicSrc = "https://d3f6voaditlmqg.cloudfront.net/bgm.mp4"; 
 
   const togglePlay = () => {
     if (!isInitialized) {
@@ -47,14 +47,14 @@ const BgmButton: React.FC = () => {
       >
         {!isPlaying ? (
           <Image
-            src="/pauseButton.svg"
+            src="https://d3f6voaditlmqg.cloudfront.net/pauseButton.svg"
             alt="Pause Button"
             width={100}
             height={100}
           />
         ) : (
           <Image
-            src="/playButton.svg"
+            src="https://d3f6voaditlmqg.cloudfront.net/playButton.svg"
             alt="Play Button"
             width={100}
             height={100}

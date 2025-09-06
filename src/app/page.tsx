@@ -29,7 +29,7 @@ export default function Page() {
   const [isInitialized, setIsInitialized] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const musicSrc = "/bgm.mp4";
+  const musicSrc = "https://d3f6voaditlmqg.cloudfront.net/bgm.mp4";
 
   const togglePlay = () => {
     if (!isInitialized) {
@@ -72,7 +72,7 @@ export default function Page() {
             {isMobile ? (
               <Image
                 className="absolute bottom-12 h-full w-full  scale-[2] select-none"
-                src="/abc.svg"
+                src="https://d3f6voaditlmqg.cloudfront.net/abc.svg"
                 width={300}
                 height={100}
                 alt="fkadshj"
@@ -80,7 +80,7 @@ export default function Page() {
             ) : (
               <Image
                 className="absolute bottom-0 h-full w-full select-none"
-                src="/abc.svg"
+                src="https://d3f6voaditlmqg.cloudfront.net/abc.svg"
                 width={300}
                 height={100}
                 alt="fkadshj"
@@ -111,14 +111,14 @@ export default function Page() {
                 >
                   {!isPlaying ? (
                     <Image
-                      src="/pauseButton.svg"
+                      src="https://d3f6voaditlmqg.cloudfront.net/pauseButton.svg"
                       alt="Pause Button"
                       width={100}
                       height={100}
                     />
                   ) : (
                     <Image
-                      src="/playButton.svg"
+                      src="https://d3f6voaditlmqg.cloudfront.net/playButton.svg"
                       alt="Play Button"
                       width={100}
                       height={100}
