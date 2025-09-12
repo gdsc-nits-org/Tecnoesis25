@@ -87,7 +87,7 @@ interface ParticleModelProps {
 
 function ParticleModel({ interactionRef, isDraggingRef }: ParticleModelProps) {
   const pointsRef = useRef<THREE.Points>(null);
-  const { scene } = useGLTF("/tr.glb");
+  const { scene } = useGLTF("https://d3f6voaditlmqg.cloudfront.net/tr.glb");
 
   const particlesData = useMemo(() => {
     const geometries: THREE.BufferGeometry[] = [];

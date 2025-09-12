@@ -47,14 +47,14 @@ const BgmButton: React.FC = () => {
       >
         {!isPlaying ? (
           <Image
-            src="/pauseButton.svg"
+            src="https://d3f6voaditlmqg.cloudfront.net/pauseButton.svg"
             alt="Pause Button"
             width={100}
             height={100}
           />
         ) : (
           <Image
-            src="/playButton.svg"
+            src="https://d3f6voaditlmqg.cloudfront.net/playButton.svg"
             alt="Play Button"
             width={100}
             height={100}
