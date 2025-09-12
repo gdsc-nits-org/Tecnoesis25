@@ -9,7 +9,7 @@ const BgmButton: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const musicSrc = "/bgm.mp4"; 
+  const musicSrc = "/bgm.mp3"; 
 
   const togglePlay = () => {
     if (!isInitialized) {
