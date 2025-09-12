@@ -1,6 +1,8 @@
 import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 
 export const metadata: Metadata = {
   title: "Tecnoesis 2025",
@@ -40,6 +42,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col no-scrollbar overflow-x-hidden">
         {children}
       </body>
+      {process.env.NODE_ENV == 'production' && <GoogleAnalytics gaId="G-69XDYH0DYC"/>}
     </html>
   );
 }
