@@ -29,7 +29,7 @@ export default function Page() {
   const [isInitialized, setIsInitialized] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const musicSrc = "https://d3f6voaditlmqg.cloudfront.net/bgm.mp4";
+  const musicSrc = "/bgm.mp3";
 
   const togglePlay = () => {
     if (!isInitialized) {
