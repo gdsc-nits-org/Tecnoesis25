@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Footer() {
   return (
    
-    <div className="relative m-0 h-[70vh] w-full overflow-hidden p-0 md:h-[80vh] lg:h-[600px]">
+    <div className="relative m-0 h-[100vh] w-full overflow-hidden p-0 ">
  
       <div className="absolute inset-0 z-0">
         <Dither
@@ -20,24 +20,24 @@ export default function Footer() {
       </div>
 
       
-      <div className="absolute left-1/2 mobile:top-[21%] tablet:top-[22%]  ipadpro:top-20 mobile2:top-[28%] z-10 flex w-[90%] laptop:w-[30%] -translate-x-1/2 items-center justify-center space-x-3 rounded-lg border border-white p-2 sm:top-[8%]  md:space-x-4 md:p-3">
+      <div className="absolute left-1/2 mobile:top-[21%] tablet:top-[22%]  ipadpro:top-[17%] mobile2:top-[28%] z-10 flex w-[90%] laptop:w-[40%] -translate-x-1/2 items-center justify-center space-x-3 rounded-lg border border-white p-2 sm:top-[8%]  md:space-x-4 md:p-3">
         <div className="relative h-8 w-8 flex-shrink-0 sm:h-10 sm:w-10 md:h-12 md:w-12">
           <Image
             src="/independence1.png"
             alt="Campus Ambassador Program"
             layout="fill"
             objectFit="cover"
-            className="rounded-full"
+            
           
           />
         </div>
-        <p className="font-bank text-center text-xs font-semibold text-white sm:text-sm md:text-lg">
+        <p className="font-bank text-center text-xs font-semibold text-white sm:text-sm md:text-2xl">
           BECOME OUR CAMPUS AMBASSADOR
         </p>
       </div>
 
       
-      <div className="absolute mobile:scale-[0.9] mobile1:scale-1 laptop:pt-[2rem] left-1/2 top-1/2 z-20 flex w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center px-6 md:px-10">
+      <div className="absolute mobile:scale-[0.9] mobile2:scale-[1.05] mobile3:scale-[1]  xl:scale-[1.1] nexthubm:scale-[0.85] laptop:scale-[1.1] laptop:pt-[2rem] left-1/2 top-1/2 z-20 flex w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center px-6 md:px-10">
         <div className="relative">
           <div className="font-nyxerin pointer-events-none select-none text-center laptop:text-[10rem] text-[clamp(2.5rem,10vw,6.6rem)] text-white">
             Technoesis
@@ -49,7 +49,7 @@ export default function Footer() {
       </div>
 
       
-      <div className="absolute left-1/2 mobile:top-[73%] laptop:top-[75%] mobile2:top-[80%] z-10 flex w-full -translate-x-1/2 flex-col items-center justify-center space-y-3 sm:top-[70%] md:space-y-4">
+      <div className="absolute left-1/2 mobile:top-[79%] mobile2:scale-[1.3]  tablet:scale-[1.3] mobile1:top-[81%] tablet:top-[84%] ipadpro:top-[83%]   ipadpro:scale-[1.1] laptop:top-[75%] mobile2:top-[85%] z-10 flex w-full -translate-x-1/2 flex-col items-center justify-center space-y-3 sm:top-[70%] md:space-y-4">
         <p className="font-bank text-sm laptop:text-[1.7rem] font-semibold text-white sm:text-base md:text-lg">
          CONTACT US
         </p>
