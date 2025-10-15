@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Nyxerin';
+  src: url('/nyxerin/nyxerin.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'BankGothic';
+  src: url('/BankGothic Md BT.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Opera */
 }
@@ -71,4 +84,3 @@
       0 0 30px #00e5ff60;
   }
 }
-
