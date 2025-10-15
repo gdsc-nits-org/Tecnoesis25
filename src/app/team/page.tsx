@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import TeamCard2 from "~/components/team/TeamCard2";
 const Team = () => {
     const [selectedTeam, setSelectedTeam] = useState<string | null>("Tech Team");
     const handleTeamClick = (team: string) => {
@@ -99,6 +100,9 @@ const Team = () => {
                     </span>
                 </button>
                 </div>
+            </div>
+            <div className="flex flex-wrap text-[#ffffff]">
+                <TeamCard2 />
             </div>
         </div>
     );
