@@ -134,28 +134,37 @@ void mainImage(in vec4 inputColor, in vec2 uv, out vec4 outputColor) {
 `;
 
 class RetroEffectImpl extends Effect {
-  public uniforms: Map<string, THREE.Uniform<any>>;
+  public uniforms: Map<string, THREE.Uniform<number>>;
+
   constructor() {
-    const uniforms = new Map<string, THREE.Uniform<any>>([
-      ['colorNum', new THREE.Uniform(4.0)],
-      ['pixelSize', new THREE.Uniform(2.0)]
+    const uniforms = new Map<string, THREE.Uniform<number>>([
+      ['colorNum', new THREE.Uniform<number>(4.0)],
+      ['pixelSize', new THREE.Uniform<number>(2.0)]
     ]);
     super('RetroEffect', ditherFragmentShader, { uniforms });
     this.uniforms = uniforms;
   }
+
   set colorNum(value: number) {
-    this.uniforms.get('colorNum')!.value = value;
+    const u = this.uniforms.get('colorNum');
+    if (u) u.value = value;
   }
+
   get colorNum(): number {
-    return this.uniforms.get('colorNum')!.value;
+    return this.uniforms.get('colorNum')?.value ?? 4.0;
   }
+
   set pixelSize(value: number) {
-    this.uniforms.get('pixelSize')!.value = value;
+    const u = this.uniforms.get('pixelSize');
+    if (u) u.value = value;
   }
+
   get pixelSize(): number {
-    return this.uniforms.get('pixelSize')!.value;
+    return this.uniforms.get('pixelSize')?.value ?? 2.0;
   }
 }
+
+
 
 const RetroEffect = forwardRef<RetroEffectImpl, { colorNum: number; pixelSize: number }>((props, ref) => {
   const { colorNum, pixelSize } = props;
@@ -166,7 +175,6 @@ const RetroEffect = forwardRef<RetroEffectImpl, { colorNum: number; pixelSize: n
 RetroEffect.displayName = 'RetroEffect';
 
 interface WaveUniforms {
-  [key: string]: THREE.Uniform<any>;
   time: THREE.Uniform<number>;
   resolution: THREE.Uniform<THREE.Vector2>;
   waveSpeed: THREE.Uniform<number>;
@@ -176,7 +184,9 @@ interface WaveUniforms {
   mousePos: THREE.Uniform<THREE.Vector2>;
   enableMouseInteraction: THREE.Uniform<number>;
   mouseRadius: THREE.Uniform<number>;
+  [key: string]: THREE.Uniform<number | THREE.Vector2 | THREE.Color>;
 }
+
 
 interface DitheredWavesProps {
   waveSpeed: number;
