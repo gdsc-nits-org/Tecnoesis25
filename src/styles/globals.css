@@ -84,3 +84,36 @@
       0 0 30px #00e5ff60;
   }
 }
+
+.TeamCard2 .socialBar{
+  transition-duration: 0.5s;
+  transform: translateY(100%);
+  opacity:0;
+}
+
+.TeamCard2:hover .socialBar {
+  transition-duration: 0.5s;
+  transform: translateY(-50%);
+  opacity:1;
+}
+
+.TeamCard2 .BottomLeft{
+  transition-duration: 1s;
+  transform: translateX(0%);
+  background: linear-gradient(190deg, rgba(22, 22, 22, 0.95) 0%, #111111 100%);
+}
+
+.TeamCard2:hover .BottomLeft {
+  transition-duration: 1s;
+  transform: translateX(-5%);
+  /* Layer the original red gradient with a very subtle repeating stripe pattern (approx 10 stripes) */
+  background:
+    /* faint black stripes (thin, subtle) */
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0) 6px, rgba(0,0,0,0) 12px),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.95) 0%, #110000 10.1%, #000000 11.1%, #ff0000 20.1%, #111111 49.5%, #000000 50.5%, #ff0000 100%);
+}
+
+.TeamCard2 .TecnoesisText{
+  font-family: 'BankGothic', sans-serif;
+  color:#ff000055;
+}
