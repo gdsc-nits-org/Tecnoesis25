@@ -55,7 +55,6 @@ const Team = () => {
                 </button>
                 </div>
 
-                {/* OTHER TEAMS button - identical to TECH TEAM */}
                 <div
                     style={{
                         display: 'inline-block',
