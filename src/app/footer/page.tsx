@@ -1,89 +1,11 @@
-import Dither from "~/components/dither"; 
 import Image from "next/image";
+import Link from "next/link";
+import PhotoGallery from "~/components/gallery";
 
-export default function Footer() {
+export default function page() {
   return (
-   
-    <div className="relative m-0 h-[100vh] w-full overflow-hidden p-0 ">
- 
-      <div className="absolute inset-0 z-0">
-        <Dither
-          waveColor={[1, 0, 0.2]}
-          disableAnimation={false}
-          enableMouseInteraction={true}
-          mouseRadius={0.3}
-          colorNum={4}
-          waveAmplitude={0.25}
-          waveFrequency={3}
-          waveSpeed={0.05}
-        />
-      </div>
-
-      
-      <div className="absolute left-1/2 mobile:top-[21%] tablet:top-[22%]  ipadpro:top-[17%] mobile2:top-[28%] z-10 flex w-[90%] laptop:w-[40%] -translate-x-1/2 items-center justify-center space-x-3 rounded-lg border border-white p-2 sm:top-[8%]  md:space-x-4 md:p-3">
-        <div className="relative h-8 w-8 flex-shrink-0 sm:h-10 ">
-          <Image
-            src="/independence1.png"
-            alt="Campus Ambassador Program"
-            layout="fill"
-            objectFit="cover"
-            
-          
-          />
-        </div>
-        <p className="font-bank text-center text-xs font-semibold text-white sm:text-sm md:text-2xl">
-          BECOME OUR CAMPUS AMBASSADOR
-        </p>
-      </div>
-
-      
-      <div className="absolute mobile:scale-[0.9] mobile2:scale-[1.05] mobile3:scale-[1]  laptop:scale-[0.97] laptop:pt-[2rem] left-1/2 top-1/2 z-20 flex w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center px-6 md:px-10">
-        <div className="relative">
-          <div className="font-nyxerin pointer-events-none select-none text-center laptop:text-[10rem] text-[clamp(2.5rem,10vw,6.6rem)] text-white">
-            Technoesis
-          </div>
-          <div className="font-nyxerin pointer-events-none absolute right-[1.5rem] top-[-1rem] -translate-y-[20%] translate-x-[20%] select-none text-[clamp(2rem,6vw,4rem)] text-white md:right-[2.4rem] lg:right-[3rem]">
-            2025
-          </div>
-        </div>
-      </div>
-
-      
-      <div className="absolute left-1/2 mobile:top-[79%] mobile2:scale-[1.3]  tablet:scale-[1.3] mobile1:top-[81%] tablet:top-[84%] ipadpro:top-[83%]   ipadpro:scale-[1.1] laptop:top-[75%] mobile2:top-[85%] z-10 flex w-full -translate-x-1/2 flex-col items-center justify-center space-y-3 sm:top-[70%] md:space-y-4">
-        <p className="font-bank text-sm laptop:text-[1.7rem] font-semibold text-white sm:text-base md:text-lg">
-         CONTACT US
-        </p>
-        <div className="flex items-center justify-center space-x-4 sm:space-x-10">
-       
-          <a href="#" aria-label="Instagram" className="transform transition-transform hover:scale-110">
-            <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
-                <Image src="/insta.png" alt="Instagram" layout="fill" objectFit="contain" />
-            </div>
-          </a>
-          <a href="#" aria-label="LinkedIn" className="transform transition-transform hover:scale-110">
-            <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
-                <Image src="/linkedin.png" alt="LinkedIn" layout="fill" objectFit="contain" />
-            </div>
-          </a>
-          <a href="#" aria-label="Facebook" className="transform transition-transform hover:scale-110">
-            <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
-                <Image src="/facebook.png" alt="Facebook" layout="fill" objectFit="contain" />
-            </div>
-          </a>
-          <a href="#" aria-label="X (formerly Twitter)" className="transform transition-transform hover:scale-110">
-            <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
-                <Image src="/x.png" alt="X (formerly Twitter)" layout="fill" objectFit="contain" />
-            </div>
-          </a>
-        </div>
-      </div>
-
-    
-      <div className="absolute bottom-5 left-0 right-0 z-10 w-full px-4">
-        <p className="font-nyxerin text-center text-[0.6rem] font-thin tracking-widest text-white sm:text-xs md:text-sm">
-          Made in Collaboration with GDG Nit Silchar
-        </p>
-      </div>
-    </div>
+    <>
+    <PhotoGallery />
+    </>
   );
 }

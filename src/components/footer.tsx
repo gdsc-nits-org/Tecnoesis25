@@ -1,3 +1,4 @@
+"use client";
 import Dither from "~/components/dither"; 
 import Image from "next/image";
 
@@ -20,8 +21,8 @@ export default function Footer() {
       </div>
 
       
-      <div className="absolute left-1/2 mobile:top-[21%] tablet:top-[22%]  ipadpro:top-[17%] mobile2:top-[28%] z-10 flex w-[90%] laptop:w-[40%] -translate-x-1/2 items-center justify-center space-x-3 rounded-lg border border-white p-2 sm:top-[8%]  md:space-x-4 md:p-3">
-        <div className="relative h-8 w-8 flex-shrink-0 sm:h-10 ">
+      <div className="absolute left-1/2 mobile:top-[21%] tablet:top-[22%]  ipadpro:top-[17%] mobile2:top-[28%] z-10 flex w-[90%] laptop:w-[50%] -translate-x-1/2 items-center justify-center space-x-3 rounded-lg border border-white p-2 sm:top-[8%]  md:space-x-4 md:p-3">
+        <div className="relative h-10 w-10 flex-shrink-0  ">
           <Image
             src="/independence1.png"
             alt="Campus Ambassador Program"
@@ -37,7 +38,7 @@ export default function Footer() {
       </div>
 
       
-      <div className="absolute mobile:scale-[0.9] mobile2:scale-[1.05] mobile3:scale-[1]  laptop:scale-[0.97] laptop:pt-[2rem] left-1/2 top-1/2 z-20 flex w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center px-6 md:px-10">
+      <div className="absolute mobile:scale-[0.9] mobile2:scale-[1.05] mobile3:scale-[1]  laptop:scale-[0.95] laptop:pt-[2rem] left-1/2 top-1/2 z-20 flex w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center px-6 md:px-10">
         <div className="relative">
           <div className="font-nyxerin pointer-events-none select-none text-center laptop:text-[10rem] text-[clamp(2.5rem,10vw,6.6rem)] text-white">
             Technoesis
