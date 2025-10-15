@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Card2 from "../../components/team/Card2";
 const Team = () => {
     const [selectedTeam, setSelectedTeam] = useState<string | null>("Tech Team");
     const handleTeamClick = (team: string) => {
@@ -55,7 +56,6 @@ const Team = () => {
                 </button>
                 </div>
 
-                {/* OTHER TEAMS button - identical to TECH TEAM */}
                 <div
                     style={{
                         display: 'inline-block',
