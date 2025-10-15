@@ -2,6 +2,13 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Orbitron } from 'next/font/google';
+
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-orbitron',
+});
 
 
 export const metadata: Metadata = {
@@ -18,7 +25,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable}`}
+      className={`${GeistSans.variable} ${orbitron.variable}`}
       prefix="og: https://ogp.me/ns#"
     >
       <head>
