@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Nyxerin';
+  src: url('/nyxerin/nyxerin.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Opera */
 }
@@ -71,4 +78,3 @@
       0 0 30px #00e5ff60;
   }
 }
-
