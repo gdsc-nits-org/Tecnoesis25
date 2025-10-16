@@ -2,3 +2,4 @@
 export * from './about';
 export * from './modules';
 export * from './teams';
+export { default as Hero } from './Hero';
