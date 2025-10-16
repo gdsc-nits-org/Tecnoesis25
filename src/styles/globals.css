@@ -73,6 +73,21 @@
   }
 }
 
+@font-face {
+  font-family: "Nyxerin";
+  src: url("/fonts/Nyxerin.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BankGothic";
+  src: url("/fonts/BankGothic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 .glitch-text {
   position: relative;
   color: white;
