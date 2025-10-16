@@ -1,76 +1,13 @@
 "use client";
-import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import React from 'react';
 import { motion } from 'framer-motion';
-import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 // import StyledStarsCanvas from '../Stars';
 import styles from './Hero.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
-
-// Tron Bike Model Component
-function TronBike() {
-  const { scene } = useGLTF('/robotron/tron_bike.glb');
-  
-  // Clone the scene to avoid reusing the same instance
-  const clonedScene = React.useMemo(() => {
-    const clone = scene.clone();
-    
-    // Apply selective neon red effect to preserve details
-    clone.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        // Keep original material but enhance it with red tint and emission
-        if (child.material) {
-          const originalMaterial = child.material as THREE.MeshStandardMaterial;
-          
-          // Clone the original material to preserve details
-          const enhancedMaterial = originalMaterial.clone();
-          
-          // Add red tint and neon glow
-          enhancedMaterial.emissive = new THREE.Color(0xFF0000); // Red emission
-          enhancedMaterial.emissiveIntensity = 0.8; // Moderate glow to preserve details
-          
-          // Add slight red tint to the base color
-          if (enhancedMaterial.color) {
-            const currentColor = enhancedMaterial.color;
-            enhancedMaterial.color = new THREE.Color(
-              Math.min(currentColor.r + 0.3, 1),
-              currentColor.g * 0.7,
-              currentColor.b * 0.7
-            );
-          }
-          
-          enhancedMaterial.metalness = Math.max(enhancedMaterial.metalness || 0, 0.7);
-          enhancedMaterial.roughness = Math.min(enhancedMaterial.roughness || 1, 0.3);
-          
-          child.material = enhancedMaterial;
-          child.castShadow = true;
-          child.receiveShadow = true;
-        }
-      }
-    });
-    
-    return clone;
-  }, [scene]);
-  
-  return (
-    <>
-      <primitive 
-        object={clonedScene} 
-        scale={15} 
-        position={[-4, -4, 3.1]} 
-        rotation={[-0.2, Math.PI / -4.9, 0.4]}
-      />
-
-    </>
-  );
-}
-
-// Preload the model
-useGLTF.preload('/robotron/tron_bike.glb');
 
 const Hero = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -197,33 +134,15 @@ const Hero = () => {
         />
       </div>
 
-      {/* Tron Bike 3D Model Layer */}
-      <div className={styles.canvasLayer}>
-        <Canvas
-          camera={{ position: [5, 2, 5], fov: 50 }}
-          gl={{ 
-            antialias: true,
-            alpha: true,
-            toneMapping: THREE.ACESFilmicToneMapping,
-            toneMappingExposure: 1.5,
-          }}
-        >
-          <Suspense fallback={null}>
-            <ambientLight intensity={0.5} />
-            <directionalLight position={[10, 10, 5]} intensity={1} />
-            <pointLight position={[-10, -10, -5]} intensity={0.5} />
-            <spotLight position={[0, 10, 0]} angle={0.3} intensity={1} />
-            
-            <TronBike />
-            
-            <OrbitControls 
-              enableZoom={false}
-              enablePan={false}
-              minPolarAngle={Math.PI / 3}
-              maxPolarAngle={Math.PI / 2}
-            />
-          </Suspense>
-        </Canvas>
+      {/* Tron Bike Image Layer */}
+      <div className={styles.bikeImageLayer}>
+        <Image
+          src="/robotron/tron_ares_bike.png"
+          alt="Tron Ares Bike"
+          fill
+          className={styles.bikeImage}
+          priority
+        />
       </div>
 
       {/* Silhouette Layer - Top layer above everything */}
@@ -234,7 +153,7 @@ const Hero = () => {
             x: ['0%', '-100%'],
           }}
           transition={{
-            duration: 2,
+            duration: 2.5,
             repeat: Infinity,
             ease: 'linear',
             repeatType: 'loop',
@@ -246,7 +165,7 @@ const Hero = () => {
             x: ['0%', '-100%'],
           }}
           transition={{
-            duration: 2,
+            duration: 2.5,
             repeat: Infinity,
             ease: 'linear',
             repeatType: 'loop',
@@ -269,7 +188,7 @@ const Hero = () => {
         <div className={styles.textWrapper}>
           <h1 className={styles.robotronText}>
             {Array.from('ROBOTRON').map((char, index) => (
-              <span key={index} className={styles.robotronChar}>
+              <span key={index} className={`${styles.robotronChar} robotron-char`}>
                 {char}
               </span>
             ))}
