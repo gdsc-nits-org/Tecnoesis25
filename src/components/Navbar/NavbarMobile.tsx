@@ -43,7 +43,7 @@ export default function NavbarMobile() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.4 }}
-            className="fixed top-0 right-0 w-[100%] h-full bg-[#0a0a0a] shadow-lg flex flex-col justify-between p-6 z-50"
+            className="fixed top-0 right-0 w-[100%] h-full bg-[#0a0a0a] shadow-lg flex flex-col justify-between p-6 z-50 overflow-y-auto"
           >
 
             <div className="flex justify-end pr-2 pt-2">

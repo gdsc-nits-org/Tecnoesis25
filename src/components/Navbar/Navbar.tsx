@@ -6,7 +6,7 @@ import { useMediaQuery } from "usehooks-ts";
 
 const Navbar = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const bigScreen = useMediaQuery("(min-width: 1025px)");
+  const bigScreen = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     setIsMounted(true);
