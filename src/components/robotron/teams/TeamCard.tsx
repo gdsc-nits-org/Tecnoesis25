@@ -24,9 +24,9 @@ export const TeamCard: React.FC<TeamCardProps> = ({
 
   return (
     <div className="relative group w-full max-w-xs">
-      {/* Frame Background - 350x471px frame with higher z-index */}
+      {/* Frame Background - 350x471px frame */}
       <div
-        className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+        className="absolute inset-0 opacity-80 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
         style={{
           backgroundImage: `url('/robotron/modules/teams/headframe.svg')`,
           backgroundSize: 'contain',
@@ -34,19 +34,19 @@ export const TeamCard: React.FC<TeamCardProps> = ({
           backgroundPosition: 'center',
           width: '350px',
           height: '471px',
-          zIndex: 10,
+          zIndex: 30,
         }}
       />
 
       {/* Main Card - positioned inside frame */}
-      <div className="relative bg-transparent h-full flex flex-col p-8" style={{ zIndex: 20 }}>
+      <div className="relative bg-transparent h-full flex flex-col p-8" style={{ zIndex: 5 }}>
         {/* Rectangular Image at top */}
         <div className="mb-8">
           <div className="w-full h-48 overflow-hidden border-2 border-white/20 shadow-lg relative" style={{
             width: '260px',
             height: '325px',
-            borderRadius: '10%', // Extremely rounded corners for PFP
-            zIndex: 5, // Lower than frame
+            borderRadius: '10%',
+            zIndex: 10,
           }}>
             <img
               src={displayImage}
@@ -55,13 +55,22 @@ export const TeamCard: React.FC<TeamCardProps> = ({
             />
           </div>
         </div>
+      </div>
 
-        {/* Name in red section - responsive positioning */}
-        <div className="mt-auto text-center px-2">
-          <h3 className="text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-bold font-orbitron drop-shadow-lg leading-tight md:whitespace-nowrap lg:whitespace-nowrap xl:whitespace-nowrap">
-            {name || "Team Member"}
-          </h3>
-        </div>
+      {/* Name and Role Section - positioned absolutely above frame */}
+      <div 
+        className="absolute bottom-0 left-8 right-0 text-center px-2 h-16 flex items-center justify-center"
+        style={{ zIndex: 40 }}
+      >
+        {/* Name - visible by default, fades out on hover */}
+        <h3 className="absolute inset-0 flex items-center justify-center text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-bold font-orbitron drop-shadow-lg leading-tight transition-all duration-500 ease-in-out group-hover:opacity-0 group-hover:scale-95 md:whitespace-nowrap lg:whitespace-nowrap xl:whitespace-nowrap">
+          {name || "Team Member"}
+        </h3>
+        
+        {/* Role - hidden by default, fades in on hover */}
+        <p className="absolute inset-0 flex items-center justify-center text-white text-xs sm:text-sm md:text-base lg:text-lg font-medium font-orbitron drop-shadow-lg leading-tight opacity-0 scale-105 transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:scale-100">
+          {role || "Role"}
+        </p>
       </div>
     </div>
   );

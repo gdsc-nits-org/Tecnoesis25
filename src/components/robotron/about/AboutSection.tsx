@@ -1,6 +1,6 @@
 // Reusable text styles
-const headingStyles = "font-bold text-white font-sans leading-[1] tracking-[0.19em]";
-const paragraphStyles = "text-white font-sans font-medium leading-[1.6] md:leading-[36px] tracking-[0.03em] text-justify";
+const headingStyles = "font-bold text-white font-['Orbitron',sans-serif] leading-[1] tracking-[0.19em]";
+const paragraphStyles = "text-white font-['Orbitron',sans-serif] font-medium leading-[1.6] md:leading-[36px] tracking-[0.03em] text-justify";
 
 export const AboutSection = () => {
   return (

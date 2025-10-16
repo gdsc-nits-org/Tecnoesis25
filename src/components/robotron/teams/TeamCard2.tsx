@@ -113,7 +113,7 @@ export const TeamCard2: React.FC<TeamCard2Props> = ({
                 style={{
                   fontFamily: 'Orbitron, sans-serif',
                   fontWeight: 400,
-                  fontSize: '30px',
+                  fontSize: '20px',
                   lineHeight: '35px',
                   letterSpacing: '0%',
                   textAlign: 'center',

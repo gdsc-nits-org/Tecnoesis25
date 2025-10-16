@@ -121,7 +121,7 @@ export const TeamsSection = () => {
         </h3>
 
         {/* Desktop */}
-        <div className={`hidden sm:grid gap-8 justify-items-center ${
+        <div className={`hidden sm:grid gap-56 justify-items-center ${
           members.length === 2 
             ? 'grid-cols-2 max-w-2xl mx-auto' 
             : 'grid-cols-2 lg:grid-cols-3'
@@ -220,25 +220,57 @@ export const TeamsSection = () => {
           <TeamHeading>Team</TeamHeading>
         </div>
 
-        {/* Leadership Section - Grid Layout */}
+        {/* Leadership Section - Hierarchical Layout */}
         <div className="mb-40">
-          <h3 className="text-xl sm:text-2xl font-semibold text-center mb-8 font-orbitron">
-            Leadership Team
+          <h3 className="text-xl sm:text-2xl font-semibold text-center mb-12 font-orbitron">
+            Robotron Module Heads
           </h3>
 
-          {/* Desktop */}
-          <div className="hidden sm:grid gap-8 justify-items-center grid-cols-2 lg:grid-cols-4">
-            {teamData.leadership.map((leader, index) => (
-              <div key={index} className="flex-shrink-0">
-                <div className="w-60 h-80">
+          {/* Desktop - Hierarchical Layout */}
+          <div className="hidden sm:block max-w-[1500px] mx-auto">
+            {/* Chief Coordinator - Top Row (Centered) */}
+            {teamData.leadership[0] && (
+              <div className="flex justify-center mb-8">
+                <TeamCard
+                  name={teamData.leadership[0].name}
+                  role={teamData.leadership[0].role}
+                  image={teamData.leadership[0].image}
+                />
+              </div>
+            )}
+
+            {/* Two Convenors - Middle Row */}
+            <div className="grid grid-cols-2 gap-56 justify-items-center max-w-[800px] mx-auto mb-8">
+              {teamData.leadership[1] && (
+                <div className="flex justify-center">
                   <TeamCard
-                    name={leader.name}
-                    role={leader.role}
-                    image={leader.image}
+                    name={teamData.leadership[1].name}
+                    role={teamData.leadership[1].role}
+                    image={teamData.leadership[1].image}
                   />
                 </div>
+              )}
+              {teamData.leadership[2] && (
+                <div className="flex justify-center">
+                  <TeamCard
+                    name={teamData.leadership[2].name}
+                    role={teamData.leadership[2].role}
+                    image={teamData.leadership[2].image}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Module Lead - Bottom Row (Centered) */}
+            {teamData.leadership[3] && (
+              <div className="flex justify-center">
+                <TeamCard
+                  name={teamData.leadership[3].name}
+                  role={teamData.leadership[3].role}
+                  image={teamData.leadership[3].image}
+                />
               </div>
-            ))}
+            )}
           </div>
 
           {/* Mobile - Carousel */}
@@ -247,7 +279,7 @@ export const TeamsSection = () => {
               {teamData.leadership.map((leader, index) => (
                 <div key={index} className="px-2">
                   <div className="flex justify-center">
-                    <div className="flex-shrink-0 scale-[0.65] origin-center w-52 h-72">
+                    <div className="scale-90 origin-center">
                       <TeamCard
                         name={leader.name}
                         role={leader.role}
