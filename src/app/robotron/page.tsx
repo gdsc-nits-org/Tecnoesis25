@@ -1,4 +1,4 @@
-import { AboutSection, ModuleSection } from '../../components/robotron';
+import { AboutSection, ModuleSection, TeamsSection } from '../../components/robotron';
 
 export default function RobotronPage() {
   return (
@@ -6,6 +6,7 @@ export default function RobotronPage() {
       <main className="pb-12">
         <AboutSection />
         <ModuleSection />
+        <TeamsSection />
       </main>
     </div>
   );
