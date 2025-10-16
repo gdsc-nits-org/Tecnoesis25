@@ -9,6 +9,7 @@ const orbitron = Orbitron({
   weight: ['400', '500', '600', '700', '800', '900'],
   variable: '--font-orbitron',
 });
+import Navbar from "~/components/Navbar/Navbar";
 
 
 export const metadata: Metadata = {
@@ -47,9 +48,10 @@ export default function RootLayout({
         <meta property="og:type" content="website" />
       </head>
       <body className="min-h-screen flex flex-col no-scrollbar overflow-x-hidden">
+        <Navbar />
         {children}
       </body>
-      {process.env.NODE_ENV == 'production' && <GoogleAnalytics gaId="G-69XDYH0DYC"/>}
+      {process.env.NODE_ENV == 'production' && <GoogleAnalytics gaId="G-69XDYH0DYC" />}
     </html>
   );
 }
