@@ -4,9 +4,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-  
     <div className="relative w-full overflow-hidden bg-black p-0">
-     
       <div className="absolute inset-0 z-0">
         <Dither
           waveColor={[1, 0, 0.2]}
@@ -20,9 +18,15 @@ export default function Footer() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-screen-xl flex-col items-center gap-y-8 px-4 py-16 md:gap-y-12 md:py-24">
-       
-        <div className="flex w-[90%] items-center justify-center space-x-3 rounded-lg border border-white p-2 md:space-x-4 md:p-3 laptop:w-[50%]">
+      {/* STEP 1: Add 'pointer-events-none' to the main content wrapper.
+        This lets mouse events pass through to the Dither component below.
+      */}
+      <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-screen-xl flex-col items-center gap-y-8 px-4 py-16 md:gap-y-12 md:py-24">
+        
+        {/* STEP 2: Add 'pointer-events-auto' to any interactive elements.
+          This makes the banner clickable again.
+        */}
+        <div className="pointer-events-auto flex w-[90%] cursor-pointer items-center justify-center space-x-3 rounded-lg border border-white p-2 md:space-x-4 md:p-3 laptop:w-[50%]">
           <div className="relative h-10 w-10 flex-shrink-0 laptop:h-14 laptop:w-14">
             <Image
               src="/independence1.png"
@@ -37,7 +41,8 @@ export default function Footer() {
         </div>
 
         <div className="relative mobile:scale-[0.8] mobile2:scale-[1] ">
-          <div className="font-nyxerin pointer-events-none  select-none  text-center text-[clamp(2.5rem,10vw,6.6rem)] text-white laptop:text-[8rem]">
+          {/* These already have pointer-events-none, which is great! */}
+          <div className="font-nyxerin pointer-events-none select-none text-center text-[clamp(2.5rem,10vw,6.6rem)] text-white laptop:text-[8rem]">
             Technoesis
           </div>
           <div className="font-nyxerin pointer-events-none absolute right-[1.5rem] top-[-1rem] -translate-y-[20%] translate-x-[20%] select-none text-[clamp(2rem,6vw,4rem)] text-white md:right-[2.4rem] lg:right-[3rem]">
@@ -49,25 +54,25 @@ export default function Footer() {
           <p className="font-bank text-sm font-semibold text-white sm:text-base md:text-lg laptop:text-[1.7rem]">
             CONTACT US
           </p>
-          {/* Using `gap-x` for more consistent spacing across browsers */}
           <div className="flex items-center justify-center gap-x-6 sm:gap-x-8 md:gap-x-10">
-            {/* Social Icons... */}
-            <a href="#" aria-label="Instagram" className="transform transition-transform hover:scale-110">
+            {/* STEP 2 (cont.): Add 'pointer-events-auto' to all social links.
+            */}
+            <a href="#" aria-label="Instagram" className="pointer-events-auto transform transition-transform hover:scale-110">
               <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
                 <Image src="/insta.png" alt="Instagram" layout="fill" objectFit="contain" />
               </div>
             </a>
-            <a href="#" aria-label="LinkedIn" className="transform transition-transform hover:scale-110">
+            <a href="#" aria-label="LinkedIn" className="pointer-events-auto transform transition-transform hover:scale-110">
               <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
                 <Image src="/linkedin.png" alt="LinkedIn" layout="fill" objectFit="contain" />
               </div>
             </a>
-            <a href="#" aria-label="Facebook" className="transform transition-transform hover:scale-110">
+            <a href="#" aria-label="Facebook" className="pointer-events-auto transform transition-transform hover:scale-110">
               <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
                 <Image src="/facebook.png" alt="Facebook" layout="fill" objectFit="contain" />
               </div>
             </a>
-            <a href="#" aria-label="X (formerly Twitter)" className="transform transition-transform hover:scale-110">
+            <a href="#" aria-label="X (formerly Twitter)" className="pointer-events-auto transform transition-transform hover:scale-110">
               <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
                 <Image src="/x.png" alt="X (formerly Twitter)" layout="fill" objectFit="contain" />
               </div>
@@ -76,7 +81,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Footer credit line remains positioned relative to the outer frame */}
       <div className="absolute bottom-5 left-0 right-0 z-10 w-full px-4">
         <p className="font-nyxerin text-center text-[0.6rem] font-thin tracking-widest text-white sm:text-xs md:text-sm">
           Made in Collaboration with GDG Nit Silchar
