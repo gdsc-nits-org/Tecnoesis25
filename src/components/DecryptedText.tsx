@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
-import { motion, HTMLMotionProps } from 'motion/react';
+import { motion } from 'motion/react';
+import type { HTMLMotionProps } from 'motion/react';
+
 
 interface DecryptedTextProps extends HTMLMotionProps<'span'> {
   text: string;
@@ -176,9 +178,9 @@ export default function DecryptedText({
   const hoverProps =
     animateOn === 'hover' || animateOn === 'both'
       ? {
-          onMouseEnter: () => setIsHovering(true),
-          onMouseLeave: () => setIsHovering(false)
-        }
+        onMouseEnter: () => setIsHovering(true),
+        onMouseLeave: () => setIsHovering(false)
+      }
       : {};
 
   return (
