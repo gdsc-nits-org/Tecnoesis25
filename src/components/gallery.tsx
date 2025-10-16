@@ -11,6 +11,7 @@ export default function PhotoGallery() {
       >
         <div className="absolute top-[10%] left-1/2 -translate-x-1/2 space-y-0 text-center mobile:text-[2.5rem] laptop:text-[4rem]">
           <p className="font-nyxerin leading-tight text-[#F40004]">Photo</p>
+          
           <p className="font-nyxerin leading-tight text-[#bb1315]">Gallery</p>
         </div>
 
