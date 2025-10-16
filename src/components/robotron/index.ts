@@ -1,2 +1,4 @@
-export { default as AboutSection } from './AboutSection';
-export { default as Hero } from './Hero';
+// Export all components from their respective modules
+export * from './about';
+export * from './modules';
+export * from './teams';
