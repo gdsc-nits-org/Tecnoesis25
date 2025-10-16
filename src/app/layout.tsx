@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Navbar from "~/components/Navbar/Navbar";
 
 
 export const metadata: Metadata = {
@@ -41,9 +42,10 @@ export default function RootLayout({
         <meta property="og:type" content="website" />
       </head>
       <body className="min-h-screen flex flex-col no-scrollbar overflow-x-hidden">
+        <Navbar />
         {children}
       </body>
-      {process.env.NODE_ENV == 'production' && <GoogleAnalytics gaId="G-69XDYH0DYC"/>}
+      {process.env.NODE_ENV == 'production' && <GoogleAnalytics gaId="G-69XDYH0DYC" />}
     </html>
   );
 }

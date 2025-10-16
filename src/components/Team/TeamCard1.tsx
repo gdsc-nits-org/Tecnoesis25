@@ -36,7 +36,7 @@ const TeamCard1 = ({ imageUrl, name, designation }: TeamCardProps) => {
                     />
                 </div>
             </div>
-            <div className="flex flex-col font-bankgothic text-nowrap  text-white text-center -translate-x-5 text-[.9rem]">
+            <div className="flex flex-col font-bankGothik text-nowrap  text-white text-center -translate-x-5 text-[.9rem]">
                 <h2>{displayName}</h2>
                 <h3>{designation}</h3>
 
