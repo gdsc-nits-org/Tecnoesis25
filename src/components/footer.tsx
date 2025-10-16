@@ -18,14 +18,9 @@ export default function Footer() {
         />
       </div>
 
-      {/* STEP 1: Add 'pointer-events-none' to the main content wrapper.
-        This lets mouse events pass through to the Dither component below.
-      */}
       <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-screen-xl flex-col items-center gap-y-8 px-4 py-16 md:gap-y-12 md:py-24">
         
-        {/* STEP 2: Add 'pointer-events-auto' to any interactive elements.
-          This makes the banner clickable again.
-        */}
+      
         <div className="pointer-events-auto flex w-[90%] cursor-pointer items-center justify-center space-x-3 rounded-lg border border-white p-2 md:space-x-4 md:p-3 laptop:w-[50%]">
           <div className="relative h-10 w-10 flex-shrink-0 laptop:h-14 laptop:w-14">
             <Image
@@ -55,8 +50,7 @@ export default function Footer() {
             CONTACT US
           </p>
           <div className="flex items-center justify-center gap-x-6 sm:gap-x-8 md:gap-x-10">
-            {/* STEP 2 (cont.): Add 'pointer-events-auto' to all social links.
-            */}
+          
             <a href="#" aria-label="Instagram" className="pointer-events-auto transform transition-transform hover:scale-110">
               <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
                 <Image src="/insta.png" alt="Instagram" layout="fill" objectFit="contain" />
