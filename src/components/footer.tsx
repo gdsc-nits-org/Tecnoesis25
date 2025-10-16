@@ -21,7 +21,7 @@ export default function Footer() {
       <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-screen-xl flex-col items-center gap-y-8 px-4 py-16 md:gap-y-12 md:py-24">
         
       
-        <div className="pointer-events-auto flex w-[90%] cursor-pointer items-center justify-center space-x-3 rounded-lg border border-white p-2 md:space-x-4 md:p-3 laptop:w-[50%]">
+        {/* <div className="pointer-events-auto flex w-[90%] cursor-pointer items-center justify-center space-x-3 rounded-lg border border-white p-2 md:space-x-4 md:p-3 laptop:w-[50%]">
           <div className="relative h-10 w-10 flex-shrink-0 laptop:h-14 laptop:w-14">
             <Image
               src="/independence1.png"
@@ -33,7 +33,7 @@ export default function Footer() {
           <p className="font-bank text-center text-xs font-semibold text-white sm:text-sm md:text-2xl">
             BECOME OUR CAMPUS AMBASSADOR
           </p>
-        </div>
+        </div> */}
 
         <div className="relative mobile:scale-[0.8] mobile2:scale-[1] ">
         
@@ -56,21 +56,21 @@ export default function Footer() {
                 <Image src="/insta.png" alt="Instagram" layout="fill" objectFit="contain" />
               </div>
             </a>
-            <a href="#" aria-label="LinkedIn" className="pointer-events-auto transform transition-transform hover:scale-110">
+            {/* <a href="#" aria-label="LinkedIn" className="pointer-events-auto transform transition-transform hover:scale-110">
               <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
                 <Image src="/linkedin.png" alt="LinkedIn" layout="fill" objectFit="contain" />
               </div>
-            </a>
+            </a> */}
             <a href="#" aria-label="Facebook" className="pointer-events-auto transform transition-transform hover:scale-110">
               <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
                 <Image src="/facebook.png" alt="Facebook" layout="fill" objectFit="contain" />
               </div>
             </a>
-            <a href="#" aria-label="X (formerly Twitter)" className="pointer-events-auto transform transition-transform hover:scale-110">
+            {/* <a href="#" aria-label="X (formerly Twitter)" className="pointer-events-auto transform transition-transform hover:scale-110">
               <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
                 <Image src="/x.png" alt="X (formerly Twitter)" layout="fill" objectFit="contain" />
               </div>
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
