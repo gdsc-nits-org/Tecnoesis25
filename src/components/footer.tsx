@@ -36,7 +36,7 @@ export default function Footer() {
         </div>
 
         <div className="relative mobile:scale-[0.8] mobile2:scale-[1] ">
-          {/* These already have pointer-events-none, which is great! */}
+        
           <div className="font-nyxerin pointer-events-none select-none text-center text-[clamp(2.5rem,10vw,6.6rem)] text-white laptop:text-[8rem]">
             Technoesis
           </div>
