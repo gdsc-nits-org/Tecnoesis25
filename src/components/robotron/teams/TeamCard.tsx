@@ -16,11 +16,9 @@ export const TeamCard: React.FC<TeamCardProps> = ({
   name,
   role,
   image,
-  description,
-  socialLinks
 }) => {
   // Default placeholder image if none provided
-  const displayImage = image || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=200&fit=crop&crop=face';
+  const displayImage = image ?? 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=200&fit=crop&crop=face';
 
   return (
     <div className="relative group w-full max-w-xs">
@@ -50,7 +48,7 @@ export const TeamCard: React.FC<TeamCardProps> = ({
           }}>
             <img
               src={displayImage}
-              alt={name || "Team Member"}
+              alt={name ?? "Team Member"}
               className="w-full h-full object-cover"
             />
           </div>
@@ -64,12 +62,12 @@ export const TeamCard: React.FC<TeamCardProps> = ({
       >
         {/* Name - visible by default, fades out on hover */}
         <h3 className="absolute inset-0 flex items-center justify-center text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-bold font-orbitron drop-shadow-lg leading-tight transition-all duration-500 ease-in-out group-hover:opacity-0 group-hover:scale-95 md:whitespace-nowrap lg:whitespace-nowrap xl:whitespace-nowrap">
-          {name || "Team Member"}
+          {name ?? "Team Member"}
         </h3>
         
         {/* Role - hidden by default, fades in on hover */}
         <p className="absolute inset-0 flex items-center justify-center text-white text-xs sm:text-sm md:text-base lg:text-lg font-medium font-orbitron drop-shadow-lg leading-tight opacity-0 scale-105 transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:scale-100">
-          {role || "Role"}
+          {role ?? "Role"}
         </p>
       </div>
     </div>

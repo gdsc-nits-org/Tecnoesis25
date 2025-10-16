@@ -88,7 +88,7 @@ export const TeamsSection = () => {
       }
     };
 
-    loadData();
+    void loadData();
   }, []);
 
   // Shared slider settings
@@ -104,7 +104,7 @@ export const TeamsSection = () => {
   };
 
   // Reusable function for team sections
-  const renderTeamSection = (title: string, teamKey: keyof TeamData, useTeamCard2: boolean = true, teamHeads?: string, extraMarginTop?: string) => {
+  const renderTeamSection = (title: string, teamKey: keyof TeamData, useTeamCard2 = true, teamHeads?: string, extraMarginTop?: string) => {
     const members = teamData[teamKey];
 
     // Ensure members is an array
@@ -116,7 +116,7 @@ export const TeamsSection = () => {
 
     return (
       <div className="mb-20">
-        <h3 className={`text-2xl sm:text-3xl font-semibold text-center mb-8 font-orbitron ${extraMarginTop || ''}`}>
+        <h3 className={`text-2xl sm:text-3xl font-semibold text-center mb-8 font-orbitron ${extraMarginTop ?? ''}`}>
           {title}
         </h3>
 

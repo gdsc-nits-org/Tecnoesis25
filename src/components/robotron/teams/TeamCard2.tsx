@@ -16,10 +16,7 @@ interface TeamCard2Props {
 
 export const TeamCard2: React.FC<TeamCard2Props> = ({
   name,
-  role,
   image,
-  description,
-  socialLinks
 }) => {
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
@@ -93,7 +90,7 @@ export const TeamCard2: React.FC<TeamCard2Props> = ({
                   )}
                   <img
                     src={displayImage}
-                    alt={name || "Team Member"}
+                    alt={name ?? "Team Member"}
                     className="w-full h-full object-cover"
                     onLoad={handleImageLoad}
                     onError={handleImageError}
@@ -123,7 +120,7 @@ export const TeamCard2: React.FC<TeamCard2Props> = ({
                   maxWidth: '100%',
                 }}
               >
-                {name || "TEAM MEMBER"}
+                {name ?? "TEAM MEMBER"}
               </h3>
             </div>
           </div>

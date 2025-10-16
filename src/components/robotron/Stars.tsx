@@ -6,13 +6,10 @@ import { Points, PointMaterial, Preload } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
 import type { Points as PointsType } from "three";
 
-interface StarsProps {
-  [key: string]: unknown;
-}
-
-const Stars = (props: StarsProps) => {
+const Stars = (props: Record<string, unknown>) => {
   const ref = useRef<PointsType>(null);
   const [sphere] = useState<Float32Array>(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     const positions = random.inSphere(new Float32Array(1500 * 3), { radius: 1.2 }) as Float32Array;
     return positions;
   });
