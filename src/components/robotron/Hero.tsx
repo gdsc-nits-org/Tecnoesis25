@@ -104,7 +104,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative h-[300vh] w-full">
+    <div ref={containerRef} className="relative h-[150vh] w-full">
       {/* Fixed Hero Container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Load Tron Font */}
