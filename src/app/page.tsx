@@ -10,6 +10,7 @@ import Link from "next/link";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import SocialIcons from "~/components/LandingFooter";
 import DynamicMusicButton from "~/components/DynamicMusicButton";
+import DownloadApp from "~/components/DownloadApp";
 
 export default function Page() {
   const [showBottomElements, setShowBottomElements] = useState(false);
