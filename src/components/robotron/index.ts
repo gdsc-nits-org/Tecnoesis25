@@ -1,1 +1,3 @@
-export { default as AboutSection } from './AboutSection';
+// Export all components from their respective modules
+export * from './about';
+export * from './modules';

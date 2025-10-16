@@ -1,5 +1,3 @@
-import React from 'react';
-
 // Reusable text styles
 const headingStyles = "font-bold text-white font-sans leading-[1] tracking-[0.19em]";
 const paragraphStyles = "text-white font-sans font-medium leading-[1.6] md:leading-[36px] tracking-[0.03em] text-justify";

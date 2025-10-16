@@ -1,6 +1,4 @@
-import React from 'react';
-import { AboutSection } from '../../components/robotron';
-import ModuleSection from '../../components/robotron/ModuleSection';
+import { AboutSection, ModuleSection } from '../../components/robotron';
 
 export default function RobotronPage() {
   return (
