@@ -16,8 +16,6 @@ export default function Page() {
   const router = useRouter();
   const [showBottomElements, setShowBottomElements] = useState(false);
   const [fadeOutUI, setFadeOutUI] = useState(false);
-  const [isMount, setIsMount] = useState(false);
-  useEffect(() => setIsMount(true), []);
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowBottomElements(true);
