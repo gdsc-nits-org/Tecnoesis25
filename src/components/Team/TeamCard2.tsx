@@ -2,7 +2,7 @@
 //clip-path: polygon(0% 0%, 66% 0, 75% 8%, 86% 8%, 100% 16%, 100% 91%, 86% 100%, 85% 22%, 22% 22%, 10% 45%, 0 38%);right
 const Card2 = () => {
     return(
-        <div className="relative w-[320px] h-[400px] z-0 TeamCard2">
+    <div className="relative w-[320px] h-[400px] z-0 TeamCard2 scale-50 mobile:scale-60 mobile2:scale-70 tablet:scale-80 laptop:scale-90 xL:scale-95 fourK:scale-100">
             <div className="relative w-full h-full px-6 py-8">
                 <div className="flex flex-row items-center justify-center border-1 border-red-500 w-full h-full rounded-lg">
                     <img src="https://res.cloudinary.com/dhry5xscm/image/upload/v1717873621/nitsmun/samarjit_kk2y5m.webp" alt="Samarjit" className="z-0 w-[235px] h-[240px]" />
@@ -22,13 +22,7 @@ const Card2 = () => {
                 <span>
                     <h2 className="text-xl font-bold mb-2 text-center mt-10">Samarjit Roy</h2>
                     <h2
-                        style={{
-                            transform: 'rotate(-90deg)',
-                            display: 'inline-block',
-                            WebkitTextStroke: '2px #ff0000',
-                            color:'#ff000055'
-                        }}
-                        className="absolute top-[180px] -right-[130px] text-4xl select-none"
+                        className="tecnoesis-title absolute top-[180px] -right-[130px] text-4xl select-none"
                     >
                         TECNOESIS
                     </h2>
