@@ -14,12 +14,12 @@ interface DataItem {
 export default function About() {
   const [index, setIndex] = useState(1);
   const [dataItem, setDataItem] = useState<DataItem>(
-    data[0] || { firstWord: "", secondWord: "", description: "" },
+    data[0] ?? { firstWord: "", secondWord: "", description: "" },
   );
 
   function handleNext() {
     setDataItem(
-      data[index] || { firstWord: "", secondWord: "", description: "" },
+      data[index] ?? { firstWord: "", secondWord: "", description: "" },
     );
     setIndex(index ^ 1);
   }
