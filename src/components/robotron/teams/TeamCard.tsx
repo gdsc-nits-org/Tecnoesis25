@@ -56,9 +56,9 @@ export const TeamCard: React.FC<TeamCardProps> = ({
           </div>
         </div>
 
-        {/* Name in red section (moved up and shifted right) */}
-        <div className="mt-auto text-center" style={{ marginTop: '-0.5rem', marginLeft: '1rem' }}>
-          <h3 className="text-white text-xl font-bold drop-shadow-lg">
+        {/* Name in red section - responsive positioning */}
+        <div className="mt-auto text-center px-2">
+          <h3 className="text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-bold font-orbitron drop-shadow-lg leading-tight md:whitespace-nowrap lg:whitespace-nowrap xl:whitespace-nowrap">
             {name || "Team Member"}
           </h3>
         </div>
