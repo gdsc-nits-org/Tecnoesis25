@@ -9,6 +9,7 @@ export default {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
         nyxerin: ["Nyxerin", "sans-serif"],
         bankGothik : ["BankGothic","sans-serif"],
+        orbitron: ["Orbitron", "sans-serif"],
       },
       screens: {
         xs: "450px",

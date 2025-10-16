@@ -1,48 +1,117 @@
 {
-  "teamMembers": [
+  "leadership": [
     {
-      "id": 1,
-      "name": "John Doe",
-      "role": "Team Lead",
-      "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=200&fit=crop&crop=face",
-      "description": "Experienced developer with expertise in React and Node.js",
-      "socialLinks": {
-        "linkedin": "https://linkedin.com/in/johndoe",
-        "github": "https://github.com/johndoe"
-      }
+      "name": "Swarup Chanda",
+      "role": "Chief Coordinator",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/f_auto,q_auto/ucr0cfbfdfdytnm9hhrh",
+      "description": "",
+      "socialLinks": {}
     },
     {
-      "id": 2,
-      "name": "Jane Smith",
-      "role": "UI/UX Designer",
-      "image": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=200&fit=crop&crop=face",
-      "description": "Creative designer passionate about user experience and modern design trends",
-      "socialLinks": {
-        "linkedin": "https://linkedin.com/in/janesmith",
-        "twitter": "https://twitter.com/janesmith"
-      }
+      "name": "Anwesha Duara",
+      "role": "Convenor",
+      "image": "https://res.cloudinary.com/dmhbmurzw/image/upload/v1728360594/IMG-20240822-WA0002_-_ECE_070_ANWESHA_DUARA_w90q9d.jpg",
+      "description": "",
+      "socialLinks": {}
     },
     {
-      "id": 3,
-      "name": "Mike Johnson",
-      "role": "Backend Developer",
-      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop&crop=face",
-      "description": "Full-stack developer specializing in scalable web applications",
-      "socialLinks": {
-        "linkedin": "https://linkedin.com/in/mikejohnson",
-        "github": "https://github.com/mikejohnson"
-      }
+      "name": "Md. Fayjan",
+      "role": "Convenor",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/v1727726868/fl7s9efn5nrfilh30rrl.webp",
+      "description": "",
+      "socialLinks": {}
     },
     {
-      "id": 4,
-      "name": "Sarah Wilson",
-      "role": "Frontend Developer",
-      "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=200&fit=crop&crop=face",
-      "description": "React enthusiast focused on creating responsive and accessible web interfaces",
-      "socialLinks": {
-        "linkedin": "https://linkedin.com/in/sarahwilson",
-        "github": "https://github.com/sarahwilson"
-      }
+      "name": "Adarsh Sharma",
+      "role": "Marketing Head",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/v1727726867/zocna1qwjbuexcqg0jy3.webp"
     }
-  ]
+  ],
+  "marketing": [
+    {
+      "name": "Jubaraj Talukdar",
+      "role": "Marketing Head",
+      "image": "https://res.cloudinary.com/dmhbmurzw/image/upload/v1728361653/Image_-_Jubaraj_Talukdar_hvqfrx.jpg"
+    },
+    {
+      "name": "Anushka Dam",
+      "role": "Marketing Head",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/v1727728954/Anushka_webp_pmqgrz.webp"
+    }
+  ],
+  "robowar": [
+    {
+      "name": "Ayushman Sagar Baruah",
+      "role": "Robowar Head",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/v1727726868/fq5es2m3mo5shev4eygz.webp"
+    },
+    {
+      "name": "Abhinav Singh",
+      "role": "Robowar Head",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/v1727726865/vhlc0a5bpvgs5ctzbghp.webp"
+    },
+    {
+      "name": "Chaman Laguri",
+      "role": "Robowar Head",
+      "image": "https://res.cloudinary.com/diabjuzqc/image/upload/v1749237795/IMG_20250606_002628_h4ujyb.jpg"
+    }
+  ],
+  "robosoccer": [
+    {
+      "name": "Mahashweta Borgohain",
+      "role": "Robosoccer Head",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/v1727867406/tccxh4z0fnxn8ag1ubsf.webp"
+    },
+    {
+      "name": "Hrishikesh Kashyap",
+      "role": "Robosoccer Head",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/v1727726869/wquws4fxuqeqhjzgghxw.webp"
+    },
+    {
+      "name": "Jyotirmoy Nath",
+      "role": "Robosoccer Head",
+      "image": "https://res.cloudinary.com/dmhbmurzw/image/upload/v1728402413/WhatsApp_Image_2024-10-08_at_21.15.01_qweovw.jpg"
+    }
+  ],
+  "robodrift": [
+    {
+      "name": "Nishit Baishya",
+      "role": "Robodrift Head",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/f_auto,q_auto/vryzuc9umiwnapohojbp"
+    },
+    {
+      "name": "Sunidhi Chetri",
+      "role": "Robodrift Head",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/f_auto,q_auto/e7y4mcm0izibxucgrx2p"
+    },
+    {
+      "name": "Abhishek Kumar",
+      "role": "Robodrift Head",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/v1727726866/jwabhaur1wszlv9vjx5h.webp"
+    }
+  ],
+  "algomaze": [
+    {
+      "name": "Tanmoy Talukdar",
+      "role": "Algomaze Head",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/f_auto,q_auto/pbhpx7qnmv656drwfzck"
+    },
+    {
+      "name": "Akshat Anil Dighade",
+      "role": "Algomaze Head",
+      "image": "https://res.cloudinary.com/dqmktpekh/image/upload/v1727726866/als7qgn8sw8jhede6uwr.webp"
+    },
+    {
+      "name": "Misbahul Karim",
+      "role": "Algomaze Head",
+      "image": "https://res.cloudinary.com/dmhbmurzw/image/upload/v1728360661/edited_misba_-_MISBAHUL_KARIM_ujryao.png"
+    }
+  ],
+  "teamHeads": {
+    "marketing": "Jubaraj Talukdar, Anushka Dam",
+    "robowar": "Ayushman, Abhinav, Chaman",
+    "robosoccer": "Mahashweta, Hrishikesh, Jyotirmoy",
+    "robodrift": "Nishit, Sunidhi, Abhishek",
+    "algomaze": "Tanmoy, Akshat, Misbaul"
+  }
 }
