@@ -7,6 +7,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+        bankgothic: ["BankGothic", "sans-serif"],
+        nyxerin: ["Nyxerin", "serif"],
       },
       screens: {
         xs: "450px",
