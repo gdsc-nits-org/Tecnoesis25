@@ -1,18 +1,21 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import Model from "~/components/Model";
 import Countdown from "~/components/Countdown";
-import Loader from "~/components/Loader";
 import Tecnoesis from "~/components/Tecno";
 import { isMobile } from "react-device-detect";
 import Link from "next/link";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import SocialIcons from "~/components/LandingFooter";
 import DynamicMusicButton from "~/components/DynamicMusicButton";
+import Loader from "~/components/Loader";
 
 export default function Page() {
+  const router = useRouter();
   const [showBottomElements, setShowBottomElements] = useState(false);
+  const [fadeOutUI, setFadeOutUI] = useState(false);
   const [isMount, setIsMount] = useState(false);
   useEffect(() => setIsMount(true), []);
   useEffect(() => {
@@ -30,6 +33,19 @@ export default function Page() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const musicSrc = "/bgm.mp3";
+
+  const handleNavigateToHome = () => {
+    try {
+      router.push('/home');
+    } catch (error) {
+      console.error('Navigation failed:', error);
+      window.location.href = '/home';
+    }
+  };
+
+  const handleZoomStart = () => {
+    setFadeOutUI(true);
+  };
 
   const togglePlay = () => {
     if (!isInitialized) {
@@ -58,16 +74,18 @@ export default function Page() {
   return (
     <div className="h-screen w-screen bg-black">
       {showBottomElements && (
-        <div
-          className={`animate-fade-in absolute -top-[50px] left-[50%] z-${isMobile ? 0 : 20} h-80 w-[50vw] -translate-x-[50%] bg-transparent`}
-        >
-          <Tecnoesis bigScreen={!isMobile} />
+        <div className={`transition-opacity duration-800 ${fadeOutUI ? 'opacity-0' : 'opacity-100'}`}>
+          <div
+            className={`animate-fade-in absolute -top-[50px] left-[50%] z-${isMobile ? 0 : 20} h-80 w-[50vw] -translate-x-[50%] bg-transparent`}
+          >
+            <Tecnoesis bigScreen={!isMobile} />
+          </div>
         </div>
       )}
       <Loader />
-      <Model />
+      <Model onZoomStart={handleZoomStart} onNavigate={handleNavigateToHome} />
       {showBottomElements && (
-        <>
+        <div className={`transition-opacity duration-800 ${fadeOutUI ? 'opacity-0' : 'opacity-100'}`}>
           <div className="animate-fade-in pointer-events-none fixed bottom-8 left-0 right-0 -z-0 flex h-60 w-screen justify-center">
             {isMobile ? (
               <Image
@@ -143,7 +161,7 @@ export default function Page() {
           <div className="animate-fade-in flex flex-col">
             <Countdown />
           </div>
-        </>
+        </div>
       )}
     </div>
   );
