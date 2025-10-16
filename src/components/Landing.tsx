@@ -11,8 +11,6 @@ import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.j
 interface ParticleMaterialType extends THREE.ShaderMaterial {
   uniforms: {
     uTime: { value: number };
-    uCursor: { value: THREE.Vector3 };
-    uVelocity: { value: number }; // Uniform for cursor velocity
   };
 }
 
@@ -27,11 +25,9 @@ interface GLTFResult {
   };
 }
 
-// --- SHADER UPGRADE: VELOCITY-BASED REPULSION ---
+// --- SHADER UPGRADE: SIMPLIFIED FOR NOISE ONLY ---
 const vertexShader = `
   uniform float uTime;
-  uniform vec3 uCursor;
-  uniform float uVelocity; // The speed of the cursor
   attribute float aRandom; // Attribute for randomization
 
   // Perlin noise function remains the same
@@ -87,40 +83,29 @@ const vertexShader = `
   }
 
   void main() {
+    // The shader now ONLY applies ambient noise. All interaction is on the CPU.
     vec3 transformed = position;
 
     // --- RANDOMIZED NOISE LOGIC ---
     float internalNoiseStrength = 0.7;
     vec3 internalNoise = vec3(
-        cnoise(position * 1.5 + uTime * 0.2),
-        cnoise(position * 1.5 + uTime * 0.2 + 100.0),
-        cnoise(position * 1.5 + uTime * 0.2 - 100.0)
+        cnoise(transformed * 1.5 + uTime * 0.2),
+        cnoise(transformed * 1.5 + uTime * 0.2 + 100.0),
+        cnoise(transformed * 1.5 + uTime * 0.2 - 100.0)
     );
     transformed += internalNoise * internalNoiseStrength;
 
     float explosiveNoiseStrength = 12.0;
     vec3 explosiveNoise = vec3(
-        cnoise(position * 0.5 + uTime * 0.1),
-        cnoise(position * 0.5 + uTime * 0.1 + 200.0),
-        cnoise(position * 0.5 + uTime * 0.1 - 200.0)
+        cnoise(transformed * 0.5 + uTime * 0.1),
+        cnoise(transformed * 0.5 + uTime * 0.1 + 200.0),
+        cnoise(transformed * 0.5 + uTime * 0.1 - 200.0)
     );
 
     float timeOffset = aRandom * 10.0;
     float pulse = pow((sin(uTime * 0.5 + timeOffset) + 1.0) * 0.5, 5.0);
     transformed += explosiveNoise * pulse * explosiveNoiseStrength;
-
-    // --- 💡 REPULSION LOGIC ---
-    float distanceToCursor = length(uCursor - position);
-    vec3 directionFromCursor = normalize(position - uCursor);
-
-    // Repulsion is strongest near the cursor, simulating "radius 0"
-    float falloff = smoothstep(15.0, 0.0, distanceToCursor);
-    
-    // The force is a combination of the falloff and the cursor's velocity.
-    float force = falloff * uVelocity * 400.0; 
-
-    transformed += directionFromCursor * force;
-    
+        
     vec4 modelViewPosition = modelViewMatrix * vec4(transformed, 1.0);
     gl_Position = projectionMatrix * modelViewPosition;
     gl_PointSize = 5.0;
@@ -147,8 +132,7 @@ class ParticleMaterial extends THREE.ShaderMaterial {
     super({
       uniforms: {
         uTime: { value: 0 },
-        uCursor: { value: new THREE.Vector3(10000, 10000, 10000) },
-        uVelocity: { value: 0.0 },
+        // uCursor is no longer needed in the shader
       },
       vertexShader,
       fragmentShader,
@@ -172,11 +156,18 @@ function ParticleModel() {
   const pointsRef = useRef<THREE.Points<THREE.BufferGeometry, ParticleMaterialType>>(null);
   const { nodes } = useGLTF("/landing/Tecno_logo.glb") as unknown as GLTFResult;
   
-  const targetPosition = useMemo(() => new THREE.Vector3(10000, 10000, 10000), []);
-  const lastPointerPosition = useRef(new THREE.Vector2());
-  const cursorVelocity = useRef(0);
+  const cursorPosition = useMemo(() => new THREE.Vector3(10000, 10000, 10000), []);
+  const interactionPlane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), []);
 
-  const { particlePositions, randomValues } = useMemo(() => {
+  // Use a ref to hold mutable data that doesn't trigger re-renders
+  const particlesData = useRef<{
+    originalPositions: Float32Array;
+    currentPositions: Float32Array;
+    randomValues: Float32Array;
+  } | null>(null);
+
+  // This useMemo only runs once to initialize particle data
+  useMemo(() => {
     const geometries: THREE.BufferGeometry[] = [];
     nodes.Scene.traverse((child) => {
       if (child instanceof THREE.Mesh && child.geometry) {
@@ -186,67 +177,91 @@ function ParticleModel() {
       }
     });
 
-    if (geometries.length === 0) return { particlePositions: new Float32Array(0), randomValues: new Float32Array(0) };
+    if (geometries.length === 0) return;
     const mergedGeometry = BufferGeometryUtils.mergeGeometries(geometries);
-    if (!mergedGeometry) return { particlePositions: new Float32Array(0), randomValues: new Float32Array(0) };
+    if (!mergedGeometry) return;
 
     const tempMesh = new THREE.Mesh(mergedGeometry);
     const sampler = new MeshSurfaceSampler(tempMesh).build();
     const particleCount = 500;
-    const particles = new Float32Array(particleCount * 3);
+    const original = new Float32Array(particleCount * 3);
     const randoms = new Float32Array(particleCount);
     const tempPosition = new THREE.Vector3();
 
     for (let i = 0; i < particleCount; i++) {
         sampler.sample(tempPosition);
-        particles.set([tempPosition.x, tempPosition.y, tempPosition.z], i * 3);
+        original.set([tempPosition.x, tempPosition.y, tempPosition.z], i * 3);
         randoms[i] = Math.random();
     }
-
-    return { particlePositions: particles, randomValues: randoms };
+    
+    particlesData.current = {
+      originalPositions: original,
+      currentPositions: original.slice(), // Start with current = original
+      randomValues: randoms,
+    };
   }, [nodes]);
 
-  const interactionPlane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), []);
-
   useFrame((state, delta) => {
-    if (pointsRef.current) {
+    if (pointsRef.current && particlesData.current) {
       pointsRef.current.material.uniforms.uTime.value += delta;
       
-      const pointerDistance = state.pointer.distanceTo(lastPointerPosition.current);
-      // --- 💡 SLOWER RELEASE SPEED ---
-      // A smaller damping factor makes the velocity fade out more slowly.
-      cursorVelocity.current = THREE.MathUtils.damp(
-          cursorVelocity.current,
-          pointerDistance,
-          2.5, // Decreased for a slower stagger effect
-          delta
-      );
-      lastPointerPosition.current.copy(state.pointer);
+      state.raycaster.ray.intersectPlane(interactionPlane, cursorPosition);
 
-      state.raycaster.ray.intersectPlane(interactionPlane, targetPosition);
+      const { originalPositions, currentPositions } = particlesData.current;
+      const positionAttribute = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
 
-      pointsRef.current.material.uniforms.uCursor.value.lerp(targetPosition, 0.2);
-      pointsRef.current.material.uniforms.uVelocity.value = cursorVelocity.current;
+      // --- 💡 JAVASCRIPT-BASED REPULSION & STAGGERED RETURN ---
+      for (let i = 0; i < currentPositions.length / 3; i++) {
+        const i3 = i * 3;
+        
+        // Get the current position of the particle
+        const pos = new THREE.Vector3(currentPositions[i3], currentPositions[i3 + 1], currentPositions[i3 + 2]);
+        
+        // Get the original "home" position
+        const originalPos = new THREE.Vector3(originalPositions[i3], originalPositions[i3 + 1], originalPositions[i3 + 2]);
+        
+        // 1. Calculate repulsion from cursor
+        const distanceToCursor = pos.distanceTo(cursorPosition);
+        const interactionRadius = 6.0;
+        const force = Math.max(0, interactionRadius - distanceToCursor);
+        if (force > 0) {
+            const direction = pos.clone().sub(cursorPosition).normalize();
+            const pushForce = Math.pow(force, 2.0) * 0.1;
+            pos.add(direction.multiplyScalar(pushForce));
+        }
+
+        // 2. Apply damping to return to original position
+        // This creates the slow, graceful return effect
+        pos.lerp(originalPos, 0.05);
+
+        // Update the current positions array
+        currentPositions.set([pos.x, pos.y, pos.z], i3);
+      }
+
+      // Update the geometry with the new positions
+      positionAttribute.set(currentPositions);
+      positionAttribute.needsUpdate = true;
     }
   });
   
-  if (particlePositions.length === 0) return null;
+  if (!particlesData.current) return null;
 
   return (
     <points ref={pointsRef}>
       <bufferGeometry>
+        {/* This attribute will now be dynamically updated */}
         <bufferAttribute
           attach="attributes-position"
-          count={particlePositions.length / 3}
-          array={particlePositions}
-          args={[particlePositions, 3]}
+          count={particlesData.current.currentPositions.length / 3}
+          array={particlesData.current.currentPositions}
+          args={[particlesData.current.currentPositions, 3]}
           itemSize={3}
         />
         <bufferAttribute
           attach="attributes-aRandom"
-          count={randomValues.length}
-          array={randomValues}
-          args={[randomValues,1]}
+          count={particlesData.current.randomValues.length}
+          array={particlesData.current.randomValues}
+          args={[particlesData.current.randomValues,1]}
           itemSize={1}
         />
       </bufferGeometry>
