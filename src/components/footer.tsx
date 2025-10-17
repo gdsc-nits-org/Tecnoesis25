@@ -38,7 +38,7 @@ export default function Footer() {
         <div className="relative mobile:scale-[0.8] mobile2:scale-[1] ">
 
           <div className="font-nyxerin pointer-events-none select-none text-center text-[clamp(2.5rem,10vw,6.6rem)] text-white laptop:text-[8rem]">
-            Technoesis
+            Tecnoesis
           </div>
           <div className="font-nyxerin pointer-events-none absolute right-[1.5rem] top-[-1rem] -translate-y-[20%] translate-x-[20%] select-none text-[clamp(2rem,6vw,4rem)] text-white md:right-[2.4rem] lg:right-[3rem]">
             2025

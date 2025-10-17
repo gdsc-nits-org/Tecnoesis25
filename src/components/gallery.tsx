@@ -36,6 +36,12 @@ export default function PhotoGallery() {
     event.stopPropagation();
   };
 
+  // 1. FIX: Add a handler to prevent the right-click menu
+  const handleContextMenu = (event: MouseEvent) => {
+    // This stops the browser from showing the context menu on a long press
+    event.preventDefault();
+  };
+
   const springTransition: Transition = {
     type: "spring",
     stiffness: 100,
@@ -53,11 +59,12 @@ export default function PhotoGallery() {
         onTouchStart={handlePress}
         onTouchEnd={handleRelease}
         onClickCapture={handleClickCapture}
+        // 2. FIX: Attach the context menu handler to the main container
+        onContextMenu={handleContextMenu}
       >
         {/* "Photo Gallery" Title */}
         <motion.div
           className="absolute space-y-0 text-center select-none"
-          // 1. FIX: Add initial={false} to prevent animation on page load
           initial={false}
           animate={isPressed ? "pressed" : "initial"}
           transition={springTransition}
@@ -83,30 +90,15 @@ export default function PhotoGallery() {
           onMouseDown={handleButtonInteraction}
           onTouchStart={handleButtonInteraction}
           className="group absolute flex items-center justify-center mobile:h-20 mobile:w-40 tablet:h-28 tablet:w-56 laptop:h-24 laptop:w-50"
-          // FIX: Add initial={false} here too
           initial={false}
           animate={isPressed ? "pressed" : "initial"}
           transition={springTransition}
           variants={{
-            // 2. FIX: Define all animated properties in the initial state
             initial: {
-              top: "75%",
-              left: "50%",
-              x: "-50%",
-              y: "0%",
-              scale: 1,
-              // Add these to give Framer Motion a clear starting point
-              bottom: "auto",
-              right: "auto",
+              top: "75%", left: "50%", x: "-50%", y: "0%", scale: 1, bottom: "auto", right: "auto",
             },
             pressed: {
-              top: "auto",
-              left: "auto",
-              bottom: "7%",
-              right: "8%",
-              x: "0%",
-              y: "0%",
-              scale: 0.8,
+              top: "auto", left: "auto", bottom: "7%", right: "8%", x: "0%", y: "0%", scale: 0.8,
             },
           }}
         >
