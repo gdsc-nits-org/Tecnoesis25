@@ -19,9 +19,9 @@ export default function PhotoGallery() {
     pressTimer.current = setTimeout(() => {
       setIsPressed(true);
       wasHeld.current = true;
-      if (isMobile && navigator.vibrate) {
-        navigator.vibrate(50);
-      }
+      // if (isMobile && navigator.vibrate) {
+      //   navigator.vibrate(50);
+      // }
     }, 250);
   };
 
@@ -55,8 +55,8 @@ export default function PhotoGallery() {
     initial: { top: "15%", left: "50%", x: "-50%", scale: 1 },
     pressed: {
       top: isMobile ? "8%" : "5%",
-      left: isMobile ? "50%" : "5%",
-      x: isMobile ? "-50%" : "0%",
+      left: isMobile ? "5%" : "5%",
+      x: isMobile ? "0%" : "0%",
       scale: isMobile ? 0.85 : 0.6,
     },
   };
@@ -73,7 +73,7 @@ export default function PhotoGallery() {
 
   return (
     <>
-      {/* 1. FIX: Add 'isolate' to create a new stacking context */}
+      
       <div
         className="relative min-h-screen w-full overflow-hidden isolate laptop:scale-110 bg-center bg-cover xL:bg-contain"
         style={{ backgroundImage: "url('/tech.gif')" }}
@@ -85,15 +85,15 @@ export default function PhotoGallery() {
         onClickCapture={handleClickCapture}
         onContextMenu={handleContextMenu}
       >
-        {/* 2. FIX: Add a new motion.div for the black background overlay */}
+        
         <motion.div
           className="absolute inset-0 z-0 bg-black"
           initial={false}
-          animate={{ opacity: isPressed ? 0.85 : 0 }} // Fades to 85% opacity
+          animate={{ opacity: isPressed ? 0.85 : 0 }} 
           transition={{ duration: 0.7, ease: "easeInOut" }}
         />
 
-        {/* "Photo Gallery" Title */}
+        
         <motion.div
           className="absolute space-y-0 text-center select-none z-10"
           initial={false}
@@ -103,7 +103,7 @@ export default function PhotoGallery() {
         >
           <motion.div
             initial={false}
-            animate={{ textAlign: isMobile && isPressed ? "center" : isPressed ? "left" : "center" }}
+            animate={{ textAlign: isMobile && isPressed ? "left" : isPressed ? "left" : "center" }}
             transition={{ duration: 0.4 }}
             className="mobile:text-[2.5rem] laptop:text-[2.8rem]"
           >
@@ -112,7 +112,7 @@ export default function PhotoGallery() {
           </motion.div>
         </motion.div>
 
-        {/* "View Details" button */}
+      
         <motion.div
           tabIndex={-1}
           onMouseDown={handleButtonInteraction}
@@ -123,6 +123,8 @@ export default function PhotoGallery() {
           transition={springTransition}
           variants={buttonVariants}
         >
+
+          {/* add the link to gallery page here  */}
           <Link href="/gallery" className="absolute inset-0 z-10" aria-label="View photo gallery" />
           <Image
             src="/view1.png"
@@ -138,7 +140,7 @@ export default function PhotoGallery() {
           />
         </motion.div>
 
-        {/* Center Image */}
+       
         <motion.div
           className="pointer-events-none absolute top-1/2 left-1/2 z-10 h-3/4 w-3/4 max-h-[500px] max-w-[500px] -translate-x-1/2 -translate-y-1/2"
           initial={false}
