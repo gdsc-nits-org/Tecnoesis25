@@ -54,17 +54,19 @@ const defaultTeamData: TeamData = {
   teamHeads: {}
 };
 
-// Carousel settings for mobile
-const mobileCarouselSettings = {
+// Carousel settings for mobile - Leadership section
+const leadershipCarouselSettings = {
   dots: true,
   infinite: true,
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
   centerMode: true,
-  centerPadding: '20px',
+  centerPadding: '0px',
   arrows: false,
-  adaptiveHeight: true
+  adaptiveHeight: true,
+  autoplay: true,
+  autoplaySpeed: 2500,
 };
 
 export const TeamsSection = () => {
@@ -139,16 +141,18 @@ export const TeamsSection = () => {
         {/* Mobile Slider */}
         <div className="sm:hidden overflow-hidden">
           <div className="w-full flex justify-center">
-            <div className="w-[85vw] max-w-[320px]">
+            <div className="w-full max-w-[350px] mx-auto">
               <Slider {...(useTeamCard2 ? teamCardSettings : teamCardSettings)}>
                 {members.map((member: TeamMember, i: number) => (
-                  <div key={i} className="!flex justify-center py-6">
-                    <div className={`scale-[0.85] origin-center w-[260px] h-auto ${useTeamCard2 ? '' : 'scale-[0.65]'}`}>
-                      <CardComponent
-                        name={member.name}
-                        role={member.role}
-                        image={member.image}
-                      />
+                  <div key={i} className="px-2">
+                    <div className="flex justify-center items-center">
+                      <div className={`origin-center mx-auto ${useTeamCard2 ? 'scale-[0.85]' : 'scale-90'}`}>
+                        <CardComponent
+                          name={member.name}
+                          role={member.role}
+                          image={member.image}
+                        />
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -274,22 +278,26 @@ export const TeamsSection = () => {
           </div>
 
           {/* Mobile - Carousel */}
-          <div className="sm:hidden mb-2 px-4 overflow-hidden">
-            <Slider {...mobileCarouselSettings}>
-              {teamData.leadership.map((leader, index) => (
-                <div key={index} className="px-2">
-                  <div className="flex justify-center">
-                    <div className="scale-90 origin-center">
-                      <TeamCard
-                        name={leader.name}
-                        role={leader.role}
-                        image={leader.image}
-                      />
+          <div className="sm:hidden mb-2 overflow-hidden">
+            <div className="w-full flex justify-center">
+              <div className="w-full max-w-[350px] mx-auto">
+                <Slider {...leadershipCarouselSettings}>
+                  {teamData.leadership.map((leader, index) => (
+                    <div key={index} className="px-2">
+                      <div className="flex justify-center items-center">
+                        <div className="scale-90 origin-center mx-auto">
+                          <TeamCard
+                            name={leader.name}
+                            role={leader.role}
+                            image={leader.image}
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </Slider>
+                  ))}
+                </Slider>
+              </div>
+            </div>
           </div>
         </div>
 
