@@ -1,5 +1,5 @@
 import { AboutSection, ModuleSection, TeamsSection,Hero } from '../../components/robotron';
-import { TechnoesisHero } from '../../components/TechnoesisHero';
+import { RobotronHero } from '../../components/RobotronHero';
 
 export default function RobotronPage() {
   return (
@@ -7,7 +7,7 @@ export default function RobotronPage() {
       <main className="pb-12">
         <Hero/>
         <AboutSection />
-        <TechnoesisHero />
+        <RobotronHero />
         <ModuleSection />
         <TeamsSection />
       </main>

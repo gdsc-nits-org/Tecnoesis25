@@ -4,12 +4,12 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronRight } from 'lucide-react'
 
-interface TechnoesisHeroProps {
+interface RobotronHeroProps {
   'data-id'?: string
   onNavigate?: () => void
 }
 
-export const TechnoesisHero: React.FC<TechnoesisHeroProps> = ({
+export const RobotronHero: React.FC<RobotronHeroProps> = ({
   'data-id': dataId,
   onNavigate,
 }) => {
