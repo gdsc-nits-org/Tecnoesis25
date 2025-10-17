@@ -1,23 +1,166 @@
-'use client';
+"use client";
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Model from "~/components/Model";
+import Countdown from "~/components/Countdown";
+import Tecnoesis from "~/components/Tecno";
+import { isMobile } from "react-device-detect";
+import Link from "next/link";
+import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import SocialIcons from "~/components/LandingFooter";
+import DynamicMusicButton from "~/components/DynamicMusicButton";
+import Loader from "~/components/Loader";
 
-import dynamic from "next/dynamic";
-import { RobotronHero } from "~/components/RobotronHero";
-const Gallery = dynamic(() => import("~/components/gallery"), { ssr: false });
-const About = dynamic(() => import("~/components/About"), { ssr: false });
-const PreviousSponsors = dynamic(() => import("~/components/PreviousSponsors"), { ssr: false });
-const Footer = dynamic(() => import("~/components/footer"), { ssr: false });
+export default function Page() {
+  const router = useRouter();
+  const [showBottomElements, setShowBottomElements] = useState(false);
+  const [fadeOutUI, setFadeOutUI] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowBottomElements(true);
+    }, 10000);
 
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
-const Home = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const musicSrc = "/bgm.mp3";
+
+  const handleNavigateToHome = () => {
+    try {
+      router.push('/home');
+    } catch (error) {
+      console.error('Navigation failed:', error);
+      window.location.href = '/home';
+    }
+  };
+
+  const handleZoomStart = () => {
+    setFadeOutUI(true);
+  };
+
+  const togglePlay = () => {
+    if (!isInitialized) {
+      if (audioRef.current) {
+        audioRef.current.src = musicSrc;
+        audioRef.current.load();
+      }
+      setIsInitialized(true);
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  useEffect(() => {
+    if (isInitialized) {
+      if (isPlaying) {
+        audioRef.current?.play().catch((error) => {
+          console.error("Audio playback failed:", error);
+          setIsPlaying(false);
+        });
+      } else {
+        audioRef.current?.pause();
+      }
+    }
+  }, [isPlaying, isInitialized]);
+
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden pt-28 md:pt-32 bg-black">
-      <About />
-      <RobotronHero/>
-      <Gallery />
-      <PreviousSponsors />
-      <Footer />
+    <div className="h-screen w-screen bg-black">
+      {showBottomElements && (
+        <div className={`transition-opacity duration-800 ${fadeOutUI ? 'opacity-0' : 'opacity-100'}`}>
+          <div
+            className={`animate-fade-in absolute -top-[50px] left-[50%] z-${isMobile ? 0 : 20} h-80 w-[50vw] -translate-x-[50%] bg-transparent`}
+          >
+            <Tecnoesis bigScreen={!isMobile} />
+          </div>
+        </div>
+      )}
+      <Loader />
+      <Model onZoomStart={handleZoomStart} onNavigate={handleNavigateToHome} />
+      {showBottomElements && (
+        <div className={`transition-opacity duration-800 ${fadeOutUI ? 'opacity-0' : 'opacity-100'}`}>
+          <div className="animate-fade-in pointer-events-none fixed bottom-8 left-0 right-0 -z-0 flex h-60 w-screen justify-center">
+            {isMobile ? (
+              <Image
+                className="absolute bottom-12 h-full w-full  scale-[2] select-none"
+                src="https://d3f6voaditlmqg.cloudfront.net/abc.svg"
+                width={300}
+                height={100}
+                alt="fkadshj"
+              />
+            ) : (
+              <Image
+                className="absolute bottom-0 h-full w-full select-none"
+                src="https://d3f6voaditlmqg.cloudfront.net/abc.svg"
+                width={300}
+                height={100}
+                alt="fkadshj"
+              />
+            )}
+          </div>
+          {isMobile && (
+            <div className="absolute bottom-5 z-50 flex w-full justify-center gap-10">
+              <Link
+                href="https://www.instagram.com/tecnoesis.nits/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="tron-icon"
+              >
+                <FaInstagram className="icon" />
+              </Link>
+              {/*  */}
+              <div className=" z-50 scale-75 items-center justify-center transition-all duration-300 ease-out hover:scale-90 md:scale-100 md:hover:scale-110">
+                <audio ref={audioRef} loop preload="none" />
+                <button
+                  onClick={togglePlay}
+                  className="flex items-center gap-2 px-5 py-2 "
+                  aria-label={
+                    isPlaying
+                      ? "Pause background music"
+                      : "Play background music"
+                  }
+                >
+                  {!isPlaying ? (
+                    <Image
+                      src="https://d3f6voaditlmqg.cloudfront.net/pauseButton.svg"
+                      alt="Pause Button"
+                      width={100}
+                      height={100}
+                    />
+                  ) : (
+                    <Image
+                      src="https://d3f6voaditlmqg.cloudfront.net/playButton.svg"
+                      alt="Play Button"
+                      width={100}
+                      height={100}
+                    />
+                  )}
+                </button>
+              </div>
+
+              <Link
+                href="https://www.facebook.com/tecnoesis.nits"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="tron-icon"
+              >
+                <FaFacebookF className="icon" />
+              </Link>
+            </div>
+          )}
+          {!isMobile && <SocialIcons />}
+          {!isMobile && <DynamicMusicButton />}
+
+          <div className="animate-fade-in flex flex-col">
+            <Countdown />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-
-export default Home;
