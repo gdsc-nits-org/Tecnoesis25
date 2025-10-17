@@ -136,13 +136,24 @@ const Hero = () => {
 
       {/* Tron Bike Image Layer */}
       <div className={styles.bikeImageLayer}>
-        <Image
-          src="/robotron/tron_ares_bike.png"
-          alt="Tron Ares Bike"
-          fill
-          className={styles.bikeImage}
-          priority
-        />
+        <motion.div
+          className={styles.bikeImageWrapper}
+          initial={{ x: '-150%', scale: 0.5, opacity: 0 }}
+          animate={{ x: 0, scale: 1, opacity: 1 }}
+          transition={{
+            duration: 3,
+            ease: [0.43, 0.13, 0.23, 0.96],
+            delay: 0.5
+          }}
+        >
+          <Image
+            src="/robotron/tron_ares_bike.png"
+            alt="Tron Ares Bike"
+            fill
+            className={styles.bikeImage}
+            priority
+          />
+        </motion.div>
       </div>
 
       {/* Silhouette Layer - Top layer above everything */}

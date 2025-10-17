@@ -80,6 +80,12 @@
   padding: 2rem;
 }
 
+.bikeImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .bikeImage {
   object-fit: contain;
   object-position: bottom left;
