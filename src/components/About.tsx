@@ -33,7 +33,7 @@ export default function About() {
         className="relative flex h-full w-full items-center justify-center bg-cover bg-center flex-col"
         style={{ backgroundImage: "url('/about/bg.png')" }}
       >
-        <div className="relative h-screen mb-8 w-full sm:hidden ">
+        <div className="relative h-screen mb-8 w-full sm:hidden max-w-[24rem] max-h-[35rem]">
           <Image
             className="absolute h-full w-full"
             src="/about/framemobile.png"
@@ -41,7 +41,7 @@ export default function About() {
             width={200}
             height={200}
           />
-          <div className="border-opacity-1 absolute left-[50%] top-[54%] h-[82%] w-[80%] translate-x-[-50%] translate-y-[-50%] overflow-hidden  rounded-lg border-[0.3px] border-[#b0adad50] backdrop-blur-sm ">
+          <div className="border-opacity-1 absolute left-[50%] top-[54%] h-auto w-[80%] translate-x-[-50%] translate-y-[-50%] overflow-hidden  rounded-lg border-[0.3px] border-[#b0adad50] backdrop-blur-sm ">
             <div className="flex flex-col items-center justify-center py-6 lg:py-12">
               <h1
                 className="glitch-text font-nyxerin text-center text-2xl font-bold text-white  py-0"
@@ -61,7 +61,7 @@ export default function About() {
             </p>
           </div>
         </div>
-        <div className="relative h-screen w-full sm:hidden">
+        <div className="relative h-screen w-full sm:hidden max-w-[24rem] max-h-[35rem]">
           <Image
             className="absolute h-full w-full"
             src="/about/framemobile.png"
@@ -69,7 +69,7 @@ export default function About() {
             width={200}
             height={200}
           />
-          <div className="border-opacity-1 absolute left-[50%] top-[54%] h-[82%] w-[80%] translate-x-[-50%] translate-y-[-50%] overflow-hidden  rounded-lg border-[0.3px] border-[#b0adad50] backdrop-blur-sm ">
+          <div className="border-opacity-1 absolute left-[50%] top-[54%] h-auto w-[80%] translate-x-[-50%] translate-y-[-50%] overflow-hidden  rounded-lg border-[0.3px] border-[#b0adad50] backdrop-blur-sm ">
             <div className="flex flex-col items-center justify-center py-6 lg:py-12">
               <h1
                 className="glitch-text font-nyxerin text-center text-2xl font-bold text-white  py-0"
