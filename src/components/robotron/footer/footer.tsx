@@ -4,7 +4,7 @@ import FaultyTerminal from './FaultyTerminal';
 
 const Footer = () => {
     return (
-        <div className="relative w-full overflow-hidden bg-black p-0 mb-[-4rem]">
+        <div className="relative w-full overflow-hidden bg-black p-0 ">
             {/* Background Terminal Effect */}
             <div className="absolute inset-0 z-0">
                 <FaultyTerminal
@@ -43,7 +43,7 @@ const Footer = () => {
             </div>
 
             {/* Bottom Credits */}
-            <div className="absolute bottom-20 left-0 right-0 z-10 w-full px-4">
+            <div className="absolute bottom-10 md:bottom-15 left-0 right-0 z-10 w-full px-4">
                 <a href="https://www.nerdsnitsilchar.in/" target="_blank" rel="noopener noreferrer">
                     <p className="font-orbitron text-center text-[0.6rem] font-thin tracking-widest text-white sm:text-xs md:text-sm">
                         Made With ❤️ By N.E.R.D.S.
