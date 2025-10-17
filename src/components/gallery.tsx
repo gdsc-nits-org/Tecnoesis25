@@ -10,30 +10,25 @@ import { motion, Transition } from "framer-motion";
 export default function PhotoGallery() {
   const [isPressed, setIsPressed] = useState(false);
   const pressTimer = useRef<NodeJS.Timeout | null>(null);
-  // 1. Add a ref to track if a press-and-hold action was completed.
   const wasHeld = useRef(false);
 
   const handlePress = () => {
     if (pressTimer.current) clearTimeout(pressTimer.current);
     pressTimer.current = setTimeout(() => {
       setIsPressed(true);
-      wasHeld.current = true; // Mark that a press-and-hold occurred
+      wasHeld.current = true;
     }, 250);
   };
 
   const handleRelease = () => {
-    if (pressTimer.current) {
-      clearTimeout(pressTimer.current);
-    }
+    if (pressTimer.current) clearTimeout(pressTimer.current);
     setIsPressed(false);
-    // We don't reset wasHeld here; we do it on the click event.
   };
 
-  // This handler stops the event from reaching the parent if it was a press-and-hold
   const handleClickCapture = (event: MouseEvent | TouchEvent) => {
     if (wasHeld.current) {
-      event.stopPropagation(); // Stop the click from bubbling up
-      wasHeld.current = false; // Reset for the next interaction
+      event.stopPropagation();
+      wasHeld.current = false;
     }
   };
 
@@ -50,19 +45,20 @@ export default function PhotoGallery() {
   return (
     <>
       <div
-        className="relative min-h-screen w-full  overflow-hidden laptop:scale-110 bg-center bg-cover xL:bg-contain"
+        className="relative min-h-screen w-full overflow-hidden laptop:scale-110 bg-center bg-cover xL:bg-contain"
         style={{ backgroundImage: "url('/tech.gif')" }}
         onMouseDown={handlePress}
         onMouseUp={handleRelease}
         onMouseLeave={handleRelease}
         onTouchStart={handlePress}
         onTouchEnd={handleRelease}
-       
         onClickCapture={handleClickCapture}
       >
-        
+        {/* "Photo Gallery" Title */}
         <motion.div
           className="absolute space-y-0 text-center select-none"
+          // 1. FIX: Add initial={false} to prevent animation on page load
+          initial={false}
           animate={isPressed ? "pressed" : "initial"}
           transition={springTransition}
           variants={{
@@ -71,6 +67,7 @@ export default function PhotoGallery() {
           }}
         >
           <motion.div
+            initial={false}
             animate={{ textAlign: isPressed ? "left" : "center" }}
             transition={{ duration: 0.4 }}
             className="mobile:text-[2.5rem] laptop:text-[2.8rem]"
@@ -80,17 +77,37 @@ export default function PhotoGallery() {
           </motion.div>
         </motion.div>
 
-       
+        {/* "View Details" button */}
         <motion.div
           tabIndex={-1}
           onMouseDown={handleButtonInteraction}
           onTouchStart={handleButtonInteraction}
           className="group absolute flex items-center justify-center mobile:h-20 mobile:w-40 tablet:h-28 tablet:w-56 laptop:h-24 laptop:w-50"
+          // FIX: Add initial={false} here too
+          initial={false}
           animate={isPressed ? "pressed" : "initial"}
           transition={springTransition}
           variants={{
-            initial: { top: "75%", left: "50%", x: "-50%", y: "0%" },
-            pressed: { top: "auto", left: "auto", bottom: "7%", right: "8%", x: "0%", y: "0%", scale: 0.8 },
+            // 2. FIX: Define all animated properties in the initial state
+            initial: {
+              top: "75%",
+              left: "50%",
+              x: "-50%",
+              y: "0%",
+              scale: 1,
+              // Add these to give Framer Motion a clear starting point
+              bottom: "auto",
+              right: "auto",
+            },
+            pressed: {
+              top: "auto",
+              left: "auto",
+              bottom: "7%",
+              right: "8%",
+              x: "0%",
+              y: "0%",
+              scale: 0.8,
+            },
           }}
         >
           <Link href="/gallery" className="absolute inset-0 z-10" aria-label="View photo gallery" />
@@ -109,9 +126,10 @@ export default function PhotoGallery() {
           />
         </motion.div>
 
-        
+        {/* Center Image */}
         <motion.div
           className="pointer-events-none absolute top-1/2 left-1/2 h-3/4 w-3/4 max-h-[500px] max-w-[500px] -translate-x-1/2 -translate-y-1/2"
+          initial={false}
           animate={{ opacity: isPressed ? 1 : 0 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
         >
