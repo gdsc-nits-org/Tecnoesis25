@@ -2,7 +2,6 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import Navbar from "~/components/Navbar/Navbar";
 
 export const metadata: Metadata = {
   title: "Tecnoesis 2025",
@@ -37,8 +36,7 @@ export default function RootLayout({
         <meta property="og:website" content="https://tecnoesis25.pages.dev/" />
         <meta property="og:type" content="website" />
       </head>
-      <body className="no-scrollbar flex min-h-screen flex-col overflow-x-hidden bg-black">
-        {/* <Navbar /> */}
+      <body className="flex min-h-screen flex-col overflow-x-hidden bg-black">
         {children}
       </body>
       {process.env.NODE_ENV == "production" && (

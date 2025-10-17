@@ -56,7 +56,7 @@ export default function NavbarMobile() {
   }, [lastScrollY]);
 
   return (
-    <nav className={`flex items-center justify-between px-4 fixed top-0 left-0 w-full z-50 bg-transparent `}>
+    <nav className={`flex items-center justify-between px-4 fixed top-0 left-0 w-full z-[10000000] bg-transparent `}>
 
       <div className={`flex px-2 items-center h-full justify-between py-3 w-full transition-transform backdrop-blur-sm origin-center scale-100 sm:scale-110 md:scale-125 cursor-pointertransition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
         <Image
@@ -82,7 +82,7 @@ export default function NavbarMobile() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.4 }}
-            className="fixed top-0 right-0 w-[100%] min-h-screen bg-[#0a0a0a] shadow-lg flex flex-col justify-between p-6 z-50 overflow-y-auto"
+            className="fixed top-0 right-0 w-full h-[100dvh] bg-[#0a0a0a] shadow-lg flex flex-col justify-between p-6 z-50 overflow-y-auto overflow-x-hidden"
           >
 
             <div className="flex justify-end pr-2 pt-2">
@@ -116,7 +116,7 @@ export default function NavbarMobile() {
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ duration: 0.4 }}
-                            className="absolute w-[420px] h-[60px]"
+                            className="absolute w-[90vw] max-w-[500px] h-[60px]"
                           >
                             <Image
                               src="/ItemBoundary.svg"
@@ -128,7 +128,7 @@ export default function NavbarMobile() {
                         )}
 
                         <span
-                          className={`relative z-10 text-3xl font-semibold font-bankGothik transition-all duration-300 ${isActive ? "text-[#FF9595]" : "text-white"
+                          className={`relative z-10 text-3xl font-semibold font-bankgothic transition-all duration-300 ${isActive ? "text-[#FF9595]" : "text-white"
                             }`}
                         >
                           {item.name}
