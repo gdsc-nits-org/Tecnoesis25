@@ -46,7 +46,14 @@ export default function CustomCursor() {
   }, []);
 
   return (
-    <div ref={cursorRef} className="custom-cursor" style={{ opacity: 0, transition: "transform 0.15s ease, opacity 0.3s ease" }}>
+    <div
+      ref={cursorRef}
+      className="custom-cursor"
+      style={{
+        opacity: 0,
+        transition: "transform 0.15s ease, opacity 0.3s ease",
+      }}
+    >
       <div className="cursor-ring">
         <div className="cursor-dot"></div>
       </div>

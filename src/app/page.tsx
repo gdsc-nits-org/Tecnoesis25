@@ -34,10 +34,10 @@ export default function Page() {
 
   const handleNavigateToHome = () => {
     try {
-      router.push('/home');
+      router.push("/home");
     } catch (error) {
-      console.error('Navigation failed:', error);
-      window.location.href = '/home';
+      console.error("Navigation failed:", error);
+      window.location.href = "/home";
     }
   };
 
@@ -72,7 +72,9 @@ export default function Page() {
   return (
     <div className="h-screen w-screen bg-black">
       {showBottomElements && (
-        <div className={`transition-opacity duration-800 ${fadeOutUI ? 'opacity-0' : 'opacity-100'}`}>
+        <div
+          className={`duration-800 transition-opacity ${fadeOutUI ? "opacity-0" : "opacity-100"}`}
+        >
           <div
             className={`animate-fade-in absolute -top-[50px] left-[50%] z-${isMobile ? 0 : 20} h-80 w-[50vw] -translate-x-[50%] bg-transparent`}
           >
@@ -83,7 +85,9 @@ export default function Page() {
       <Loader />
       <Model onZoomStart={handleZoomStart} onNavigate={handleNavigateToHome} />
       {showBottomElements && (
-        <div className={`transition-opacity duration-800 ${fadeOutUI ? 'opacity-0' : 'opacity-100'}`}>
+        <div
+          className={`duration-800 transition-opacity ${fadeOutUI ? "opacity-0" : "opacity-100"}`}
+        >
           <div className="animate-fade-in pointer-events-none fixed bottom-8 left-0 right-0 -z-0 flex h-60 w-screen justify-center">
             {isMobile ? (
               <Image

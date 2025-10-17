@@ -22,7 +22,7 @@ const Home = () => {
       <About />
       <SnakeMatrix />
       <Gallery />
-      <RobotronHero/>
+      <RobotronHero />
       <PreviousSponsors />
       <Footer />
     </div>

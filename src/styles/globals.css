@@ -92,7 +92,7 @@ body {
 
 .cursor-ring::before,
 .cursor-ring::after {
-  content: '';
+  content: "";
   position: absolute;
   background: rgba(255, 0, 0, 0.9);
 }
@@ -147,7 +147,11 @@ body {
 }
 
 /* Interactive elements cursor */
-a, button, input, textarea, select {
+a,
+button,
+input,
+textarea,
+select {
   cursor: none;
 }
 
@@ -471,23 +475,23 @@ a, button, input, textarea, select {
 }
 
 @font-face {
-  font-family: 'nyxerin';
-  src: url('/fonts/nyxerin.otf') format('opentype');
+  font-family: "nyxerin";
+  src: url("/fonts/nyxerin.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 
 .font-nyxerin {
-  font-family: 'nyxerin', sans-serif;
+  font-family: "nyxerin", sans-serif;
 }
 
 @font-face {
-  font-family: 'bankgothic';
-  src: url('/fonts/DEMO-bgt45.otf') format('opentype');
+  font-family: "bankgothic";
+  src: url("/fonts/DEMO-bgt45.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 
 .font-bank {
-  font-family: 'bankgothic', sans-serif;
+  font-family: "bankgothic", sans-serif;
 }

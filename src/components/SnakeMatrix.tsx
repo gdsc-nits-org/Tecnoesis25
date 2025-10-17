@@ -7,7 +7,7 @@ interface Position {
 }
 
 const GRID_ROWS = 7;
-const GRID_COLS = 52; 
+const GRID_COLS = 52;
 const INITIAL_SPEED = 150;
 
 export default function SnakeMatrix() {
@@ -18,7 +18,9 @@ export default function SnakeMatrix() {
   const gameLoopRef = useRef<NodeJS.Timeout>();
 
   const isInSnake = useRef((pos: Position, snakeBody: Position[]): boolean => {
-    return snakeBody.some((segment) => segment.x === pos.x && segment.y === pos.y);
+    return snakeBody.some(
+      (segment) => segment.x === pos.x && segment.y === pos.y,
+    );
   }).current;
 
   const generateFood = (): Position => {
@@ -28,17 +30,23 @@ export default function SnakeMatrix() {
     };
   };
 
-  const getNextDirection = useRef((head: Position, target: Position, currentDirection: Position): Position => {
-    const dx = target.x - head.x;
-    const dy = target.y - head.y;
+  const getNextDirection = useRef(
+    (
+      head: Position,
+      target: Position,
+      currentDirection: Position,
+    ): Position => {
+      const dx = target.x - head.x;
+      const dy = target.y - head.y;
 
-    if (Math.abs(dx) > Math.abs(dy)) {
-      return { x: dx > 0 ? 1 : -1, y: 0 };
-    } else if (dy !== 0) {
-      return { x: 0, y: dy > 0 ? 1 : -1 };
-    }
-    return currentDirection;
-  }).current;
+      if (Math.abs(dx) > Math.abs(dy)) {
+        return { x: dx > 0 ? 1 : -1, y: 0 };
+      } else if (dy !== 0) {
+        return { x: 0, y: dy > 0 ? 1 : -1 };
+      }
+      return currentDirection;
+    },
+  ).current;
 
   useEffect(() => {
     const moveSnake = () => {
@@ -57,7 +65,7 @@ export default function SnakeMatrix() {
         const ateFood = newHead.x === food.x && newHead.y === food.y;
 
         const newSnake = [newHead, ...prevSnake];
-        
+
         if (!ateFood) {
           newSnake.pop();
         } else {
@@ -97,14 +105,14 @@ export default function SnakeMatrix() {
   const getIntensity = (x: number, y: number): number => {
     const key = `${x}-${y}`;
     const snakeIndex = snake.findIndex((s) => s.x === x && s.y === y);
-    
+
     if (snakeIndex === 0) return 5;
     if (snakeIndex > 0) {
       const intensity = 5 - Math.floor((snakeIndex / snake.length) * 3);
       return Math.max(2, intensity);
     }
     if (trail.has(key)) return 1;
-    return 0;   
+    return 0;
   };
 
   const getColor = (intensity: number): string => {
@@ -123,7 +131,7 @@ export default function SnakeMatrix() {
     <div className="w-full bg-black max-[500px]:hidden">
       <div className="w-full">
         <div
-          className="grid gap-[2px] w-full max-[400px]:h-[200px]"
+          className="grid w-full gap-[2px] max-[400px]:h-[200px]"
           style={{
             gridTemplateColumns: `repeat(${GRID_COLS}, minmax(0, 1fr))`,
             gridTemplateRows: `repeat(${GRID_ROWS}, minmax(0, 1fr))`,
@@ -134,20 +142,20 @@ export default function SnakeMatrix() {
             Array.from({ length: GRID_COLS }).map((_, col) => {
               const intensity = getIntensity(col, row);
               const isFood = food.x === col && food.y === row;
-              
+
               return (
                 <div
                   key={`${row}-${col}`}
                   className={`
-                    ${isFood ? "bg-white/90 border-white/50 animate-pulse shadow-lg shadow-white/30" : getColor(intensity)}
-                    rounded-[1px] border transition-all duration-200 w-full h-full
+                    ${isFood ? "animate-pulse border-white/50 bg-white/90 shadow-lg shadow-white/30" : getColor(intensity)}
+                    h-full w-full rounded-[1px] border transition-all duration-200
                   `}
                   style={{
-                    aspectRatio: '1 / 1',
+                    aspectRatio: "1 / 1",
                   }}
                 />
               );
-            })
+            }),
           )}
         </div>
       </div>

@@ -8,7 +8,7 @@ export default {
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
         nyxerin: ["Nyxerin", "sans-serif"],
-        bankGothik : ["BankGothic","sans-serif"],
+        bankGothik: ["BankGothic", "sans-serif"],
         orbitron: ["Orbitron", "sans-serif"],
       },
       screens: {
@@ -26,8 +26,8 @@ export default {
         ipadair: "1180px",
         fourK: "2000px",
       },
-       backgroundImage: {
-        'red-grid': `
+      backgroundImage: {
+        "red-grid": `
           radial-gradient(circle at 40% 40%, rgba(255, 0, 0, 0.2), transparent 60%),
           radial-gradient(circle at 70% 60%, rgba(255, 0, 0, 0.1), transparent 70%),
           radial-gradient(circle, rgba(255, 0, 0, 0.8) 2px, transparent 2px),
@@ -36,7 +36,7 @@ export default {
         `,
       },
       backgroundSize: {
-        'red-grid': `
+        "red-grid": `
           100% 100%,
           100% 100%,
           50px 50px,
@@ -45,7 +45,7 @@ export default {
         `,
       },
       backgroundPosition: {
-        'red-grid': `
+        "red-grid": `
           0 0,
           0 0,
           25px 25px,
@@ -53,9 +53,9 @@ export default {
           0 0
         `,
       },
-       keyframes: {
+      keyframes: {
         glowMove: {
-          '0%, 100%': {
+          "0%, 100%": {
             backgroundPosition: `
               0 0,
               0 0,
@@ -64,7 +64,7 @@ export default {
               0 0
             `,
           },
-          '50%': {
+          "50%": {
             backgroundPosition: `
               10px 10px,
               -10px -10px,
@@ -76,10 +76,10 @@ export default {
         },
       },
       animation: {
-        glowMove: 'glowMove 10s ease-in-out infinite alternate',
+        glowMove: "glowMove 10s ease-in-out infinite alternate",
       },
       clipPath: {
-        'angled': 'polygon(0 0, 100% 0, 100% 90%, 0 100%)',
+        angled: "polygon(0 0, 100% 0, 100% 90%, 0 100%)",
       },
     },
   },

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import styles from './ModuleSection.module.css';
+import React, { useState, useEffect } from "react";
+import styles from "./ModuleSection.module.css";
 
 interface ModuleHeadingProps {
   children: React.ReactNode;
@@ -11,8 +11,8 @@ interface ModuleHeadingProps {
 
 const ModuleHeading: React.FC<ModuleHeadingProps> = ({
   children,
-  className = '',
-  bgImage = '/robotron/modules/moduleheadingbg.svg'
+  className = "",
+  bgImage = "/robotron/modules/moduleheadingbg.svg",
 }) => {
   const [mounted, setMounted] = useState(false);
 
@@ -35,9 +35,9 @@ const ModuleHeading: React.FC<ModuleHeadingProps> = ({
             <source src="/robotron/bit_binary.mp4" type="video/mp4" />
           </video>
         )}
-        <img 
+        <img
           src={bgImage}
-          alt="" 
+          alt=""
           className={styles.backgroundImage}
           aria-hidden="true"
         />

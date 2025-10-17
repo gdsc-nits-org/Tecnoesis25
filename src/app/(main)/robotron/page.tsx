@@ -1,14 +1,20 @@
-import { AboutSection, ModuleSection, TeamsSection,Hero, Footer } from '../../../components/robotron';
+import {
+  AboutSection,
+  ModuleSection,
+  TeamsSection,
+  Hero,
+  Footer,
+} from "../../../components/robotron";
 
 export default function RobotronPage() {
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden">
+    <div className="min-h-screen overflow-hidden bg-black text-white">
       <main className="pb-0">
-        <Hero/>
+        <Hero />
         <AboutSection />
         <ModuleSection />
         <TeamsSection />
-        <Footer/>
+        <Footer />
       </main>
     </div>
   );

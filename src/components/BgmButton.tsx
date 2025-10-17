@@ -9,7 +9,7 @@ const BgmButton: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const musicSrc = "/bgm.mp3"; 
+  const musicSrc = "/bgm.mp3";
 
   const togglePlay = () => {
     if (!isInitialized) {
@@ -36,14 +36,15 @@ const BgmButton: React.FC = () => {
   }, [isPlaying, isInitialized]);
   if (isMobile) return null;
   return (
-    <div className="flex fixed scale-75 hover:scale-90 md:scale-100 md:hover:scale-110 bottom-40 md:bottom-14 right-0 md:right-3 items-center justify-center transition-all duration-300 ease-out z-50">
-      
+    <div className="fixed bottom-40 right-0 z-50 flex scale-75 items-center justify-center transition-all duration-300 ease-out hover:scale-90 md:bottom-14 md:right-3 md:scale-100 md:hover:scale-110">
       <audio ref={audioRef} loop preload="none" />
 
       <button
         onClick={togglePlay}
         className="flex items-center gap-2 px-5 py-2 "
-        aria-label={isPlaying ? "Pause background music" : "Play background music"}
+        aria-label={
+          isPlaying ? "Pause background music" : "Play background music"
+        }
       >
         {!isPlaying ? (
           <Image
