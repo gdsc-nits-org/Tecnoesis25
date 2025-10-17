@@ -36,9 +36,7 @@ export default function PhotoGallery() {
     event.stopPropagation();
   };
 
-  // 1. FIX: Add a handler to prevent the right-click menu
   const handleContextMenu = (event: MouseEvent) => {
-    // This stops the browser from showing the context menu on a long press
     event.preventDefault();
   };
 
@@ -59,7 +57,6 @@ export default function PhotoGallery() {
         onTouchStart={handlePress}
         onTouchEnd={handleRelease}
         onClickCapture={handleClickCapture}
-        // 2. FIX: Attach the context menu handler to the main container
         onContextMenu={handleContextMenu}
       >
         {/* "Photo Gallery" Title */}
@@ -94,14 +91,27 @@ export default function PhotoGallery() {
           animate={isPressed ? "pressed" : "initial"}
           transition={springTransition}
           variants={{
+            // FIX: All animated properties are now defined in BOTH states
             initial: {
-              top: "75%", left: "50%", x: "-50%", y: "0%", scale: 1, bottom: "auto", right: "auto",
+              top: "75%",
+              left: "50%",
+              bottom: "auto", // Explicitly define the starting value
+              right: "auto",  // Explicitly define the starting value
+              x: "-50%",
+              y: "0%",
+              scale: 1,
             },
             pressed: {
-              top: "auto", left: "auto", bottom: "7%", right: "8%", x: "0%", y: "0%", scale: 0.8,
+              top: "auto",    // Explicitly define the ending value
+              left: "auto",   // Explicitly define the ending value
+              bottom: "7%",
+              right: "8%",
+              x: "0%",
+              y: "0%",
+              scale: 0.8,
             },
           }}
-        >
+        >  {/* add the link to gallery here */}
           <Link href="/gallery" className="absolute inset-0 z-10" aria-label="View photo gallery" />
 
           <Image
