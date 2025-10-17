@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from "next/dynamic";
+import { RobotronHero } from "~/components/RobotronHero";
 const Gallery = dynamic(() => import("~/components/gallery"), { ssr: false });
 const About = dynamic(() => import("~/components/About"), { ssr: false });
 const PreviousSponsors = dynamic(() => import("~/components/PreviousSponsors"), { ssr: false });
@@ -12,6 +13,7 @@ const Home = () => {
     <div className="flex flex-col min-h-screen overflow-x-hidden pt-28 md:pt-32 bg-black">
       <About />
       <Gallery />
+      <RobotronHero/>
       <PreviousSponsors />
       <Footer />
     </div>
