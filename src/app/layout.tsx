@@ -11,7 +11,6 @@ const orbitron = Orbitron({
 });
 import Navbar from "~/components/Navbar/Navbar";
 
-
 export const metadata: Metadata = {
   title: "Tecnoesis 2025",
   description: "The Official Website of Tecnoesis 2025",
@@ -42,17 +41,16 @@ export default function RootLayout({
         />
         <meta property="og:image:width" content="300" />
         <meta property="og:image:height" content="300" />
-        <meta
-          property="og:website"
-          content="https://tecnoesis25.pages.dev/"
-        />
+        <meta property="og:website" content="https://tecnoesis25.pages.dev/" />
         <meta property="og:type" content="website" />
       </head>
-      <body className="min-h-screen flex flex-col no-scrollbar overflow-x-hidden bg-black">
-        <Navbar />
+      <body className="no-scrollbar flex min-h-screen flex-col overflow-x-hidden bg-black">
+        {/* <Navbar /> */}
         {children}
       </body>
-      {process.env.NODE_ENV == 'production' && <GoogleAnalytics gaId="G-69XDYH0DYC" />}
+      {process.env.NODE_ENV == "production" && (
+        <GoogleAnalytics gaId="G-69XDYH0DYC" />
+      )}
     </html>
   );
 }

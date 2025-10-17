@@ -1,4 +1,4 @@
-import { AboutSection, ModuleSection, TeamsSection,Hero, Footer } from '../../components/robotron';
+import { AboutSection, ModuleSection, TeamsSection,Hero, Footer } from '../../../components/robotron';
 
 
 export default function RobotronPage() {
