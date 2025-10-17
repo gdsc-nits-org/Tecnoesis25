@@ -18,25 +18,30 @@ const Hero = () => {
 
     const robotronChars = el.querySelectorAll('.robotron-char');
     
-    // ROBOTRON starts visible, fades out on scroll
-    gsap.fromTo(
+    // Set initial state
+    gsap.set(robotronChars, { opacity: 1, y: 0 });
+    
+    // ROBOTRON starts visible, fades out on scroll - optimized with force3D
+    gsap.to(
       robotronChars,
-      {
-        opacity: 1,
-        y: 0,
-      },
       {
         opacity: 0,
         y: 100,
         stagger: 0.05,
+        force3D: true,
         scrollTrigger: {
           trigger: el,
           start: 'top top',
           end: 'top top-=30%',
-          scrub: true,
+          scrub: 1, // Added smoothing
         }
       }
     );
+
+    // Cleanup
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
   }, []);
 
   return (
@@ -64,6 +69,7 @@ const Hero = () => {
             ease: 'linear',
             repeatType: 'loop',
           }}
+          style={{ willChange: 'transform' }}
         />
         <motion.div
           className={styles.bgLayer2}
@@ -76,33 +82,7 @@ const Hero = () => {
             ease: 'linear',
             repeatType: 'loop',
           }}
-        />
-      </div>
-      {/* Blue overlay for Layer 2 */}
-      <div className={styles.bgLayer2Container}>
-        <motion.div
-          className="h-full w-full flex-shrink-0"
-          animate={{
-            x: ['0%', '-100%'],
-          }}
-          transition={{
-            duration: 100,
-            repeat: Infinity,
-            ease: 'linear',
-            repeatType: 'loop',
-          }}
-        />
-        <motion.div
-          className="h-full w-full flex-shrink-0"
-          animate={{
-            x: ['0%', '-100%'],
-          }}
-          transition={{
-            duration: 100,
-            repeat: Infinity,
-            ease: 'linear',
-            repeatType: 'loop',
-          }}
+          style={{ willChange: 'transform' }}
         />
       </div>
 
@@ -119,6 +99,7 @@ const Hero = () => {
             ease: 'linear',
             repeatType: 'loop',
           }}
+          style={{ willChange: 'transform' }}
         />
         <motion.div
           className={styles.bgLayer3}
@@ -131,6 +112,7 @@ const Hero = () => {
             ease: 'linear',
             repeatType: 'loop',
           }}
+          style={{ willChange: 'transform' }}
         />
       </div>
 
@@ -141,10 +123,11 @@ const Hero = () => {
           initial={{ x: '-150%', scale: 0.5, opacity: 0 }}
           animate={{ x: 0, scale: 1, opacity: 1 }}
           transition={{
-            duration: 3,
+            duration: 2.5,
             ease: [0.43, 0.13, 0.23, 0.96],
-            delay: 0.5
+            delay: 0.3
           }}
+          style={{ willChange: 'transform, opacity' }}
         >
           <Image
             src="/robotron/tron_ares_bike.png"
@@ -152,6 +135,7 @@ const Hero = () => {
             fill
             className={styles.bikeImage}
             priority
+            quality={90}
           />
         </motion.div>
       </div>
@@ -169,6 +153,7 @@ const Hero = () => {
             ease: 'linear',
             repeatType: 'loop',
           }}
+          style={{ willChange: 'transform' }}
         />
         <motion.div
           className={styles.silhouette}
@@ -181,6 +166,7 @@ const Hero = () => {
             ease: 'linear',
             repeatType: 'loop',
           }}
+          style={{ willChange: 'transform' }}
         />
       </div>
 
