@@ -54,10 +54,11 @@ export default function PhotoGallery() {
   const titleVariants = {
     initial: { top: "15%", left: "50%", x: "-50%", scale: 1 },
     pressed: {
-      top: isMobile ? "8%" : "5%",
-      left: isMobile ? "5%" : "5%",
+      top: isMobile ? "8%" : "8.5%",
+      left: isMobile ? "5%" : "14%",
       x: isMobile ? "0%" : "0%",
-      scale: isMobile ? 0.85 : 0.6,
+      scale: isMobile ? 0.85 : 0.8,
+      
     },
   };
 
@@ -66,7 +67,7 @@ export default function PhotoGallery() {
       top: "75%", left: "50%", x: "-50%", y: "0%", scale: 1, bottom: "auto", right: "auto",
     },
     pressed: {
-      top: "auto", left: "auto", bottom: "7%", right: "8%", x: "0%", y: "0%",
+      top: "auto", left: "auto", bottom: "12%", right: "14%", x: "0%", y: "0%",
       scale: isMobile ? 0.9 : 0.8,
     },
   };
@@ -142,13 +143,13 @@ export default function PhotoGallery() {
 
        
         <motion.div
-          className="pointer-events-none absolute top-1/2 left-1/2 z-10 h-3/4 w-3/4 max-h-[500px] max-w-[500px] -translate-x-1/2 -translate-y-1/2"
+          className="pointer-events-none absolute top-1/2 left-1/2 z-10 h-3/4 w-3/4 max-h-[500px] max-w-[500px] laptop:max-h-[600px] laptop:max-w-[600px] -translate-x-1/2 -translate-y-1/2"
           initial={false}
           animate={{ opacity: isPressed ? 1 : 0 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
         >
           <Image
-            src="/about/framebg.png"
+            src="/easter.svg"
             alt="Centered gallery view"
             fill
             className="object-contain"
