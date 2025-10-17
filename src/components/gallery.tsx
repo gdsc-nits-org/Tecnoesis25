@@ -1,50 +1,127 @@
+// src/components/gallery.tsx
+
+"use client";
+
+import { useState, useRef, MouseEvent, TouchEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Footer from "./footer";
+import { motion, Transition } from "framer-motion";
 
 export default function PhotoGallery() {
+  const [isPressed, setIsPressed] = useState(false);
+  const pressTimer = useRef<NodeJS.Timeout | null>(null);
+  // 1. Add a ref to track if a press-and-hold action was completed.
+  const wasHeld = useRef(false);
+
+  const handlePress = () => {
+    if (pressTimer.current) clearTimeout(pressTimer.current);
+    pressTimer.current = setTimeout(() => {
+      setIsPressed(true);
+      wasHeld.current = true; // Mark that a press-and-hold occurred
+    }, 250);
+  };
+
+  const handleRelease = () => {
+    if (pressTimer.current) {
+      clearTimeout(pressTimer.current);
+    }
+    setIsPressed(false);
+    // We don't reset wasHeld here; we do it on the click event.
+  };
+
+  // This handler stops the event from reaching the parent if it was a press-and-hold
+  const handleClickCapture = (event: MouseEvent | TouchEvent) => {
+    if (wasHeld.current) {
+      event.stopPropagation(); // Stop the click from bubbling up
+      wasHeld.current = false; // Reset for the next interaction
+    }
+  };
+
+  const handleButtonInteraction = (event: MouseEvent | TouchEvent) => {
+    event.stopPropagation();
+  };
+
+  const springTransition: Transition = {
+    type: "spring",
+    stiffness: 100,
+    damping: 20,
+  };
+
   return (
     <>
       <div
-        className="relative min-h-screen w-full bg-center bg-cover xL:bg-contain"
+        className="relative min-h-screen w-full  overflow-hidden laptop:scale-110 bg-center bg-cover xL:bg-contain"
         style={{ backgroundImage: "url('/tech.gif')" }}
+        onMouseDown={handlePress}
+        onMouseUp={handleRelease}
+        onMouseLeave={handleRelease}
+        onTouchStart={handlePress}
+        onTouchEnd={handleRelease}
+       
+        onClickCapture={handleClickCapture}
       >
-        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 space-y-0 text-center mobile:text-[2.5rem] laptop:text-[4rem]">
-          <p className="font-nyxerin leading-tight text-[#F40004]">Photo</p>
-          <p className="font-nyxerin leading-tight text-[#bb1315]">Gallery</p>
-        </div>
-
         
-        <div
-         
-          tabIndex={0}
-          className="group absolute cursor-pointer top-[75%] left-1/2 flex -translate-x-1/2 items-center justify-center mobile:h-20 mobile:w-44 tablet:h-28 tablet:w-56 laptop:h-24 laptop:w-58 transition-all duration-300 ease-in-out group-hover:brightness-125"
+        <motion.div
+          className="absolute space-y-0 text-center select-none"
+          animate={isPressed ? "pressed" : "initial"}
+          transition={springTransition}
+          variants={{
+            initial: { top: "15%", left: "50%", x: "-50%", scale: 1 },
+            pressed: { top: "5%", left: "5%", x: "0%", scale: 0.6 },
+          }}
         >
+          <motion.div
+            animate={{ textAlign: isPressed ? "left" : "center" }}
+            transition={{ duration: 0.4 }}
+            className="mobile:text-[2.5rem] laptop:text-[2.8rem]"
+          >
+            <p className="font-nyxerin leading-tight text-[#F40004]">Photo</p>
+            <p className="font-nyxerin leading-tight text-[#bb1315]">Gallery</p>
+          </motion.div>
+        </motion.div>
+
+       
+        <motion.div
+          tabIndex={-1}
+          onMouseDown={handleButtonInteraction}
+          onTouchStart={handleButtonInteraction}
+          className="group absolute flex items-center justify-center mobile:h-20 mobile:w-40 tablet:h-28 tablet:w-56 laptop:h-24 laptop:w-50"
+          animate={isPressed ? "pressed" : "initial"}
+          transition={springTransition}
+          variants={{
+            initial: { top: "75%", left: "50%", x: "-50%", y: "0%" },
+            pressed: { top: "auto", left: "auto", bottom: "7%", right: "8%", x: "0%", y: "0%", scale: 0.8 },
+          }}
+        >
+          <Link href="/gallery" className="absolute inset-0 z-10" aria-label="View photo gallery" />
+
           <Image
             src="/view1.png"
-            alt="view details background"
-            layout="fill"
-            objectFit="cover"
-     
-            className="transition-opacity duration-3000 ease-in-out group-hover:opacity-0 group-focus:opacity-0"
+            alt="View details background"
+            fill
+            className="object-cover transition-opacity duration-300 group-hover:opacity-0"
           />
-
           <Image
             src="/view2.png"
-            alt="view details background hovered"
-            layout="fill"
-            objectFit="cover"
-       
-            className="opacity-0 transition-all duration-3000 ease-in-out group-hover:opacity-100 group-hover:scale-[1.1] group-focus:opacity-100 group-focus:scale-[1.1]"
+            alt="View details background hovered"
+            fill
+            className="object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-[1.1]"
           />
-         
+        </motion.div>
 
-          {/* <Link href="#" className="relative z-10">
-            <p className="font-bank cursor-pointer tracking-widest text-white mobile:text-[0.8rem] tablet:text-[1.1rem] laptop:text-lg">
-              View Details
-            </p>
-          </Link> */}
-        </div>
+        
+        <motion.div
+          className="pointer-events-none absolute top-1/2 left-1/2 h-3/4 w-3/4 max-h-[500px] max-w-[500px] -translate-x-1/2 -translate-y-1/2"
+          animate={{ opacity: isPressed ? 1 : 0 }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+        >
+          <Image
+            src="/view.png"
+            alt="Centered gallery view"
+            fill
+            className="object-contain"
+          />
+        </motion.div>
       </div>
     </>
   );
