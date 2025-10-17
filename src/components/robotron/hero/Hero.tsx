@@ -123,7 +123,7 @@ const Hero = () => {
           initial={{ x: '-150%', scale: 0.5, opacity: 0 }}
           animate={{ x: 0, scale: 1, opacity: 1 }}
           transition={{
-            duration: 2.5,
+            duration: 3,
             ease: [0.43, 0.13, 0.23, 0.96],
             delay: 0.3
           }}
@@ -148,7 +148,7 @@ const Hero = () => {
             x: ['0%', '-100%'],
           }}
           transition={{
-            duration: 2.5,
+            duration: 3,
             repeat: Infinity,
             ease: 'linear',
             repeatType: 'loop',
@@ -161,7 +161,7 @@ const Hero = () => {
             x: ['0%', '-100%'],
           }}
           transition={{
-            duration: 2.5,
+            duration: 3,
             repeat: Infinity,
             ease: 'linear',
             repeatType: 'loop',
