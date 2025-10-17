@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
-import pastSponsors from "../../data/pastsponsors.json";
+import pastSponsors from "../../data/pastSponsors.json";
 
 interface MarqueeComponentProps {
   direction?: "left" | "right";
