@@ -3,11 +3,17 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import sponsors from "../../data/sponsors.json"
+import sponsors from "../../data/sponsors.json";
+
+interface Sponsor {
+  src: string;
+  alt: string;
+  url: string;
+}
 
 const SponsorHome: React.FC = () => {
-  const topSponsors = sponsors.slice(0, 4);
-  const bottomSponsors = sponsors.slice(4, 8);
+  const topSponsors = sponsors.slice(0, 4) as Sponsor[];
+  const bottomSponsors = sponsors.slice(4, 8) as Sponsor[];
 
   return (
     <section
@@ -35,17 +41,21 @@ const SponsorHome: React.FC = () => {
         />
       </div>
 
-      <div className="relative z-10 order-2 sm:order-2 md:order-1 lg:order-1
+      <div
+        className="relative z-10 order-2 sm:order-2 md:order-1 lg:order-1
             grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-            gap-[31px] w-full md:max-w-[1024px] mb-4 md:mb-10 lg:mb-14">
+            gap-[31px] w-full md:max-w-[1024px] mb-4 md:mb-10 lg:mb-14"
+      >
         {topSponsors.map((sponsor, index) => (
           <SponsorCard key={index} sponsor={sponsor} />
         ))}
       </div>
 
-      <div className="relative z-10 order-3 sm:order-3 md:order-3 lg:order-3
+      <div
+        className="relative z-10 order-3 sm:order-3 md:order-3 lg:order-3
             grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-            gap-[31px] w-full md:max-w-[1024px]">
+            gap-[31px] w-full md:max-w-[1024px]"
+      >
         {bottomSponsors.map((sponsor, index) => (
           <SponsorCard key={index} sponsor={sponsor} />
         ))}
@@ -54,7 +64,7 @@ const SponsorHome: React.FC = () => {
   );
 };
 
-const SponsorCard = ({ sponsor }: any) => (
+const SponsorCard: React.FC<{ sponsor: Sponsor }> = ({ sponsor }) => (
   <Link
     href={sponsor.url}
     className="relative group flex items-center justify-center
