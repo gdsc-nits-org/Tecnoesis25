@@ -3,7 +3,7 @@ import { AboutSection, ModuleSection, TeamsSection,Hero, Footer } from '../../co
 
 export default function RobotronPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
       <main className="pb-12">
         <Hero/>
         <AboutSection />
