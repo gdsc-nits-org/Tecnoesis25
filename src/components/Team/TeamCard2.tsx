@@ -71,7 +71,7 @@ const Card2: React.FC<TeamCard2Props> = ({
                         </div>
                     </div>
                 </div>
-                <img src="/Team/team4.svg" className="absolute right-5 bottom-5 w-20 h-20"/>
+                <img src="/Team/team4.svg" alt="" className="absolute right-5 bottom-5 w-20 h-20"/>
             </div>
             {/* Content container */}
         </div>

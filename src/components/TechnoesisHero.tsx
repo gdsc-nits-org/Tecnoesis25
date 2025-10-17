@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronRight } from 'lucide-react'
 
@@ -13,6 +13,18 @@ export const TechnoesisHero: React.FC<TechnoesisHeroProps> = ({
   'data-id': dataId,
   onNavigate,
 }) => {
+  const [particles, setParticles] = useState<Array<{ left: number; delay: number; duration: number }>>([]);
+
+  useEffect(() => {
+    // Generate particle positions only on client side to avoid hydration mismatch
+    const particleData = Array.from({ length: 20 }, () => ({
+      left: Math.random() * 100,
+      delay: Math.random() * 5,
+      duration: 3 + Math.random() * 4,
+    }));
+    setParticles(particleData);
+  }, []);
+
   const handleClick = () => {
     if (onNavigate) {
       onNavigate()
@@ -95,14 +107,14 @@ export const TechnoesisHero: React.FC<TechnoesisHeroProps> = ({
 
       {/* Particle System */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {particles.map((particle, i) => (
           <div
             key={i}
             className="particle"
             style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
+              left: `${particle.left}%`,
+              animationDelay: `${particle.delay}s`,
+              animationDuration: `${particle.duration}s`,
             }}
           ></div>
         ))}
