@@ -12,8 +12,8 @@ const Home = () => {
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden pt-28 md:pt-32 bg-black">
       <About />
-      <Gallery />
       <RobotronHero/>
+      <Gallery />
       <PreviousSponsors />
       <Footer />
     </div>
