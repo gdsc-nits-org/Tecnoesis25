@@ -6,7 +6,7 @@ export const AboutSection = () => {
   return (
     <section 
       id="about" 
-      className="relative py-16 bg-cover bg-center"
+      className="relative mt-[-20rem] py-16 bg-cover bg-center"
       style={{
         backgroundImage: 'url("/robotron/aboutBackground.svg")',
         backgroundSize: 'cover',
