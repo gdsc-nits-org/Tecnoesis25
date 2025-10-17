@@ -21,7 +21,7 @@ export default function RootLayout({
       lang="en"
       className={`${GeistSans.variable}`}
       prefix="og: https://ogp.me/ns#"
-      suppressHydrationWarning  
+      suppressHydrationWarning
     >
       <head>
         <meta property="og:title" content="Tecnoesis 2025" />
@@ -41,7 +41,7 @@ export default function RootLayout({
         />
         <meta property="og:type" content="website" />
       </head>
-      <body className="min-h-screen flex flex-col no-scrollbar overflow-x-hidden">
+      <body className="min-h-screen flex flex-col no-scrollbar overflow-x-hidden bg-black">
         <Navbar />
         {children}
       </body>

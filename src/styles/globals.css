@@ -148,3 +148,25 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'nyxerin';
+  src: url('/fonts/nyxerin.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-nyxerin {
+  font-family: 'nyxerin', sans-serif;
+}
+
+@font-face {
+  font-family: 'bankgothic';
+  src: url('/fonts/DEMO-bgt45.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-bank {
+  font-family: 'bankgothic', sans-serif;
+}

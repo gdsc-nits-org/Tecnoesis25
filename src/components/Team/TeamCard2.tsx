@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import Image from "next/image";
+
 interface TeamCard2Props {
     name?: string;
     designation?: string;
@@ -10,18 +12,24 @@ interface TeamCard2Props {
 }
 
 const Card2: React.FC<TeamCard2Props> = ({
-    name = "Samarjit Roy",
-    designation = "TECHNICAL HEAD",
-    photoUrl = "https://res.cloudinary.com/dhry5xscm/image/upload/v1717873621/nitsmun/samarjit_kk2y5m.webp",
-    insta = "#",
-    facebook = "#",
-    linkedin = "#"
+    name,
+    designation,
+    photoUrl,
+    insta,
+    facebook,
+    linkedin,
 }) => {
     return(
-    <div className="relative w-[320px] h-[400px] z-0 TeamCard2 scale-50 mobile:scale-60 mobile2:scale-70 tablet:scale-80 laptop:scale-90 xL:scale-95 fourK:scale-100">
+    <div className="relative w-[320px] h-[400px] z-0 TeamCard2 scale-[.8] tablet:scale-[.9] laptop:scale-90 xL:scale-95 fourK:scale-100">
             <div className="relative w-full h-full px-6 py-8">
                 <div className="flex flex-row items-center justify-center border-1 border-red-500 w-full h-full rounded-lg">
-                    <img src={photoUrl} alt={name} className="z-0 w-[235px] h-[240px]" />
+                    <Image 
+                        src={photoUrl ?? '/Team/default-avatar.png'} 
+                        alt={name ?? 'Team Member'} 
+                        width={235} 
+                        height={240}
+                        className="z-0 w-[235px] h-[240px] object-cover" 
+                    />
                 </div>
             </div>
             {/* Top right corner */}
@@ -36,7 +44,7 @@ const Card2: React.FC<TeamCard2Props> = ({
                 clipPath:"polygon(0% 0%, 66% 0, 75% 8%, 86% 8%, 100% 16%, 100% 91%, 86% 100%, 85% 22%, 10% 22%, 10% 35%, 0 28%)"
             }}>
                 <span>
-                    <h2 className="text-xl font-bold mb-2 text-center mt-10">{name}</h2>
+                    <h2 className="text-lg -translate-x-5 font-bold mb-2 text-center mt-10">{name}</h2>
                     <h2
                         className="tecnoesis-title absolute top-[180px] -right-[130px] text-4xl select-none"
                     >
@@ -54,7 +62,7 @@ const Card2: React.FC<TeamCard2Props> = ({
                 clipPath:"polygon(0% 0%, 35% 0, 35% 42%, 37% 53%, 92% 53%, 100% 64%, 100% 82%, 92% 93%, 78% 93%, 67% 100%, 47% 100%, 41% 93%, 26% 93%, 20% 100%, 4% 100%, 0 93%)",
             }}>
                 <div className="flex flex-row p-5 font-nyxerin">
-                    <span className="text-[1rem]" style={{ transform: 'rotate(-90deg)', display: 'inline-block' }}>
+                    <span className={`text-nowrap text-[1rem] absolute bottom-[7rem] ${designation==="Technical Head"?"right-[7.5rem]":"right-[10rem]"}`} style={{ transform: 'rotate(-90deg)'}}>
                         {designation}
                     </span>
                     <div className="absolute top-[60px] left-[20px]" style={{ transform: 'rotate(-90deg)' }}>
@@ -71,7 +79,13 @@ const Card2: React.FC<TeamCard2Props> = ({
                         </div>
                     </div>
                 </div>
-                <img src="/Team/team4.svg" className="absolute right-5 bottom-5 w-20 h-20"/>
+                <Image 
+                    src="/Team/team4.svg" 
+                    alt="Decorative corner design" 
+                    width={80} 
+                    height={80}
+                    className="absolute right-5 bottom-5 w-20 h-20"
+                />
             </div>
             {/* Content container */}
         </div>
