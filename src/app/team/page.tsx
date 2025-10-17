@@ -1,16 +1,32 @@
 "use client";
 import { useState } from "react";
+import TeamCard1 from "~/components/Team/TeamCard1";
+import TeamCard2 from "~/components/Team/TeamCard2";
+import Teamdata from "../../../public/json/tech.json";
+
+interface TeamMember {
+    name: string;
+    photoUrl: string;
+    designation: string;
+    instagram?: string;
+    facebook?: string;
+    linkedin?: string;
+}
+
 const Team = () => {
+    const TechLead = Teamdata.techLead as TeamMember[];
+    const Head = Teamdata.heads as TeamMember[];
+    const CoreTeam = Teamdata.members as TeamMember[];
     const [selectedTeam, setSelectedTeam] = useState<string | null>("Tech Team");
     const handleTeamClick = (team: string) => {
         setSelectedTeam(team);
     }
     console.log(`Navigating to ${selectedTeam} page...`);
     return (
-        <div className="absolute top-0 left-0 w-screen text-[#ffffff] bg-[#000000] bg-red-grid bg-[length:100%_100%,100%_100%,50px_50px,50px_50px,50px_50px]
-        bg-[position:0_0,0_0,25px_25px,0_0,0_0]
-        clip-angled animate-glowMove min-h-screen flex items-center justify-center flex-col font-nyxerin text-xl z-[10]">
-            <h1 className="text-2xl mobile:text-3xl tablet:text-4xl laptop:text-5xl fourK:text-7xl font-bold">Team Page</h1>
+        <div className="w-screen text-[#ffffff] bg-[#000000] bg-red-grid bg-[length:100%_100%,100%_100%,50px_50px,50px_50px,50px_50px]
+        bg-[position:0_0,0_0,25px_25px,0_0,0_0] bg-fixed
+        clip-angled animate-glowMove min-h-screen flex items-center justify-center flex-col font-nyxerin text-xl pt-28 md:pt-32">
+            <h1 className="text-2xl mobile:text-3xl tablet:text-4xl laptop:text-7xl fourK:text-7xl font-bold mb-6">Team Page</h1>
             <div className="relative top-0 left-0 flex flex-row items-center justify-center gap-2 md:gap-4 flex-nowrap">
                 <div
                     style={{
@@ -97,10 +113,68 @@ const Team = () => {
                         ></span>
 
                         <span className="relative">
-                            OTHER TEAMS
+                            CORE TEAM
                         </span>
                     </button>
                 </div>
+            </div>
+            <div className="flex flex-col gap-5 w-full px-2 mobile:px-4 py-4 mobile:py-6 tablet:py-8">
+                {selectedTeam === "Tech Team" && TechLead[0] && (
+                    <div className="flex flex-col gap-40">
+                        {/* Tech Lead Section */}
+                        <div className="flex flex-col gap-16">
+                            <div className="flex justify-center">
+                                <TeamCard2
+                                    photoUrl={TechLead[0].photoUrl}
+                                    name={TechLead[0].name}
+                                    designation={TechLead[0].designation}
+                                    insta={TechLead[0].instagram}
+                                    facebook={TechLead[0].facebook}
+                                    linkedin={TechLead[0].linkedin}
+                                />
+                            </div>
+                            {/* Heads Section */}
+                            <div className="flex flex-wrap items-center justify-center gap-4 tablet:gap-8 lg:gap-16">
+                                {Head.map((head, index) => (
+                                    <TeamCard2
+                                        key={index}
+                                        photoUrl={head.photoUrl}
+                                        name={head.name}
+                                        designation={head.designation}
+                                        insta={head.instagram}
+                                        facebook={head.facebook}
+                                        linkedin={head.linkedin}
+                                    />
+                                ))}
+                                
+                            </div>
+                        </div>
+
+                        {/* Core Team Section */}
+                        <div className="flex flex-col gap-8">
+                            <p className="text-center font-nyxerin text-3xl">JUNIOR TEAM</p>
+                            <div className="flex flex-row flex-wrap justify-center gap-2 mobile:gap-4 tablet:gap-6 laptop:gap-8 xL:gap-10">
+
+                                {CoreTeam.map((member, index) => (
+                                    <TeamCard1
+                                        key={index}
+                                        photoUrl={member.photoUrl}
+                                        name={member.name}
+                                        designation={member.designation}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {selectedTeam === "Other Teams" && (
+                    <div className="flex flex-col gap-6">
+                        <div className="flex justify-center items-center min-h-[400px]">
+                            <p className="text-2xl text-gray-400">Other Teams Coming Soon...</p>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
