@@ -66,7 +66,7 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
             >
               <path
                 d="M 0 50 L 50 50 L 50 0 M 50 100 L 50 150 L 100 150 M 150 50 L 200 50 M 100 0 L 100 50 L 150 50"
-                stroke="#ff0000"
+                stroke="#F40004"
                 strokeWidth="1"
                 fill="none"
                 opacity="0.3"
@@ -75,21 +75,21 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
                 cx="50"
                 cy="50"
                 r="3"
-                fill="#ff0000"
+                fill="#F40004"
                 className="circuit-node"
               />
               <circle
                 cx="100"
                 cy="150"
                 r="3"
-                fill="#ff0000"
+                fill="#F40004"
                 className="circuit-node"
               />
               <circle
                 cx="150"
                 cy="50"
                 r="3"
-                fill="#ff0000"
+                fill="#F40004"
                 className="circuit-node"
               />
             </pattern>
@@ -154,8 +154,8 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
               x2="100%"
               y2="100%"
             >
-              <stop offset="0%" stopColor="#ff0000" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#ff0000" stopOpacity="0" />
+              <stop offset="0%" stopColor="#F40004" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#F40004" stopOpacity="0" />
             </linearGradient>
           </defs>
           <path
@@ -383,10 +383,10 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
           position: absolute;
           height: 2px;
           width: 0;
-          background: linear-gradient(90deg, transparent, #ff0000, transparent);
+          background: linear-gradient(90deg, transparent, #F40004, transparent);
           box-shadow:
-            0 0 10px #ff0000,
-            0 0 20px #ff0000;
+            0 0 10px #F40004,
+            0 0 20px #F40004;
           animation: trailMove 4s linear infinite;
         }
 
@@ -456,8 +456,8 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
           left: 0;
           width: 100%;
           height: 1px;
-          background: linear-gradient(90deg, transparent, #ff0000, transparent);
-          box-shadow: 0 0 10px #ff0000;
+          background: linear-gradient(90deg, transparent, #F40004, transparent);
+          box-shadow: 0 0 10px #F40004;
           animation: scanMove 8s linear infinite;
         }
 
@@ -495,9 +495,9 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
           position: absolute;
           width: 2px;
           height: 2px;
-          background: #ff0000;
+          background: #F40004;
           border-radius: 50%;
-          box-shadow: 0 0 5px #ff0000;
+          box-shadow: 0 0 5px #F40004;
           animation: particleFloat linear infinite;
         }
 
@@ -523,8 +523,8 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
           position: absolute;
           width: 200px;
           height: 1px;
-          background: linear-gradient(90deg, #ff0000, transparent);
-          box-shadow: 0 0 5px #ff0000;
+          background: linear-gradient(90deg, #F40004, transparent);
+          box-shadow: 0 0 5px #F40004;
           opacity: 0;
           animation: speedLineFlash 3s ease-in-out infinite;
         }
@@ -668,22 +668,22 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
 
         /* Corner Accents */
         .corner-accent {
-          background: linear-gradient(135deg, #ff0000 0%, transparent 70%);
+          background: linear-gradient(135deg, #F40004 0%, transparent 70%);
           animation: cornerGlow 2s ease-in-out infinite;
         }
 
         .corner-accent.top-right {
-          background: linear-gradient(225deg, #ff0000 0%, transparent 70%);
+          background: linear-gradient(225deg, #F40004 0%, transparent 70%);
           animation-delay: 0.5s;
         }
 
         .corner-accent.bottom-left {
-          background: linear-gradient(45deg, #ff0000 0%, transparent 70%);
+          background: linear-gradient(45deg, #F40004 0%, transparent 70%);
           animation-delay: 1s;
         }
 
         .corner-accent.bottom-right {
-          background: linear-gradient(315deg, #ff0000 0%, transparent 70%);
+          background: linear-gradient(315deg, #F40004 0%, transparent 70%);
           animation-delay: 1.5s;
         }
 
@@ -722,10 +722,10 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
         .neon-text-red {
           color: #fff;
           text-shadow:
-            0 0 10px #ff0000,
-            0 0 20px #ff0000,
-            0 0 30px #ff0000,
-            0 0 40px #ff0000;
+            0 0 10px #F40004,
+            0 0 20px #F40004,
+            0 0 30px #F40004,
+            0 0 40px #F40004;
           animation: flicker 3s infinite alternate;
         }
 
@@ -733,14 +733,14 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
           color: #fff;
           text-shadow:
             0 0 10px #fff,
-            0 0 20px #fff,
-            0 0 30px #ff0000,
-            0 0 40px #ff0000;
+            0 0 20px #ffffff50,
+            0 0 30px #F40004,
+            0 0 40px #F40004;
         }
 
         .neon-button {
           box-shadow:
-            0 0 10px rgba(255, 0, 0, 0.5),
+            0 0 10px #F40004,
             inset 0 0 10px rgba(255, 0, 0, 0.1);
           transition: all 0.3s ease;
         }
@@ -750,7 +750,7 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
             0 0 20px rgba(255, 0, 0, 0.8),
             0 0 40px rgba(255, 0, 0, 0.6),
             inset 0 0 20px rgba(255, 0, 0, 0.2);
-          text-shadow: 0 0 10px #ff0000;
+          text-shadow: 0 0 10px #F40004;
         }
 
         @keyframes flicker {
