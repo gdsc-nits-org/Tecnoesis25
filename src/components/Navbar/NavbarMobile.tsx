@@ -2,12 +2,12 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 
 const NavDetails = [
-  { name: "Home", link: "/" },
+  { name: "Home", link: "/home" },
   // { name: "About", link: "/about" },
   { name: "Modules", link: "/modules" },
   { name: "Team", link: "/team" },
@@ -20,7 +20,7 @@ export default function NavbarMobile() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [lastScrollY, setLastScrollY] = useState<number>(0);
-
+  const router = useRouter();
   // Update active index based on current pathname
   useEffect(() => {
     const currentIndex = NavDetails.findIndex(item => item.link === pathname);
@@ -55,15 +55,16 @@ export default function NavbarMobile() {
   }, [lastScrollY]);
 
   return (
-    <nav className={`flex items-center justify-between px-4 py-3 fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-sm transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+    <nav className={`flex items-center justify-between px-4 py-3 fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
 
-     <div className="flex px-2 items-center transition-transform duration-300 origin-center scale-100 sm:scale-110 md:scale-125">
+     <div className="flex px-2 items-center transition-transform duration-300 origin-center scale-100 sm:scale-110 md:scale-125 cursor-pointer">
   <Image
     src="/TechnoLogo.svg"
     alt="TechnoLogo"
     width={200}
     height={45}
-    className="object-contain cursor-pointer"
+    className="object-contain"
+    onClick={() => router.push("/")}
   />
 </div>
 

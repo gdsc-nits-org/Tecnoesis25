@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import RegisterButton from "./RegisterButton";
 
 const NavbarDesktop = () => {
@@ -11,6 +11,7 @@ const NavbarDesktop = () => {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [lastScrollY, setLastScrollY] = useState<number>(0);
+  const navigate = useRouter()
 
   const isAnyHovered = hoverIndex !== null;
 
@@ -49,10 +50,10 @@ const NavbarDesktop = () => {
 
   return (
     <nav
-      className={`fixed z-50 flex h-[6rem] w-full items-center justify-between bg-transparent px-6 transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
+      className={`fixed z-50 flex h-[6rem] w-full items-center justify-between bg-gradient-to-b from-black via-black/80 to-transparent px-6 transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
     >
-      <div className="flex items-center">
-        <Image src="/TechnoLogo.svg" alt="TechnoLogo" width={250} height={40} />
+      <div className="flex items-center cursor-pointer">
+        <Image src="/TechnoLogo.svg" alt="TechnoLogo" width={250} height={40} onClick={()=>navigate.push("/")}/>
       </div>
 
       <div
@@ -118,25 +119,25 @@ const NavbarDesktop = () => {
 const NavDetails = [
   {
     name: "Home",
-    link: "/",
+    link: "/home",
+    defaultImg: "/ItemState1.svg",
+    hoverImg: "/ItemState2.svg",
+    clickedImg: "/ItemState3.svg",
+  },
+  {
+    name: "About",
+    link: "/home#about",
     defaultImg: "/ItemState1.svg",
     hoverImg: "/ItemState2.svg",
     clickedImg: "/ItemState3.svg",
   },
   // {
-  //   name: "About",
-  //   link: "/about",
+  //   name: "Events",
+  //   link: "/events",
   //   defaultImg: "/ItemState1.svg",
   //   hoverImg: "/ItemState2.svg",
   //   clickedImg: "/ItemState3.svg",
   // },
-  {
-    name: "Events",
-    link: "/events",
-    defaultImg: "/ItemState1.svg",
-    hoverImg: "/ItemState2.svg",
-    clickedImg: "/ItemState3.svg",
-  },
   {
     name: "Gallery",
     link: "/gallery",
