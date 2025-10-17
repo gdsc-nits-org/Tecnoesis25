@@ -217,7 +217,7 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
               }}
               className="mb-8"
             >
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-wider mb-2 neon-text-red">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-wider mb-2 neon-text-red tron-font">
                 ROBOTRON
               </h1>
               <div className="flex items-center justify-center gap-2 text-red-400 text-sm md:text-base tracking-[0.3em]">
@@ -334,8 +334,20 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
       <style jsx>{`
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
+        @font-face {
+          font-family: 'Tron';
+          src: url('/tron.ttf') format('truetype');
+          font-weight: normal;
+          font-style: normal;
+          font-display: swap;
+        }
+
         * {
           font-family: 'Orbitron', sans-serif;
+        }
+
+        .tron-font {
+          font-family: 'Tron', 'Orbitron', sans-serif;
         }
 
         .grid-background {
