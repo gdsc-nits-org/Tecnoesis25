@@ -123,18 +123,19 @@ export const TeamsSection = () => {
         </h3>
 
         {/* Desktop */}
-        <div className={`hidden sm:grid gap-56 justify-items-center ${
+        <div className={`hidden sm:grid gap-12 justify-items-center ${
           members.length === 2 
-            ? 'grid-cols-2 max-w-2xl mx-auto' 
-            : 'grid-cols-2 lg:grid-cols-3'
+            ? 'grid-cols-2 max-w-4xl mx-auto' 
+            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto'
         }`}>
           {members.map((member: TeamMember, i: number) => (
-            <CardComponent
-              key={i}
-              name={member.name}
-              role={member.role}
-              image={member.image}
-            />
+            <div key={i} className="flex justify-center items-center">
+              <CardComponent
+                name={member.name}
+                role={member.role}
+                image={member.image}
+              />
+            </div>
           ))}
         </div>
 
@@ -234,7 +235,7 @@ export const TeamsSection = () => {
           <div className="hidden sm:block max-w-[1500px] mx-auto">
             {/* Chief Coordinator - Top Row (Centered) */}
             {teamData.leadership[0] && (
-              <div className="flex justify-center mb-8">
+              <div className="flex justify-center mb-12">
                 <TeamCard
                   name={teamData.leadership[0].name}
                   role={teamData.leadership[0].role}
@@ -244,7 +245,7 @@ export const TeamsSection = () => {
             )}
 
             {/* Two Convenors - Middle Row */}
-            <div className="grid grid-cols-2 gap-56 justify-items-center max-w-[800px] mx-auto mb-8">
+            <div className="grid grid-cols-2 gap-12 justify-items-center max-w-4xl mx-auto mb-12">
               {teamData.leadership[1] && (
                 <div className="flex justify-center">
                   <TeamCard
