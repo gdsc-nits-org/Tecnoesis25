@@ -2,10 +2,9 @@
 
 import { Canvas } from "@react-three/fiber";
 import { useState, Suspense } from "react";
-import * as THREE from 'three';
+import * as THREE from "three";
 import ParticleModel from "./ParticleModel";
 import SolidModel from "./SolidModel";
-
 
 const Landing = () => {
   // 💡 NEW: State to manage the reveal effect
@@ -13,7 +12,7 @@ const Landing = () => {
 
   return (
     <div
-      className="flex h-screen w-screen cursor-pointer items-center justify-center bg-black bg-cover bg-center"
+      className="flex h-screen w-screen cursor-default items-center justify-center bg-black bg-cover bg-center"
       style={{ backgroundImage: "url('/landing/bg.png')" }}
       // 💡 NEW: Click handler to trigger the reveal
       onClick={() => setIsActivated(true)}

@@ -1,11 +1,17 @@
 "use client";
 
-import { Canvas, useFrame, extend, ThreeElements, useThree } from '@react-three/fiber';
-import { Environment, useGLTF } from "@react-three/drei";
-import React, { Suspense, useMemo, useRef, useState, useEffect } from 'react';
-import * as THREE from 'three';
-import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js';
+import {
+  Canvas,
+  useFrame,
+  extend,
+  ThreeElements,
+  useThree,
+} from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
+import React, { useMemo, useRef, useEffect } from "react";
+import * as THREE from "three";
+import * as BufferGeometryUtils from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler.js";
 
 // Define the type for our custom shader material
 interface ParticleMaterialType extends THREE.ShaderMaterial {
@@ -17,13 +23,10 @@ interface ParticleMaterialType extends THREE.ShaderMaterial {
 // Define the type for the GLTF result for type safety
 interface GLTFResult {
   scene: THREE.Group;
-  nodes: {
-    [key:string]: THREE.Object3D;
+  nodes: Record<string, THREE.Object3D> & {
     Scene: THREE.Group;
   };
-  materials: {
-    [key:string]: THREE.Material;
-  };
+  materials: Record<string, THREE.Material>;
 }
 
 // --- SHADER UPGRADE: NOISE ONLY ---
@@ -177,19 +180,28 @@ extend({ ParticleMaterial });
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      particleMaterial: ThreeElements['shaderMaterial'] & { ref?:React.Ref<ParticleMaterialType> };
+      particleMaterial: ThreeElements["shaderMaterial"] & {
+        ref?: React.Ref<ParticleMaterialType>;
+      };
     }
   }
 }
 
 function ParticleModel() {
-  const pointsRef = useRef<THREE.Points<THREE.BufferGeometry, ParticleMaterialType>>(null);
+  const pointsRef =
+    useRef<THREE.Points<THREE.BufferGeometry, ParticleMaterialType>>(null);
   const { nodes } = useGLTF("/landing/Tecno_logo.glb") as unknown as GLTFResult;
-  
-  const cursorPosition = useMemo(() => new THREE.Vector3(10000, 10000, 10000), []);
-  const interactionPlane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), []);
 
-  const isMobile = useMemo(() => 'ontouchstart' in window, []);
+  const cursorPosition = useMemo(
+    () => new THREE.Vector3(10000, 10000, 10000),
+    [],
+  );
+  const interactionPlane = useMemo(
+    () => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0),
+    [],
+  );
+
+  const isMobile = useMemo(() => "ontouchstart" in window, []);
 
   // 💡 NEW: A ref to track if the pointer is down, managed by event listeners.
   const isPointerDown = useRef(false);
@@ -197,17 +209,21 @@ function ParticleModel() {
 
   // 💡 NEW: Set up event listeners for pointer state
   useEffect(() => {
-    const handlePointerDown = () => { isPointerDown.current = true; };
-    const handlePointerUp = () => { isPointerDown.current = false; };
-    
-    gl.domElement.addEventListener('pointerdown', handlePointerDown);
-    gl.domElement.addEventListener('pointerup', handlePointerUp);
-    gl.domElement.addEventListener('pointerleave', handlePointerUp); // Also stop on leave
+    const handlePointerDown = () => {
+      isPointerDown.current = true;
+    };
+    const handlePointerUp = () => {
+      isPointerDown.current = false;
+    };
+
+    gl.domElement.addEventListener("pointerdown", handlePointerDown);
+    gl.domElement.addEventListener("pointerup", handlePointerUp);
+    gl.domElement.addEventListener("pointerleave", handlePointerUp); // Also stop on leave
 
     return () => {
-      gl.domElement.removeEventListener('pointerdown', handlePointerDown);
-      gl.domElement.removeEventListener('pointerup', handlePointerUp);
-      gl.domElement.removeEventListener('pointerleave', handlePointerUp);
+      gl.domElement.removeEventListener("pointerdown", handlePointerDown);
+      gl.domElement.removeEventListener("pointerup", handlePointerUp);
+      gl.domElement.removeEventListener("pointerleave", handlePointerUp);
     };
   }, [gl]);
 
@@ -220,10 +236,12 @@ function ParticleModel() {
 
   useMemo(() => {
     const geometries: THREE.BufferGeometry[] = [];
-    nodes.Scene.traverse((child) => {
+    nodes.Scene.traverse((child: THREE.Object3D) => {
       if (child instanceof THREE.Mesh && child.geometry) {
-        const transformedGeometry = child.geometry.clone();
-        transformedGeometry.applyMatrix4(child.matrixWorld);
+        const mesh = child as THREE.Mesh;
+
+        const transformedGeometry = mesh.geometry.clone();
+        transformedGeometry.applyMatrix4(mesh.matrixWorld);
         geometries.push(transformedGeometry);
       }
     });
@@ -238,26 +256,29 @@ function ParticleModel() {
     const original = new Float32Array(particleCount * 3);
     const randoms = new Float32Array(particleCount);
     const interactions = new Float32Array(particleCount);
-    
+
     const scattered = new Float32Array(particleCount * 3);
     const tempPosition = new THREE.Vector3();
 
     for (let i = 0; i < particleCount; i++) {
-        sampler.sample(tempPosition);
-        original.set([tempPosition.x, tempPosition.y, tempPosition.z], i * 3);
-        randoms[i] = Math.random();
-        interactions[i] = 0;
-        
-        const r = 100 * Math.cbrt(Math.random());
-        const theta = Math.random() * 2 * Math.PI;
-        const phi = Math.acos(2 * Math.random() - 1);
-        scattered.set([
-            r * Math.sin(phi) * Math.cos(theta),
-            r * Math.sin(phi) * Math.sin(theta),
-            r * Math.cos(phi)
-        ], i * 3);
+      sampler.sample(tempPosition);
+      original.set([tempPosition.x, tempPosition.y, tempPosition.z], i * 3);
+      randoms[i] = Math.random();
+      interactions[i] = 0;
+
+      const r = 100 * Math.cbrt(Math.random());
+      const theta = Math.random() * 2 * Math.PI;
+      const phi = Math.acos(2 * Math.random() - 1);
+      scattered.set(
+        [
+          r * Math.sin(phi) * Math.cos(theta),
+          r * Math.sin(phi) * Math.sin(theta),
+          r * Math.cos(phi),
+        ],
+        i * 3,
+      );
     }
-    
+
     particlesData.current = {
       originalPositions: original,
       currentPositions: scattered,
@@ -270,7 +291,7 @@ function ParticleModel() {
     if (pointsRef.current && particlesData.current) {
       pointsRef.current.rotation.y += delta * 0.5;
       pointsRef.current.material.uniforms.uTime.value += delta;
-      
+
       // 💡 FIX: Use the ref to check for pointer state.
       const pointerIsCurrentlyDown = isPointerDown.current;
       const shouldInteract = !isMobile || pointerIsCurrentlyDown;
@@ -281,30 +302,46 @@ function ParticleModel() {
         cursorPosition.set(10000, 10000, 10000);
       }
 
-      const { originalPositions, currentPositions, interactionStrengths } = particlesData.current;
-      const positionAttribute = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
-      const interactionAttribute = pointsRef.current.geometry.attributes.aInteractionStrength as THREE.BufferAttribute;
+      const { originalPositions, currentPositions, interactionStrengths } =
+        particlesData.current;
+      const positionAttribute = pointsRef.current.geometry.attributes
+        .position as THREE.BufferAttribute;
+      const interactionAttribute = pointsRef.current.geometry.attributes
+        .aInteractionStrength as THREE.BufferAttribute;
 
       for (let i = 0; i < currentPositions.length / 3; i++) {
         const i3 = i * 3;
-        const pos = new THREE.Vector3(currentPositions[i3], currentPositions[i3 + 1], currentPositions[i3 + 2]);
-        const originalPos = new THREE.Vector3(originalPositions[i3], originalPositions[i3 + 1], originalPositions[i3 + 2]);
-        
+        const pos = new THREE.Vector3(
+          currentPositions[i3],
+          currentPositions[i3 + 1],
+          currentPositions[i3 + 2],
+        );
+        const originalPos = new THREE.Vector3(
+          originalPositions[i3],
+          originalPositions[i3 + 1],
+          originalPositions[i3 + 2],
+        );
+
         const distanceToCursor = pos.distanceTo(cursorPosition);
         const interactionRadius = 3.5;
         const force = Math.max(0, interactionRadius - distanceToCursor);
-        
+
         const shouldGlow = force > 0;
-        
+
         const currentStrength = interactionStrengths[i];
         const targetStrength = shouldGlow ? 1.0 : 0.0;
         const dampingFactor = shouldGlow ? 8 : 1.5;
-        interactionStrengths[i] = THREE.MathUtils.damp(currentStrength??0, targetStrength, dampingFactor, delta);
+        interactionStrengths[i] = THREE.MathUtils.damp(
+          currentStrength ?? 0,
+          targetStrength,
+          dampingFactor,
+          delta,
+        );
 
         if (force > 0) {
-            const direction = pos.clone().sub(cursorPosition).normalize();
-            const pushForce = Math.pow(force, 2.0) * 0.6;
-            pos.add(direction.multiplyScalar(pushForce));
+          const direction = pos.clone().sub(cursorPosition).normalize();
+          const pushForce = Math.pow(force, 2.0) * 0.6;
+          pos.add(direction.multiplyScalar(pushForce));
         }
 
         pos.lerp(originalPos, 0.01);
@@ -313,12 +350,12 @@ function ParticleModel() {
 
       positionAttribute.set(currentPositions);
       positionAttribute.needsUpdate = true;
-      
+
       interactionAttribute.set(interactionStrengths);
       interactionAttribute.needsUpdate = true;
     }
   });
-  
+
   if (!particlesData.current) return null;
 
   return (

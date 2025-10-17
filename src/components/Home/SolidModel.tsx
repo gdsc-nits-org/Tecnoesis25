@@ -1,9 +1,9 @@
-import React, { useRef, useLayoutEffect, useMemo } from 'react';
-import { useGLTF } from '@react-three/drei';
-import { useFrame, extend } from '@react-three/fiber';
-import { GLTF } from 'three-stdlib';
-import * as THREE from 'three';
-import { easing } from 'maath';
+import React, { useRef, useLayoutEffect, useMemo } from "react";
+import { useGLTF } from "@react-three/drei";
+import { useFrame, extend } from "@react-three/fiber";
+import { GLTF } from "three-stdlib";
+import * as THREE from "three";
+import { easing } from "maath";
 
 // Extend THREE with ShaderMaterial so it can be used declaratively
 extend({ ShaderMaterial: THREE.ShaderMaterial });
@@ -87,27 +87,34 @@ function AnimatedMesh({
   const animatedGroupRef = useRef<THREE.Group>(null!);
 
   const originalPosition = useRef(new THREE.Vector3()).current;
-  const vec = new THREE.Vector3();
   const dir = new THREE.Vector3();
   const worldCursor = new THREE.Vector3();
   const localCursor = new THREE.Vector3();
 
   // Uniforms for the SOLID shader
-  const solidUniforms = useMemo(() => ({
-    baseColor: { value: new THREE.Color(0x0a0a0d) },
-    shininess: { value: 60.0 },
-    smoothness: { value: 0.8 },
-  }), []);
+  const solidUniforms = useMemo(
+    () => ({
+      baseColor: { value: new THREE.Color(0x0a0a0d) },
+      shininess: { value: 60.0 },
+      smoothness: { value: 0.8 },
+    }),
+    [],
+  );
 
   // An HDR color for the wireframe to make it glow with Bloom
-  const wireframeColor = useMemo(() => new THREE.Color(0xff0000).multiplyScalar(20), []);
+  const wireframeColor = useMemo(
+    () => new THREE.Color(0xff0000).multiplyScalar(20),
+    [],
+  );
 
   // A random seed for each mesh to make its movement unique
   const randomSeed = useMemo(() => Math.random() * 100, []);
-  
-  // Create a new geometry that only contains the sharp edges
-  const edges = useMemo(() => new THREE.EdgesGeometry(geometry, 15), [geometry]);
 
+  // Create a new geometry that only contains the sharp edges
+  const edges = useMemo(
+    () => new THREE.EdgesGeometry(geometry, 15),
+    [geometry],
+  );
 
   useLayoutEffect(() => {
     originalPosition.set(...position);
@@ -115,7 +122,8 @@ function AnimatedMesh({
 
   useFrame(({ pointer, camera, clock }, delta) => {
     if (!animatedGroupRef.current || !groupRef.current) return;
-    animatedGroupRef.current.rotation.z = Math.sin(clock.getElapsedTime()) * 0.5;
+    animatedGroupRef.current.rotation.z =
+      Math.sin(clock.getElapsedTime()) * 0.5;
 
     // --- Cursor Repulsion Logic (unchanged) ---
     worldCursor.set(pointer.x, pointer.y, 0.5).unproject(camera);
@@ -129,7 +137,7 @@ function AnimatedMesh({
     dir.copy(originalPosition).sub(localCursor).normalize();
 
     const distInv = displacement - dist;
-    
+
     // --- Calculate Target Position ---
     const targetPosition = new THREE.Vector3();
 
@@ -137,17 +145,21 @@ function AnimatedMesh({
     if (dist > displacement) {
       targetPosition.copy(originalPosition);
     } else {
-      targetPosition.copy(originalPosition).add(dir.multiplyScalar(distInv * intensity));
+      targetPosition
+        .copy(originalPosition)
+        .add(dir.multiplyScalar(distInv * intensity));
     }
 
     // --- Add Slight Random Movement ---
     const time = clock.getElapsedTime();
     const movementSpeed = 0.5;
     const movementAmplitude = 0.35;
-    targetPosition.x += Math.sin(time * movementSpeed + randomSeed) * movementAmplitude;
-    targetPosition.y += Math.cos(time * movementSpeed + randomSeed * 1.1) * movementAmplitude;
-    targetPosition.z += Math.sin(time * movementSpeed * 0.9 + randomSeed) * movementAmplitude;
-
+    targetPosition.x +=
+      Math.sin(time * movementSpeed + randomSeed) * movementAmplitude;
+    targetPosition.y +=
+      Math.cos(time * movementSpeed + randomSeed * 1.1) * movementAmplitude;
+    targetPosition.z +=
+      Math.sin(time * movementSpeed * 0.9 + randomSeed) * movementAmplitude;
 
     // --- Animate to Target ---
     easing.damp3(animatedGroupRef.current.position, targetPosition, 0.1, delta);
@@ -159,11 +171,13 @@ function AnimatedMesh({
       <mesh geometry={geometry}>
         <shaderMaterial
           attach="material"
-          args={[{
-            uniforms: solidUniforms,
-            vertexShader: tronVertexShader,
-            fragmentShader: tronFragmentShader,
-          }]}
+          args={[
+            {
+              uniforms: solidUniforms,
+              vertexShader: tronVertexShader,
+              fragmentShader: tronFragmentShader,
+            },
+          ]}
         />
       </mesh>
       {/* 2. The glowing red edges on top */}
@@ -174,32 +188,35 @@ function AnimatedMesh({
   );
 }
 
-
-export default function SolidModel(props: any) {
-  const { nodes, materials } = useGLTF('/landing/Tecno_logo.glb') as unknown as GLTFResult;
+export default function SolidModel() {
+  const { nodes, materials } = useGLTF(
+    "/landing/Tecno_logo.glb",
+  ) as unknown as GLTFResult;
   const groupRef = useRef<THREE.Group>(null!);
 
   const meshData = [
-    { name: 'Curve', node: nodes.Curve },
-    { name: 'Curve001', node: nodes.Curve001 },
-    { name: 'Curve002', node: nodes.Curve002 },
-    { name: 'Curve003', node: nodes.Curve003 },
-    { name: 'Curve004', node: nodes.Curve004 },
-    { name: 'Curve005', node: nodes.Curve005 },
-    { name: 'Curve006', node: nodes.Curve006 },
-    { name: 'Curve007', node: nodes.Curve007 },
-    { name: 'Curve008', node: nodes.Curve008 },
-    { name: 'Curve009', node: nodes.Curve009 },
+    { name: "Curve", node: nodes.Curve },
+    { name: "Curve001", node: nodes.Curve001 },
+    { name: "Curve002", node: nodes.Curve002 },
+    { name: "Curve003", node: nodes.Curve003 },
+    { name: "Curve004", node: nodes.Curve004 },
+    { name: "Curve005", node: nodes.Curve005 },
+    { name: "Curve006", node: nodes.Curve006 },
+    { name: "Curve007", node: nodes.Curve007 },
+    { name: "Curve008", node: nodes.Curve008 },
+    { name: "Curve009", node: nodes.Curve009 },
   ];
 
   return (
-    <group ref={groupRef} {...props} dispose={null}>
+    <group ref={groupRef} dispose={null}>
       {meshData.map(({ name, node }) => (
         <AnimatedMesh
           key={name}
           geometry={node.geometry}
           position={node.position.toArray() as [number, number, number]}
-          rotation={node.rotation.toArray().slice(0, 3) as [number, number, number]}
+          rotation={
+            node.rotation.toArray().slice(0, 3) as [number, number, number]
+          }
           groupRef={groupRef}
           displacement={8}
           intensity={0.2}
@@ -209,5 +226,4 @@ export default function SolidModel(props: any) {
   );
 }
 
-useGLTF.preload('/landing/Tecno_logo.glb');
-
+useGLTF.preload("/landing/Tecno_logo.glb");
