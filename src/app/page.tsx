@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
@@ -68,8 +69,20 @@ export default function Page() {
       }
     }
   }, [isPlaying, isInitialized]);
+=======
+'use client';
 
+import dynamic from "next/dynamic";
+const Gallery = dynamic(() => import("~/components/gallery"), { ssr: false });
+const About = dynamic(() => import("~/components/About"), { ssr: false });
+const PreviousSponsors = dynamic(() => import("~/components/PreviousSponsors"), { ssr: false });
+const Footer = dynamic(() => import("~/components/footer"), { ssr: false });
+
+>>>>>>> efa91f5ffe567f3616074a9a6c3c6e5dcde09b4c
+
+const Home = () => {
   return (
+<<<<<<< HEAD
     <div className="h-screen w-screen bg-black">
       {showBottomElements && (
         <div className={`transition-opacity duration-800 ${fadeOutUI ? 'opacity-0' : 'opacity-100'}`}>
@@ -161,6 +174,15 @@ export default function Page() {
           </div>
         </div>
       )}
+=======
+    <div className="flex flex-col min-h-screen overflow-x-hidden pt-28 md:pt-32 bg-black">
+      <About />
+      <Gallery />
+      <PreviousSponsors />
+      <Footer />
+>>>>>>> efa91f5ffe567f3616074a9a6c3c6e5dcde09b4c
     </div>
   );
 }
+
+export default Home;
