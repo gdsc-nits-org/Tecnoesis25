@@ -1,4 +1,6 @@
+import Footer from '~/components/footer';
 import { AboutSection, ModuleSection, TeamsSection,Hero } from '../../components/robotron';
+
 
 export default function RobotronPage() {
   return (
@@ -8,6 +10,7 @@ export default function RobotronPage() {
         <AboutSection />
         <ModuleSection />
         <TeamsSection />
+        <Footer/>
       </main>
     </div>
   );
