@@ -25,10 +25,7 @@ export const AboutSection = () => {
             </h2>
             <div className="w-full">
               <p className={`${paragraphStyles} text-sm`}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quam mi, 
-                interdum eu volutpat eget, fermentum vitae odio. Quisque dui sem, auctor 
-                nec tempus in, convallis et nunc. Ut at tellus et enim dictum sagittis vel 
-                id tellus. Sed id tellus quis libero pretium blandit nec at lorem.
+                Robotron is the flagship annual event of N.E.R.D.S., the Robotics Club of NIT Silchar, dedicated to celebrating innovation, technology, and engineering excellence. It brings together creative minds and tech enthusiasts from across the nation to design, build, and battle robots in an electrifying arena of intelligence and precision.
               </p>
             </div>
           </div>
@@ -60,14 +57,7 @@ export const AboutSection = () => {
               </h2>
               <div className="w-full max-w-full mx-auto mt-4 sm:mt-6 md:mt-8">
                 <p className={`${paragraphStyles} text-xs sm:text-sm md:text-[15px] lg:text-base xl:text-lg leading-relaxed md:leading-loose`}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quam mi, 
-                  interdum eu volutpat eget, fermentum vitae odio. Quisque dui sem, auctor 
-                  nec tempus in, convallis et nunc. Ut at tellus et enim dictum sagittis vel 
-                  id tellus. Sed id tellus quis libero pretium blandit nec at lorem. Mauris 
-                  sit amet finibus odio. Nunc non condimentum odio. Vestibulum gravida posuere 
-                  orci eu dapibus. Nunc mattis hendrerit aliquet. Pellentesque magna magna, 
-                  sagittis vel placerat non, euismod eget lectus. Curabitur aliquet libero 
-                  vel massa eleifend.
+                  Robotron is the flagship annual event of N.E.R.D.S., the Robotics Club of NIT Silchar, dedicated to celebrating innovation, technology, and engineering excellence. It brings together creative minds and tech enthusiasts from across the nation to design, build, and battle robots in an electrifying arena of intelligence and precision.The event showcases the limitless potential of robotics through competitions like RoboWar, RoboSoccer, Race Circuit, and Bluetooth Blitz, testing participants’ mechanical design, coding skills, and real-time problem-solving abilities. Beyond the adrenaline of robot battles, Robotron fosters collaboration, teamwork, and a spirit of engineering innovation among young technocrats.
                 </p>
               </div>
             </div>
