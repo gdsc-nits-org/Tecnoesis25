@@ -905,6 +905,19 @@
   align-items: center;
   z-index: 1;
   padding: 1.5rem;
+  overflow: hidden;
+}
+
+.videoBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .backgroundImage {

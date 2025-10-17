@@ -14,6 +14,16 @@ const ModuleHeading: React.FC<ModuleHeadingProps> = ({
 }) => (
   <div className={`${styles.wrapper} ${className}`}>
     <div className={styles.container}>
+      {/* Video Background */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className={styles.videoBackground}
+      >
+        <source src="/robotron/bit_binary.mp4" type="video/mp4" />
+      </video>
       <img 
         src={bgImage}
         alt="" 
