@@ -246,11 +246,7 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
               <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 neon-text-white">
                 ENTER THE ARENA
               </h2>
-              <div className="inline-block px-6 py-2 border border-red-500/30 rounded-full mb-4">
-                <p className="text-lg md:text-xl text-red-400 font-light tracking-wider">
-                  Visit Robotron Page
-                </p>
-              </div>
+            
             </motion.div>
 
             {/* Subtext */}
@@ -267,7 +263,7 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
               }}
               className="text-gray-400 text-sm md:text-base lg:text-lg mb-12 max-w-2xl mx-auto font-light leading-relaxed"
             >
-              Experience the ultimate AI-Robotics battle at Technoesis.
+              Experience the ultimate Robotics battle at Tecnoesis.
               <br />
               Where machines collide and innovation ignites.
             </motion.p>
