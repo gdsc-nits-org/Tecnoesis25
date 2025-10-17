@@ -124,13 +124,13 @@ const NavDetails = [
     hoverImg: "/ItemState2.svg",
     clickedImg: "/ItemState3.svg",
   },
-  {
-    name: "About",
-    link: "/home#about",
-    defaultImg: "/ItemState1.svg",
-    hoverImg: "/ItemState2.svg",
-    clickedImg: "/ItemState3.svg",
-  },
+  // {
+  //   name: "About",
+  //   link: "/home#about",
+  //   defaultImg: "/ItemState1.svg",
+  //   hoverImg: "/ItemState2.svg",
+  //   clickedImg: "/ItemState3.svg",
+  // },
   // {
   //   name: "Events",
   //   link: "/events",

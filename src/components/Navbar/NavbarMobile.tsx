@@ -8,10 +8,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const NavDetails = [
   { name: "Home", link: "/home" },
-  // { name: "About", link: "/about" },
-  { name: "Modules", link: "/modules" },
-  { name: "Team", link: "/team" },
   { name: "Gallery", link: "/Gallery" },
+  // { name: "About", link: "/about" },
+  // { name: "Modules", link: "/modules" },
+  { name: "Team", link: "/team" }
+  
 ];
 
 export default function NavbarMobile() {
