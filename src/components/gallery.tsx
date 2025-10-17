@@ -6,17 +6,22 @@ import { useState, useRef, MouseEvent, TouchEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, Transition } from "framer-motion";
+import { useMediaQuery } from "usehooks-ts";
 
 export default function PhotoGallery() {
   const [isPressed, setIsPressed] = useState(false);
   const pressTimer = useRef<NodeJS.Timeout | null>(null);
   const wasHeld = useRef(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const handlePress = () => {
     if (pressTimer.current) clearTimeout(pressTimer.current);
     pressTimer.current = setTimeout(() => {
       setIsPressed(true);
       wasHeld.current = true;
+      if (isMobile && navigator.vibrate) {
+        navigator.vibrate(50);
+      }
     }, 250);
   };
 
@@ -46,10 +51,31 @@ export default function PhotoGallery() {
     damping: 20,
   };
 
+  const titleVariants = {
+    initial: { top: "15%", left: "50%", x: "-50%", scale: 1 },
+    pressed: {
+      top: isMobile ? "8%" : "5%",
+      left: isMobile ? "50%" : "5%",
+      x: isMobile ? "-50%" : "0%",
+      scale: isMobile ? 0.85 : 0.6,
+    },
+  };
+
+  const buttonVariants = {
+    initial: {
+      top: "75%", left: "50%", x: "-50%", y: "0%", scale: 1, bottom: "auto", right: "auto",
+    },
+    pressed: {
+      top: "auto", left: "auto", bottom: "7%", right: "8%", x: "0%", y: "0%",
+      scale: isMobile ? 0.9 : 0.8,
+    },
+  };
+
   return (
     <>
+      {/* 1. FIX: Add 'isolate' to create a new stacking context */}
       <div
-        className="relative min-h-screen w-full overflow-hidden laptop:scale-110 bg-center bg-cover xL:bg-contain"
+        className="relative min-h-screen w-full overflow-hidden isolate laptop:scale-110 bg-center bg-cover xL:bg-contain"
         style={{ backgroundImage: "url('/tech.gif')" }}
         onMouseDown={handlePress}
         onMouseUp={handleRelease}
@@ -59,20 +85,25 @@ export default function PhotoGallery() {
         onClickCapture={handleClickCapture}
         onContextMenu={handleContextMenu}
       >
+        {/* 2. FIX: Add a new motion.div for the black background overlay */}
+        <motion.div
+          className="absolute inset-0 z-0 bg-black"
+          initial={false}
+          animate={{ opacity: isPressed ? 0.85 : 0 }} // Fades to 85% opacity
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+        />
+
         {/* "Photo Gallery" Title */}
         <motion.div
-          className="absolute space-y-0 text-center select-none"
+          className="absolute space-y-0 text-center select-none z-10"
           initial={false}
           animate={isPressed ? "pressed" : "initial"}
           transition={springTransition}
-          variants={{
-            initial: { top: "15%", left: "50%", x: "-50%", scale: 1 },
-            pressed: { top: "5%", left: "5%", x: "0%", scale: 0.6 },
-          }}
+          variants={titleVariants}
         >
           <motion.div
             initial={false}
-            animate={{ textAlign: isPressed ? "left" : "center" }}
+            animate={{ textAlign: isMobile && isPressed ? "center" : isPressed ? "left" : "center" }}
             transition={{ duration: 0.4 }}
             className="mobile:text-[2.5rem] laptop:text-[2.8rem]"
           >
@@ -86,34 +117,13 @@ export default function PhotoGallery() {
           tabIndex={-1}
           onMouseDown={handleButtonInteraction}
           onTouchStart={handleButtonInteraction}
-          className="group absolute flex items-center justify-center mobile:h-20 mobile:w-40 tablet:h-28 tablet:w-56 laptop:h-24 laptop:w-50"
+          className="group absolute z-10 flex items-center justify-center mobile:h-20 mobile:w-40 tablet:h-28 tablet:w-56 laptop:h-24 laptop:w-50"
           initial={false}
           animate={isPressed ? "pressed" : "initial"}
           transition={springTransition}
-          variants={{
-            // FIX: All animated properties are now defined in BOTH states
-            initial: {
-              top: "75%",
-              left: "50%",
-              bottom: "auto", // Explicitly define the starting value
-              right: "auto",  // Explicitly define the starting value
-              x: "-50%",
-              y: "0%",
-              scale: 1,
-            },
-            pressed: {
-              top: "auto",    // Explicitly define the ending value
-              left: "auto",   // Explicitly define the ending value
-              bottom: "7%",
-              right: "8%",
-              x: "0%",
-              y: "0%",
-              scale: 0.8,
-            },
-          }}
-        >  {/* add the link to gallery here */}
+          variants={buttonVariants}
+        >
           <Link href="/gallery" className="absolute inset-0 z-10" aria-label="View photo gallery" />
-
           <Image
             src="/view1.png"
             alt="View details background"
@@ -130,13 +140,13 @@ export default function PhotoGallery() {
 
         {/* Center Image */}
         <motion.div
-          className="pointer-events-none absolute top-1/2 left-1/2 h-3/4 w-3/4 max-h-[500px] max-w-[500px] -translate-x-1/2 -translate-y-1/2"
+          className="pointer-events-none absolute top-1/2 left-1/2 z-10 h-3/4 w-3/4 max-h-[500px] max-w-[500px] -translate-x-1/2 -translate-y-1/2"
           initial={false}
           animate={{ opacity: isPressed ? 1 : 0 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
         >
           <Image
-            src="/view.png"
+            src="/about/framebg.png"
             alt="Centered gallery view"
             fill
             className="object-contain"
