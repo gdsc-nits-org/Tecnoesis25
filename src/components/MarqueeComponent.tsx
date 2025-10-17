@@ -12,22 +12,25 @@ const MarqueeComponent: React.FC<MarqueeComponentProps> = ({
   direction = "left",
   set,
 }) => {
-  const imageSets = pastSponsors.sets;
-  const imagesToShow = imageSets[set - 1] ?? imageSets[0];
+  const imageSets = pastSponsors.sets ?? [];
+  const imagesToShow = imageSets?.[set - 1] ?? imageSets?.[0] ?? [];
+
+  // Duplicate images for seamless scrolling
+  const repeatedImages = [...imagesToShow, ...imagesToShow];
 
   return (
-    <div className="w-full bg-black">
+    <div className="w-full bg-black overflow-hidden">
       <Marquee
         speed={100}
         direction={direction}
-        gradient={true}
-        gradientColor="black"
+        gradient={false}
+        pauseOnHover={false}
       >
-        <div className="flex gap-x-8 md:gap-x-12 lg:gap-x-18">
-          {imagesToShow?.map((image, index) => (
+        <div className="flex gap-x-10 md:gap-x-14 lg:gap-x-20">
+          {repeatedImages.map((image, index) => (
             <div
               key={index}
-              className={`flex items-center px-4 ${image.divWidths}`}
+              className={`flex items-center ${image.divWidths} scale-105`}
             >
               <Image
                 src={image.src}
