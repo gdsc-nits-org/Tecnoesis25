@@ -19,8 +19,8 @@ export default function Footer() {
       </div>
 
       <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-screen-xl flex-col items-center gap-y-8 px-4 py-16 md:gap-y-12 md:py-24">
-        
-      
+
+
         {/* <div className="pointer-events-auto flex w-[90%] cursor-pointer items-center justify-center space-x-3 rounded-lg border border-white p-2 md:space-x-4 md:p-3 laptop:w-[50%]">
           <div className="relative h-10 w-10 flex-shrink-0 laptop:h-14 laptop:w-14">
             <Image
@@ -36,7 +36,7 @@ export default function Footer() {
         </div> */}
 
         <div className="relative mobile:scale-[0.8] mobile2:scale-[1] ">
-        
+
           <div className="font-nyxerin pointer-events-none select-none text-center text-[clamp(2.5rem,10vw,6.6rem)] text-white laptop:text-[8rem]">
             Technoesis
           </div>
@@ -50,8 +50,8 @@ export default function Footer() {
             CONTACT US
           </p>
           <div className="flex items-center justify-center gap-x-6 sm:gap-x-8 md:gap-x-10">
-          
-            <a href="#" aria-label="Instagram" className="pointer-events-auto transform transition-transform hover:scale-110">
+
+            <a href="https://www.instagram.com/tecnoesis.nits/" target="_blank" aria-label="Instagram" className="pointer-events-auto transform transition-transform hover:scale-110">
               <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
                 <Image src="/insta.png" alt="Instagram" layout="fill" objectFit="contain" />
               </div>
@@ -61,7 +61,7 @@ export default function Footer() {
                 <Image src="/linkedin.png" alt="LinkedIn" layout="fill" objectFit="contain" />
               </div>
             </a> */}
-            <a href="#" aria-label="Facebook" className="pointer-events-auto transform transition-transform hover:scale-110">
+            <a href="https://www.facebook.com/rishiraj.saha.353" target="_blank" aria-label="Facebook" className="pointer-events-auto transform transition-transform hover:scale-110">
               <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
                 <Image src="/facebook.png" alt="Facebook" layout="fill" objectFit="contain" />
               </div>
@@ -76,9 +76,11 @@ export default function Footer() {
       </div>
 
       <div className="absolute bottom-5 left-0 right-0 z-10 w-full px-4">
-        <p className="font-nyxerin text-center text-[0.6rem] font-thin tracking-widest text-white sm:text-xs md:text-sm">
-          Made in Collaboration with GDG Nit Silchar
-        </p>
+        <a href="https://gdscnits.in/" target="_blank">
+          <p className="font-nyxerin text-center text-[0.6rem] font-thin tracking-widest text-white sm:text-xs md:text-sm">
+            Made in Collaboration with GDG Nit Silchar
+          </p>
+        </a>
       </div>
     </div>
   );

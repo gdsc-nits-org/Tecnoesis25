@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Nyxerin';
+  src: url('/nyxerin/nyxerin.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'BankGothic';
+  src: url('/BankGothic Md BT.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Opera */
 }
@@ -72,6 +85,69 @@
   }
 }
 
+.TeamCard2 .socialBar{
+  transition-duration: 0.5s;
+  transform: translateY(100%);
+  opacity:0;
+}
+
+.TeamCard2:hover .socialBar {
+  transition-duration: 0.5s;
+  transform: translateY(-50%);
+  opacity:1;
+}
+
+.TeamCard2 .BottomLeft{
+  transition-duration: 1s;
+  transform: translateX(0%);
+  background: linear-gradient(190deg, rgba(22, 22, 22, 0.95) 0%, #111111 100%);
+}
+
+.TeamCard2:hover .BottomLeft {
+  transition-duration: 1s;
+  transform: translateX(-5%);
+  /* Layer the original red gradient with a very subtle repeating stripe pattern (approx 10 stripes) */
+  background:
+    /* faint black stripes (thin, subtle) */
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0) 6px, rgba(0,0,0,0) 12px),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.95) 0%, #110000 15.1%, #ff0000 25.2%, #111111 49.5%, #000000 45.5%, #ff0000 100%);
+}
+
+.TeamCard2 .TecnoesisText{
+  font-family: 'BankGothic', sans-serif;
+  color:#ff000055;
+}
+
+/* Move inline TECNOESIS styles here so the component can use className="tecnoesis-title" */
+.tecnoesis-title {
+  transform: rotate(-90deg);
+  display: inline-block;
+  -webkit-text-stroke: 2px #ff0000;
+  color: #ff000055;
+  transition-duration: 1s;
+  text-shadow:0px 0px 20px #ff0000;
+}
+
+.TeamCard2:hover .tecnoesis-title {
+  color: #ffffff11; /* light white fill on hover */
+  -webkit-text-stroke-color: #ffffff; /* white stroke on hover */
+  transition-duration: 1s;
+    text-shadow:0px 0px 20px #ffffff;
+}@font-face {
+  font-family: "Nyxerin";
+  src: url("/fonts/Nyxerin.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BankGothic";
+  src: url("/fonts/BankGothic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 @font-face {
   font-family: 'nyxerin';
