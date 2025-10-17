@@ -17,18 +17,21 @@ interface ParticleMaterialType extends THREE.ShaderMaterial {
 // Define the type for the GLTF result for type safety
 interface GLTFResult {
   nodes: {
-    [key: string]: THREE.Object3D;
+    [key:string]: THREE.Object3D;
     Scene: THREE.Group;
   };
   materials: {
-    [key: string]: THREE.Material;
+    [key:string]: THREE.Material;
   };
 }
 
-// --- SHADER UPGRADE: SIMPLIFIED FOR NOISE ONLY ---
+// --- SHADER UPGRADE: NOISE ONLY ---
 const vertexShader = `
   uniform float uTime;
-  attribute float aRandom; // Attribute for randomization
+  attribute float aRandom;
+  attribute vec3 aOriginalPosition; // The particle's "home" position
+  attribute float aInteractionStrength; // 💡 Pass interaction strength to fragment shader
+  varying float vInteractionStrength;
 
   // Perlin noise function remains the same
   vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
@@ -83,23 +86,24 @@ const vertexShader = `
   }
 
   void main() {
-    // The shader now ONLY applies ambient noise. All interaction is on the CPU.
+    vInteractionStrength = aInteractionStrength;
     vec3 transformed = position;
 
-    // --- RANDOMIZED NOISE LOGIC ---
-    float internalNoiseStrength = 0.7;
+    float noiseDampening = 1.0 - aInteractionStrength;
+
+    float internalNoiseStrength = 0.9 * noiseDampening;
     vec3 internalNoise = vec3(
-        cnoise(transformed * 1.5 + uTime * 0.2),
-        cnoise(transformed * 1.5 + uTime * 0.2 + 100.0),
-        cnoise(transformed * 1.5 + uTime * 0.2 - 100.0)
+        cnoise(aOriginalPosition * 1.5 + uTime * 0.2),
+        cnoise(aOriginalPosition * 1.5 + uTime * 0.2 + 100.0),
+        cnoise(aOriginalPosition * 1.5 + uTime * 0.2 - 100.0)
     );
     transformed += internalNoise * internalNoiseStrength;
 
-    float explosiveNoiseStrength = 12.0;
+    float explosiveNoiseStrength = 7.0 * noiseDampening;
     vec3 explosiveNoise = vec3(
-        cnoise(transformed * 0.5 + uTime * 0.1),
-        cnoise(transformed * 0.5 + uTime * 0.1 + 200.0),
-        cnoise(transformed * 0.5 + uTime * 0.1 - 200.0)
+        cnoise(aOriginalPosition * 0.5 + uTime * 0.1),
+        cnoise(aOriginalPosition * 0.5 + uTime * 0.1 + 200.0),
+        cnoise(aOriginalPosition * 0.5 + uTime * 0.1 - 200.0)
     );
 
     float timeOffset = aRandom * 10.0;
@@ -108,22 +112,37 @@ const vertexShader = `
         
     vec4 modelViewPosition = modelViewMatrix * vec4(transformed, 1.0);
     gl_Position = projectionMatrix * modelViewPosition;
-    gl_PointSize = 5.0;
+    gl_PointSize = 8.0;
   }
 `;
-
 const fragmentShader = `
+  varying float vInteractionStrength;
+
   void main() {
-    // --- SPHERICAL SHADING LOGIC ---
+    // --- 💡 NEW INTERACTIVE COLOR LOGIC ---
     vec2 coord = gl_PointCoord - vec2(0.5);
     if (length(coord) > 0.5) {
-      discard;
+        discard;
     }
     float z = sqrt(0.25 - dot(coord, coord));
     vec3 normal = normalize(vec3(coord.x, coord.y, z));
+    
+    // Simple lighting for the matte effect
     vec3 lightDir = normalize(vec3(0.5, 0.5, 1.0));
-    float diffuse = max(0.0, dot(normal, lightDir)) * 0.7 + 0.3;
-    gl_FragColor = vec4(vec3(0.8, 0.9, 1.0) * diffuse, 1.0);
+    float diffuse = max(0.0, dot(normal, lightDir)) * 0.6 + 0.4;
+
+    // Define the two colors
+    vec3 matteGreyColor = vec3(1, 1, 1);
+    vec3 tronRedColor = vec3(1.0, 0.0, 0.0);
+
+    // The matte grey is affected by lighting.
+    vec3 baseColor = matteGreyColor * diffuse;
+    
+    // Mix between the base color and the glow color based on interaction strength
+    vec3 finalColor = mix(baseColor, tronRedColor, vInteractionStrength);
+
+    // For NormalBlending, we want full opacity
+    gl_FragColor = vec4(finalColor, 1.0);
   }
 `;
 
@@ -132,13 +151,13 @@ class ParticleMaterial extends THREE.ShaderMaterial {
     super({
       uniforms: {
         uTime: { value: 0 },
-        // uCursor is no longer needed in the shader
       },
       vertexShader,
       fragmentShader,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
+      // 💡 Switched to NormalBlending for a solid, matte look
+      blending: THREE.NormalBlending,
+      transparent: false,
+      depthWrite: true,
     });
   }
 }
@@ -147,7 +166,7 @@ extend({ ParticleMaterial });
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      particleMaterial: ThreeElements['shaderMaterial'] & { ref?: React.Ref<ParticleMaterialType> };
+      particleMaterial: ThreeElements['shaderMaterial'] & { ref?:React.Ref<ParticleMaterialType> };
     }
   }
 }
@@ -159,14 +178,13 @@ function ParticleModel() {
   const cursorPosition = useMemo(() => new THREE.Vector3(10000, 10000, 10000), []);
   const interactionPlane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), []);
 
-  // Use a ref to hold mutable data that doesn't trigger re-renders
   const particlesData = useRef<{
     originalPositions: Float32Array;
     currentPositions: Float32Array;
     randomValues: Float32Array;
+    interactionStrengths: Float32Array;
   } | null>(null);
 
-  // This useMemo only runs once to initialize particle data
   useMemo(() => {
     const geometries: THREE.BufferGeometry[] = [];
     nodes.Scene.traverse((child) => {
@@ -183,64 +201,71 @@ function ParticleModel() {
 
     const tempMesh = new THREE.Mesh(mergedGeometry);
     const sampler = new MeshSurfaceSampler(tempMesh).build();
-    const particleCount = 500;
+    const particleCount = 1000;
     const original = new Float32Array(particleCount * 3);
     const randoms = new Float32Array(particleCount);
+    const interactions = new Float32Array(particleCount);
     const tempPosition = new THREE.Vector3();
 
     for (let i = 0; i < particleCount; i++) {
         sampler.sample(tempPosition);
         original.set([tempPosition.x, tempPosition.y, tempPosition.z], i * 3);
         randoms[i] = Math.random();
+        interactions[i] = 0;
     }
     
     particlesData.current = {
       originalPositions: original,
-      currentPositions: original.slice(), // Start with current = original
+      currentPositions: original.slice(),
       randomValues: randoms,
+      interactionStrengths: interactions,
     };
   }, [nodes]);
 
   useFrame((state, delta) => {
     if (pointsRef.current && particlesData.current) {
+      pointsRef.current.rotation.y += delta * 0.5;
       pointsRef.current.material.uniforms.uTime.value += delta;
       
       state.raycaster.ray.intersectPlane(interactionPlane, cursorPosition);
 
-      const { originalPositions, currentPositions } = particlesData.current;
+      const { originalPositions, currentPositions, interactionStrengths } = particlesData.current;
       const positionAttribute = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
+      const interactionAttribute = pointsRef.current.geometry.attributes.aInteractionStrength as THREE.BufferAttribute;
 
-      // --- 💡 JAVASCRIPT-BASED REPULSION & STAGGERED RETURN ---
       for (let i = 0; i < currentPositions.length / 3; i++) {
         const i3 = i * 3;
-        
-        // Get the current position of the particle
         const pos = new THREE.Vector3(currentPositions[i3], currentPositions[i3 + 1], currentPositions[i3 + 2]);
-        
-        // Get the original "home" position
         const originalPos = new THREE.Vector3(originalPositions[i3], originalPositions[i3 + 1], originalPositions[i3 + 2]);
         
-        // 1. Calculate repulsion from cursor
         const distanceToCursor = pos.distanceTo(cursorPosition);
-        const interactionRadius = 6.0;
+        const interactionRadius = 4.5;
         const force = Math.max(0, interactionRadius - distanceToCursor);
+        
+        const shouldGlow = force > 0;
+        
+        // 💡 SLOWER FADE-OUT FOR COLOR
+        const currentStrength = interactionStrengths[i];
+        const targetStrength = shouldGlow ? 1.0 : 0.0;
+        // Use a much smaller damping factor for the fade-out
+        const dampingFactor = shouldGlow ? 8 : 1.5;
+        interactionStrengths[i] = THREE.MathUtils.damp(currentStrength??0, targetStrength, dampingFactor, delta);
+
         if (force > 0) {
             const direction = pos.clone().sub(cursorPosition).normalize();
-            const pushForce = Math.pow(force, 2.0) * 0.1;
+            const pushForce = Math.pow(force, 2.0) * 0.6;
             pos.add(direction.multiplyScalar(pushForce));
         }
 
-        // 2. Apply damping to return to original position
-        // This creates the slow, graceful return effect
-        pos.lerp(originalPos, 0.05);
-
-        // Update the current positions array
+        pos.lerp(originalPos, 0.01);
         currentPositions.set([pos.x, pos.y, pos.z], i3);
       }
 
-      // Update the geometry with the new positions
       positionAttribute.set(currentPositions);
       positionAttribute.needsUpdate = true;
+      
+      interactionAttribute.set(interactionStrengths);
+      interactionAttribute.needsUpdate = true;
     }
   });
   
@@ -249,20 +274,21 @@ function ParticleModel() {
   return (
     <points ref={pointsRef}>
       <bufferGeometry>
-        {/* This attribute will now be dynamically updated */}
         <bufferAttribute
           attach="attributes-position"
-          count={particlesData.current.currentPositions.length / 3}
-          array={particlesData.current.currentPositions}
           args={[particlesData.current.currentPositions, 3]}
-          itemSize={3}
+        />
+        <bufferAttribute
+          attach="attributes-aOriginalPosition"
+          args={[particlesData.current.originalPositions, 3]}
         />
         <bufferAttribute
           attach="attributes-aRandom"
-          count={particlesData.current.randomValues.length}
-          array={particlesData.current.randomValues}
-          args={[particlesData.current.randomValues,1]}
-          itemSize={1}
+          args={[particlesData.current.randomValues, 1]}
+        />
+        <bufferAttribute
+          attach="attributes-aInteractionStrength"
+          args={[particlesData.current.interactionStrengths, 1]}
         />
       </bufferGeometry>
       <particleMaterial />
@@ -279,14 +305,13 @@ const Landing = () => {
       style={{ backgroundImage: "url('/landing/bg.png')" }}
     >
       <Canvas
-        camera={{ position: [0, 0, 150], fov: 50 }}
+        camera={{ position: [0, 0, 100], fov: 50 }}
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}
       >
         <ambientLight intensity={1.2} />
         <directionalLight position={[2, 2, 2]} intensity={1.5} />
         <Suspense fallback={null}>
           <ParticleModel />
-          <Environment preset="sunset" />
         </Suspense>
       </Canvas>
     </div>
