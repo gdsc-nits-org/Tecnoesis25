@@ -1,17 +1,54 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import RegisterButton from "./RegisterButton";
 
 const NavbarDesktop = () => {
+  const pathname = usePathname();
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [lastScrollY, setLastScrollY] = useState<number>(0);
 
   const isAnyHovered = hoverIndex !== null;
 
+  // Update active index based on current pathname
+  useEffect(() => {
+    const currentIndex = NavDetails.findIndex(item => item.link === pathname);
+    if (currentIndex !== -1) {
+      setActiveIndex(currentIndex);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < 10) {
+        // Always show navbar at the top of the page
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY) {
+        // Scrolling down
+        setIsVisible(false);
+      } else {
+        // Scrolling up
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
   return (
-    <nav className="fixed top-0 h-[6rem] flex justify-between items-center bg-transparent w-full px-6 z-50">
+    <nav className={`fixed h-[6rem] flex justify-between items-center bg-transparent w-full px-6 z-50 transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
 
       <div className="flex items-center">
         <Image src="/TechnoLogo.svg" alt="TechnoLogo" width={250} height={40} />
@@ -39,10 +76,6 @@ const NavbarDesktop = () => {
             <Link
               key={index}
               href={item.link}
-              onClick={() => {
-                setActiveIndex(index);
-                setHoverIndex(null);
-              }}
               onMouseEnter={() => setHoverIndex(index)}
               onMouseLeave={() => setHoverIndex(null)}
               className="flex flex-col items-center transition-all duration-500 ease-in-out cursor-pointer"
@@ -87,13 +120,13 @@ const NavDetails = [
     hoverImg: "/ItemState2.svg",
     clickedImg: "/ItemState3.svg",
   },
-  {
-    name: "About",
-    link: "/about",
-    defaultImg: "/ItemState1.svg",
-    hoverImg: "/ItemState2.svg",
-    clickedImg: "/ItemState3.svg",
-  },
+  // {
+  //   name: "About",
+  //   link: "/about",
+  //   defaultImg: "/ItemState1.svg",
+  //   hoverImg: "/ItemState2.svg",
+  //   clickedImg: "/ItemState3.svg",
+  // },
   {
     name: "Events",
     link: "/events",
