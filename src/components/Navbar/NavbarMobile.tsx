@@ -1,24 +1,61 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 
 const NavDetails = [
   { name: "Home", link: "/" },
-  { name: "About", link: "/about" },
+  // { name: "About", link: "/about" },
   { name: "Modules", link: "/modules" },
-  { name: "Team", link: "/Team" },
+  { name: "Team", link: "/team" },
   { name: "Gallery", link: "/Gallery" },
 ];
 
 export default function NavbarMobile() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [lastScrollY, setLastScrollY] = useState<number>(0);
+
+  // Update active index based on current pathname
+  useEffect(() => {
+    const currentIndex = NavDetails.findIndex(item => item.link === pathname);
+    if (currentIndex !== -1) {
+      setActiveIndex(currentIndex);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < 10) {
+        // Always show navbar at the top of the page
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY) {
+        // Scrolling down
+        setIsVisible(false);
+      } else {
+        // Scrolling up
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
 
   return (
-    <nav className="flex items-center justify-between px-4 py-3 ">
+    <nav className={`flex items-center justify-between px-4 py-3 fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-sm transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
 
      <div className="flex px-2 items-center transition-transform duration-300 origin-center scale-100 sm:scale-110 md:scale-125">
   <Image
@@ -43,7 +80,7 @@ export default function NavbarMobile() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.4 }}
-            className="fixed top-0 right-0 w-[100%] h-full bg-[#0a0a0a] shadow-lg flex flex-col justify-between p-6 z-50"
+            className="fixed top-0 right-0 w-[100%] h-full bg-[#0a0a0a] shadow-lg flex flex-col justify-between p-6 z-50 overflow-y-auto"
           >
 
             <div className="flex justify-end pr-2 pt-2">
@@ -67,7 +104,6 @@ export default function NavbarMobile() {
                     <Link
                       href={item.link}
                       onClick={() => {
-                        setActiveIndex(index);
                         setIsOpen(false);
                       }}
                       className="flex flex-col items-center cursor-pointer"
