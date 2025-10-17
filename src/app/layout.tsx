@@ -21,7 +21,7 @@ export default function RootLayout({
       lang="en"
       className={`${GeistSans.variable}`}
       prefix="og: https://ogp.me/ns#"
-      suppressHydrationWarning  
+      suppressHydrationWarning
     >
       <head>
         <meta property="og:title" content="Tecnoesis 2025" />

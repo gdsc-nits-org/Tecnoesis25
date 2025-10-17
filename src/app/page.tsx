@@ -1,8 +1,17 @@
-import About from "~/components/About";
+'use client';
+
+import dynamic from "next/dynamic";
+const Gallery = dynamic(() => import("~/components/gallery"), { ssr: false });
+const About = dynamic(() => import("~/components/About"), { ssr: false });
+
+
 const Home = () => {
-  return <>
-    <About />
-  </>;
+  return (
+    <div className="flex flex-col min-h-screen overflow-x-hidden pt-28 md:pt-32 bg-black">
+      <About />
+      <Gallery />
+    </div>
+  );
 }
 
 export default Home;
