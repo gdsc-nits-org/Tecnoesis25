@@ -58,25 +58,34 @@ export default function PhotoGallery() {
       left: isMobile ? "5%" : "14%",
       x: isMobile ? "0%" : "0%",
       scale: isMobile ? 0.85 : 0.8,
-      
     },
   };
 
   const buttonVariants = {
     initial: {
-      top: "75%", left: "50%", x: "-50%", y: "0%", scale: 1, bottom: "auto", right: "auto",
+      top: "75%",
+      left: "50%",
+      x: "-50%",
+      y: "0%",
+      scale: 1,
+      bottom: "auto",
+      right: "auto",
     },
     pressed: {
-      top: "auto", left: "auto", bottom: "12%", right: "14%", x: "0%", y: "0%",
+      top: "auto",
+      left: "auto",
+      bottom: "12%",
+      right: "14%",
+      x: "0%",
+      y: "0%",
       scale: isMobile ? 0.9 : 0.8,
     },
   };
 
   return (
     <>
-      
       <div
-        className="relative min-h-screen w-full overflow-hidden isolate laptop:scale-110 bg-center bg-cover xL:bg-contain"
+        className="relative isolate min-h-screen w-full overflow-hidden bg-cover bg-center laptop:scale-110 xL:bg-contain"
         style={{ backgroundImage: "url('/tech.gif')" }}
         onMouseDown={handlePress}
         onMouseUp={handleRelease}
@@ -86,17 +95,15 @@ export default function PhotoGallery() {
         onClickCapture={handleClickCapture}
         onContextMenu={handleContextMenu}
       >
-        
         <motion.div
           className="absolute inset-0 z-0 bg-black"
           initial={false}
-          animate={{ opacity: isPressed ? 0.85 : 0 }} 
+          animate={{ opacity: isPressed ? 0.85 : 0 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
         />
 
-        
         <motion.div
-          className="absolute space-y-0 text-center select-none z-10"
+          className="absolute z-10 select-none space-y-0 text-center"
           initial={false}
           animate={isPressed ? "pressed" : "initial"}
           transition={springTransition}
@@ -104,7 +111,10 @@ export default function PhotoGallery() {
         >
           <motion.div
             initial={false}
-            animate={{ textAlign: isMobile && isPressed ? "left" : isPressed ? "left" : "center" }}
+            animate={{
+              textAlign:
+                isMobile && isPressed ? "left" : isPressed ? "left" : "center",
+            }}
             transition={{ duration: 0.4 }}
             className="mobile:text-[2.5rem] laptop:text-[2.8rem]"
           >
@@ -113,20 +123,22 @@ export default function PhotoGallery() {
           </motion.div>
         </motion.div>
 
-      
         <motion.div
           tabIndex={-1}
           onMouseDown={handleButtonInteraction}
           onTouchStart={handleButtonInteraction}
-          className="group absolute z-10 flex items-center justify-center mobile:h-20 mobile:w-40 tablet:h-28 tablet:w-56 laptop:h-24 laptop:w-50"
+          className="laptop:w-50 group absolute z-10 flex items-center justify-center mobile:h-20 mobile:w-40 tablet:h-28 tablet:w-56 laptop:h-24"
           initial={false}
           animate={isPressed ? "pressed" : "initial"}
           transition={springTransition}
           variants={buttonVariants}
         >
-
           {/* add the link to gallery page here  */}
-          <Link href="/gallery" className="absolute inset-0 z-10" aria-label="View photo gallery" />
+          <Link
+            href="/gallery"
+            className="absolute inset-0 z-10"
+            aria-label="View photo gallery"
+          />
           <Image
             src="/view1.png"
             alt="View details background"
@@ -137,13 +149,12 @@ export default function PhotoGallery() {
             src="/view2.png"
             alt="View details background hovered"
             fill
-            className="object-cover opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-[1.1]"
+            className="object-cover opacity-0 transition-all duration-300 group-hover:scale-[1.1] group-hover:opacity-100"
           />
         </motion.div>
 
-       
         <motion.div
-          className="pointer-events-none absolute top-1/2 left-1/2 z-10 h-3/4 w-3/4 max-h-[500px] max-w-[500px] laptop:max-h-[600px] laptop:max-w-[600px] -translate-x-1/2 -translate-y-1/2"
+          className="pointer-events-none absolute left-1/2 top-1/2 z-10 h-3/4 max-h-[500px] w-3/4 max-w-[500px] -translate-x-1/2 -translate-y-1/2 laptop:max-h-[600px] laptop:max-w-[600px]"
           initial={false}
           animate={{ opacity: isPressed ? 1 : 0 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}

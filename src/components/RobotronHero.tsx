@@ -1,19 +1,21 @@
 "use client";
 
-import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { ChevronRight } from 'lucide-react'
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { ChevronRight } from "lucide-react";
 
 interface RobotronHeroProps {
-  'data-id'?: string
-  onNavigate?: () => void
+  "data-id"?: string;
+  onNavigate?: () => void;
 }
 
 export const RobotronHero: React.FC<RobotronHeroProps> = ({
-  'data-id': dataId,
+  "data-id": dataId,
   onNavigate,
 }) => {
-  const [particles, setParticles] = useState<Array<{ left: number; delay: number; duration: number }>>([]);
+  const [particles, setParticles] = useState<
+    Array<{ left: number; delay: number; duration: number }>
+  >([]);
 
   useEffect(() => {
     // Generate particle positions only on client side to avoid hydration mismatch
@@ -27,24 +29,24 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
 
   const handleClick = () => {
     if (onNavigate) {
-      onNavigate()
+      onNavigate();
     } else {
-      window.location.href = '/robotron'
+      window.location.href = "/robotron";
     }
-  }
+  };
 
   return (
     <div
       data-id={dataId}
-      className="relative w-full min-h-screen bg-black overflow-hidden flex items-center justify-center p-4 md:p-8"
+      className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-black p-4 md:p-8"
     >
       {/* Animated Grid Background */}
-      <div className="absolute inset-0 grid-background">
+      <div className="grid-background absolute inset-0">
         <div className="grid-lines"></div>
       </div>
 
       {/* Tron Light Trails */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="light-trail trail-1"></div>
         <div className="light-trail trail-2"></div>
         <div className="light-trail trail-3"></div>
@@ -54,7 +56,7 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
 
       {/* Circuit Board Pattern */}
       <div className="absolute inset-0 opacity-20">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern
               id="circuit"
@@ -99,14 +101,14 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
       </div>
 
       {/* Scanning Lines */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="pointer-events-none absolute inset-0">
         <div className="scan-line scan-line-1"></div>
         <div className="scan-line scan-line-2"></div>
         <div className="scan-line scan-line-3"></div>
       </div>
 
       {/* Particle System */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="pointer-events-none absolute inset-0">
         {particles.map((particle, i) => (
           <div
             key={i}
@@ -121,7 +123,7 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
       </div>
 
       {/* Speed Lines from Corners */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="speed-line speed-line-tl"></div>
         <div className="speed-line speed-line-tr"></div>
         <div className="speed-line speed-line-bl"></div>
@@ -129,20 +131,20 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
       </div>
 
       {/* Pulsing Geometric Shapes */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="pointer-events-none absolute inset-0">
         <div className="geometric-shape shape-1"></div>
         <div className="geometric-shape shape-2"></div>
         <div className="geometric-shape shape-3"></div>
       </div>
 
       {/* Glow Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/20 rounded-full blur-3xl animate-pulse-slow"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-500/15 rounded-full blur-3xl animate-pulse-slower"></div>
+      <div className="animate-pulse-slow absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-red-600/20 blur-3xl"></div>
+      <div className="animate-pulse-slower absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-red-500/15 blur-3xl"></div>
 
       {/* Robot Silhouette */}
       <div className="absolute inset-0 opacity-5">
         <svg
-          className="w-full h-full"
+          className="h-full w-full"
           viewBox="0 0 100 100"
           preserveAspectRatio="xMidYMid slice"
         >
@@ -180,25 +182,25 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
         transition={{
           duration: 1,
         }}
-        className="relative z-10 w-full max-w-6xl futuristic-box"
+        className="futuristic-box relative z-10 w-full max-w-6xl"
       >
         {/* Box Border Glow */}
-        <div className="absolute inset-0 border-glow"></div>
+        <div className="border-glow absolute inset-0"></div>
 
         {/* Corner Decorations */}
-        <div className="absolute -top-2 -left-2 w-8 h-8 corner-accent top-left"></div>
-        <div className="absolute -top-2 -right-2 w-8 h-8 corner-accent top-right"></div>
-        <div className="absolute -bottom-2 -left-2 w-8 h-8 corner-accent bottom-left"></div>
-        <div className="absolute -bottom-2 -right-2 w-8 h-8 corner-accent bottom-right"></div>
+        <div className="corner-accent top-left absolute -left-2 -top-2 h-8 w-8"></div>
+        <div className="corner-accent top-right absolute -right-2 -top-2 h-8 w-8"></div>
+        <div className="corner-accent bottom-left absolute -bottom-2 -left-2 h-8 w-8"></div>
+        <div className="corner-accent bottom-right absolute -bottom-2 -right-2 h-8 w-8"></div>
 
         {/* Side Accent Lines */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-20 bg-gradient-to-b from-transparent via-red-500 to-transparent side-line-left"></div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-20 bg-gradient-to-b from-transparent via-red-500 to-transparent side-line-right"></div>
+        <div className="side-line-left absolute left-0 top-1/2 h-20 w-1 -translate-y-1/2 bg-gradient-to-b from-transparent via-red-500 to-transparent"></div>
+        <div className="side-line-right absolute right-0 top-1/2 h-20 w-1 -translate-y-1/2 bg-gradient-to-b from-transparent via-red-500 to-transparent"></div>
 
         {/* Main Content Container */}
-        <div className="relative backdrop-blur-sm bg-black/40 border-2 border-red-500/30 box-shape p-8 md:p-12 lg:p-16">
+        <div className="box-shape relative border-2 border-red-500/30 bg-black/40 p-8 backdrop-blur-sm md:p-12 lg:p-16">
           {/* Inner Glow Effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-red-500/5 pointer-events-none"></div>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-red-500/5"></div>
 
           <div className="relative text-center">
             {/* Technoesis Logo/Title */}
@@ -217,10 +219,10 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
               }}
               className="mb-8"
             >
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-wider mb-2 neon-text-red tron-font">
+              <h1 className="neon-text-red tron-font mb-2 text-4xl font-bold tracking-wider md:text-6xl lg:text-7xl">
                 ROBOTRON
               </h1>
-              <div className="flex items-center justify-center gap-2 text-red-400 text-sm md:text-base tracking-[0.3em]">
+              <div className="flex items-center justify-center gap-2 text-sm tracking-[0.3em] text-red-400 md:text-base">
                 <div className="h-px w-12 bg-gradient-to-r from-transparent to-red-500"></div>
                 <span className="font-light">2025</span>
                 <div className="h-px w-12 bg-gradient-to-l from-transparent to-red-500"></div>
@@ -243,10 +245,9 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
               }}
               className="mb-6"
             >
-              <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 neon-text-white">
+              <h2 className="neon-text-white mb-4 text-2xl font-bold md:text-4xl lg:text-5xl">
                 ENTER THE ARENA
               </h2>
-            
             </motion.div>
 
             {/* Subtext */}
@@ -261,7 +262,7 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
                 duration: 0.8,
                 delay: 0.6,
               }}
-              className="text-gray-400 text-sm md:text-base lg:text-lg mb-12 max-w-2xl mx-auto font-light leading-relaxed"
+              className="mx-auto mb-12 max-w-2xl text-sm font-light leading-relaxed text-gray-400 md:text-base lg:text-lg"
             >
               Experience the ultimate Robotics battle at Tecnoesis.
               <br />
@@ -285,25 +286,25 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
             >
               <button
                 onClick={handleClick}
-                className="group relative px-8 py-4 md:px-12 md:py-5 bg-transparent border-2 border-red-500 text-red-500 font-bold text-lg md:text-xl tracking-wider rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 neon-button"
+                className="neon-button group relative overflow-hidden rounded-lg border-2 border-red-500 bg-transparent px-8 py-4 text-lg font-bold tracking-wider text-red-500 transition-all duration-300 hover:scale-105 md:px-12 md:py-5 md:text-xl"
               >
                 {/* Button Glow Effect */}
-                <div className="absolute inset-0 bg-red-500/0 group-hover:bg-red-500/10 transition-all duration-300"></div>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute inset-0 animate-pulse-ring"></div>
+                <div className="absolute inset-0 bg-red-500/0 transition-all duration-300 group-hover:bg-red-500/10"></div>
+                <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="animate-pulse-ring absolute inset-0"></div>
                 </div>
 
                 {/* Button Content */}
                 <span className="relative flex items-center gap-3">
                   ENTER ROBOTRON
-                  <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
+                  <ChevronRight className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
 
                 {/* Corner Accents */}
-                <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-red-500"></div>
-                <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-red-500"></div>
-                <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-red-500"></div>
-                <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-red-500"></div>
+                <div className="absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-red-500"></div>
+                <div className="absolute right-0 top-0 h-3 w-3 border-r-2 border-t-2 border-red-500"></div>
+                <div className="absolute bottom-0 left-0 h-3 w-3 border-b-2 border-l-2 border-red-500"></div>
+                <div className="absolute bottom-0 right-0 h-3 w-3 border-b-2 border-r-2 border-red-500"></div>
               </button>
             </motion.div>
 
@@ -324,7 +325,7 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
               className="mt-16 flex items-center justify-center gap-4"
             >
               <div className="h-px w-24 bg-gradient-to-r from-transparent via-red-500 to-transparent"></div>
-              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+              <div className="h-2 w-2 animate-pulse rounded-full bg-red-500"></div>
               <div className="h-px w-24 bg-gradient-to-r from-transparent via-red-500 to-transparent"></div>
             </motion.div>
           </div>
@@ -332,22 +333,22 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
       </motion.div>
 
       <style jsx>{`
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap");
 
         @font-face {
-          font-family: 'Tron';
-          src: url('/tron.ttf') format('truetype');
+          font-family: "Tron";
+          src: url("/tron.ttf") format("truetype");
           font-weight: normal;
           font-style: normal;
           font-display: swap;
         }
 
         * {
-          font-family: 'Orbitron', sans-serif;
+          font-family: "Orbitron", sans-serif;
         }
 
         .tron-font {
-          font-family: 'Tron', 'Orbitron', sans-serif;
+          font-family: "Tron", "Orbitron", sans-serif;
         }
 
         .grid-background {
@@ -359,7 +360,7 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
         }
 
         .grid-lines::before {
-          content: '';
+          content: "";
           position: absolute;
           inset: 0;
           background: radial-gradient(
@@ -383,10 +384,10 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
           position: absolute;
           height: 2px;
           width: 0;
-          background: linear-gradient(90deg, transparent, #F40004, transparent);
+          background: linear-gradient(90deg, transparent, #f40004, transparent);
           box-shadow:
-            0 0 10px #F40004,
-            0 0 20px #F40004;
+            0 0 10px #f40004,
+            0 0 20px #f40004;
           animation: trailMove 4s linear infinite;
         }
 
@@ -440,7 +441,8 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
         }
 
         @keyframes nodePulse {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.3;
             r: 3;
           }
@@ -456,8 +458,8 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
           left: 0;
           width: 100%;
           height: 1px;
-          background: linear-gradient(90deg, transparent, #F40004, transparent);
-          box-shadow: 0 0 10px #F40004;
+          background: linear-gradient(90deg, transparent, #f40004, transparent);
+          box-shadow: 0 0 10px #f40004;
           animation: scanMove 8s linear infinite;
         }
 
@@ -495,9 +497,9 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
           position: absolute;
           width: 2px;
           height: 2px;
-          background: #F40004;
+          background: #f40004;
           border-radius: 50%;
-          box-shadow: 0 0 5px #F40004;
+          box-shadow: 0 0 5px #f40004;
           animation: particleFloat linear infinite;
         }
 
@@ -523,8 +525,8 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
           position: absolute;
           width: 200px;
           height: 1px;
-          background: linear-gradient(90deg, #F40004, transparent);
-          box-shadow: 0 0 5px #F40004;
+          background: linear-gradient(90deg, #f40004, transparent);
+          box-shadow: 0 0 5px #f40004;
           opacity: 0;
           animation: speedLineFlash 3s ease-in-out infinite;
         }
@@ -560,7 +562,8 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
         }
 
         @keyframes speedLineFlash {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0;
             width: 0;
           }
@@ -605,7 +608,8 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
         }
 
         @keyframes shapePulse {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.2;
             transform: scale(1) rotate(0deg);
             box-shadow: 0 0 0 rgba(255, 0, 0, 0);
@@ -658,7 +662,8 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
         }
 
         @keyframes borderPulse {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.3;
           }
           50% {
@@ -668,27 +673,28 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
 
         /* Corner Accents */
         .corner-accent {
-          background: linear-gradient(135deg, #F40004 0%, transparent 70%);
+          background: linear-gradient(135deg, #f40004 0%, transparent 70%);
           animation: cornerGlow 2s ease-in-out infinite;
         }
 
         .corner-accent.top-right {
-          background: linear-gradient(225deg, #F40004 0%, transparent 70%);
+          background: linear-gradient(225deg, #f40004 0%, transparent 70%);
           animation-delay: 0.5s;
         }
 
         .corner-accent.bottom-left {
-          background: linear-gradient(45deg, #F40004 0%, transparent 70%);
+          background: linear-gradient(45deg, #f40004 0%, transparent 70%);
           animation-delay: 1s;
         }
 
         .corner-accent.bottom-right {
-          background: linear-gradient(315deg, #F40004 0%, transparent 70%);
+          background: linear-gradient(315deg, #f40004 0%, transparent 70%);
           animation-delay: 1.5s;
         }
 
         @keyframes cornerGlow {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.5;
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
           }
@@ -709,7 +715,8 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
         }
 
         @keyframes sidePulse {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.3;
             height: 5rem;
           }
@@ -722,10 +729,10 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
         .neon-text-red {
           color: #fff;
           text-shadow:
-            0 0 10px #F40004,
-            0 0 20px #F40004,
-            0 0 30px #F40004,
-            0 0 40px #F40004;
+            0 0 10px #f40004,
+            0 0 20px #f40004,
+            0 0 30px #f40004,
+            0 0 40px #f40004;
           animation: flicker 3s infinite alternate;
         }
 
@@ -734,13 +741,13 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
           text-shadow:
             0 0 10px #fff,
             0 0 20px #ffffff50,
-            0 0 30px #F40004,
-            0 0 40px #F40004;
+            0 0 30px #f40004,
+            0 0 40px #f40004;
         }
 
         .neon-button {
           box-shadow:
-            0 0 10px #F40004,
+            0 0 10px #f40004,
             inset 0 0 10px rgba(255, 0, 0, 0.1);
           transition: all 0.3s ease;
         }
@@ -750,11 +757,12 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
             0 0 20px rgba(255, 0, 0, 0.8),
             0 0 40px rgba(255, 0, 0, 0.6),
             inset 0 0 20px rgba(255, 0, 0, 0.2);
-          text-shadow: 0 0 10px #F40004;
+          text-shadow: 0 0 10px #f40004;
         }
 
         @keyframes flicker {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 1;
           }
           50% {
@@ -784,5 +792,5 @@ export const RobotronHero: React.FC<RobotronHeroProps> = ({
         }
       `}</style>
     </div>
-  )
-}
+  );
+};

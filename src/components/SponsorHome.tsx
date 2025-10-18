@@ -18,10 +18,10 @@ const SponsorHome: React.FC = () => {
   return (
     <section
       id="sponsors"
-      className="relative w-full min-h-screen flex flex-col items-center justify-center py-10 px-4 md:px-8 lg:px-16 overflow-hidden"
+      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 py-10 md:px-8 lg:px-16"
     >
       <video
-        className="absolute top-0 left-0 w-full h-full object-cover opacity-100"
+        className="absolute left-0 top-0 h-full w-full object-cover opacity-100"
         src="/sponsor_bg.mp4"
         autoPlay
         loop
@@ -31,20 +31,20 @@ const SponsorHome: React.FC = () => {
 
       <div className="absolute inset-0 bg-black/65"></div>
 
-      <div className="relative z-10 order-1 sm:order-1 md:order-2 lg:order-2 flex justify-center mb-4 md:mb-10 lg:mb-14">
+      <div className="relative z-10 order-1 mb-4 flex justify-center sm:order-1 md:order-2 md:mb-10 lg:order-2 lg:mb-14">
         <Image
           src="/sponsors/SPONSORS.png"
           alt="Sponsors"
           width={661}
           height={52}
-          className="w-[240px] sm:w-[400px] md:w-[400px] lg:w-[500px] h-auto"
+          className="h-auto w-[240px] sm:w-[400px] md:w-[400px] lg:w-[500px]"
         />
       </div>
 
       <div
-        className="relative z-10 order-2 sm:order-2 md:order-1 lg:order-1
-            grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-            gap-[31px] w-full md:max-w-[1024px] mb-4 md:mb-10 lg:mb-14"
+        className="relative z-10 order-2 mb-4 grid w-full
+            grid-cols-2 gap-[31px] sm:order-2 sm:grid-cols-2 md:order-1
+            md:mb-10 md:max-w-[1024px] md:grid-cols-3 lg:order-1 lg:mb-14 lg:grid-cols-4"
       >
         {topSponsors.map((sponsor, index) => (
           <SponsorCard key={index} sponsor={sponsor} />
@@ -52,9 +52,9 @@ const SponsorHome: React.FC = () => {
       </div>
 
       <div
-        className="relative z-10 order-3 sm:order-3 md:order-3 lg:order-3
-            grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-            gap-[31px] w-full md:max-w-[1024px]"
+        className="relative z-10 order-3 grid w-full grid-cols-2
+            gap-[31px] sm:order-3 sm:grid-cols-2 md:order-3 md:max-w-[1024px]
+            md:grid-cols-3 lg:order-3 lg:grid-cols-4"
       >
         {bottomSponsors.map((sponsor, index) => (
           <SponsorCard key={index} sponsor={sponsor} />
@@ -67,23 +67,23 @@ const SponsorHome: React.FC = () => {
 const SponsorCard: React.FC<{ sponsor: Sponsor }> = ({ sponsor }) => (
   <Link
     href={sponsor.url}
-    className="relative group flex items-center justify-center
-               w-full aspect-[400.85/263.83] 
-               rounded-xl overflow-hidden transition-all duration-500"
+    className="group relative flex aspect-[400.85/263.83] w-full
+               items-center justify-center 
+               overflow-hidden rounded-xl transition-all duration-500"
   >
     <div className="absolute inset-0 z-0">
       <Image
         src="/sponsors/sponsors-bg.svg"
         alt="Sponsor Background"
         fill
-        className="object-cover transition-opacity duration-500 opacity-100 group-hover:opacity-0"
+        className="object-cover opacity-100 transition-opacity duration-500 group-hover:opacity-0"
       />
 
       <Image
         src="/sponsors/sponsor-bg2.svg"
         alt="Sponsor Hover Background"
         fill
-        className="object-cover transition-opacity duration-500 opacity-0 group-hover:opacity-100"
+        className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
       />
     </div>
 
@@ -92,8 +92,8 @@ const SponsorCard: React.FC<{ sponsor: Sponsor }> = ({ sponsor }) => (
       alt={sponsor.alt}
       width={240}
       height={270}
-      className="object-contain transition-transform duration-500 ease-in-out group-hover:scale-125 z-20
-                 w-[100px] h-[113px] sm:w-[140px] sm:h-[160px] md:w-[120px] md:h-[136px] lg:w-[160px] lg:h-[180px]"
+      className="z-20 h-[113px] w-[100px] object-contain transition-transform duration-500
+                 ease-in-out group-hover:scale-125 sm:h-[160px] sm:w-[140px] md:h-[136px] md:w-[120px] lg:h-[180px] lg:w-[160px]"
     />
   </Link>
 );

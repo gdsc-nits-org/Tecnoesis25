@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import { TeamCard } from './TeamCard';
-import { TeamCard2 } from './TeamCard2';
-import TeamHeading from './TeamHeading';
+import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { TeamCard } from "./TeamCard";
+import { TeamCard2 } from "./TeamCard2";
+import TeamHeading from "./TeamHeading";
 
 // Dynamically import Slider to avoid SSR issues
-const Slider = dynamic(() => import('react-slick'), { ssr: false });
+const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
 // Import slick carousel CSS
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface SocialLinks {
   linkedin?: string;
@@ -51,7 +51,7 @@ const defaultTeamData: TeamData = {
   robodrift: [],
   algomaze: [],
   leadership: [],
-  teamHeads: {}
+  teamHeads: {},
 };
 
 // Carousel settings for mobile - Leadership section
@@ -62,7 +62,7 @@ const leadershipCarouselSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   centerMode: true,
-  centerPadding: '0px',
+  centerPadding: "0px",
   arrows: false,
   adaptiveHeight: true,
   autoplay: true,
@@ -78,13 +78,13 @@ export const TeamsSection = () => {
     // Load data on client side only
     const loadData = async () => {
       try {
-        const data = await import('./teamData.json');
+        const data = await import("./teamData.json");
         const rawData = data.default as unknown as TeamData;
 
         setTeamData(rawData);
       } catch (err) {
-        console.error('Failed to load team data:', err);
-        setError('Failed to load team data. Please try again later.');
+        console.error("Failed to load team data:", err);
+        setError("Failed to load team data. Please try again later.");
       } finally {
         setIsLoading(false);
       }
@@ -106,7 +106,13 @@ export const TeamsSection = () => {
   };
 
   // Reusable function for team sections
-  const renderTeamSection = (title: string, teamKey: keyof TeamData, useTeamCard2 = true, teamHeads?: string, extraMarginTop?: string) => {
+  const renderTeamSection = (
+    title: string,
+    teamKey: keyof TeamData,
+    useTeamCard2 = true,
+    teamHeads?: string,
+    extraMarginTop?: string,
+  ) => {
     const members = teamData[teamKey];
 
     // Ensure members is an array
@@ -118,18 +124,22 @@ export const TeamsSection = () => {
 
     return (
       <div className="mb-20">
-        <h3 className={`text-2xl sm:text-3xl font-semibold text-center mb-8 font-orbitron ${extraMarginTop ?? ''}`}>
+        <h3
+          className={`mb-8 text-center font-orbitron text-2xl font-semibold sm:text-3xl ${extraMarginTop ?? ""}`}
+        >
           {title}
         </h3>
 
         {/* Desktop */}
-        <div className={`hidden sm:grid gap-12 justify-items-center ${
-          members.length === 2 
-            ? 'grid-cols-2 max-w-4xl mx-auto' 
-            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto'
-        }`}>
+        <div
+          className={`hidden justify-items-center gap-12 sm:grid ${
+            members.length === 2
+              ? "mx-auto max-w-4xl grid-cols-2"
+              : "mx-auto max-w-7xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          }`}
+        >
           {members.map((member: TeamMember, i: number) => (
-            <div key={i} className="flex justify-center items-center">
+            <div key={i} className="flex items-center justify-center">
               <CardComponent
                 name={member.name}
                 role={member.role}
@@ -140,14 +150,16 @@ export const TeamsSection = () => {
         </div>
 
         {/* Mobile Slider */}
-        <div className="sm:hidden overflow-hidden">
-          <div className="w-full flex justify-center">
-            <div className="w-full max-w-[350px] mx-auto">
+        <div className="overflow-hidden sm:hidden">
+          <div className="flex w-full justify-center">
+            <div className="mx-auto w-full max-w-[350px]">
               <Slider {...(useTeamCard2 ? teamCardSettings : teamCardSettings)}>
                 {members.map((member: TeamMember, i: number) => (
                   <div key={i} className="px-2">
-                    <div className="flex justify-center items-center">
-                      <div className={`origin-center mx-auto ${useTeamCard2 ? 'scale-[0.85]' : 'scale-90'}`}>
+                    <div className="flex items-center justify-center">
+                      <div
+                        className={`mx-auto origin-center ${useTeamCard2 ? "scale-[0.85]" : "scale-90"}`}
+                      >
                         <CardComponent
                           name={member.name}
                           role={member.role}
@@ -167,21 +179,21 @@ export const TeamsSection = () => {
 
   if (isLoading) {
     return (
-      <section 
-        className="w-full bg-black text-white py-12 sm:py-20 relative"
+      <section
+        className="relative w-full bg-black py-12 text-white sm:py-20"
         style={{
-          backgroundImage: 'url(/robotron/team/teamsbackg.svg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed'
+          backgroundImage: "url(/robotron/team/teamsbackg.svg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-96 flex items-center justify-center">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-96 items-center justify-center">
             <div className="animate-pulse text-center">
-              <div className="h-8 bg-gray-700 rounded w-64 mb-4"></div>
-              <div className="h-4 bg-gray-700 rounded w-48 mx-auto"></div>
+              <div className="mb-4 h-8 w-64 rounded bg-gray-700"></div>
+              <div className="mx-auto h-4 w-48 rounded bg-gray-700"></div>
             </div>
           </div>
         </div>
@@ -191,35 +203,35 @@ export const TeamsSection = () => {
 
   if (error) {
     return (
-      <section 
-        className="w-full bg-black text-white py-12 sm:py-20 relative"
+      <section
+        className="relative w-full bg-black py-12 text-white sm:py-20"
         style={{
-          backgroundImage: 'url(/robotron/team/teamsbackg.svg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed'
+          backgroundImage: "url(/robotron/team/teamsbackg.svg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-red-400 font-orbitron">{error}</div>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center font-orbitron text-red-400">{error}</div>
         </div>
       </section>
     );
   }
 
   return (
-    <section 
-      className="w-full bg-black text-white py-12 sm:py-20 relative"
+    <section
+      className="relative w-full bg-black py-12 text-white sm:py-20"
       style={{
-        backgroundImage: 'url(/robotron/team/teamsbackg.svg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
+        backgroundImage: "url(/robotron/team/teamsbackg.svg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Main Title */}
         <div className="mb-16">
           <TeamHeading>Team</TeamHeading>
@@ -227,15 +239,15 @@ export const TeamsSection = () => {
 
         {/* Leadership Section - Hierarchical Layout */}
         <div className="mb-40">
-          <h3 className="text-xl sm:text-2xl font-semibold text-center mb-12 font-orbitron">
+          <h3 className="mb-12 text-center font-orbitron text-xl font-semibold sm:text-2xl">
             Robotron Module Heads
           </h3>
 
           {/* Desktop - Hierarchical Layout */}
-          <div className="hidden sm:block max-w-[1500px] mx-auto">
+          <div className="mx-auto hidden max-w-[1500px] sm:block">
             {/* Chief Coordinator - Top Row (Centered) */}
             {teamData.leadership[0] && (
-              <div className="flex justify-center mb-12">
+              <div className="mb-12 flex justify-center">
                 <TeamCard
                   name={teamData.leadership[0].name}
                   role={teamData.leadership[0].role}
@@ -245,7 +257,7 @@ export const TeamsSection = () => {
             )}
 
             {/* Two Convenors - Middle Row */}
-            <div className="grid grid-cols-2 gap-12 justify-items-center max-w-4xl mx-auto mb-12">
+            <div className="mx-auto mb-12 grid max-w-4xl grid-cols-2 justify-items-center gap-12">
               {teamData.leadership[1] && (
                 <div className="flex justify-center">
                   <TeamCard
@@ -279,14 +291,14 @@ export const TeamsSection = () => {
           </div>
 
           {/* Mobile - Carousel */}
-          <div className="sm:hidden mb-2 overflow-hidden">
-            <div className="w-full flex justify-center">
-              <div className="w-full max-w-[350px] mx-auto">
+          <div className="mb-2 overflow-hidden sm:hidden">
+            <div className="flex w-full justify-center">
+              <div className="mx-auto w-full max-w-[350px]">
                 <Slider {...leadershipCarouselSettings}>
                   {teamData.leadership.map((leader, index) => (
                     <div key={index} className="px-2">
-                      <div className="flex justify-center items-center">
-                        <div className="scale-90 origin-center mx-auto">
+                      <div className="flex items-center justify-center">
+                        <div className="mx-auto origin-center scale-90">
                           <TeamCard
                             name={leader.name}
                             role={leader.role}
@@ -303,19 +315,25 @@ export const TeamsSection = () => {
         </div>
 
         {/* ============ Marketing Heads ============ */}
-        {renderTeamSection('Marketing Heads', 'marketing', false, undefined, 'mt-20')}
+        {renderTeamSection(
+          "Marketing Heads",
+          "marketing",
+          false,
+          undefined,
+          "mt-20",
+        )}
 
         {/* ============ 2. Robowar ============ */}
-        {renderTeamSection('Robowar Heads', 'robowar', true)}
+        {renderTeamSection("Robowar Heads", "robowar", true)}
 
         {/* ============ 3. Robosoccer ============ */}
-        {renderTeamSection('Robosoccer Heads', 'robosoccer', true)}
+        {renderTeamSection("Robosoccer Heads", "robosoccer", true)}
 
         {/* ============ 4. Robodrift ============ */}
-        {renderTeamSection('Robodrift Heads', 'robodrift', true)}
+        {renderTeamSection("Robodrift Heads", "robodrift", true)}
 
         {/* ============ 5. Algomaze ============ */}
-        {renderTeamSection('Algomaze Heads', 'algomaze', true)}
+        {renderTeamSection("Algomaze Heads", "algomaze", true)}
       </div>
     </section>
   );

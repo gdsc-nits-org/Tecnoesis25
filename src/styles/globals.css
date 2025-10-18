@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+@font-face {
+  font-family: 'nyxerin';
+  src: url('/nyxerin.otf') format('opentype');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* helper class to use anywhere */
+.font-nyxerin {
+  font-family: 'nyxerin', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
 /* Import slick carousel styles */
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
@@ -18,19 +33,188 @@
   font-style: normal;
 }
 
+/* Custom Scrollbar Styles */
+:root {
+  --scrollbar-color: rgba(255, 0, 0, 0.8);
+  --scrollbar-track: rgba(20, 20, 20, 0.5);
+  /* Default custom cursor theme (red) */
+  --cursor-color: rgba(255, 0, 0, 0.8);
+  --cursor-solid: #ff0000;
+}
+
+/* Landing/root page cursor theme: darker cyan than #00e5ff */
+.cursor-theme-landing {
+  --cursor-color: rgba(0, 180, 210, 0.7);
+  --cursor-solid: #00b4d2;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 10px;
+  margin: 4px 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--scrollbar-color) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    var(--scrollbar-color) 100%
+  );
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  min-height: 30px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 0, 0, 1) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 0, 0, 1) 100%
+  );
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color) var(--scrollbar-track);
+}
+
+/* Custom Cursor Styles */
+/* Hide native cursor only on md and up; show normal cursor on small screens */
+@media (min-width: 768px) {
+  body {
+    cursor: none;
+  }
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+
+/* On small screens, ensure default cursor and hide custom cursor visuals */
+@media (max-width: 767.98px) {
+  .custom-cursor {
+    display: none !important;
+  }
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    cursor: auto;
+  }
+}
+
+.cursor-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--cursor-color);
+  border-radius: 50%;
+  animation: rotateCursor 3s linear infinite;
+}
+
+.cursor-ring::before,
+.cursor-ring::after {
+  content: "";
+  position: absolute;
+  background: var(--cursor-solid);
+}
+
+/* Crosshair vertical */
+.cursor-ring::before {
+  width: 2px;
+  height: 12px;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Crosshair horizontal */
+.cursor-ring::after {
+  width: 12px;
+  height: 2px;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.cursor-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--cursor-solid);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-arc {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.8);
+  border-right-color: rgba(0, 0, 0, 0.8);
+  animation: rotateCursor 2s linear infinite reverse;
+}
+
+@keyframes rotateCursor {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Interactive elements cursor */
+@media (min-width: 768px) {
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    cursor: none;
+  }
+}
+
 .no-scrollbar::-webkit-scrollbar {
-  display: none; /* For Chrome, Safari, and Opera */
+  display: none;
+  /* For Chrome, Safari, and Opera */
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none; /* For IE and Edge */
-  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;
+  /* For IE and Edge */
+  scrollbar-width: none;
+  /* For Firefox */
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -47,13 +231,15 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: rgba(0, 229, 255, 0.1); /* subtle bluish glow */
+  background: rgba(0, 229, 255, 0.1);
+  /* subtle bluish glow */
   transition: transform 0.3s;
   animation: tronGlow 1.5s infinite alternate;
 }
 
 .tron-icon .icon {
-  color: #00e5ff; /* neon bluish cyan */
+  color: #00e5ff;
+  /* neon bluish cyan */
   font-size: 28px;
   transition: color 0.3s;
   text-shadow:
@@ -74,6 +260,7 @@
 }
 
 @keyframes tronGlow {
+
   0%,
   100% {
     box-shadow:
@@ -81,6 +268,7 @@
       0 0 10px #00e5ff,
       0 0 15px #00e5ff30;
   }
+
   50% {
     box-shadow:
       0 0 10px #00e5ff,
@@ -338,23 +526,34 @@
 }
 
 @font-face {
-  font-family: 'nyxerin';
-  src: url('/fonts/nyxerin.otf') format('opentype');
+  font-family: "nyxerin";
+  src: url("/fonts/nyxerin.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 
 .font-nyxerin {
-  font-family: 'nyxerin', sans-serif;
+  font-family: "nyxerin", sans-serif;
 }
 
 @font-face {
-  font-family: 'bankgothic';
-  src: url('/fonts/DEMO-bgt45.otf') format('opentype');
+  font-family: "bankgothic";
+  src: url("/fonts/DEMO-bgt45.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 
 .font-bank {
-  font-family: 'bankgothic', sans-serif;
+  font-family: "bankgothic", sans-serif;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }

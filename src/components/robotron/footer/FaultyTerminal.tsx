@@ -1,10 +1,11 @@
 "use client";
-import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
-import React, { useEffect, useRef, useMemo, useCallback } from 'react';
+import { Renderer, Program, Mesh, Color, Triangle } from "ogl";
+import React, { useEffect, useRef, useMemo, useCallback } from "react";
 
 type Vec2 = [number, number];
 
-export interface FaultyTerminalProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface FaultyTerminalProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   scale?: number;
   gridMul?: Vec2;
   digitSize?: number;
@@ -232,14 +233,18 @@ void main() {
 `;
 
 function hexToRgb(hex: string): [number, number, number] {
-  let h = hex.replace('#', '').trim();
+  let h = hex.replace("#", "").trim();
   if (h.length === 3)
     h = h
-      .split('')
-      .map(c => c + c)
-      .join('');
+      .split("")
+      .map((c) => c + c)
+      .join("");
   const num = parseInt(h, 16);
-  return [((num >> 16) & 255) / 255, ((num >> 8) & 255) / 255, (num & 255) / 255];
+  return [
+    ((num >> 16) & 255) / 255,
+    ((num >> 8) & 255) / 255,
+    (num & 255) / 255,
+  ];
 }
 
 export default function FaultyTerminal({
@@ -255,10 +260,12 @@ export default function FaultyTerminal({
   chromaticAberration = 0,
   dither = 0,
   curvature = 0.2,
-  tint = '#ffffff',
+  tint = "#ffffff",
   mouseReact = true,
   mouseStrength = 0.2,
-  dpr = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 2) : 2,
+  dpr = typeof window !== "undefined"
+    ? Math.min(window.devicePixelRatio || 1, 2)
+    : 2,
   pageLoadAnimation = true,
   brightness = 1,
   className,
@@ -277,7 +284,10 @@ export default function FaultyTerminal({
 
   const tintVec = useMemo(() => hexToRgb(tint), [tint]);
 
-  const ditherValue = useMemo(() => (typeof dither === 'boolean' ? (dither ? 1 : 0) : dither), [dither]);
+  const ditherValue = useMemo(
+    () => (typeof dither === "boolean" ? (dither ? 1 : 0) : dither),
+    [dither],
+  );
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     const ctn = containerRef.current;
@@ -305,7 +315,11 @@ export default function FaultyTerminal({
       uniforms: {
         iTime: { value: 0 },
         iResolution: {
-          value: new Color(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height)
+          value: new Color(
+            gl.canvas.width,
+            gl.canvas.height,
+            gl.canvas.width / gl.canvas.height,
+          ),
         },
         uScale: { value: scale },
 
@@ -320,14 +334,17 @@ export default function FaultyTerminal({
         uCurvature: { value: curvature },
         uTint: { value: new Color(tintVec[0], tintVec[1], tintVec[2]) },
         uMouse: {
-          value: new Float32Array([smoothMouseRef.current.x, smoothMouseRef.current.y])
+          value: new Float32Array([
+            smoothMouseRef.current.x,
+            smoothMouseRef.current.y,
+          ]),
         },
         uMouseStrength: { value: mouseStrength },
         uUseMouse: { value: mouseReact ? 1 : 0 },
         uPageLoadProgress: { value: pageLoadAnimation ? 0 : 1 },
         uUsePageLoadAnimation: { value: pageLoadAnimation ? 1 : 0 },
-        uBrightness: { value: brightness }
-      }
+        uBrightness: { value: brightness },
+      },
     });
     programRef.current = program;
 
@@ -336,12 +353,14 @@ export default function FaultyTerminal({
     function resize() {
       if (!ctn || !renderer) return;
       renderer.setSize(ctn.offsetWidth, ctn.offsetHeight);
-      const resolutionUniform = program.uniforms.iResolution as { value: Color } | undefined;
+      const resolutionUniform = program.uniforms.iResolution as
+        | { value: Color }
+        | undefined;
       if (resolutionUniform) {
         resolutionUniform.value = new Color(
           gl.canvas.width,
           gl.canvas.height,
-          gl.canvas.width / gl.canvas.height
+          gl.canvas.width / gl.canvas.height,
         );
       }
     }
@@ -359,13 +378,17 @@ export default function FaultyTerminal({
 
       if (!pause) {
         const elapsed = (t * 0.001 + timeOffsetRef.current) * timeScale;
-        const iTimeUniform = program.uniforms.iTime as { value: number } | undefined;
+        const iTimeUniform = program.uniforms.iTime as
+          | { value: number }
+          | undefined;
         if (iTimeUniform) {
           iTimeUniform.value = elapsed;
         }
         frozenTimeRef.current = elapsed;
       } else {
-        const iTimeUniform = program.uniforms.iTime as { value: number } | undefined;
+        const iTimeUniform = program.uniforms.iTime as
+          | { value: number }
+          | undefined;
         if (iTimeUniform) {
           iTimeUniform.value = frozenTimeRef.current;
         }
@@ -375,7 +398,9 @@ export default function FaultyTerminal({
         const animationDuration = 2000;
         const animationElapsed = t - loadAnimationStartRef.current;
         const progress = Math.min(animationElapsed / animationDuration, 1);
-        const progressUniform = program.uniforms.uPageLoadProgress as { value: number } | undefined;
+        const progressUniform = program.uniforms.uPageLoadProgress as
+          | { value: number }
+          | undefined;
         if (progressUniform) {
           progressUniform.value = progress;
         }
@@ -388,7 +413,9 @@ export default function FaultyTerminal({
         smoothMouse.x += (mouse.x - smoothMouse.x) * dampingFactor;
         smoothMouse.y += (mouse.y - smoothMouse.y) * dampingFactor;
 
-        const mouseUniform = program.uniforms.uMouse as { value: Float32Array } | undefined;
+        const mouseUniform = program.uniforms.uMouse as
+          | { value: Float32Array }
+          | undefined;
         if (mouseUniform?.value) {
           mouseUniform.value[0] = smoothMouse.x;
           mouseUniform.value[1] = smoothMouse.y;
@@ -400,14 +427,14 @@ export default function FaultyTerminal({
     rafRef.current = requestAnimationFrame(update);
     ctn.appendChild(gl.canvas);
 
-    if (mouseReact) ctn.addEventListener('mousemove', handleMouseMove);
+    if (mouseReact) ctn.addEventListener("mousemove", handleMouseMove);
 
     return () => {
       cancelAnimationFrame(rafRef.current);
       resizeObserver.disconnect();
-      if (mouseReact) ctn.removeEventListener('mousemove', handleMouseMove);
+      if (mouseReact) ctn.removeEventListener("mousemove", handleMouseMove);
       if (gl.canvas.parentElement === ctn) ctn.removeChild(gl.canvas);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
       loadAnimationStartRef.current = 0;
       timeOffsetRef.current = Math.random() * 100;
     };
@@ -430,16 +457,16 @@ export default function FaultyTerminal({
     mouseStrength,
     pageLoadAnimation,
     brightness,
-    handleMouseMove
+    handleMouseMove,
   ]);
 
   return (
-    <div 
-      ref={containerRef} 
-      className={`w-full h-full relative overflow-hidden ${className ?? ''}`} 
+    <div
+      ref={containerRef}
+      className={`relative h-full w-full overflow-hidden ${className ?? ""}`}
       // eslint-disable-next-line react/forbid-dom-props
-      style={style} 
-      {...rest} 
+      style={style}
+      {...rest}
     />
   );
 }

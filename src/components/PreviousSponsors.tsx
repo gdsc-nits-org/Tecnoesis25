@@ -5,19 +5,18 @@ import MarqueeComponent from "./MarqueeComponent";
 
 const PreviousSponsors: React.FC = () => {
   return (
-    <div className="w-screen bg-black flex flex-col items-center py-6 overflow-hidden">
-
-      <div className="w-full px-4 mb-6 flex justify-center">
+    <div className="flex w-screen flex-col items-center overflow-hidden bg-black py-6">
+      <div className="mb-6 flex w-full justify-center px-4">
         <Image
           src="/past-sponsor-logos/PreviousSponsors.png"
           alt="Previous Sponsors"
           width={800}
           height={35}
-          className="w-[80%] sm:w-[70%] md:w-[60%] lg:w-[50%] h-auto drop-shadow-lg"
+          className="h-auto w-[80%] drop-shadow-lg sm:w-[70%] md:w-[60%] lg:w-[50%]"
         />
       </div>
 
-      <div className="w-full overflow-hidden mb-4">
+      <div className="mb-4 w-full overflow-hidden">
         <MarqueeComponent set={1} direction="left" />
       </div>
 

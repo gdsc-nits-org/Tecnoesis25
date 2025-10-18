@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './TeamSection.module.css';
+import React from "react";
+import styles from "./TeamSection.module.css";
 
 interface TeamHeadingProps {
   children: React.ReactNode;
@@ -9,8 +9,8 @@ interface TeamHeadingProps {
 
 const TeamHeading: React.FC<TeamHeadingProps> = ({
   children,
-  className = '',
-  bgImage = '/robotron/team/teamsheadingbg.svg'
+  className = "",
+  bgImage = "/robotron/team/teamsheadingbg.svg",
 }) => (
   <div className={`${styles.wrapper} ${className}`}>
     <div className={styles.container}>

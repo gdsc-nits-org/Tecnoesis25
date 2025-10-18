@@ -11,7 +11,7 @@ const NavbarDesktop = () => {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [lastScrollY, setLastScrollY] = useState<number>(0);
-  const navigate = useRouter()
+  const navigate = useRouter();
 
   const isAnyHovered = hoverIndex !== null;
 
@@ -52,12 +52,18 @@ const NavbarDesktop = () => {
     <nav
       className={`fixed z-50 flex h-[6rem] w-full items-center justify-between bg-gradient-to-b from-black via-black/80 to-transparent px-6 transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
     >
-      <div className="flex items-center cursor-pointer">
-        <Image src="/TechnoLogo.svg" alt="TechnoLogo" width={250} height={40} onClick={()=>navigate.push("/")}/>
+      <div className="flex cursor-pointer items-center">
+        <Image
+          src="/TechnoLogo.svg"
+          alt="TechnoLogo"
+          width={250}
+          height={40}
+          onClick={() => navigate.push("/")}
+        />
       </div>
 
       <div
-        className={`flex items-center  rounded-lg transition-all duration-500 ease-in-out ${
+        className={`flex flex-1 items-center justify-center rounded-lg transition-all duration-500 ease-in-out ${
           isAnyHovered
             ? "gap-8 px-4 pt-6 xl:gap-10 "
             : "gap-6 px-2 pt-4 xl:gap-8"
@@ -108,10 +114,8 @@ const NavbarDesktop = () => {
           );
         })}
       </div>
-
-      <div className="rounded-md px-4 py-1 font-semibold text-black">
-        <RegisterButton />
-      </div>
+      {/* right spacer to keep center group truly centered */}
+      <div className="w-[250px]" aria-hidden="true" />
     </nav>
   );
 };

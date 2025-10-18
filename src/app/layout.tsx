@@ -2,14 +2,15 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Orbitron } from 'next/font/google';
+import { Orbitron } from "next/font/google";
+import CustomCursor from "~/components/CustomCursor";
+import ScrollbarColorController from "~/components/ScrollbarColorController";
 
 const orbitron = Orbitron({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800', '900'],
-  variable: '--font-orbitron',
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-orbitron",
 });
-import Navbar from "~/components/Navbar/Navbar";
 
 export const metadata: Metadata = {
   title: "Tecnoesis 2025",
@@ -45,7 +46,11 @@ export default function RootLayout({
         <meta property="og:type" content="website" />
       </head>
       <body className="no-scrollbar flex min-h-screen flex-col overflow-x-hidden bg-black">
-        {/* <Navbar /> */}
+        {/* Global UI helpers mounted once for entire app, including top-level pages and error boundaries */}
+        <ScrollbarColorController />
+        <CustomCursor />
+        {/* Global background music audio element to persist across routes */}
+        <audio id="bgm-audio" loop preload="none" />
         {children}
       </body>
       {process.env.NODE_ENV == "production" && (
