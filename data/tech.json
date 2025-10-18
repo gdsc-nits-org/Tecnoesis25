@@ -22,8 +22,17 @@
       "name": "Bedanta Kataki",
       "photoUrl": "https://res.cloudinary.com/dprjiwgfo/image/upload/v1729687760/web_developers_Bedanta_Kataki.webp",
       "designation": "Web Head",
+      "instagram": "https://www.instagram.com/bedanta.03/",
       "facebook": "https://m.facebook.com/bedanta.kataki.5/",
       "linkedin": "https://www.linkedin.com/in/bedanta-kataki-0b5205257?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+    },
+    {
+      "name": "Rishav Bora",
+      "photoUrl": "https://res.cloudinary.com/dprjiwgfo/image/upload/v1729687764/web_developers_Rishav_Bora.webp",
+      "designation": "Web Head",
+      "instagram": "https://www.instagram.com/_rishav_bora/",
+      "facebook": "https://www.facebook.com/rishav.bora.31586/",
+      "linkedin": "https://www.linkedin.com/in/rishav-bora-377157258/"
     },
     {
       "name": "Kaustav Dev",

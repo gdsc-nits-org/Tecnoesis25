@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const NavDetails = [
   { name: "Home", link: "/home" },
-  { name: "Gallery", link: "/Gallery" },
+  { name: "Gallery", link: "/gallery" },
   // { name: "About", link: "/about" },
   // { name: "Modules", link: "/modules" },
   { name: "Team", link: "/team" },
@@ -131,7 +131,7 @@ export default function NavbarMobile() {
                         )}
 
                         <span
-                          className={`font-bankgothic relative z-10 text-3xl font-semibold transition-all duration-300 ${
+                          className={`font-bankGothik relative z-10 text-3xl font-semibold transition-all duration-300 ${
                             isActive ? "text-[#FF9595]" : "text-white"
                           }`}
                         >

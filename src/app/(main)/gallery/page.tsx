@@ -105,8 +105,8 @@ const GalleryAnimation = forwardRef<HTMLDivElement, GalleryAnimationProps>(({ on
     <Bars className="z-20" />
     <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none">
       <div className="text-center space-y-4">
-        <h1 className="text-white text-5xl md:text-6xl tracking-widest font-nyxerin">TECNOESIS</h1>
-        <h2 className="text-red-600 text-5xl md:text-7xl font-nyxerin tracking-widest">PHOTO GALLERY</h2>
+        <h1 className="text-white text-4xl md:text-6xl tracking-widest font-nyxerin">TECNOESIS</h1>
+        <h2 className="text-red-600 text-4xl md:text-7xl font-nyxerin tracking-widest">PHOTO GALLERY</h2>
       </div>
     </div>
     <div className="absolute left-[7vw] z-10"><Image src="/hand.png" alt="Left robotic hand" width={600} height={600} className="opacity-90" /></div>
@@ -293,7 +293,7 @@ export default function EventPage() {
               style={{ backgroundImage: "url('/grid.png')" }}
             >
               <div className="w-full h-full flex flex-col justify-center items-center space-y-4 p-4">
-                  <h3 className="text-white font-nyxerin tracking-widest text-2xl">SELECT THE EVENT</h3>
+                  {/* <h3 className="text-white font-nyxerin tracking-widest text-2xl">SELECT THE EVENT</h3> */}
                   <div 
                     ref={mobileScrollRef}
                     className="w-full flex overflow-x-auto snap-x snap-mandatory hide-scrollbar items-center py-4"

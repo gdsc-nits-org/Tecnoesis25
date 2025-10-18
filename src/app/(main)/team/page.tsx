@@ -39,7 +39,9 @@ const Team = () => {
             padding: "5px",
             borderRadius: "10px",
             background:
-              "radial-gradient(70% 50% at 50% 50%, rgba(139,117,217,0.32) 0%, rgba(139,117,217,0.14) 25%, rgba(0,0,0,0) 60%)",
+              selectedTeam === "Tech Team"
+                ? "transparent"
+                : "radial-gradient(70% 50% at 50% 50%, rgba(139,117,217,0.32) 0%, rgba(139,117,217,0.14) 25%, rgba(0,0,0,0) 60%)",
             overflow: "visible",
           }}
         >
@@ -47,13 +49,14 @@ const Team = () => {
             style={{
               clipPath:
                 "polygon(0% 70%, 10% 0%, 92% 0%, 100% 30%, 90% 100%, 8% 100%)",
-              backgroundColor: "#cfcdffff",
+              backgroundColor:
+                selectedTeam === "Tech Team" ? "#1a0b3e" : "#cfcdffff",
               overflow: "visible",
             }}
             onClick={() => {
               handleTeamClick("Tech Team");
             }}
-            className="shadow-violet-500/14 hover:shadow-violet-400/16 relative inline-block border border-slate-800 px-2 py-1 text-[10px] font-extrabold tracking-widest text-slate-900 shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl"
+            className={`relative inline-block px-2 py-1 text-[10px] font-extrabold tracking-widest shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl ${selectedTeam === "Tech Team" ? "border-2 border-[#6B5DD3] text-white shadow-[0_0_20px_rgba(107,93,211,0.6)]" : "border border-slate-800 text-slate-900 shadow-violet-500/14 hover:shadow-violet-400/16"}`}
           >
             <span
               style={{
@@ -65,9 +68,13 @@ const Team = () => {
                 minHeight: "80%",
                 height: "80%",
                 boxShadow:
-                  "inset 0 1px 4px rgba(255,255,255,0.45), 0 4px 12px rgba(139,117,217,0.14)",
+                  selectedTeam === "Tech Team"
+                    ? "inset 0 1px 4px rgba(107,93,211,0.3), 0 4px 12px rgba(107,93,211,0.25)"
+                    : "inset 0 1px 4px rgba(255,255,255,0.45), 0 4px 12px rgba(139,117,217,0.14)",
                 background:
-                  "linear-gradient(160deg, rgba(207,205,255,0.95) 0%, rgba(109,24,228,0.9) 100%)",
+                  selectedTeam === "Tech Team"
+                    ? "linear-gradient(160deg, rgba(26,11,62,0.7) 0%, rgba(107,93,211,0.5) 100%)"
+                    : "linear-gradient(160deg, rgba(207,205,255,0.95) 0%, rgba(109,24,228,0.9) 100%)",
                 clipPath:
                   "polygon(0% 70%, 10% 0%, 92% 0%, 100% 30%, 90% 100%, 8% 100%)",
                 filter: "blur(4px) saturate(1.03)",
@@ -89,7 +96,9 @@ const Team = () => {
             padding: "5px",
             borderRadius: "10px",
             background:
-              "radial-gradient(70% 50% at 50% 50%, rgba(139,117,217,0.32) 0%, rgba(139,117,217,0.14) 25%, rgba(0,0,0,0) 60%)",
+              selectedTeam === "Other Teams"
+                ? "transparent"
+                : "radial-gradient(70% 50% at 50% 50%, rgba(139,117,217,0.32) 0%, rgba(139,117,217,0.14) 25%, rgba(0,0,0,0) 60%)",
             overflow: "visible",
           }}
         >
@@ -97,10 +106,11 @@ const Team = () => {
             style={{
               clipPath:
                 "polygon(0% 70%, 10% 0%, 92% 0%, 100% 30%, 90% 100%, 8% 100%)",
-              backgroundColor: "#cfcdffff",
+              backgroundColor:
+                selectedTeam === "Other Teams" ? "#1a0b3e" : "#cfcdffff",
               overflow: "visible",
             }}
-            className="shadow-violet-500/14 hover:shadow-violet-400/16 relative inline-block border border-slate-800 px-2 py-1 text-[10px] font-extrabold tracking-widest text-slate-900 shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl"
+            className={`relative inline-block px-2 py-1 text-[10px] font-extrabold tracking-widest shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl ${selectedTeam === "Other Teams" ? "border-2 border-[#6B5DD3] text-white shadow-[0_0_20px_rgba(107,93,211,0.6)]" : "border border-slate-800 text-slate-900 shadow-violet-500/14 hover:shadow-violet-400/16"}`}
             onClick={() => {
               handleTeamClick("Other Teams");
             }}
@@ -115,9 +125,13 @@ const Team = () => {
                 minHeight: "80%",
                 height: "80%",
                 boxShadow:
-                  "inset 0 1px 4px rgba(255,255,255,0.45), 0 4px 12px rgba(139,117,217,0.14)",
+                  selectedTeam === "Other Teams"
+                    ? "inset 0 1px 4px rgba(107,93,211,0.3), 0 4px 12px rgba(107,93,211,0.25)"
+                    : "inset 0 1px 4px rgba(255,255,255,0.45), 0 4px 12px rgba(139,117,217,0.14)",
                 background:
-                  "linear-gradient(160deg, rgba(207,205,255,0.95) 0%, rgba(109,24,228,0.9) 100%)",
+                  selectedTeam === "Other Teams"
+                    ? "linear-gradient(160deg, rgba(26,11,62,0.7) 0%, rgba(107,93,211,0.5) 100%)"
+                    : "linear-gradient(160deg, rgba(207,205,255,0.95) 0%, rgba(109,24,228,0.9) 100%)",
                 clipPath:
                   "polygon(0% 70%, 10% 0%, 92% 0%, 100% 30%, 90% 100%, 8% 100%)",
                 filter: "blur(4px) saturate(1.03)",
