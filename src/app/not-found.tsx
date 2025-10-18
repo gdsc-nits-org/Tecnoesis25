@@ -83,7 +83,7 @@ export default function NotFound() {
   return (
     <>
       <main
-        className={`${digits.className} font-orbitron flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black p-4 text-white`}
+        className={`${digits.className} flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black p-4 font-orbitron text-white`}
       >
         <div className="relative flex w-full max-w-2xl flex-col items-center rounded-lg border-2 border-red-500/30 bg-black/30 p-8 text-center md:p-12">
           {/* Decorative Corner Brackets */}

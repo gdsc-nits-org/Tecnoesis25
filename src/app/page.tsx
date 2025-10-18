@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Model from "~/components/Model";
@@ -10,6 +10,7 @@ import Link from "next/link";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import SocialIcons from "~/components/LandingFooter";
 import DynamicMusicButton from "~/components/DynamicMusicButton";
+import useGlobalBgm from "~/hooks/useGlobalBgm";
 import Loader from "~/components/Loader";
 
 export default function Page() {
@@ -26,18 +27,14 @@ export default function Page() {
     };
   }, []);
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  const musicSrc = "/bgm.mp3";
+  const { isPlaying, toggle: togglePlay } = useGlobalBgm("/bgm.mp3");
 
   const handleNavigateToHome = () => {
     try {
-      router.push('/home');
+      router.push("/home");
     } catch (error) {
-      console.error('Navigation failed:', error);
-      window.location.href = '/home';
+      console.error("Navigation failed:", error);
+      window.location.href = "/home";
     }
   };
 
@@ -45,34 +42,22 @@ export default function Page() {
     setFadeOutUI(true);
   };
 
-  const togglePlay = () => {
-    if (!isInitialized) {
-      if (audioRef.current) {
-        audioRef.current.src = musicSrc;
-        audioRef.current.load();
-      }
-      setIsInitialized(true);
-    }
-    setIsPlaying(!isPlaying);
-  };
+  // Global BGM is handled by the global hook and persistent audio element
 
+  // Apply darker cyan custom cursor only while this page is mounted
   useEffect(() => {
-    if (isInitialized) {
-      if (isPlaying) {
-        audioRef.current?.play().catch((error) => {
-          console.error("Audio playback failed:", error);
-          setIsPlaying(false);
-        });
-      } else {
-        audioRef.current?.pause();
-      }
-    }
-  }, [isPlaying, isInitialized]);
+    document.body.classList.add("cursor-theme-landing");
+    return () => {
+      document.body.classList.remove("cursor-theme-landing");
+    };
+  }, []);
 
   return (
-    <div className="h-screen w-screen bg-black">
+    <div className="h-screen w-screen bg-black cursor-theme-landing">
       {showBottomElements && (
-        <div className={`transition-opacity duration-800 ${fadeOutUI ? 'opacity-0' : 'opacity-100'}`}>
+        <div
+          className={`duration-800 transition-opacity ${fadeOutUI ? "opacity-0" : "opacity-100"}`}
+        >
           <div
             className={`animate-fade-in absolute -top-[50px] left-[50%] z-${isMobile ? 0 : 20} h-80 w-[50vw] -translate-x-[50%] bg-transparent`}
           >
@@ -83,7 +68,9 @@ export default function Page() {
       <Loader />
       <Model onZoomStart={handleZoomStart} onNavigate={handleNavigateToHome} />
       {showBottomElements && (
-        <div className={`transition-opacity duration-800 ${fadeOutUI ? 'opacity-0' : 'opacity-100'}`}>
+        <div
+          className={`duration-800 transition-opacity ${fadeOutUI ? "opacity-0" : "opacity-100"}`}
+        >
           <div className="animate-fade-in pointer-events-none fixed bottom-8 left-0 right-0 -z-0 flex h-60 w-screen justify-center">
             {isMobile ? (
               <Image
@@ -115,7 +102,6 @@ export default function Page() {
               </Link>
               {/*  */}
               <div className=" z-50 scale-75 items-center justify-center transition-all duration-300 ease-out hover:scale-90 md:scale-100 md:hover:scale-110">
-                <audio ref={audioRef} loop preload="none" />
                 <button
                   onClick={togglePlay}
                   className="flex items-center gap-2 px-5 py-2 "

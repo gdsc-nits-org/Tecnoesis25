@@ -78,8 +78,8 @@ const fragmentShader = `
     // Original blue gradient color
     vec3 blueColor = mix(vec3(1.0, 0.1, 0.3), vec3(0.3, 0.5, 1.0), vDistance / 50.0);
     
-    // Target red color
-    vec3 redColor = vec3(1.0, 0.1, 0.3);
+    // Target deep red color - pure red with no green or blue components
+    vec3 redColor = vec3(0.9, 0.0, 0.0);
     
     // Create a wave effect for the transition
     float wave = sin(vDistance * 0.5 - uTime * 3.0) * 0.5 + 0.5;
@@ -92,9 +92,14 @@ const fragmentShader = `
     // Mix colors with the eased progress
     vec3 finalColor = mix(blueColor, redColor, easedProgress);
     
-    // Add a subtle pulse during transition
-    float pulse = 1.0 + sin(uTime * 5.0) * 0.1 * uColorTransition * (1.0 - uColorTransition);
+    // Add a subtle pulse during transition - boost red intensity
+    float pulse = 1.0 + sin(uTime * 5.0) * 0.15 * uColorTransition * (1.0 - uColorTransition);
     finalColor *= pulse;
+    
+    // Ensure red channel stays strong and green/blue stay at zero during full transition
+    if (uColorTransition > 0.95) {
+      finalColor = vec3(finalColor.r * 1.1, 0.0, 0.0);
+    }
     
     gl_FragColor = vec4(finalColor, strength);
   }
@@ -109,7 +114,11 @@ interface ParticleModelProps {
   colorTransition: number;
 }
 
-function ParticleModel({ interactionRef, isDraggingRef, colorTransition }: ParticleModelProps) {
+function ParticleModel({
+  interactionRef,
+  isDraggingRef,
+  colorTransition,
+}: ParticleModelProps) {
   const pointsRef = useRef<THREE.Points>(null);
   const { scene } = useGLTF("https://d3f6voaditlmqg.cloudfront.net/tr.glb");
 
@@ -283,9 +292,10 @@ function ZoomTransition({ onTransitionEnd }: { onTransitionEnd: () => void }) {
     const progress = Math.min(elapsed / TRANSITION_DURATION, 1.0);
 
     // Smooth easing function for better visual experience
-    const easeProgress = progress < 0.5
-      ? 2 * progress * progress
-      : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+    const easeProgress =
+      progress < 0.5
+        ? 2 * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
     // Interpolate camera position z from 350 to -200
     camera.position.z = THREE.MathUtils.lerp(350, -200, easeProgress);
@@ -343,7 +353,11 @@ interface CameraResetProps {
   originalRotation: THREE.Euler;
 }
 
-function CameraReset({ isInteracting, originalPosition, originalRotation }: CameraResetProps) {
+function CameraReset({
+  isInteracting,
+  originalPosition,
+  originalRotation,
+}: CameraResetProps) {
   const { camera } = useThree();
   const resetStartTimeRef = useRef<number | null>(null);
   const RESET_DURATION = 1.5; // seconds
@@ -364,15 +378,18 @@ function CameraReset({ isInteracting, originalPosition, originalRotation }: Came
     const progress = Math.min(elapsed / RESET_DURATION, 1.0);
 
     // Smooth easing
-    const easeProgress = progress < 0.5
-      ? 2 * progress * progress
-      : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+    const easeProgress =
+      progress < 0.5
+        ? 2 * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
     // Smoothly interpolate back to original position
     camera.position.lerp(originalPosition, easeProgress * 0.1);
-    
+
     // Smoothly interpolate back to original rotation
-    const targetQuaternion = new THREE.Quaternion().setFromEuler(originalRotation);
+    const targetQuaternion = new THREE.Quaternion().setFromEuler(
+      originalRotation,
+    );
     camera.quaternion.slerp(targetQuaternion, easeProgress * 0.1);
   });
 
@@ -416,23 +433,27 @@ function ScrollZoom({ enabled = true }: { enabled?: boolean }) {
 }
 
 // Component to track model center position in screen coordinates
-function ModelCenterTracker({ onPositionUpdate }: { onPositionUpdate: (x: number, y: number) => void }) {
+function ModelCenterTracker({
+  onPositionUpdate,
+}: {
+  onPositionUpdate: (x: number, y: number) => void;
+}) {
   const { camera, size } = useThree();
-  
+
   useFrame(() => {
     // The model is centered at origin (0, 0, 0) in 3D space
     const modelCenter = new THREE.Vector3(0, 0, 0);
-    
+
     // Project 3D position to screen coordinates
     const screenPosition = modelCenter.clone().project(camera);
-    
+
     // Convert normalized device coordinates (-1 to 1) to pixel coordinates
     const x = (screenPosition.x * 0.5 + 0.5) * size.width;
     const y = (-(screenPosition.y * 0.5) + 0.5) * size.height;
-    
+
     onPositionUpdate(x, y);
   });
-  
+
   return null;
 }
 
@@ -462,7 +483,7 @@ export default function Model({ onZoomStart, onNavigate }: ModelProps = {}) {
   });
 
   const isDraggingRef = useRef(false);
-  
+
   // Store original camera position and rotation after initial animation
   const originalCameraPosition = useRef(new THREE.Vector3(0, 0, 350));
   const originalCameraRotation = useRef(new THREE.Euler(0, 0, 0));
@@ -497,7 +518,8 @@ export default function Model({ onZoomStart, onNavigate }: ModelProps = {}) {
 
   // Animate color transition over 2 seconds, then start zoom
   useEffect(() => {
-    if (!isColorTransitioning || colorTransitionStartRef.current === null) return;
+    if (!isColorTransitioning || colorTransitionStartRef.current === null)
+      return;
 
     const animate = () => {
       const elapsed = Date.now() - colorTransitionStartRef.current!;
@@ -535,10 +557,10 @@ export default function Model({ onZoomStart, onNavigate }: ModelProps = {}) {
     const handleMouseDown = (event: MouseEvent | TouchEvent) => {
       // Ignore if clicking on a button or interactive element
       const target = event.target as HTMLElement;
-      if (target.tagName === 'BUTTON' || target.closest('button')) {
+      if (target.tagName === "BUTTON" || target.closest("button")) {
         return;
       }
-      
+
       isDraggingRef.current = true;
       handleInteractionStart();
     };
@@ -546,10 +568,10 @@ export default function Model({ onZoomStart, onNavigate }: ModelProps = {}) {
     const handleMouseUp = (event: MouseEvent | TouchEvent) => {
       // Ignore if clicking on a button or interactive element
       const target = event.target as HTMLElement;
-      if (target.tagName === 'BUTTON' || target.closest('button')) {
+      if (target.tagName === "BUTTON" || target.closest("button")) {
         return;
       }
-      
+
       isDraggingRef.current = false;
       mouseDataRef.current.lastTime = 0;
       handleInteractionEnd();
@@ -597,11 +619,12 @@ export default function Model({ onZoomStart, onNavigate }: ModelProps = {}) {
     window.addEventListener("touchmove", (event) => {
       if (event.touches.length > 0) {
         const touch = event.touches[0];
-        if(touch)handleMouseMove({
-          clientX: touch.clientX ? touch.clientX : 0,
-          clientY: touch.clientY ? touch.clientY : 0,
-          timeStamp: event.timeStamp,
-        } as MouseEvent);
+        if (touch)
+          handleMouseMove({
+            clientX: touch.clientX ? touch.clientX : 0,
+            clientY: touch.clientY ? touch.clientY : 0,
+            timeStamp: event.timeStamp,
+          } as MouseEvent);
       }
     });
 
@@ -618,11 +641,12 @@ export default function Model({ onZoomStart, onNavigate }: ModelProps = {}) {
       window.removeEventListener("touchmove", (event) => {
         if (event.touches.length > 0) {
           const touch = event.touches[0];
-          if (touch) handleMouseMove({
-            clientX: touch.clientX ? touch.clientX : 0,
-            clientY: touch.clientY ? touch.clientY : 0,
-            timeStamp: event.timeStamp,
-          } as MouseEvent);
+          if (touch)
+            handleMouseMove({
+              clientX: touch.clientX ? touch.clientX : 0,
+              clientY: touch.clientY ? touch.clientY : 0,
+              timeStamp: event.timeStamp,
+            } as MouseEvent);
         }
       });
     };
@@ -634,15 +658,13 @@ export default function Model({ onZoomStart, onNavigate }: ModelProps = {}) {
         gl={{ alpha: true }}
         dpr={[1, 1.5]}
         camera={{ position: [0, 0, 200], fov: isMobile ? 100 : 75 }}
-        className="mx-auto h-[90%] w-[90%] z-10"
+        className="z-10 mx-auto h-[90%] w-[90%]"
       >
         {isAnimating && (
           <CameraAnimation onAnimationEnd={handleInitialAnimationEnd} />
         )}
 
-        {isZooming && (
-          <ZoomTransition onTransitionEnd={handleZoomEnd} />
-        )}
+        {isZooming && <ZoomTransition onTransitionEnd={handleZoomEnd} />}
 
         <ParticleModel
           interactionRef={interactionRef}
@@ -662,7 +684,9 @@ export default function Model({ onZoomStart, onNavigate }: ModelProps = {}) {
               mouseDataRef={mouseDataRef}
             />
             {/* enable scroll zoom only after animation ends */}
-            <ScrollZoom enabled={!isAnimating && !isColorTransitioning && !isZooming} />
+            <ScrollZoom
+              enabled={!isAnimating && !isColorTransitioning && !isZooming}
+            />
             {/* Reset camera to original position when not interacting */}
             <CameraReset
               isInteracting={isInteracting}
@@ -674,18 +698,25 @@ export default function Model({ onZoomStart, onNavigate }: ModelProps = {}) {
 
         {!isMobile && (
           <EffectComposer>
-            <Bloom mipmapBlur luminanceThreshold={0.5} radius={0.8} intensity={0.2} />
+            <Bloom
+              mipmapBlur
+              luminanceThreshold={0.5}
+              radius={0.8}
+              intensity={0.2}
+            />
           </EffectComposer>
         )}
-        
+
         {/* Track model center position for button placement */}
         {showButton && !isInteracting && (
-          <ModelCenterTracker onPositionUpdate={(x, y) => setButtonPosition({ x, y })} />
+          <ModelCenterTracker
+            onPositionUpdate={(x, y) => setButtonPosition({ x, y })}
+          />
         )}
       </Canvas>
 
-      <EnterGridButton 
-        visible={showButton && !isInteracting} 
+      <EnterGridButton
+        visible={showButton && !isInteracting}
         onClick={handleEnterGrid}
         position={buttonPosition}
       />

@@ -5,13 +5,18 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
-
 const NavDetails = [
   { name: "Home", link: "/home" },
+<<<<<<< HEAD
   // { name: "About", link: "/about" },
   { name: "Modules", link: "/modules" },
   { name: "Team", link: "/team" },
+=======
+>>>>>>> 7fc25aa975b724238871ca830f2162123133f2c8
   { name: "Gallery", link: "/Gallery" },
+  // { name: "About", link: "/about" },
+  // { name: "Modules", link: "/modules" },
+  { name: "Team", link: "/team" },
 ];
 
 export default function NavbarMobile() {
@@ -23,7 +28,7 @@ export default function NavbarMobile() {
   const router = useRouter();
   // Update active index based on current pathname
   useEffect(() => {
-    const currentIndex = NavDetails.findIndex(item => item.link === pathname);
+    const currentIndex = NavDetails.findIndex((item) => item.link === pathname);
     if (currentIndex !== -1) {
       setActiveIndex(currentIndex);
     }
@@ -47,14 +52,15 @@ export default function NavbarMobile() {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [lastScrollY]);
 
   return (
+<<<<<<< HEAD
     <nav className={`flex items-center justify-between px-4 py-3 fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
 
      <div className="flex px-2 items-center transition-transform duration-300 origin-center scale-100 sm:scale-110 md:scale-125 cursor-pointer">
@@ -73,6 +79,27 @@ export default function NavbarMobile() {
       <button onClick={() => setIsOpen(true)} aria-label="Open menu">
         <Image src="/MenuIcon.svg" alt="MenuIcon" width={30} height={15} />
       </button>
+=======
+    <nav
+      className={`fixed left-0 top-0 z-[10000000] flex w-full items-center justify-between bg-transparent px-4 `}
+    >
+      <div
+        className={`cursor-pointertransition-transform flex h-full w-full origin-center scale-100 items-center justify-between px-2 py-3 backdrop-blur-sm transition-transform duration-300 ease-in-out sm:scale-110 md:scale-125 ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
+      >
+        <Image
+          src="/TechnoLogo.svg"
+          alt="TechnoLogo"
+          width={200}
+          height={45}
+          className="object-contain"
+          onClick={() => router.push("/")}
+        />
+
+        <button onClick={() => setIsOpen(true)} aria-label="Open menu">
+          <Image src="/MenuIcon.svg" alt="MenuIcon" width={30} height={15} />
+        </button>
+      </div>
+>>>>>>> 7fc25aa975b724238871ca830f2162123133f2c8
 
       <AnimatePresence>
         {isOpen && (
@@ -81,16 +108,20 @@ export default function NavbarMobile() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.4 }}
-            className="fixed top-0 right-0 w-[100%] h-full bg-[#0a0a0a] shadow-lg flex flex-col justify-between p-6 z-50 overflow-y-auto"
+            className="fixed right-0 top-0 z-50 flex h-[100dvh] w-full flex-col items-center justify-center overflow-y-auto overflow-x-hidden bg-[#0a0a0a] p-6 shadow-lg"
           >
-
-            <div className="flex justify-end pr-2 pt-2">
+            <div className="absolute right-4 top-4">
               <button onClick={() => setIsOpen(false)} aria-label="Close menu">
-                  <Image src="/CrossSign.svg" alt="crossIcon" width={30} height={15} />
+                <Image
+                  src="/CrossSign.svg"
+                  alt="crossIcon"
+                  width={30}
+                  height={15}
+                />
               </button>
             </div>
 
-            <div className="flex flex-col gap-12 text-lg font-medium  items-center">
+            <div className="flex flex-col items-center justify-center gap-12 text-lg  font-medium">
               {NavDetails.map((item, index) => {
                 const isActive = index === activeIndex;
 
@@ -107,7 +138,7 @@ export default function NavbarMobile() {
                       onClick={() => {
                         setIsOpen(false);
                       }}
-                      className="flex flex-col items-center cursor-pointer"
+                      className="flex cursor-pointer flex-col items-center"
                     >
                       <div className="relative flex items-center justify-center">
                         {isActive && (
@@ -115,7 +146,7 @@ export default function NavbarMobile() {
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ duration: 0.4 }}
-                            className="absolute w-[420px] h-[60px]"
+                            className="absolute h-[60px] w-[90vw] max-w-[500px]"
                           >
                             <Image
                               src="/ItemBoundary.svg"
@@ -127,22 +158,27 @@ export default function NavbarMobile() {
                         )}
 
                         <span
-                          className={`relative z-10 text-3xl font-semibold font-bankGothik transition-all duration-300 ${isActive ? "text-[#FF9595]" : "text-white"
-                            }`}
+                          className={`font-bankgothic relative z-10 text-3xl font-semibold transition-all duration-300 ${
+                            isActive ? "text-[#FF9595]" : "text-white"
+                          }`}
                         >
                           {item.name}
                         </span>
                       </div>
-
                     </Link>
                   </motion.div>
                 );
               })}
             </div>
 
-            <div className="flex  justify-center align-middle min-h-48 ">
-                <Image src="/RegisterState1.svg" alt="registerImage" height={60} width={250}/>
-            </div>
+            {/* <div className="flex  min-h-48 justify-center align-middle ">
+              <Image
+                src="/RegisterState1.svg"
+                alt="registerImage"
+                height={60}
+                width={250}
+              />
+            </div> */}
           </motion.aside>
         )}
       </AnimatePresence>
