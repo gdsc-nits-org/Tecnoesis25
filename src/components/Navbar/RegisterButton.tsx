@@ -7,11 +7,7 @@ const RegisterButton = () => {
 
   return (
     <div
-<<<<<<< HEAD
-      className="relative px-4 py-1 rounded-md text-black font-semibold overflow-hidden cursor-not-allowed group"
-=======
       className="group relative cursor-not-allowed overflow-hidden rounded-md px-4 py-1 font-semibold text-black"
->>>>>>> 7fc25aa975b724238871ca830f2162123133f2c8
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

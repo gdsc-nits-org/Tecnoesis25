@@ -11,11 +11,7 @@ const NavbarDesktop = () => {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [lastScrollY, setLastScrollY] = useState<number>(0);
-<<<<<<< HEAD
-  const navigate = useRouter()
-=======
   const navigate = useRouter();
->>>>>>> 7fc25aa975b724238871ca830f2162123133f2c8
 
   const isAnyHovered = hoverIndex !== null;
 
@@ -56,14 +52,6 @@ const NavbarDesktop = () => {
     <nav
       className={`fixed z-50 flex h-[6rem] w-full items-center justify-between bg-gradient-to-b from-black via-black/80 to-transparent px-6 transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
     >
-<<<<<<< HEAD
-      <div className="flex items-center cursor-pointer">
-        <Image src="/TechnoLogo.svg" alt="TechnoLogo" width={250} height={40} onClick={()=>navigate.push("/")}/>
-      </div>
-
-      <div
-        className={`flex items-center  rounded-lg transition-all duration-500 ease-in-out ${
-=======
       <div className="flex cursor-pointer items-center">
         <Image
           src="/TechnoLogo.svg"
@@ -76,7 +64,6 @@ const NavbarDesktop = () => {
 
       <div
         className={`flex flex-1 items-center justify-center rounded-lg transition-all duration-500 ease-in-out ${
->>>>>>> 7fc25aa975b724238871ca830f2162123133f2c8
           isAnyHovered
             ? "gap-8 px-4 pt-6 xl:gap-10 "
             : "gap-6 px-2 pt-4 xl:gap-8"
@@ -126,13 +113,6 @@ const NavbarDesktop = () => {
             </Link>
           );
         })}
-<<<<<<< HEAD
-      </div>
-
-      <div className="rounded-md px-4 py-1 font-semibold text-black">
-        <RegisterButton />
-=======
->>>>>>> 7fc25aa975b724238871ca830f2162123133f2c8
       </div>
       {/* right spacer to keep center group truly centered */}
       <div className="w-[250px]" aria-hidden="true" />
@@ -144,23 +124,11 @@ const NavDetails = [
   {
     name: "Home",
     link: "/home",
-<<<<<<< HEAD
-    defaultImg: "/ItemState1.svg",
-    hoverImg: "/ItemState2.svg",
-    clickedImg: "/ItemState3.svg",
-  },
-  {
-    name: "About",
-    link: "/home#about",
-=======
->>>>>>> 7fc25aa975b724238871ca830f2162123133f2c8
     defaultImg: "/ItemState1.svg",
     hoverImg: "/ItemState2.svg",
     clickedImg: "/ItemState3.svg",
   },
   // {
-<<<<<<< HEAD
-=======
   //   name: "About",
   //   link: "/home#about",
   //   defaultImg: "/ItemState1.svg",
@@ -168,7 +136,6 @@ const NavDetails = [
   //   clickedImg: "/ItemState3.svg",
   // },
   // {
->>>>>>> 7fc25aa975b724238871ca830f2162123133f2c8
   //   name: "Events",
   //   link: "/events",
   //   defaultImg: "/ItemState1.svg",

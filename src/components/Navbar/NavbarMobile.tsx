@@ -7,12 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const NavDetails = [
   { name: "Home", link: "/home" },
-<<<<<<< HEAD
-  // { name: "About", link: "/about" },
-  { name: "Modules", link: "/modules" },
-  { name: "Team", link: "/team" },
-=======
->>>>>>> 7fc25aa975b724238871ca830f2162123133f2c8
   { name: "Gallery", link: "/Gallery" },
   // { name: "About", link: "/about" },
   // { name: "Modules", link: "/modules" },
@@ -60,26 +54,6 @@ export default function NavbarMobile() {
   }, [lastScrollY]);
 
   return (
-<<<<<<< HEAD
-    <nav className={`flex items-center justify-between px-4 py-3 fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-
-     <div className="flex px-2 items-center transition-transform duration-300 origin-center scale-100 sm:scale-110 md:scale-125 cursor-pointer">
-  <Image
-    src="/TechnoLogo.svg"
-    alt="TechnoLogo"
-    width={200}
-    height={45}
-    className="object-contain"
-    onClick={() => router.push("/")}
-  />
-</div>
-
-
-
-      <button onClick={() => setIsOpen(true)} aria-label="Open menu">
-        <Image src="/MenuIcon.svg" alt="MenuIcon" width={30} height={15} />
-      </button>
-=======
     <nav
       className={`fixed left-0 top-0 z-[10000000] flex w-full items-center justify-between bg-transparent px-4 `}
     >
@@ -99,7 +73,6 @@ export default function NavbarMobile() {
           <Image src="/MenuIcon.svg" alt="MenuIcon" width={30} height={15} />
         </button>
       </div>
->>>>>>> 7fc25aa975b724238871ca830f2162123133f2c8
 
       <AnimatePresence>
         {isOpen && (
