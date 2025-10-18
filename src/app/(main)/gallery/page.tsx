@@ -215,7 +215,7 @@ export default function EventPage() {
     setEventPairs(pairs);
     
     const numSections = isMobile ? 2 : pairs.length + 1;
-    sectionRefs.current = Array(numSections).fill(null);
+    sectionRefs.current = Array.from<HTMLDivElement | null>({ length: numSections }).fill(null);
     
     const observer = new IntersectionObserver((entries) => {
         const mostVisibleEntry = entries.reduce((prev, current) => {
@@ -312,7 +312,7 @@ export default function EventPage() {
             <GalleryAnimation ref={el => { if (el) sectionRefs.current[0] = el; }} onScrollClick={() => scrollToSection(1)} />
             {eventPairs.map((pair, index) => (
               <div
-                key={pair[0]?.id || index}
+                key={pair[0]?.id ?? index}
                 ref={el => { if (el) sectionRefs.current[index + 1] = el; }}
                 className="h-screen w-full relative flex items-center justify-center snap-start flex-shrink-0 bg-transparent"
               >
