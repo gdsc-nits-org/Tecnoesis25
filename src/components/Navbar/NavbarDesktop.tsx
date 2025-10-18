@@ -63,7 +63,7 @@ const NavbarDesktop = () => {
       </div>
 
       <div
-        className={`flex items-center  rounded-lg transition-all duration-500 ease-in-out ${
+        className={`flex flex-1 items-center justify-center rounded-lg transition-all duration-500 ease-in-out ${
           isAnyHovered
             ? "gap-8 px-4 pt-6 xl:gap-10 "
             : "gap-6 px-2 pt-4 xl:gap-8"
@@ -114,10 +114,8 @@ const NavbarDesktop = () => {
           );
         })}
       </div>
-
-      <div className="rounded-md px-4 py-1 font-semibold text-black">
-        <RegisterButton />
-      </div>
+      {/* right spacer to keep center group truly centered */}
+      <div className="w-[250px]" aria-hidden="true" />
     </nav>
   );
 };

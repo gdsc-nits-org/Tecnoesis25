@@ -49,6 +49,8 @@ export default function RootLayout({
         {/* Global UI helpers mounted once for entire app, including top-level pages and error boundaries */}
         <ScrollbarColorController />
         <CustomCursor />
+        {/* Global background music audio element to persist across routes */}
+        <audio id="bgm-audio" loop preload="none" />
         {children}
       </body>
       {process.env.NODE_ENV == "production" && (

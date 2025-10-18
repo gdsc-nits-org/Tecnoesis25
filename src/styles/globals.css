@@ -22,6 +22,15 @@
 :root {
   --scrollbar-color: rgba(255, 0, 0, 0.8);
   --scrollbar-track: rgba(20, 20, 20, 0.5);
+  /* Default custom cursor theme (red) */
+  --cursor-color: rgba(255, 0, 0, 0.8);
+  --cursor-solid: #ff0000;
+}
+
+/* Landing/root page cursor theme: darker cyan than #00e5ff */
+.cursor-theme-landing {
+  --cursor-color: rgba(0, 180, 210, 0.7);
+  --cursor-solid: #00b4d2;
 }
 
 /* Webkit browsers (Chrome, Safari, Edge) */
@@ -65,8 +74,11 @@
 }
 
 /* Custom Cursor Styles */
-body {
-  cursor: none;
+/* Hide native cursor only on md and up; show normal cursor on small screens */
+@media (min-width: 768px) {
+  body {
+    cursor: none;
+  }
 }
 
 .custom-cursor {
@@ -81,11 +93,25 @@ body {
   mix-blend-mode: difference;
 }
 
+/* On small screens, ensure default cursor and hide custom cursor visuals */
+@media (max-width: 767.98px) {
+  .custom-cursor {
+    display: none !important;
+  }
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    cursor: auto;
+  }
+}
+
 .cursor-ring {
   position: absolute;
   width: 100%;
   height: 100%;
-  border: 2px solid rgba(255, 0, 0, 0.8);
+  border: 2px solid var(--cursor-color);
   border-radius: 50%;
   animation: rotateCursor 3s linear infinite;
 }
@@ -94,7 +120,7 @@ body {
 .cursor-ring::after {
   content: "";
   position: absolute;
-  background: rgba(255, 0, 0, 0.9);
+  background: var(--cursor-solid);
 }
 
 /* Crosshair vertical */
@@ -121,7 +147,7 @@ body {
   left: 50%;
   width: 4px;
   height: 4px;
-  background: red;
+  background: var(--cursor-solid);
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
@@ -147,12 +173,14 @@ body {
 }
 
 /* Interactive elements cursor */
-a,
-button,
-input,
-textarea,
-select {
-  cursor: none;
+@media (min-width: 768px) {
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    cursor: none;
+  }
 }
 
 .no-scrollbar::-webkit-scrollbar {

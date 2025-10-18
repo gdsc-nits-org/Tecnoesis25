@@ -81,9 +81,9 @@ export default function NavbarMobile() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.4 }}
-            className="fixed right-0 top-0 z-50 flex h-[100dvh] w-full flex-col justify-between overflow-y-auto overflow-x-hidden bg-[#0a0a0a] p-6 shadow-lg"
+            className="fixed right-0 top-0 z-50 flex h-[100dvh] w-full flex-col items-center justify-center overflow-y-auto overflow-x-hidden bg-[#0a0a0a] p-6 shadow-lg"
           >
-            <div className="flex justify-end pr-2 pt-2">
+            <div className="absolute right-4 top-4">
               <button onClick={() => setIsOpen(false)} aria-label="Close menu">
                 <Image
                   src="/CrossSign.svg"
@@ -94,7 +94,7 @@ export default function NavbarMobile() {
               </button>
             </div>
 
-            <div className="flex flex-col items-center gap-12 text-lg  font-medium">
+            <div className="flex flex-col items-center justify-center gap-12 text-lg  font-medium">
               {NavDetails.map((item, index) => {
                 const isActive = index === activeIndex;
 
@@ -144,14 +144,14 @@ export default function NavbarMobile() {
               })}
             </div>
 
-            <div className="flex  min-h-48 justify-center align-middle ">
+            {/* <div className="flex  min-h-48 justify-center align-middle ">
               <Image
                 src="/RegisterState1.svg"
                 alt="registerImage"
                 height={60}
                 width={250}
               />
-            </div>
+            </div> */}
           </motion.aside>
         )}
       </AnimatePresence>

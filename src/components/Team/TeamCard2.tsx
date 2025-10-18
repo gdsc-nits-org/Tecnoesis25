@@ -86,6 +86,7 @@ const Card2: React.FC<TeamCard2Props> = ({
                 href={insta}
                 aria-label="Instagram"
                 className="text-white hover:opacity-80"
+                target="_blank"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -101,6 +102,7 @@ const Card2: React.FC<TeamCard2Props> = ({
                 href={facebook}
                 aria-label="Facebook"
                 className="text-white hover:opacity-80"
+                target="_blank"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -116,6 +118,7 @@ const Card2: React.FC<TeamCard2Props> = ({
                 href={linkedin}
                 aria-label="LinkedIn"
                 className="text-white hover:opacity-80"
+                target="_blank"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -138,7 +141,6 @@ const Card2: React.FC<TeamCard2Props> = ({
           className="absolute bottom-5 right-5 h-20 w-20"
         />
       </div>
-      {/* Content container */}
     </div>
   );
 };
