@@ -12,6 +12,10 @@ const config = {
         protocol: "https",
         hostname: "d3f6voaditlmqg.cloudfront.net",
       },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
 };

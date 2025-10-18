@@ -1,0 +1,132 @@
+{
+  "leadership": [
+    {
+      "name": "Swarup Chanda",
+      "role": "Chief Coordinator",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "MD Faizan",
+      "role": "Convenor",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Anwesha Duara",
+      "role": "Convenor",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Adarsh Sharma",
+      "role": "Convenor",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    }
+  ],
+  "teamMembers": [
+    {
+      "name": "Jubaraj Talukdar",
+      "role": "Marketing Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Anushka Dam",
+      "role": "Marketing Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Ayushman",
+      "role": "Robowar Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Abhinav",
+      "role": "Robowar Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Chaman",
+      "role": "Robowar Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Mahashweta",
+      "role": "Robosoccer Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Hrishikesh",
+      "role": "Robosoccer Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Jyotirmoy",
+      "role": "Robosoccer Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Nishit",
+      "role": "Robodrift Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Sunidhi",
+      "role": "Robodrift Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Abhishek",
+      "role": "Robodrift Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Tanmoy",
+      "role": "Algomaze Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Akshat",
+      "role": "Algomaze Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    },
+    {
+      "name": "Mishbaul",
+      "role": "Algomaze Head",
+      "image": "",
+      "description": "",
+      "socialLinks": {}
+    }
+  ]
+}

@@ -74,7 +74,9 @@ export default function Loader() {
               d="M4 17v-3a8 8 0 0116 0v3m-2 0a2 2 0 11-4 0m-4 0a2 2 0 11-4 0"
             />
           </svg>
-          <span className={`${tron.className} text-xs text-cyan-300 opacity-80`}>
+          <span
+            className={`${tron.className} text-xs text-cyan-300 opacity-80`}
+          >
             Use headphones for better experience
           </span>
         </div>
