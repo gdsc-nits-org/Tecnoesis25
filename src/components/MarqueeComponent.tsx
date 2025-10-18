@@ -19,7 +19,7 @@ const MarqueeComponent: React.FC<MarqueeComponentProps> = ({
   const repeatedImages = [...imagesToShow, ...imagesToShow];
 
   return (
-    <div className="w-full bg-black overflow-hidden">
+    <div className="w-full overflow-hidden bg-black">
       <Marquee
         speed={100}
         direction={direction}
@@ -37,7 +37,7 @@ const MarqueeComponent: React.FC<MarqueeComponentProps> = ({
                 alt={image.alt}
                 width={image.width}
                 height={image.height}
-                className="w-full h-auto"
+                className="h-auto w-full"
               />
             </div>
           ))}
