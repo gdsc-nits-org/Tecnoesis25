@@ -121,7 +121,7 @@ const GalleryAnimation = forwardRef<HTMLDivElement, GalleryAnimationProps>(({ on
 GalleryAnimation.displayName = 'GalleryAnimation';
 
 const EventCard: React.FC<EventCardProps> = ({ event, position }) => (
-  <div className={`absolute small-bounce transition-transform duration-1000 ${position === 'top-left' ? 'top-[10%] left-[8%]' : 'bottom-[10%] right-[8%]'}`}>
+  <div className={`absolute small-bounce transition-transform duration-1000 w-[40%] ${position === 'top-left' ? 'top-[10%] left-[8%]' : 'bottom-[10%] right-[8%]'}`}>
     <div className="relative">
       <Image src={event.imageUrl} alt={`${event.name} Visual`} width={600} height={600} className="rounded-lg border border-gray-800" />
       <Image src="/Subtract.png" alt="Event Badge" width={300} height={300} className={`absolute -top-12 ${position === 'top-left' ? '-left-7' : '-right-7 scale-x-[-1]'}`} />
@@ -276,8 +276,8 @@ export default function EventPage() {
 
       {!isMobile && (
           <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10">
-            <Image src="/x.png" alt="Background decoration" width={600} height={600} className="rounded-lg opacity-80" />
-            <Image src="/xshad.png" alt="Background shadow" width={600} height={600} className="absolute left-[50%] -translate-x-[50%]" />
+            <Image src="/x.png" alt="Background decoration" width={600} height={600} className="rounded-lg opacity-8" />
+            <Image src="/xshad.png" alt="Background shadow" width={600} height={600} className="w-[40%] absolute left-[50%] -translate-x-[50%]" />
             <Bars className="z-10" />
           </div>
       )}
