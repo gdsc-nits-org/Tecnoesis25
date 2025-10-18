@@ -78,8 +78,8 @@ const fragmentShader = `
     // Original blue gradient color
     vec3 blueColor = mix(vec3(1.0, 0.1, 0.3), vec3(0.3, 0.5, 1.0), vDistance / 50.0);
     
-    // Target red color
-    vec3 redColor = vec3(1.0, 0.1, 0.3);
+    // Target deep red color - pure red with no green or blue components
+    vec3 redColor = vec3(0.9, 0.0, 0.0);
     
     // Create a wave effect for the transition
     float wave = sin(vDistance * 0.5 - uTime * 3.0) * 0.5 + 0.5;
@@ -92,9 +92,14 @@ const fragmentShader = `
     // Mix colors with the eased progress
     vec3 finalColor = mix(blueColor, redColor, easedProgress);
     
-    // Add a subtle pulse during transition
-    float pulse = 1.0 + sin(uTime * 5.0) * 0.1 * uColorTransition * (1.0 - uColorTransition);
+    // Add a subtle pulse during transition - boost red intensity
+    float pulse = 1.0 + sin(uTime * 5.0) * 0.15 * uColorTransition * (1.0 - uColorTransition);
     finalColor *= pulse;
+    
+    // Ensure red channel stays strong and green/blue stay at zero during full transition
+    if (uColorTransition > 0.95) {
+      finalColor = vec3(finalColor.r * 1.1, 0.0, 0.0);
+    }
     
     gl_FragColor = vec4(finalColor, strength);
   }
