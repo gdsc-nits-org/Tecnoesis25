@@ -22,7 +22,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("/robotron/bg_robotron.png");
+  background-image: url("/robotron/bg_robotron.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -44,7 +44,7 @@
   height: 100%;
   width: 100%;
   flex-shrink: 0;
-  background-image: url("/robotron/bg_robotron_2.png");
+  background-image: url("/robotron/bg_robotron_2.webp");
   background-size: cover;
   background-position: center;
   opacity: 1;
@@ -65,7 +65,7 @@
   height: 100%;
   width: 90%;
   flex-shrink: 0;
-  background-image: url("/robotron/bg_robotron_3.png");
+  background-image: url("/robotron/bg_robotron_3.webp");
   background-size: cover;
   background-position: center bottom;
   background-repeat: repeat-x;
@@ -128,7 +128,7 @@
   height: 100%;
   width: 100%;
   flex-shrink: 0;
-  background-image: url("/robotron/silhouette.png");
+  background-image: url("/robotron/silhouette.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
