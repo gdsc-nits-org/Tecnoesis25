@@ -162,7 +162,7 @@ const Team = () => {
                 />
               </div>
               {/* Heads Section */}
-              <div className="flex flex-wrap items-center justify-center gap-4 tablet:gap-8 lg:gap-16">
+              <div className="flex flex-wrap items-center justify-center gap-4 tablet:gap-8 lg:gap-20">
                 {Head.map((head, index) => (
                   <TeamCard2
                     key={index}
@@ -178,17 +178,32 @@ const Team = () => {
             </div>
 
             {/* Core Team Section */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-12">
               <p className="text-center font-nyxerin text-3xl">JUNIOR TEAM</p>
-              <div className="flex flex-row flex-wrap justify-center gap-2 mobile:gap-4 tablet:gap-6 laptop:gap-8 xL:gap-10">
-                {CoreTeam.map((member, index) => (
-                  <TeamCard1
-                    key={index}
-                    photoUrl={member.photoUrl}
-                    name={member.name}
-                    designation={member.designation}
-                  />
-                ))}
+              <div className="flex flex-col gap-12">
+                {/* Web CoHeads and UI/UX CoHeads */}
+                <div className="flex flex-row flex-wrap justify-center gap-2 mobile:gap-4 tablet:gap-6 laptop:gap-8 xL:gap-10">
+                  {CoreTeam.filter(member => member.designation === "Web CoHead" || member.designation === "UI/Ux CoHead").map((member, index) => (
+                    <TeamCard1
+                      key={index}
+                      photoUrl={member.photoUrl}
+                      name={member.name}
+                      designation={member.designation}
+                    />
+                  ))}
+                </div>
+
+                {/* Web Developers */}
+                <div className="flex flex-row flex-wrap justify-center gap-2 mobile:gap-4 tablet:gap-6 laptop:gap-8 xL:gap-10">
+                  {CoreTeam.filter(member => member.designation === "Web Developer").map((member, index) => (
+                    <TeamCard1
+                      key={index}
+                      photoUrl={member.photoUrl}
+                      name={member.name}
+                      designation={member.designation}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
