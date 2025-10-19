@@ -19,6 +19,7 @@ export default function NavbarMobile() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [lastScrollY, setLastScrollY] = useState<number>(0);
+  const [isNavigating, setIsNavigating] = useState<boolean>(false);
   const router = useRouter();
   // Update active index based on current pathname
   useEffect(() => {
@@ -26,6 +27,7 @@ export default function NavbarMobile() {
     if (currentIndex !== -1) {
       setActiveIndex(currentIndex);
     }
+    setIsNavigating(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -54,9 +56,33 @@ export default function NavbarMobile() {
   }, [lastScrollY]);
 
   return (
-    <nav
-      className={`fixed left-0 top-0 z-[10000000] flex w-full items-center justify-between bg-transparent px-4 `}
-    >
+    <>
+      {isNavigating && (
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black">
+          <div className="relative w-[340px] sm:w-[400px] md:w-[460px] aspect-square">
+            <Image
+              src="/Loader/loader.svg"
+              alt="Loading..."
+              fill
+              priority
+              className="animate-pulse object-contain"
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Image
+                src="/Loader/loader.gif"
+                alt="Neon grid animation"
+                width={220}
+                height={220}
+                unoptimized
+                className="object-contain rounded-full"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+      <nav
+        className={`fixed left-0 top-0 z-[10000000] flex w-full items-center justify-between bg-transparent px-4 `}
+      >
       <div
         className={`cursor-pointertransition-transform flex h-full w-full origin-center scale-100 items-center justify-between px-2 py-3 backdrop-blur-sm transition-transform duration-300 ease-in-out sm:scale-110 md:scale-125 ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
       >
@@ -110,6 +136,7 @@ export default function NavbarMobile() {
                       href={item.link}
                       onClick={() => {
                         setIsOpen(false);
+                        setIsNavigating(true);
                       }}
                       className="flex cursor-pointer flex-col items-center"
                     >
@@ -156,5 +183,6 @@ export default function NavbarMobile() {
         )}
       </AnimatePresence>
     </nav>
+    </>
   );
 }

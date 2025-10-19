@@ -11,6 +11,7 @@ const NavbarDesktop = () => {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [lastScrollY, setLastScrollY] = useState<number>(0);
+  const [isNavigating, setIsNavigating] = useState<boolean>(false);
   const navigate = useRouter();
 
   const isAnyHovered = hoverIndex !== null;
@@ -21,6 +22,7 @@ const NavbarDesktop = () => {
     if (currentIndex !== -1) {
       setActiveIndex(currentIndex);
     }
+    setIsNavigating(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -49,9 +51,33 @@ const NavbarDesktop = () => {
   }, [lastScrollY]);
 
   return (
-    <nav
-      className={`fixed z-50 flex h-[6rem] w-full items-center justify-between bg-gradient-to-b from-black via-black/80 to-transparent px-6 transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
-    >
+    <>
+      {isNavigating && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black">
+          <div className="relative w-[340px] sm:w-[400px] md:w-[460px] aspect-square">
+            <Image
+              src="/Loader/loader.svg"
+              alt="Loading..."
+              fill
+              priority
+              className="animate-pulse object-contain"
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Image
+                src="/Loader/loader.gif"
+                alt="Neon grid animation"
+                width={220}
+                height={220}
+                unoptimized
+                className="object-contain rounded-full"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+      <nav
+        className={`fixed z-50 flex h-[6rem] w-full items-center justify-between bg-gradient-to-b from-black via-black/80 to-transparent px-6 transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
+      >
       <div className="flex cursor-pointer items-center">
         <Image
           src="/TechnoLogo.svg"
@@ -87,6 +113,7 @@ const NavbarDesktop = () => {
               href={item.link}
               onMouseEnter={() => setHoverIndex(index)}
               onMouseLeave={() => setHoverIndex(null)}
+              onClick={() => setIsNavigating(true)}
               className="flex cursor-pointer flex-col items-center transition-all duration-500 ease-in-out"
             >
               <Image
@@ -117,6 +144,7 @@ const NavbarDesktop = () => {
       {/* right spacer to keep center group truly centered */}
       <div className="w-[250px]" aria-hidden="true" />
     </nav>
+    </>
   );
 };
 
