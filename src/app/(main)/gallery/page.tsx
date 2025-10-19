@@ -121,12 +121,15 @@ const GalleryAnimation = forwardRef<HTMLDivElement, GalleryAnimationProps>(({ on
 GalleryAnimation.displayName = 'GalleryAnimation';
 
 const EventCard: React.FC<EventCardProps> = ({ event, position }) => (
-  <div className={`absolute small-bounce transition-transform duration-1000 w-[40%] ${position === 'top-left' ? 'top-[10%] left-[8%]' : 'bottom-[10%] right-[8%]'}`}>
+  <div className={`absolute small-bounce transition-transform duration-1000 w-[40%] max-w-2xl ${position === 'top-left' ? 'top-[10%] left-[8%]' : 'bottom-[10%] right-[8%]'}`}>
     <div className="relative">
       <Image src={event.imageUrl} alt={`${event.name} Visual`} width={600} height={600} className="rounded-lg border border-gray-800" />
-      <Image src="/Subtract.png" alt="Event Badge" width={300} height={300} className={`absolute -top-12 ${position === 'top-left' ? '-left-7' : '-right-7 scale-x-[-1]'}`} />
-      <div className={`absolute -top-6 text-white font-mono text-xs ${position === 'top-left' ? 'left-16' : 'right-16 text-right'}`}>
-        <p>{event.name}</p><p>{event.year}</p>
+      <div className={`absolute -top-12 w-[300px] h-[300px] ${position === 'top-left' ? '-left-7' : '-right-7'}`}>
+        <Image src="/Subtract.png" alt="Event Badge" layout="fill" className={`${position === 'bottom-right' && 'scale-x-[-1]'}`} />
+        <div className={`absolute top-[28px] text-white font-mono text-xs ${position === 'top-left' ? 'left-[65px]' : 'right-[65px] text-right'}`}>
+          <p>{event.name}</p>
+          <p>{event.year}</p>
+        </div>
       </div>
     </div>
   </div>
