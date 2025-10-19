@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import Image from 'next/image';
+import eventsData from "../../../../data/events.json";
 
 // --- 1. Define Types ---
 
@@ -41,28 +42,7 @@ interface MobileProgressBarProps {
 }
 
 // --- Data (20 events) ---
-const events: EventType[] = [
-    { id: 1, name: "CYBERIA", year: "2024", imageUrl: "/demo.png" },
-    { id: 2, name: "NEXUS", year: "2024", imageUrl: "/demo.png" },
-    { id: 3, name: "APERTURE", year: "2025", imageUrl: "/demo.png" },
-    { id: 4, name: "VELOCITY", year: "2025", imageUrl: "/demo.png" },
-    { id: 5, name: "ORION", year: "2026", imageUrl: "/demo.png" },
-    { id: 6, name: "ECLIPSE", year: "2026", imageUrl: "/demo.png" },
-    { id: 7, name: "AEON", year: "2027", imageUrl: "/demo.png" },
-    { id: 8, name: "SPECTRA", year: "2027", imageUrl: "/demo.png" },
-    { id: 9, name: "PULSAR", year: "2028", imageUrl: "/demo.png" },
-    { id: 10, name: "QUASAR", year: "2028", imageUrl: "/demo.png" },
-    { id: 11, name: "ZENITH", year: "2029", imageUrl: "/demo.png" },
-    { id: 12, name: "HALCYON", year: "2029", imageUrl: "/demo.png" },
-    { id: 13, name: "KAIROS", year: "2030", imageUrl: "/demo.png" },
-    { id: 14, name: "CHRONOS", year: "2030", imageUrl: "/demo.png" },
-    { id: 15, name: "AURA", year: "2031", imageUrl: "/demo.png" },
-    { id: 16, name: "NOVA", year: "2031", imageUrl: "/demo.png" },
-    { id: 17, name: "GENESIS", year: "2032", imageUrl: "/demo.png" },
-    { id: 18, name: "PARALLAX", year: "2032", imageUrl: "/demo.png" },
-    { id: 19, name: "KINETIC", year: "2033", imageUrl: "/demo.png" },
-    { id: 20, name: "FUSION", year: "2033", imageUrl: "/demo.png" },
-];
+const events: EventType[] = eventsData.events;
 
 // --- 2. Helper Function ---
 const chunkArray = <T,>(arr: T[], size: number): T[][] =>
@@ -106,7 +86,7 @@ const GalleryAnimation = forwardRef<HTMLDivElement, GalleryAnimationProps>(({ on
     <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none">
       <div className="text-center space-y-4">
         <h1 className="text-white text-4xl md:text-6xl tracking-widest font-nyxerin">TECNOESIS</h1>
-        <h2 className="text-red-600 text-4xl md:text-7xl font-nyxerin tracking-widest">PHOTO GALLERY</h2>
+        <h2 className="text-red-600 text-3xl md:text-7xl font-nyxerin tracking-widest">PHOTO GALLERY</h2>
       </div>
     </div>
     <div className="absolute left-[7vw] z-10"><Image src="/hand.png" alt="Left robotic hand" width={600} height={600} className="opacity-90" /></div>
@@ -121,15 +101,12 @@ const GalleryAnimation = forwardRef<HTMLDivElement, GalleryAnimationProps>(({ on
 GalleryAnimation.displayName = 'GalleryAnimation';
 
 const EventCard: React.FC<EventCardProps> = ({ event, position }) => (
-  <div className={`absolute small-bounce transition-transform duration-1000 w-[40%] max-w-2xl ${position === 'top-left' ? 'top-[10%] left-[8%]' : 'bottom-[10%] right-[8%]'}`}>
+  <div className={`absolute small-bounce transition-transform duration-1000 w-[40%] ${position === 'top-left' ? 'top-[10%] left-[8%]' : 'bottom-[10%] right-[8%]'}`}>
     <div className="relative">
-      <Image src={event.imageUrl} alt={`${event.name} Visual`} width={600} height={600} className="rounded-lg border border-gray-800" />
-      <div className={`absolute -top-12 w-[300px] h-[300px] ${position === 'top-left' ? '-left-7' : '-right-7'}`}>
-        <Image src="/Subtract.png" alt="Event Badge" layout="fill" className={`${position === 'bottom-right' && 'scale-x-[-1]'}`} />
-        <div className={`absolute top-[28px] text-white font-mono text-xs ${position === 'top-left' ? 'left-[65px]' : 'right-[65px] text-right'}`}>
-          <p>{event.name}</p>
-          <p>{event.year}</p>
-        </div>
+      <Image src={event.imageUrl} alt={`${event.name} Visual`} width={1200} height={1200} className="rounded-lg border border-gray-800" />
+      <Image src="/Subtract.png" alt="Event Badge" width={300} height={300} className={`absolute -top-12 ${position === 'top-left' ? '-left-7 fourK:scale-125' : '-right-7 scale-x-[-1] fourK:scale-125 fourK:scale-x-[-1]'}`} />
+      <div className={`absolute -top-6 text-white font-nyxerin fourK:scale-125  text-xs ${position === 'top-left' ? 'left-16' : 'right-16 text-right'}`}>
+        <p>{event.name}</p><p>{event.year}</p>
       </div>
     </div>
   </div>
@@ -140,9 +117,9 @@ const MobileEventCard: React.FC<MobileEventCardProps> = ({ event }) => (
         <div className="relative aspect-[3/4] p-4 border-2 border-orange-500/50 rounded-xl bg-black/30">
             <Image src={event.imageUrl} alt={event.name} layout="fill" objectFit="cover" className="rounded-md opacity-80" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-            <p className="absolute bottom-4 left-4 text-white font-nyxerin text-3xl tracking-widest">{event.name}</p>
+            <p className="absolute bottom-4 left-4 text-white font-nyxerin text-[1rem] tracking-widest">{event.name}</p>
             <div className="absolute top-4 right-4 bg-white/10 p-2 rounded-md backdrop-blur-sm">
-                 <p className="text-white font-mono text-xs">{event.year}</p>
+                 <p className="text-white font-nyxerin text-xs">{event.year}</p>
             </div>
         </div>
     </div>
