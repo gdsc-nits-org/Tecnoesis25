@@ -182,7 +182,7 @@ export const TeamsSection = () => {
       <section
         className="relative w-full bg-black py-12 text-white sm:py-20"
         style={{
-          backgroundImage: "url(/robotron/team/teamsbackg.svg)",
+          backgroundImage: "url(/robotron/team/teamsbackg.min.svg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -206,7 +206,7 @@ export const TeamsSection = () => {
       <section
         className="relative w-full bg-black py-12 text-white sm:py-20"
         style={{
-          backgroundImage: "url(/robotron/team/teamsbackg.svg)",
+          backgroundImage: "url(/robotron/team/teamsbackg.min.svg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -224,7 +224,7 @@ export const TeamsSection = () => {
     <section
       className="relative w-full bg-black py-12 text-white sm:py-20"
       style={{
-        backgroundImage: "url(/robotron/team/teamsbackg.svg)",
+        backgroundImage: "url(/robotron/team/teamsbackg.min.svg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

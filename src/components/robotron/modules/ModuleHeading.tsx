@@ -12,7 +12,7 @@ interface ModuleHeadingProps {
 const ModuleHeading: React.FC<ModuleHeadingProps> = ({
   children,
   className = "",
-  bgImage = "/robotron/modules/moduleheadingbg.svg",
+  bgImage = "/robotron/modules/moduleheadingbg.min.svg",
 }) => {
   
 
