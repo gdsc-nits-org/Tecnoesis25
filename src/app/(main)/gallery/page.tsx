@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import Image from 'next/image';
+import eventsData from "../../../../data/events.json";
 
 // --- 1. Define Types ---
 
@@ -41,28 +42,7 @@ interface MobileProgressBarProps {
 }
 
 // --- Data (20 events) ---
-const events: EventType[] = [
-    { id: 1, name: "CYBERIA", year: "2024", imageUrl: "/demo.png" },
-    { id: 2, name: "NEXUS", year: "2024", imageUrl: "/demo.png" },
-    { id: 3, name: "APERTURE", year: "2025", imageUrl: "/demo.png" },
-    { id: 4, name: "VELOCITY", year: "2025", imageUrl: "/demo.png" },
-    { id: 5, name: "ORION", year: "2026", imageUrl: "/demo.png" },
-    { id: 6, name: "ECLIPSE", year: "2026", imageUrl: "/demo.png" },
-    { id: 7, name: "AEON", year: "2027", imageUrl: "/demo.png" },
-    { id: 8, name: "SPECTRA", year: "2027", imageUrl: "/demo.png" },
-    { id: 9, name: "PULSAR", year: "2028", imageUrl: "/demo.png" },
-    { id: 10, name: "QUASAR", year: "2028", imageUrl: "/demo.png" },
-    { id: 11, name: "ZENITH", year: "2029", imageUrl: "/demo.png" },
-    { id: 12, name: "HALCYON", year: "2029", imageUrl: "/demo.png" },
-    { id: 13, name: "KAIROS", year: "2030", imageUrl: "/demo.png" },
-    { id: 14, name: "CHRONOS", year: "2030", imageUrl: "/demo.png" },
-    { id: 15, name: "AURA", year: "2031", imageUrl: "/demo.png" },
-    { id: 16, name: "NOVA", year: "2031", imageUrl: "/demo.png" },
-    { id: 17, name: "GENESIS", year: "2032", imageUrl: "/demo.png" },
-    { id: 18, name: "PARALLAX", year: "2032", imageUrl: "/demo.png" },
-    { id: 19, name: "KINETIC", year: "2033", imageUrl: "/demo.png" },
-    { id: 20, name: "FUSION", year: "2033", imageUrl: "/demo.png" },
-];
+const events: EventType[] = eventsData.events;
 
 // --- 2. Helper Function ---
 const chunkArray = <T,>(arr: T[], size: number): T[][] =>
