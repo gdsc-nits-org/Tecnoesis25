@@ -60,7 +60,7 @@ export const TeamCard2: React.FC<TeamCard2Props> = ({ name, image }) => {
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `url('/robotron/team/bgframe2.min.svg')`,
+              backgroundImage: `url('/robotron/team/bgframe2.min_.png')`,
               backgroundSize: "118% 117%",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
