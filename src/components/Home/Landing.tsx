@@ -19,10 +19,16 @@ const Landing = () => {
 
   return (
     <div
-      className="flex h-screen w-screen cursor-default items-center justify-center bg-black bg-cover bg-center"
-      style={{ backgroundImage: "url('/landing/bg.png')" }}
+      className="relative flex h-screen w-screen cursor-default items-center justify-center bg-black overflow-hidden"
       onClick={() => setIsActivated(true)}
     >
+      {/* Animated SVG background as an <object> so SMIL/filter animations run */}
+      <object
+        data="/landing/bg.svg"
+        type="image/svg+xml"
+        aria-hidden
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+      />
       <Canvas
         // FIX: Conditionally set the DPR. Capped at 1.5 on mobile for performance.
         camera={{ position: [0, 0, 100], fov: 50 }}

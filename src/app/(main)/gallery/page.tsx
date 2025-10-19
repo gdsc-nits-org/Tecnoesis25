@@ -85,8 +85,8 @@ const GalleryAnimation = forwardRef<HTMLDivElement, GalleryAnimationProps>(({ on
     <Bars className="z-20" />
     <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none">
       <div className="text-center space-y-4">
-        <h1 className="text-white text-5xl md:text-6xl tracking-widest font-nyxerin">TECNOESIS</h1>
-        <h2 className="text-red-600 text-5xl md:text-7xl font-nyxerin tracking-widest">PHOTO GALLERY</h2>
+        <h1 className="text-white text-4xl md:text-6xl tracking-widest font-nyxerin">TECNOESIS</h1>
+        <h2 className="text-red-600 text-3xl md:text-7xl font-nyxerin tracking-widest">PHOTO GALLERY</h2>
       </div>
     </div>
     <div className="absolute left-[7vw] z-10"><Image src="/hand.png" alt="Left robotic hand" width={600} height={600} className="opacity-90" /></div>
@@ -103,9 +103,9 @@ GalleryAnimation.displayName = 'GalleryAnimation';
 const EventCard: React.FC<EventCardProps> = ({ event, position }) => (
   <div className={`absolute small-bounce transition-transform duration-1000 w-[40%] ${position === 'top-left' ? 'top-[10%] left-[8%]' : 'bottom-[10%] right-[8%]'}`}>
     <div className="relative">
-      <Image src={event.imageUrl} alt={`${event.name} Visual`} width={600} height={600} className="rounded-lg border border-gray-800" />
-      <Image src="/Subtract.png" alt="Event Badge" width={300} height={300} className={`absolute -top-12 ${position === 'top-left' ? '-left-7' : '-right-7 scale-x-[-1]'}`} />
-      <div className={`absolute -top-6 text-white font-mono text-xs ${position === 'top-left' ? 'left-16' : 'right-16 text-right'}`}>
+      <Image src={event.imageUrl} alt={`${event.name} Visual`} width={1200} height={1200} className="rounded-lg border border-gray-800" />
+      <Image src="/Subtract.png" alt="Event Badge" width={300} height={300} className={`absolute -top-12 ${position === 'top-left' ? '-left-7 fourK:scale-125' : '-right-7 scale-x-[-1] fourK:scale-125 fourK:scale-x-[-1]'}`} />
+      <div className={`absolute -top-6 text-white font-nyxerin fourK:scale-125  text-xs ${position === 'top-left' ? 'left-16' : 'right-16 text-right'}`}>
         <p>{event.name}</p><p>{event.year}</p>
       </div>
     </div>
@@ -117,9 +117,9 @@ const MobileEventCard: React.FC<MobileEventCardProps> = ({ event }) => (
         <div className="relative aspect-[3/4] p-4 border-2 border-orange-500/50 rounded-xl bg-black/30">
             <Image src={event.imageUrl} alt={event.name} layout="fill" objectFit="cover" className="rounded-md opacity-80" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-            <p className="absolute bottom-4 left-4 text-white font-nyxerin text-3xl tracking-widest">{event.name}</p>
+            <p className="absolute bottom-4 left-4 text-white font-nyxerin text-[1rem] tracking-widest">{event.name}</p>
             <div className="absolute top-4 right-4 bg-white/10 p-2 rounded-md backdrop-blur-sm">
-                 <p className="text-white font-mono text-xs">{event.year}</p>
+                 <p className="text-white font-nyxerin text-xs">{event.year}</p>
             </div>
         </div>
     </div>
@@ -273,7 +273,7 @@ export default function EventPage() {
               style={{ backgroundImage: "url('/grid.png')" }}
             >
               <div className="w-full h-full flex flex-col justify-center items-center space-y-4 p-4">
-                  <h3 className="text-white font-nyxerin tracking-widest text-2xl">SELECT THE EVENT</h3>
+                  {/* <h3 className="text-white font-nyxerin tracking-widest text-2xl">SELECT THE EVENT</h3> */}
                   <div 
                     ref={mobileScrollRef}
                     className="w-full flex overflow-x-auto snap-x snap-mandatory hide-scrollbar items-center py-4"
