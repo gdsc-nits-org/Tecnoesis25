@@ -2,7 +2,6 @@
 
 import dynamic from "next/dynamic";
 import Landing from "~/components/Home/Landing";
-
 import { RobotronHero } from "~/components/RobotronHero";
 const SnakeMatrix = dynamic(() => import("~/components/SnakeMatrix"), {
   ssr: false,
@@ -14,6 +13,8 @@ const PreviousSponsors = dynamic(
   { ssr: false },
 );
 const Footer = dynamic(() => import("~/components/footer"), { ssr: false });
+const Modules = dynamic(() => import("~/components/Home/Modules"), { ssr: false });
+
 
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
       <Landing />
       <About />
       <SnakeMatrix />
+      <Modules />
       <Gallery />
       <RobotronHero />
       <PreviousSponsors />
