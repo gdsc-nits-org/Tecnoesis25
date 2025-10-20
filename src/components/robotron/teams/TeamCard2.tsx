@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 
 interface TeamCard2Props {
   name?: string;
@@ -89,23 +90,25 @@ export const TeamCard2: React.FC<TeamCard2Props> = ({ name, image }) => {
               >
                 {/* Image with Clipped Corners */}
                 <div
-                  className="h-full w-full overflow-hidden"
+                  className="relative h-full w-full overflow-hidden"
                   style={{
                     clipPath:
                       "polygon(4% 0%, 96% 0%, 100% 4%, 100% 96%, 96% 100%, 4% 100%, 0% 96%, 0% 4%)",
                   }}
                 >
                   {imageLoading && (
-                    <div className="absolute inset-0 flex animate-pulse items-center justify-center bg-gray-800">
+                    <div className="absolute inset-0 z-10 flex animate-pulse items-center justify-center bg-gray-800">
                       <div className="font-orbitron text-sm text-white">
                         Loading...
                       </div>
                     </div>
                   )}
-                  <img
+                  <Image
                     src={displayImage}
                     alt={name ?? "Team Member"}
                     className="h-full w-full object-cover"
+                    fill
+                    sizes="200px"
                     onLoad={handleImageLoad}
                     onError={handleImageError}
                     style={{
