@@ -1,0 +1,106 @@
+/**
+ * TRON ARES BIKE POSITION CONFIGURATION
+ * =====================================
+ * 
+ * Easy-to-adjust configuration for bike positioning across different screen sizes.
+ * Simply change the values below to move the bike up/down/left/right.
+ * 
+ * TIPS:
+ * - Increase margin-bottom to move bike DOWN (use positive values like 0rem, 1rem, 2rem)
+ * - Decrease margin-bottom to move bike UP (use negative values like -5rem, -10rem)
+ * - Increase margin-left to move bike RIGHT (use positive values)
+ * - Decrease margin-left to move bike LEFT (use negative values)
+ * - Adjust width/height to make bike bigger or smaller
+ */
+
+:root {
+  /* ========================================
+     MOBILE (< 640px) - Phones
+     ======================================== */
+  
+  /* Vertical position - CHANGE THIS to move bike up/down on mobile */
+  --bike-margin-bottom-mobile: 6rem;  /* Move DOWN: use 0rem, 1rem, 2rem | Move UP: use -3rem, -4rem, -5rem */
+  
+  /* Horizontal position */
+  --bike-margin-left-mobile: -1rem;
+  
+  /* Size */
+  --bike-width-mobile: 70%;
+  --bike-height-mobile: 40%;
+  --bike-padding-mobile: 1rem;
+  
+  
+  /* ========================================
+     TABLET (640px - 767px)
+     ======================================== */
+  
+  /* Vertical position - CHANGE THIS to move bike up/down on tablet */
+  --bike-margin-bottom-tablet: -6rem;  /* Move DOWN: use 0rem, 1rem, 2rem | Move UP: use -4rem, -5rem, -6rem */
+  
+  /* Horizontal position */
+  --bike-margin-left-tablet: -1.5rem;
+  
+  /* Size */
+  --bike-width-tablet: 55%;
+  --bike-height-tablet: 42%;
+  --bike-padding-tablet: 1.5rem;
+  
+  
+  /* ========================================
+     DESKTOP (768px - 1023px)
+     ======================================== */
+  
+  /* Vertical position - CHANGE THIS to move bike up/down on desktop */
+  --bike-margin-bottom-desktop: -8rem;  /* Move DOWN: use -2rem, 0rem | Move UP: use -6rem, -7rem, -8rem */
+  
+  /* Horizontal position */
+  --bike-margin-left-desktop: -2rem;
+  
+  /* Size */
+  --bike-width-desktop: 45%;
+  --bike-height-desktop: 45%;
+  --bike-padding-desktop: 2rem;
+  
+  
+  /* ========================================
+     LARGE DESKTOP (1024px+)
+     ======================================== */
+  
+  /* Vertical position - CHANGE THIS to move bike up/down on large screens */
+  --bike-margin-bottom-lg: -5rem;  /* Move DOWN: use -2rem, 0rem | Move UP: use -6rem, -7rem, -8rem */
+  
+  /* Horizontal position */
+  --bike-margin-left-lg: -2rem;
+  
+  /* Size */
+  --bike-width-lg: 45%;
+  --bike-height-lg: 45%;
+  --bike-padding-lg: 2rem;
+}
+
+/* ========================================
+   QUICK ADJUSTMENT EXAMPLES
+   ========================================
+   
+   Example 1: Move bike DOWN on mobile
+   --bike-margin-bottom-mobile: 0rem;
+   
+   Example 2: Move bike UP on mobile
+   --bike-margin-bottom-mobile: -6rem;
+   
+   Example 3: Move bike DOWN on tablet
+   --bike-margin-bottom-tablet: -1rem;
+   
+   Example 4: Move bike DOWN on desktop
+   --bike-margin-bottom-desktop: -2rem;
+   
+   Example 5: Make bike bigger on mobile
+   --bike-width-mobile: 80%;
+   --bike-height-mobile: 50%;
+   
+   Example 6: Move bike to the right
+   --bike-margin-left-mobile: 2rem;
+   --bike-margin-left-tablet: 3rem;
+   --bike-margin-left-desktop: 4rem;
+   
+   ======================================== */

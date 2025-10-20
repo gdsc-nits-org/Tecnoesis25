@@ -2,27 +2,27 @@
 import React from "react";
 import FaultyTerminal from "./FaultyTerminal";
 
-const Footer = () => {
+const Footer = React.memo(() => {
   return (
-    <div className="relative w-full overflow-hidden bg-black p-0 ">
+    <div className="relative w-full overflow-hidden bg-black p-0">
       {/* Background Terminal Effect */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0" style={{ contain: 'strict' }}>
         <FaultyTerminal
           scale={4}
           gridMul={[2, 1]}
           digitSize={1.2}
-          timeScale={1}
+          timeScale={0.8}
           pause={false}
-          scanlineIntensity={1}
-          glitchAmount={1}
-          flickerAmount={1}
-          noiseAmp={1}
+          scanlineIntensity={0.8}
+          glitchAmount={0.8}
+          flickerAmount={0.8}
+          noiseAmp={0.8}
           chromaticAberration={0}
           dither={0}
           curvature={0}
           tint="#F40004"
           mouseReact={true}
-          mouseStrength={0.5}
+          mouseStrength={0.3}
           pageLoadAnimation={false}
           brightness={1}
         />
@@ -55,6 +55,8 @@ const Footer = () => {
       </div>
     </div>
   );
-};
+});
+
+Footer.displayName = "Footer";
 
 export default Footer;

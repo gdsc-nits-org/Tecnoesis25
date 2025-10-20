@@ -1,56 +1,81 @@
 'use client';
-import Image from "next/image";
+import { useState, useEffect } from "react";
 
 const Loader = () => {
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        const duration = 5000; 
+        const interval = 50; 
+        const steps = duration / interval;
+        const increment = 100 / steps;
+
+        const timer = setInterval(() => {
+            setProgress((prev) => {
+                if (prev >= 100) {
+                    clearInterval(timer);
+                    return 100;
+                }
+                return Math.min(prev + increment, 100);
+            });
+        }, interval);
+
+        return () => clearInterval(timer);
+    }, []);
+
     return (
-        <div className="fixed inset-0 z-50 flex flex-col gap-10 items-center justify-center bg-black">
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black px-4">
             <style jsx>{`
-                @keyframes flicker {
-                    0%, 100% {
-                        opacity: 1;
-                        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
+                @keyframes slideIn {
+                    from {
+                        width: 0%;
                     }
-                    10%, 30%, 50%, 70%, 90% {
-                        opacity: 0.8;
-                        text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
-                    }
-                    20%, 40%, 60%, 80% {
-                        opacity: 1;
-                        text-shadow: 0 0 15px #ff0000, 0 0 25px #ff0000, 0 0 35px #ff0000;
-                    }
-                    15%, 45%, 75% {
-                        opacity: 0.6;
-                        text-shadow: 0 0 3px #ff0000;
+                    to {
+                        width: ${progress}%;
                     }
                 }
-                .flicker-text {
-                    animation: flicker 5s infinite;
+                .loading-bar {
+                    animation: slideIn 0.3s ease-out forwards;
                 }
             `}</style>
-            <div className="relative w-[340px] sm:w-[400px] md:w-[460px] aspect-square">
-                {/* Base SVG loader */}
-                <Image
-                    src="/Loader/loader.svg"
-                    alt="Loading..."
-                    fill
-                    priority
-                    className="animate-pulse object-contain"
-                />
+            
+            {/* Loading Container */}
+            <div className="w-full max-w-2xl">
+                {/* Loading Text */}
+                <div className="mb-4 text-left font-bankGothik text-sm tracking-[0.3em] text-white md:text-base">
+                    LOADING...
+                </div>
 
-                {/* Center GIF inside the SVG's empty middle */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <Image
-                        src="/Loader/loader.gif"
-                        alt="Neon grid animation"
-                        width={220}
-                        height={220}
-                        unoptimized
-                        className="object-contain rounded-full"
-                    />
+                {/* Loading Bar Container with Border */}
+                <div className="relative rounded-lg border border-gray-600 p-1">
+                    {/* Corner Decorations */}
+                    <div className="absolute -left-1 top-1/2 h-3 w-1 -translate-y-1/2 bg-red-600"></div>
+                    <div className="absolute -right-1 top-1/2 h-3 w-1 -translate-y-1/2 bg-red-600"></div>
+
+                    {/* Progress Bar Background */}
+                    <div className="relative h-4 w-full overflow-hidden rounded bg-black/50">
+                        {/* Striped Progress Bar */}
+                        <div
+                            className="loading-bar h-full transition-all duration-300 ease-out"
+                            style={{
+                                width: `${progress}%`,
+                                background: 'repeating-linear-gradient(45deg, #dc2626 0px, #dc2626 10px, #b91c1c 10px, #b91c1c 20px)',
+                                boxShadow: '0 0 10px rgba(220, 38, 38, 0.5), inset 0 0 10px rgba(220, 38, 38, 0.3)'
+                            }}
+                        ></div>
+                    </div>
                 </div>
             </div>
-            <div className="flicker-text text-center text-3xl font-bold font-bankGothik text-red-600 tracking-wide laptop:bottom-24 laptop:text-5xl">
-                <h2> ENTER THE GRID</h2>
+
+            {/* Quote Section */}
+            <div className="absolute bottom-20 w-full max-w-4xl px-8 text-center">
+                <p className="mb-4 font-bankGothik text-xs leading-relaxed tracking-wide text-white md:text-sm">
+                    &ldquo;The Thing About Perfection Is That It&apos;s Unknowable. It&apos;s Impossible, But It&apos;s Also Right<br className="hidden md:block" />
+                    In Front Of Us All The Time&rdquo;
+                </p>
+                <p className="font-bankGothik text-xs tracking-[0.3em] text-purple-400 md:text-sm">
+                    KEVIN FLYNN
+                </p>
             </div>
         </div>
     );

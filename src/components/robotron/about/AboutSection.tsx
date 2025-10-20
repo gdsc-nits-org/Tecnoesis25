@@ -1,10 +1,13 @@
+import React from "react";
+import Image from "next/image";
+
 // Reusable text styles
 const headingStyles =
   "font-bold text-white font-['Orbitron',sans-serif] leading-[1] tracking-[0.19em]";
 const paragraphStyles =
   "text-white font-['Orbitron',sans-serif] font-medium leading-[1.6] md:leading-[36px] tracking-[0.03em] text-justify";
 
-export const AboutSection = () => {
+export const AboutSection = React.memo(() => {
   return (
     <section
       id="about"
@@ -46,7 +49,7 @@ export const AboutSection = () => {
 
         {/* Desktop/Tablet Frame */}
         <div className="relative hidden md:block">
-          <img
+          <Image
             src="/robotron/aboutFrame.min.svg"
             alt="About Robotron Frame"
             className="h-auto w-full"
@@ -88,6 +91,8 @@ export const AboutSection = () => {
       </div>
     </section>
   );
-};
+});
+
+AboutSection.displayName = "AboutSection";
 
 export default AboutSection;
