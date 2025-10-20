@@ -127,7 +127,7 @@ const Hero = () => {
             style={{ willChange: "transform, opacity" }}
           >
             <Image
-              src="/robotron/tron_ares_bike.png"
+              src="/robotron/tron_ares_bike.webp"
               alt="Tron Ares Bike"
               fill
               className={styles.bikeImage}

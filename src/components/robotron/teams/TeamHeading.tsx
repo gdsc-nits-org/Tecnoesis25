@@ -10,7 +10,7 @@ interface TeamHeadingProps {
 const TeamHeading: React.FC<TeamHeadingProps> = ({
   children,
   className = "",
-  bgImage = "/robotron/team/teamsheadingbg.svg",
+  bgImage = "/robotron/team/teamsheadingbg.min.svg",
 }) => (
   <div className={`${styles.wrapper} ${className}`}>
     <div className={styles.container}>
