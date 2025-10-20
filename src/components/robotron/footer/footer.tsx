@@ -2,7 +2,7 @@
 import React from "react";
 import FaultyTerminal from "./FaultyTerminal";
 
-const Footer = () => {
+const Footer = React.memo(() => {
   return (
     <div className="relative w-full overflow-hidden bg-black p-0 ">
       {/* Background Terminal Effect */}
@@ -55,6 +55,8 @@ const Footer = () => {
       </div>
     </div>
   );
-};
+});
+
+Footer.displayName = "Footer";
 
 export default Footer;

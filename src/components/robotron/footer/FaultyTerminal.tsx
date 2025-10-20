@@ -264,8 +264,8 @@ export default function FaultyTerminal({
   mouseReact = true,
   mouseStrength = 0.2,
   dpr = typeof window !== "undefined"
-    ? Math.min(window.devicePixelRatio || 1, 2)
-    : 2,
+    ? Math.min(window.devicePixelRatio || 1, 1.5)
+    : 1.5,
   pageLoadAnimation = true,
   brightness = 1,
   className,
@@ -289,6 +289,7 @@ export default function FaultyTerminal({
     [dither],
   );
 
+  // Throttled mouse move handler for better performance
   const handleMouseMove = useCallback((e: MouseEvent) => {
     const ctn = containerRef.current;
     if (!ctn) return;
@@ -302,7 +303,12 @@ export default function FaultyTerminal({
     const ctn = containerRef.current;
     if (!ctn) return;
 
-    const renderer = new Renderer({ dpr });
+    const renderer = new Renderer({ 
+      dpr,
+      alpha: false,
+      antialias: false,
+      powerPreference: "high-performance"
+    });
     rendererRef.current = renderer;
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 1);
@@ -427,12 +433,23 @@ export default function FaultyTerminal({
     rafRef.current = requestAnimationFrame(update);
     ctn.appendChild(gl.canvas);
 
-    if (mouseReact) ctn.addEventListener("mousemove", handleMouseMove);
+    // Throttle mouse events for performance
+    let throttleTimeout: NodeJS.Timeout | null = null;
+    const throttledMouseMove = (e: MouseEvent) => {
+      if (throttleTimeout) return;
+      throttleTimeout = setTimeout(() => {
+        handleMouseMove(e);
+        throttleTimeout = null;
+      }, 16); // ~60fps
+    };
+    
+    if (mouseReact) ctn.addEventListener("mousemove", throttledMouseMove);
 
     return () => {
       cancelAnimationFrame(rafRef.current);
       resizeObserver.disconnect();
-      if (mouseReact) ctn.removeEventListener("mousemove", handleMouseMove);
+      if (mouseReact) ctn.removeEventListener("mousemove", throttledMouseMove);
+      if (throttleTimeout) clearTimeout(throttleTimeout);
       if (gl.canvas.parentElement === ctn) ctn.removeChild(gl.canvas);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       loadAnimationStartRef.current = 0;

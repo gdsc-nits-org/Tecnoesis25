@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface TeamCardProps {
   name?: string;
@@ -50,10 +51,12 @@ export const TeamCard: React.FC<TeamCardProps> = ({ name, role, image }) => {
               zIndex: 10,
             }}
           >
-            <img
+            <Image
               src={displayImage}
               alt={name ?? "Team Member"}
               className="h-full w-full object-cover"
+              fill
+              sizes="260px"
             />
           </div>
         </div>

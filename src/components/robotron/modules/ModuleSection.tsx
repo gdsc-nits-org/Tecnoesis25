@@ -1,10 +1,11 @@
+import React from "react";
 import ModuleHeading from "./ModuleHeading";
 import styles from "./ModuleSection.module.css";
 import modulesData from "./modulesData.json";
 import Link from "next/link";
 import Image from "next/image";
 
-const ModuleSection = () => {
+const ModuleSection = React.memo(() => {
   const colorPairs = [
     {
       frame: "/robotron/modules/framemodules.min.svg",
@@ -97,6 +98,8 @@ const ModuleSection = () => {
       </div>
     </>
   );
-};
+});
+
+ModuleSection.displayName = "ModuleSection";
 
 export default ModuleSection;
