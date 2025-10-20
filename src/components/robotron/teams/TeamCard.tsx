@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface TeamCardProps {
   name?: string;
@@ -24,7 +25,7 @@ export const TeamCard: React.FC<TeamCardProps> = ({ name, role, image }) => {
       <div
         className="pointer-events-none absolute inset-0 opacity-80 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          backgroundImage: `url('/robotron/modules/teams/headframe.svg')`,
+          backgroundImage: `url('/robotron/modules/teams/headframe.min.svg')`,
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -50,10 +51,12 @@ export const TeamCard: React.FC<TeamCardProps> = ({ name, role, image }) => {
               zIndex: 10,
             }}
           >
-            <img
+            <Image
               src={displayImage}
               alt={name ?? "Team Member"}
               className="h-full w-full object-cover"
+              fill
+              sizes="260px"
             />
           </div>
         </div>

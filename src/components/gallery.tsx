@@ -146,7 +146,7 @@ export default function PhotoGallery() {
             className="object-cover transition-opacity duration-300 group-hover:opacity-0"
           />
           <Image
-            src="/view2.png"
+            src="/view2.svg"
             alt="View details background hovered"
             fill
             className="object-cover opacity-0 transition-all duration-300 group-hover:scale-[1.1] group-hover:opacity-100"

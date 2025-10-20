@@ -82,6 +82,21 @@ export default function Footer() {
                 />
               </div>
             </a>
+            <a
+              href="mailto:tecnoesis@nits.ac.in"
+              target="_blank"
+              aria-label="mail"
+              className="pointer-events-auto transform transition-transform hover:scale-110"
+            >
+              <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
+                <Image
+                  src="/pmail.png"
+                  alt="mail"
+                  layout="fill"
+                  objectFit="contain"
+                />
+              </div>
+            </a>
             {/* <a href="#" aria-label="X (formerly Twitter)" className="pointer-events-auto transform transition-transform hover:scale-110">
               <div className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8">
                 <Image src="/x.png" alt="X (formerly Twitter)" layout="fill" objectFit="contain" />

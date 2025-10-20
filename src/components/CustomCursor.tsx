@@ -5,6 +5,12 @@ export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Only enable custom cursor on screens >= 768px
+    if (typeof window !== "undefined") {
+      const mq = window.matchMedia("(min-width: 768px)");
+      if (!mq.matches) return;
+    }
+
     const cursor = cursorRef.current;
     if (!cursor) return;
 
@@ -48,7 +54,7 @@ export default function CustomCursor() {
   return (
     <div
       ref={cursorRef}
-      className="custom-cursor"
+      className="custom-cursor hidden md:block"
       style={{
         opacity: 0,
         transition: "transform 0.15s ease, opacity 0.3s ease",

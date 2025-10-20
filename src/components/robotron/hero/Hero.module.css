@@ -22,7 +22,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("/robotron/bg_robotron.png");
+  background-image: url("/robotron/bg_robotron.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -44,7 +44,7 @@
   height: 100%;
   width: 100%;
   flex-shrink: 0;
-  background-image: url("/robotron/bg_robotron_2.png");
+  background-image: url("/robotron/team/bg_robotron_2_11zon.webp");
   background-size: cover;
   background-position: center;
   opacity: 1;
@@ -65,7 +65,7 @@
   height: 100%;
   width: 90%;
   flex-shrink: 0;
-  background-image: url("/robotron/bg_robotron_3.png");
+  background-image: url("/robotron/bg_robotron_3.webp");
   background-size: cover;
   background-position: center bottom;
   background-repeat: repeat-x;
@@ -76,21 +76,57 @@
 }
 
 /* Tron Bike Image Layer */
+/* Bike Position Configuration - Easy to adjust for different screen sizes */
 .bikeImageLayer {
   position: absolute;
   bottom: 0;
   left: 0;
   z-index: 30;
-  margin-left: -2rem;
-  margin-bottom: -5rem;
-  width: 45%;
-  height: 45%;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
   pointer-events: none;
-  padding: 2rem;
   will-change: transform, opacity;
+  
+  /* Mobile (default) - Adjust these values */
+  margin-left: var(--bike-margin-left-mobile, -1rem);
+  margin-bottom: var(--bike-margin-bottom-mobile, -3rem);
+  width: var(--bike-width-mobile, 70%);
+  height: var(--bike-height-mobile, 40%);
+  padding: var(--bike-padding-mobile, 1rem);
+}
+
+/* Tablet (sm: 640px and up) */
+@media (min-width: 640px) {
+  .bikeImageLayer {
+    margin-left: var(--bike-margin-left-tablet, -1.5rem);
+    margin-bottom: var(--bike-margin-bottom-tablet, -4rem);
+    width: var(--bike-width-tablet, 55%);
+    height: var(--bike-height-tablet, 42%);
+    padding: var(--bike-padding-tablet, 1.5rem);
+  }
+}
+
+/* Desktop (md: 768px and up) */
+@media (min-width: 768px) {
+  .bikeImageLayer {
+    margin-left: var(--bike-margin-left-desktop, -2rem);
+    margin-bottom: var(--bike-margin-bottom-desktop, -5rem);
+    width: var(--bike-width-desktop, 45%);
+    height: var(--bike-height-desktop, 45%);
+    padding: var(--bike-padding-desktop, 2rem);
+  }
+}
+
+/* Large Desktop (lg: 1024px and up) */
+@media (min-width: 1024px) {
+  .bikeImageLayer {
+    margin-left: var(--bike-margin-left-lg, -2rem);
+    margin-bottom: var(--bike-margin-bottom-lg, -5rem);
+    width: var(--bike-width-lg, 45%);
+    height: var(--bike-height-lg, 45%);
+    padding: var(--bike-padding-lg, 2rem);
+  }
 }
 
 .bikeImageWrapper {
@@ -128,7 +164,7 @@
   height: 100%;
   width: 100%;
   flex-shrink: 0;
-  background-image: url("/robotron/silhouette.png");
+  background-image: url("/robotron/silhouette.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
