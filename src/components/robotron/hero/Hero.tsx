@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import styles from "./Hero.module.css";
+import "./BikePositionConfig.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
