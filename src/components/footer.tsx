@@ -106,7 +106,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="absolute bottom-5 left-0 right-0 z-10 w-full px-4 flex items-center justify-center translate-y-8 md:translate-y-0">
+      <div className="absolute bottom-5 left-0 right-0 z-10 flex w-full translate-y-8 items-center justify-center px-4 md:translate-y-0">
         <a href="https://gdscnits.in/" target="_blank" className="flex">
           <p className="text-center font-nyxerin text-[0.6rem] font-thin tracking-widest text-white sm:text-xs md:text-sm">
             Made in Collaboration with GDG Nit Silchar

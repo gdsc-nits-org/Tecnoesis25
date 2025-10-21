@@ -10,9 +10,9 @@ interface CustomButtonProps {
   fontSize?: number;
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({ 
-  text, 
-  onClick, 
+const CustomButton: React.FC<CustomButtonProps> = ({
+  text,
+  onClick,
   className = "",
   width = "auto",
   height = 60,
@@ -45,7 +45,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       <div
         className="absolute inset-0 transition-all duration-300"
         style={{
-          clipPath: "polygon(39.4% 14.8%, 42.5% 21.7%, 42.9% 21.7%, 49.9% 22.2%, 93.6% 22.2%, 93.6% 47.3%, 77.6% 85.3%, 60.5% 85.3%, 57.7% 78.7%, 57.5% 78.3%, 57.2% 78.3%, 49.9% 78.1%, 6.2% 78.1%, 6.2% 52.7%, 22.2% 14.8%, 39.4% 14.8%)",
+          clipPath:
+            "polygon(39.4% 14.8%, 42.5% 21.7%, 42.9% 21.7%, 49.9% 22.2%, 93.6% 22.2%, 93.6% 47.3%, 77.6% 85.3%, 60.5% 85.3%, 57.7% 78.7%, 57.5% 78.3%, 57.2% 78.3%, 49.9% 78.1%, 6.2% 78.1%, 6.2% 52.7%, 22.2% 14.8%, 39.4% 14.8%)",
         }}
       >
         {/* Background with blur effect */}
@@ -53,7 +54,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
           className="absolute inset-0"
           style={{
             backdropFilter: "blur(9.85px)",
-            backgroundColor: isHovered ? "rgba(202, 0, 3, 0.3)" : "rgba(202, 0, 3, 0.2)",
+            backgroundColor: isHovered
+              ? "rgba(202, 0, 3, 0.3)"
+              : "rgba(202, 0, 3, 0.2)",
           }}
         />
 
@@ -72,7 +75,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
           style={{
             background: "transparent",
             border: "4px solid #680002",
-            clipPath: "polygon(39.4% 14.8%, 42.5% 21.7%, 42.9% 21.7%, 49.9% 22.2%, 93.6% 22.2%, 93.6% 47.3%, 77.6% 85.3%, 60.5% 85.3%, 57.7% 78.7%, 57.5% 78.3%, 57.2% 78.3%, 49.9% 78.1%, 6.2% 78.1%, 6.2% 52.7%, 22.2% 14.8%, 39.4% 14.8%)",
+            clipPath:
+              "polygon(39.4% 14.8%, 42.5% 21.7%, 42.9% 21.7%, 49.9% 22.2%, 93.6% 22.2%, 93.6% 47.3%, 77.6% 85.3%, 60.5% 85.3%, 57.7% 78.7%, 57.5% 78.3%, 57.2% 78.3%, 49.9% 78.1%, 6.2% 78.1%, 6.2% 52.7%, 22.2% 14.8%, 39.4% 14.8%)",
           }}
         />
       </div>
@@ -85,8 +89,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
           left: "0",
           width: "100%",
           height: "100%",
-          clipPath: "polygon(3.8% 79.5%, 0% 79.5%, 0% 47.1%, 19.8% 0%, 33.5% 0%, 37.8% 9.5%, 20.2% 9.5%, 3.8% 48.3%)",
-          background: isHovered 
+          clipPath:
+            "polygon(3.8% 79.5%, 0% 79.5%, 0% 47.1%, 19.8% 0%, 33.5% 0%, 37.8% 9.5%, 20.2% 9.5%, 3.8% 48.3%)",
+          background: isHovered
             ? "linear-gradient(135deg, #ffffff 0%, #cccccc 50%, #ffffff 100%)"
             : "linear-gradient(135deg, #A50000 0%, #1a0000 50%, #A50000 100%)",
         }}
@@ -100,8 +105,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
           right: "0",
           width: "100%",
           height: "100%",
-          clipPath: "polygon(96.1% 20.4%, 100% 20.4%, 100% 52.8%, 80.1% 100%, 66.4% 100%, 62.1% 90.4%, 79.7% 90.4%, 96.1% 51.6%)",
-          background: isHovered 
+          clipPath:
+            "polygon(96.1% 20.4%, 100% 20.4%, 100% 52.8%, 80.1% 100%, 66.4% 100%, 62.1% 90.4%, 79.7% 90.4%, 96.1% 51.6%)",
+          background: isHovered
             ? "linear-gradient(135deg, #ffffff 0%, #cccccc 50%, #ffffff 100%)"
             : "linear-gradient(135deg, #A50000 0%, #1a0000 50%, #A50000 100%)",
         }}
@@ -115,7 +121,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
           left: "0",
           width: "22%",
           height: "10%",
-          clipPath: "polygon(0% 47.1%, 3.8% 48.9%, 20.3% 9.5%, 19.8% 0%, 0% 47.1%)",
+          clipPath:
+            "polygon(0% 47.1%, 3.8% 48.9%, 20.3% 9.5%, 19.8% 0%, 0% 47.1%)",
           background: "#570001",
           opacity: 0.7,
         }}
@@ -129,7 +136,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
           right: "0",
           width: "22%",
           height: "10%",
-          clipPath: "polygon(79.7% 90.4%, 80.1% 100%, 100% 52.9%, 95.9% 51.5%, 79.7% 90.4%)",
+          clipPath:
+            "polygon(79.7% 90.4%, 80.1% 100%, 100% 52.9%, 95.9% 51.5%, 79.7% 90.4%)",
           background: "#570001",
           opacity: 0.7,
         }}
@@ -137,7 +145,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 
       {/* Text */}
       <div
-        className="absolute inset-0 flex items-center justify-center transition-all duration-300 font-bankGothik whitespace-nowrap px-6 text-xs overflow-hidden "
+        className="absolute inset-0 flex items-center justify-center overflow-hidden whitespace-nowrap px-6 font-bankGothik text-xs transition-all duration-300 "
         style={{
           color: "white",
           fontWeight: "bold",

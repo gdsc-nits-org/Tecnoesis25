@@ -87,7 +87,7 @@
   justify-content: flex-start;
   pointer-events: none;
   will-change: transform, opacity;
-  
+
   /* Mobile (default) - Adjust these values */
   margin-left: var(--bike-margin-left-mobile, -1rem);
   margin-bottom: var(--bike-margin-bottom-mobile, -3rem);

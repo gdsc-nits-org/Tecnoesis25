@@ -6,7 +6,7 @@ import CustomButton from "../CustomButton";
 
 export default function Modules() {
   const isMobile = false; // You can implement proper mobile detection if needed
-  
+
   const gridStyle: React.CSSProperties = {
     backgroundColor: "#070707",
     backgroundImage:
@@ -32,7 +32,7 @@ export default function Modules() {
           alt="Left squares"
           width={720}
           height={720}
-          className="pointer-events-none hidden select-none opacity-90 [mix-blend-mode:screen] md:block md:w-60 lg:w-[29rem] -rotate-90"
+          className="pointer-events-none hidden -rotate-90 select-none opacity-90 [mix-blend-mode:screen] md:block md:w-60 lg:w-[29rem]"
           aria-hidden="true"
         />
 
@@ -263,7 +263,6 @@ export default function Modules() {
                 />
               </g>
             </g>
-
           </svg>
 
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">

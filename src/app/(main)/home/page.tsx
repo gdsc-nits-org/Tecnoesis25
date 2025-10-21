@@ -13,17 +13,18 @@ const PreviousSponsors = dynamic(
   { ssr: false },
 );
 const Footer = dynamic(() => import("~/components/footer"), { ssr: false });
-const Modules = dynamic(() => import("~/components/Home/Modules"), { ssr: false });
-
+const Modules = dynamic(() => import("~/components/Home/Modules"), {
+  ssr: false,
+});
 
 const Home = () => {
   useEffect(() => {
     // Scroll to top on page load/refresh
     window.scrollTo(0, 0);
-    
+
     // Disable scroll restoration
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
     }
   }, []);
 

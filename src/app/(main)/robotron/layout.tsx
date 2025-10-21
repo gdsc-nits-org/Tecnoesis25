@@ -16,14 +16,8 @@ export default function RobotronLayout({ children }: { children: ReactNode }) {
         as="image"
         type="image/webp"
       />
-      <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-      />
-      <link
-        rel="dns-prefetch"
-        href="https://images.unsplash.com"
-      />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="dns-prefetch" href="https://images.unsplash.com" />
       {children}
     </>
   );

@@ -53,7 +53,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="h-screen w-screen bg-black cursor-theme-landing">
+    <div className="cursor-theme-landing h-screen w-screen bg-black">
       {showBottomElements && (
         <div
           className={`duration-800 transition-opacity ${fadeOutUI ? "opacity-0" : "opacity-100"}`}

@@ -3,6 +3,7 @@
 ## Quick Start
 
 To adjust the bike position, edit this file:
+
 ```
 src/components/robotron/hero/BikePositionConfig.css
 ```
@@ -10,14 +11,15 @@ src/components/robotron/hero/BikePositionConfig.css
 ## How to Move the Bike
 
 ### 📱 **Mobile (Phones)**
+
 Edit these variables in `BikePositionConfig.css`:
 
 ```css
 /* Move bike DOWN on mobile */
---bike-margin-bottom-mobile: 0rem;  /* or 1rem, 2rem */
+--bike-margin-bottom-mobile: 0rem; /* or 1rem, 2rem */
 
 /* Move bike UP on mobile */
---bike-margin-bottom-mobile: -6rem;  /* or -7rem, -8rem */
+--bike-margin-bottom-mobile: -6rem; /* or -7rem, -8rem */
 
 /* Move bike RIGHT */
 --bike-margin-left-mobile: 2rem;
@@ -27,21 +29,23 @@ Edit these variables in `BikePositionConfig.css`:
 ```
 
 ### 📱 **Tablet (640px - 767px)**
+
 ```css
 /* Move bike DOWN on tablet */
---bike-margin-bottom-tablet: -1rem;  /* or 0rem, 1rem */
+--bike-margin-bottom-tablet: -1rem; /* or 0rem, 1rem */
 
 /* Move bike UP on tablet */
---bike-margin-bottom-tablet: -6rem;  /* or -7rem, -8rem */
+--bike-margin-bottom-tablet: -6rem; /* or -7rem, -8rem */
 ```
 
 ### 💻 **Desktop (768px+)**
+
 ```css
 /* Move bike DOWN on desktop */
---bike-margin-bottom-desktop: -2rem;  /* or 0rem, 1rem */
+--bike-margin-bottom-desktop: -2rem; /* or 0rem, 1rem */
 
 /* Move bike UP on desktop */
---bike-margin-bottom-desktop: -8rem;  /* or -9rem, -10rem */
+--bike-margin-bottom-desktop: -8rem; /* or -9rem, -10rem */
 ```
 
 ---
@@ -49,38 +53,42 @@ Edit these variables in `BikePositionConfig.css`:
 ## Common Adjustments
 
 ### Example 1: Move bike DOWN by 2rem on all devices
+
 ```css
 :root {
-  --bike-margin-bottom-mobile: -1rem;   /* was -3rem */
-  --bike-margin-bottom-tablet: -2rem;   /* was -4rem */
-  --bike-margin-bottom-desktop: -3rem;  /* was -5rem */
-  --bike-margin-bottom-lg: -3rem;       /* was -5rem */
+  --bike-margin-bottom-mobile: -1rem; /* was -3rem */
+  --bike-margin-bottom-tablet: -2rem; /* was -4rem */
+  --bike-margin-bottom-desktop: -3rem; /* was -5rem */
+  --bike-margin-bottom-lg: -3rem; /* was -5rem */
 }
 ```
 
 ### Example 2: Move bike UP by 2rem on mobile only
+
 ```css
 :root {
-  --bike-margin-bottom-mobile: -5rem;  /* was -3rem */
+  --bike-margin-bottom-mobile: -5rem; /* was -3rem */
   /* Leave others unchanged */
 }
 ```
 
 ### Example 3: Make bike bigger on mobile
+
 ```css
 :root {
-  --bike-width-mobile: 85%;   /* was 70% */
-  --bike-height-mobile: 50%;  /* was 40% */
+  --bike-width-mobile: 85%; /* was 70% */
+  --bike-height-mobile: 50%; /* was 40% */
 }
 ```
 
 ### Example 4: Move bike to the right on all devices
+
 ```css
 :root {
-  --bike-margin-left-mobile: 1rem;    /* was -1rem */
-  --bike-margin-left-tablet: 2rem;    /* was -1.5rem */
-  --bike-margin-left-desktop: 3rem;   /* was -2rem */
-  --bike-margin-left-lg: 3rem;        /* was -2rem */
+  --bike-margin-left-mobile: 1rem; /* was -1rem */
+  --bike-margin-left-tablet: 2rem; /* was -1.5rem */
+  --bike-margin-left-desktop: 3rem; /* was -2rem */
+  --bike-margin-left-lg: 3rem; /* was -2rem */
 }
 ```
 
@@ -89,16 +97,19 @@ Edit these variables in `BikePositionConfig.css`:
 ## Understanding the Values
 
 ### Margin Bottom (Vertical Position)
+
 - **Negative values** (e.g., `-5rem`): Bike goes UP (overlaps more with content above)
 - **Zero** (`0rem`): Bike sits at the bottom edge
 - **Positive values** (e.g., `2rem`): Bike goes DOWN (more space from bottom)
 
 ### Margin Left (Horizontal Position)
+
 - **Negative values** (e.g., `-2rem`): Bike goes LEFT (off-screen or edge)
 - **Zero** (`0rem`): Bike aligns with left edge
 - **Positive values** (e.g., `2rem`): Bike goes RIGHT (more centered)
 
 ### Size (Width/Height)
+
 - **Smaller %** (e.g., `40%`): Smaller bike
 - **Larger %** (e.g., `80%`): Bigger bike
 
@@ -106,12 +117,12 @@ Edit these variables in `BikePositionConfig.css`:
 
 ## Screen Size Breakpoints
 
-| Device | Screen Width | Variable Suffix |
-|--------|--------------|-----------------|
-| Mobile | < 640px | `-mobile` |
-| Tablet | 640px - 767px | `-tablet` |
-| Desktop | 768px - 1023px | `-desktop` |
-| Large Desktop | 1024px+ | `-lg` |
+| Device        | Screen Width   | Variable Suffix |
+| ------------- | -------------- | --------------- |
+| Mobile        | < 640px        | `-mobile`       |
+| Tablet        | 640px - 767px  | `-tablet`       |
+| Desktop       | 768px - 1023px | `-desktop`      |
+| Large Desktop | 1024px+        | `-lg`           |
 
 ---
 
@@ -170,6 +181,7 @@ Edit these variables in `BikePositionConfig.css`:
 ## Need Help?
 
 If the bike isn't moving as expected:
+
 1. Check that you saved `BikePositionConfig.css`
 2. Hard refresh the browser (Ctrl+Shift+R or Cmd+Shift+R)
 3. Check browser console for CSS errors

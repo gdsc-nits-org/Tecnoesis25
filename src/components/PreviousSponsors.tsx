@@ -5,7 +5,7 @@ import MarqueeComponent from "./MarqueeComponent";
 
 const PreviousSponsors: React.FC = () => {
   return (
-    <div className="flex w-screen flex-col items-center overflow-hidden bg-black py-6 mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+    <div className="mb-8 flex w-screen flex-col items-center overflow-hidden bg-black py-6 sm:mb-10 md:mb-12 lg:mb-16">
       <div className="mb-8 flex w-full justify-center px-4 sm:mb-10 md:mb-12">
         <Image
           src="/past-sponsor-logos/PreviousSponsors.png"

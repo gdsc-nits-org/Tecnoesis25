@@ -41,24 +41,27 @@ export default function Home() {
   };
 
   return (
-    <main ref={mainRef} className="relative flex items-center justify-center h-screen overflow-hidden bg-black hide-scrollbar">
+    <main
+      ref={mainRef}
+      className="hide-scrollbar relative flex h-screen items-center justify-center overflow-hidden bg-black"
+    >
       {/* 🔹 Background GIF */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-70"
+        className="absolute inset-0 h-full w-full object-cover opacity-70"
       >
         <source src="/background.gif" type="video/mp4" />
       </video>
 
-      <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none">
-        <div className="text-center space-y-4">
-          <h1 className="text-white text-6xl md:text-7xl tracking-widest font-nyxerin">
+      <div className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center">
+        <div className="space-y-4 text-center">
+          <h1 className="font-nyxerin text-6xl tracking-widest text-white md:text-7xl">
             TECNOESIS
           </h1>
-          <h2 className="text-red-600 text-5xl md:text-6xl font-nyxerin tracking-widest">
+          <h2 className="font-nyxerin text-5xl tracking-widest text-red-600 md:text-6xl">
             PHOTO GALLERY
           </h2>
         </div>
@@ -76,7 +79,7 @@ export default function Home() {
           className="opacity-90"
         />
       </div>
-      <div className="absolute right-[7vw] scale-x-[-1] z-10">
+      <div className="absolute right-[7vw] z-10 scale-x-[-1]">
         <Image
           src="/hand.png"
           alt="Right robotic hand"
@@ -101,16 +104,14 @@ export default function Home() {
       <button
         onClick={scrollToNextSection}
         aria-label="Scroll to next section"
-        className="absolute left-1/2 bottom-16 -translate-x-1/2 z-50 text-white tracking-wider font-nyxerin"
+        className="absolute bottom-16 left-1/2 z-50 -translate-x-1/2 font-nyxerin tracking-wider text-white"
       >
-        <span className="bg-black/60 backdrop-blur-sm px-6 py-2 rounded-full cursor-pointer hover:opacity-90">
+        <span className="cursor-pointer rounded-full bg-black/60 px-6 py-2 backdrop-blur-sm hover:opacity-90">
           SCROLL UP
         </span>
       </button>
 
-      <div
-        className="absolute left-0 right-0 bottom-0 h-40 md:h-56 lg:h-72 bg-gradient-to-t from-black to-transparent pointer-events-none transition-opacity duration-700 ease-out z-30 "
-      />
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-30 h-40 bg-gradient-to-t from-black to-transparent transition-opacity duration-700 ease-out md:h-56 lg:h-72 " />
     </main>
   );
 }

@@ -17,61 +17,58 @@
   /* ========================================
      MOBILE (< 640px) - Phones
      ======================================== */
-  
+
   /* Vertical position - CHANGE THIS to move bike up/down on mobile */
-  --bike-margin-bottom-mobile: 6rem;  /* Move DOWN: use 0rem, 1rem, 2rem | Move UP: use -3rem, -4rem, -5rem */
-  
+  --bike-margin-bottom-mobile: 6rem; /* Move DOWN: use 0rem, 1rem, 2rem | Move UP: use -3rem, -4rem, -5rem */
+
   /* Horizontal position */
   --bike-margin-left-mobile: -1rem;
-  
+
   /* Size */
   --bike-width-mobile: 70%;
   --bike-height-mobile: 40%;
   --bike-padding-mobile: 1rem;
-  
-  
+
   /* ========================================
      TABLET (640px - 767px)
      ======================================== */
-  
+
   /* Vertical position - CHANGE THIS to move bike up/down on tablet */
-  --bike-margin-bottom-tablet: -6rem;  /* Move DOWN: use 0rem, 1rem, 2rem | Move UP: use -4rem, -5rem, -6rem */
-  
+  --bike-margin-bottom-tablet: -6rem; /* Move DOWN: use 0rem, 1rem, 2rem | Move UP: use -4rem, -5rem, -6rem */
+
   /* Horizontal position */
   --bike-margin-left-tablet: -1.5rem;
-  
+
   /* Size */
   --bike-width-tablet: 55%;
   --bike-height-tablet: 42%;
   --bike-padding-tablet: 1.5rem;
-  
-  
+
   /* ========================================
      DESKTOP (768px - 1023px)
      ======================================== */
-  
+
   /* Vertical position - CHANGE THIS to move bike up/down on desktop */
-  --bike-margin-bottom-desktop: -8rem;  /* Move DOWN: use -2rem, 0rem | Move UP: use -6rem, -7rem, -8rem */
-  
+  --bike-margin-bottom-desktop: -8rem; /* Move DOWN: use -2rem, 0rem | Move UP: use -6rem, -7rem, -8rem */
+
   /* Horizontal position */
   --bike-margin-left-desktop: -2rem;
-  
+
   /* Size */
   --bike-width-desktop: 45%;
   --bike-height-desktop: 45%;
   --bike-padding-desktop: 2rem;
-  
-  
+
   /* ========================================
      LARGE DESKTOP (1024px+)
      ======================================== */
-  
+
   /* Vertical position - CHANGE THIS to move bike up/down on large screens */
-  --bike-margin-bottom-lg: -5rem;  /* Move DOWN: use -2rem, 0rem | Move UP: use -6rem, -7rem, -8rem */
-  
+  --bike-margin-bottom-lg: -5rem; /* Move DOWN: use -2rem, 0rem | Move UP: use -6rem, -7rem, -8rem */
+
   /* Horizontal position */
   --bike-margin-left-lg: -2rem;
-  
+
   /* Size */
   --bike-width-lg: 45%;
   --bike-height-lg: 45%;

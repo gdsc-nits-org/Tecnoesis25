@@ -22,7 +22,7 @@ const Card2: React.FC<TeamCard2Props> = ({
   const [isHovered, setIsHovered] = React.useState(false);
 
   return (
-    <div 
+    <div
       className="TeamCard2 group relative z-0 h-[400px] w-[320px] scale-[.8] tablet:scale-[.9] laptop:scale-90 xL:scale-95 fourK:scale-100"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -72,8 +72,8 @@ const Card2: React.FC<TeamCard2Props> = ({
           minHeight: "250px",
           height: "250px",
           border: "1px solid #505050ff",
-          background: isHovered 
-            ? "linear-gradient(90deg, #ff0000 0%, #000000 100%)" 
+          background: isHovered
+            ? "linear-gradient(90deg, #ff0000 0%, #000000 100%)"
             : "linear-gradient(90deg, rgba(52, 52, 52, 1) 0%, #000000 100%)",
           clipPath:
             "polygon(0% 0%, 35% 0, 35% 42%, 37% 53%, 92% 53%, 100% 64%, 100% 82%, 92% 93%, 78% 93%, 67% 100%, 47% 100%, 41% 93%, 26% 93%, 20% 100%, 4% 100%, 0 93%)",
@@ -90,7 +90,7 @@ const Card2: React.FC<TeamCard2Props> = ({
             className="absolute left-[20px] top-[60px]"
             style={{ transform: "rotate(-90deg)" }}
           >
-            <div className="socialBar flex flex-row items-center gap-3 scale-110">
+            <div className="socialBar flex scale-110 flex-row items-center gap-3">
               <a
                 href={insta}
                 aria-label="Instagram"
