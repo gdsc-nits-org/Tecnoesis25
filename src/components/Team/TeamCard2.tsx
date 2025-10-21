@@ -19,8 +19,14 @@ const Card2: React.FC<TeamCard2Props> = ({
   facebook,
   linkedin,
 }) => {
+  const [isHovered, setIsHovered] = React.useState(false);
+
   return (
-    <div className="TeamCard2 relative z-0 h-[400px] w-[320px] scale-[.8] tablet:scale-[.9] laptop:scale-90 xL:scale-95 fourK:scale-100">
+    <div
+      className="TeamCard2 group relative z-0 h-[400px] w-[320px] scale-[.8] tablet:scale-[.9] laptop:scale-90 xL:scale-95 fourK:scale-100"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="relative h-full w-full px-6 py-8">
         <div className="border-1 flex h-full w-full flex-row items-center justify-center rounded-lg border-red-500">
           <Image
@@ -59,20 +65,23 @@ const Card2: React.FC<TeamCard2Props> = ({
       </div>
       {/* Bottom left corner */}
       <div
-        className="BottomLeft z-1 absolute bottom-0 left-0 flex flex-row text-[#ffffff]"
+        className="BottomLeft z-1 absolute bottom-0 left-0 flex flex-row text-[#ffffff] transition-all duration-500"
         style={{
           minWidth: "250px",
           width: "250px",
           minHeight: "250px",
           height: "250px",
           border: "1px solid #505050ff",
+          background: isHovered
+            ? "linear-gradient(90deg, #ff0000 0%, #000000 100%)"
+            : "linear-gradient(90deg, rgba(52, 52, 52, 1) 0%, #000000 100%)",
           clipPath:
             "polygon(0% 0%, 35% 0, 35% 42%, 37% 53%, 92% 53%, 100% 64%, 100% 82%, 92% 93%, 78% 93%, 67% 100%, 47% 100%, 41% 93%, 26% 93%, 20% 100%, 4% 100%, 0 93%)",
         }}
       >
         <div className="flex flex-row p-5 font-nyxerin">
           <span
-            className={`absolute bottom-[7rem] text-nowrap text-[1rem] ${designation === "Technical Head" ? "right-[7.5rem]" : "right-[10rem]"}`}
+            className={`absolute bottom-[7rem] text-nowrap text-[1.1rem] ${designation === "Technical Head" ? "right-[7.5rem]" : "right-[10rem]"}`}
             style={{ transform: "rotate(-90deg)" }}
           >
             {designation}
@@ -81,7 +90,7 @@ const Card2: React.FC<TeamCard2Props> = ({
             className="absolute left-[20px] top-[60px]"
             style={{ transform: "rotate(-90deg)" }}
           >
-            <div className="socialBar flex flex-row items-center gap-3">
+            <div className="socialBar flex scale-110 flex-row items-center gap-3">
               <a
                 href={insta}
                 aria-label="Instagram"

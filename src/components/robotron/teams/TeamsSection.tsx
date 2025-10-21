@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { TeamCard } from "./TeamCard";
 import { TeamCard2 } from "./TeamCard2";
 import TeamHeading from "./TeamHeading";
+import teamDataJson from "./teamData.json";
 
 // Dynamically import Slider to avoid SSR issues
 const Slider = dynamic(() => import("react-slick"), { ssr: false });
@@ -43,16 +44,8 @@ interface TeamData {
   };
 }
 
-// Default empty data to prevent undefined errors
-const defaultTeamData: TeamData = {
-  marketing: [],
-  robowar: [],
-  robosoccer: [],
-  robodrift: [],
-  algomaze: [],
-  leadership: [],
-  teamHeads: {},
-};
+// Load team data statically for better performance
+const teamDataStatic = teamDataJson as unknown as TeamData;
 
 // Carousel settings for mobile - Leadership section
 const leadershipCarouselSettings = {
@@ -69,29 +62,9 @@ const leadershipCarouselSettings = {
   autoplaySpeed: 2500,
 };
 
-export const TeamsSection = () => {
-  const [teamData, setTeamData] = useState<TeamData>(defaultTeamData);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Load data on client side only
-    const loadData = async () => {
-      try {
-        const data = await import("./teamData.json");
-        const rawData = data.default as unknown as TeamData;
-
-        setTeamData(rawData);
-      } catch (err) {
-        console.error("Failed to load team data:", err);
-        setError("Failed to load team data. Please try again later.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    void loadData();
-  }, []);
+export const TeamsSection = React.memo(() => {
+  // Use static data instead of async loading
+  const teamData = useMemo(() => teamDataStatic, []);
 
   // Shared slider settings
   const teamCardSettings = {
@@ -177,54 +150,11 @@ export const TeamsSection = () => {
     );
   };
 
-  if (isLoading) {
-    return (
-      <section
-        className="relative w-full bg-black py-12 text-white sm:py-20"
-        style={{
-          backgroundImage: "url(/robotron/team/teamsbackg.svg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-        }}
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-96 items-center justify-center">
-            <div className="animate-pulse text-center">
-              <div className="mb-4 h-8 w-64 rounded bg-gray-700"></div>
-              <div className="mx-auto h-4 w-48 rounded bg-gray-700"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section
-        className="relative w-full bg-black py-12 text-white sm:py-20"
-        style={{
-          backgroundImage: "url(/robotron/team/teamsbackg.svg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-        }}
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center font-orbitron text-red-400">{error}</div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section
-      className="relative w-full bg-black py-12 text-white sm:py-20"
+      className="robotron-teams-section relative w-full bg-black py-12 text-white sm:py-20"
       style={{
-        backgroundImage: "url(/robotron/team/teamsbackg.svg)",
+        backgroundImage: "url(/robotron/team/teamsbackg.min.svg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -337,6 +267,8 @@ export const TeamsSection = () => {
       </div>
     </section>
   );
-};
+});
+
+TeamsSection.displayName = "TeamsSection";
 
 export default TeamsSection;
