@@ -5,26 +5,28 @@ const Loader = () => {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        const duration = 5000; 
-        const interval = 50; 
+        const duration = 5000;
+        const interval = 50;
         const steps = duration / interval;
         const increment = 100 / steps;
 
-        const timer = setInterval(() => {
+        const progressTimer = setInterval(() => {
             setProgress((prev) => {
                 if (prev >= 100) {
-                    clearInterval(timer);
+                    clearInterval(progressTimer);
                     return 100;
                 }
                 return Math.min(prev + increment, 100);
             });
         }, interval);
 
-        return () => clearInterval(timer);
+        return () => {
+            clearInterval(progressTimer);
+        };
     }, []);
 
     return (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black px-4">
+        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black px-4">
             <style jsx>{`
                 @keyframes slideIn {
                     from {
@@ -38,7 +40,7 @@ const Loader = () => {
                     animation: slideIn 0.3s ease-out forwards;
                 }
             `}</style>
-            
+
             {/* Loading Container */}
             <div className="w-full max-w-2xl">
                 {/* Loading Text */}
@@ -54,27 +56,32 @@ const Loader = () => {
 
                     {/* Progress Bar Background */}
                     <div className="relative h-4 w-full overflow-hidden rounded bg-black/50">
-                        {/* Striped Progress Bar */}
+                        {/* Slanting Striped Progress Bar */}
                         <div
                             className="loading-bar h-full transition-all duration-300 ease-out"
                             style={{
                                 width: `${progress}%`,
-                                background: 'repeating-linear-gradient(45deg, #dc2626 0px, #dc2626 10px, #b91c1c 10px, #b91c1c 20px)',
-                                boxShadow: '0 0 10px rgba(220, 38, 38, 0.5), inset 0 0 10px rgba(220, 38, 38, 0.3)'
+                                background: 'repeating-linear-gradient(45deg, #dc2626 0px, #dc2626 15px, transparent 15px, transparent 25px)',
+                                boxShadow: '0 0 10px rgba(220, 38, 38, 0.5)'
                             }}
                         ></div>
                     </div>
+                </div>
+
+                {/* Percentage Display */}
+                <div className="mt-3 text-center font-nyxerin text-lg tracking-wider text-white md:text-xl">
+                    {Math.round(progress)}%
                 </div>
             </div>
 
             {/* Quote Section */}
             <div className="absolute bottom-20 w-full max-w-4xl px-8 text-center">
-                <p className="mb-4 font-bankGothik text-xs leading-relaxed tracking-wide text-white md:text-sm">
+                <p className="mb-4 font-nyxerin text-xs leading-relaxed tracking-wide text-left text-white">
                     &ldquo;The Thing About Perfection Is That It&apos;s Unknowable. It&apos;s Impossible, But It&apos;s Also Right<br className="hidden md:block" />
                     In Front Of Us All The Time&rdquo;
                 </p>
-                <p className="font-bankGothik text-xs tracking-[0.3em] text-purple-400 md:text-sm">
-                    KEVIN FLYNN
+                <p className="font-nyxerin text-right text-sm tracking-[0.3em] text-purple-400 md:text-lg">
+                    ~ KEVIN FLYNN
                 </p>
             </div>
         </div>

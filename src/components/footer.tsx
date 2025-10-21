@@ -46,7 +46,7 @@ export default function Footer() {
           <p className="font-bank text-sm font-semibold text-white sm:text-base md:text-lg laptop:text-[1.7rem]">
             CONTACT US
           </p>
-          <div className="flex items-center justify-center gap-x-6 sm:gap-x-8 md:gap-x-10">
+          <div className="flex items-center justify-center gap-x-6 sm:gap-x-8 md:gap-x-6">
             <a
               href="https://www.instagram.com/tecnoesis.nits/"
               target="_blank"
@@ -106,11 +106,18 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="absolute bottom-5 left-0 right-0 z-10 w-full px-4">
-        <a href="https://gdscnits.in/" target="_blank">
+      <div className="absolute bottom-5 left-0 right-0 z-10 w-full px-4 flex items-center justify-center translate-y-8 md:translate-y-0">
+        <a href="https://gdscnits.in/" target="_blank" className="flex">
           <p className="text-center font-nyxerin text-[0.6rem] font-thin tracking-widest text-white sm:text-xs md:text-sm">
             Made in Collaboration with GDG Nit Silchar
           </p>
+          <Image
+            src="/gdgc_logo_animated.gif"
+            alt="gdgc_logo"
+            height={60}
+            width={55}
+            className="-translate-y-5"
+          />
         </a>
       </div>
     </div>

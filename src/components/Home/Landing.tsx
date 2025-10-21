@@ -19,7 +19,7 @@ const Landing = () => {
 
   return (
     <div
-      className="relative flex h-screen w-screen cursor-default items-center justify-center bg-black overflow-hidden"
+      className="relative flex h-screen min-h-screen w-screen cursor-default items-center justify-center bg-black overflow-hidden"
       onClick={() => setIsActivated(true)}
     >
       {/* Animated SVG background as an <object> so SMIL/filter animations run */}
@@ -27,7 +27,8 @@ const Landing = () => {
         data="/landing/bg.svg"
         type="image/svg+xml"
         aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+        className="pointer-events-none absolute inset-0 h-full w-full min-h-screen object-cover"
+        style={{ minHeight: '100vh', minWidth: '100vw' }}
       />
       <Canvas
         // FIX: Conditionally set the DPR. Capped at 1.5 on mobile for performance.
