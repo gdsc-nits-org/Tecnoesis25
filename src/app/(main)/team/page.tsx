@@ -3,6 +3,7 @@ import { useState } from "react";
 import TeamCard1 from "~/components/Team/TeamCard1";
 import TeamCard2 from "~/components/Team/TeamCard2";
 import Teamdata from "../../../../data/tech.json";
+import CoreData from "../../../../data/core.json";
 
 interface TeamMember {
   name: string;
@@ -17,6 +18,17 @@ const Team = () => {
   const TechLead = Teamdata.techLead as TeamMember[];
   const Head = Teamdata.heads as TeamMember[];
   const CoreTeam = Teamdata.members as TeamMember[];
+
+  // Dynamically get all core teams from core.json
+  const coreTeams = Object.entries(CoreData).map(([key, value]) => ({
+    key,
+    members: value as TeamMember[],
+    displayName: key
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" "),
+  }));
+
   const [selectedTeam, setSelectedTeam] = useState<string | null>("Tech Team");
   const handleTeamClick = (team: string) => {
     setSelectedTeam(team);
@@ -56,7 +68,7 @@ const Team = () => {
             onClick={() => {
               handleTeamClick("Tech Team");
             }}
-            className={`relative inline-block px-2 py-1 text-[10px] font-extrabold tracking-widest shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl ${selectedTeam === "Tech Team" ? "border-2 border-[#6B5DD3] text-white shadow-[0_0_20px_rgba(107,93,211,0.6)]" : "border border-slate-800 text-slate-900 shadow-violet-500/14 hover:shadow-violet-400/16"}`}
+            className={`relative inline-block px-2 py-1 text-[10px] font-extrabold tracking-widest shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl ${selectedTeam === "Tech Team" ? "border-2 border-[#6B5DD3] text-white shadow-[0_0_20px_rgba(107,93,211,0.6)]" : "shadow-violet-500/14 hover:shadow-violet-400/16 border border-slate-800 text-slate-900"}`}
           >
             <span
               style={{
@@ -110,7 +122,7 @@ const Team = () => {
                 selectedTeam === "Other Teams" ? "#1a0b3e" : "#cfcdffff",
               overflow: "visible",
             }}
-            className={`relative inline-block px-2 py-1 text-[10px] font-extrabold tracking-widest shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl ${selectedTeam === "Other Teams" ? "border-2 border-[#6B5DD3] text-white shadow-[0_0_20px_rgba(107,93,211,0.6)]" : "border border-slate-800 text-slate-900 shadow-violet-500/14 hover:shadow-violet-400/16"}`}
+            className={`relative inline-block px-2 py-1 text-[10px] font-extrabold tracking-widest shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl ${selectedTeam === "Other Teams" ? "border-2 border-[#6B5DD3] text-white shadow-[0_0_20px_rgba(107,93,211,0.6)]" : "shadow-violet-500/14 hover:shadow-violet-400/16 border border-slate-800 text-slate-900"}`}
             onClick={() => {
               handleTeamClick("Other Teams");
             }}
@@ -183,7 +195,11 @@ const Team = () => {
               <div className="flex flex-col gap-12">
                 {/* Web CoHeads and UI/UX CoHeads */}
                 <div className="flex flex-row flex-wrap justify-center gap-2 mobile:gap-4 tablet:gap-6 laptop:gap-8 xL:gap-10">
-                  {CoreTeam.filter(member => member.designation === "Web CoHead" || member.designation === "UI/Ux CoHead").map((member, index) => (
+                  {CoreTeam.filter(
+                    (member) =>
+                      member.designation === "Web CoHead" ||
+                      member.designation === "UI/Ux CoHead",
+                  ).map((member, index) => (
                     <TeamCard1
                       key={index}
                       photoUrl={member.photoUrl}
@@ -195,7 +211,9 @@ const Team = () => {
 
                 {/* Web Developers */}
                 <div className="flex flex-row flex-wrap justify-center gap-2 mobile:gap-4 tablet:gap-6 laptop:gap-8 xL:gap-10">
-                  {CoreTeam.filter(member => member.designation === "Web Developer").map((member, index) => (
+                  {CoreTeam.filter(
+                    (member) => member.designation === "Web Developer",
+                  ).map((member, index) => (
                     <TeamCard1
                       key={index}
                       photoUrl={member.photoUrl}
@@ -210,12 +228,28 @@ const Team = () => {
         )}
 
         {selectedTeam === "Other Teams" && (
-          <div className="flex flex-col gap-6">
-            <div className="flex min-h-[400px] items-center justify-center">
-              <p className="text-2xl text-gray-400">
-                Other Teams Coming Soon...
-              </p>
-            </div>
+          <div className="flex flex-col gap-16">
+            {/* Dynamically render all teams from core.json */}
+            {coreTeams.map((team) => (
+              <div key={team.key} className="flex flex-col gap-6">
+                {/* Team Section Title */}
+                <p className="text-center font-nyxerin text-3xl uppercase">
+                  {team.displayName}
+                </p>
+                {team.members.length > 0 && (
+                  <div className="flex flex-wrap items-center justify-center gap-4 tablet:gap-8 lg:gap-20">
+                    {team.members.map((member, index) => (
+                      <TeamCard1
+                        key={index}
+                        photoUrl={member.photoUrl}
+                        name={member.name}
+                        designation={member.designation}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         )}
       </div>

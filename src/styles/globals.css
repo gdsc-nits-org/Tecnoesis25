@@ -2,11 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @font-face {
-  font-family: 'nyxerin';
-  src: url('/nyxerin.otf') format('opentype');
+  font-family: "nyxerin";
+  src: url("/nyxerin.otf") format("opentype");
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
@@ -14,7 +12,14 @@
 
 /* helper class to use anywhere */
 .font-nyxerin {
-  font-family: 'nyxerin', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family:
+    "nyxerin",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
 }
 
 /* Import slick carousel styles */
@@ -260,7 +265,6 @@
 }
 
 @keyframes tronGlow {
-
   0%,
   100% {
     box-shadow:
@@ -556,4 +560,33 @@
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+}
+
+/* Home - Modules Animations */
+
+@keyframes rotateClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateAntiClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+#rotating-path {
+  transform-origin: center;
+
+  animation: rotateClockwise 20s linear infinite;
+}
+#rotating-path-acw {
+  transform-origin: center;
+  animation: rotateAntiClockwise 20s linear infinite;
 }

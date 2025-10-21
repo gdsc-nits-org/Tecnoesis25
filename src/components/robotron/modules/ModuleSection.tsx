@@ -77,7 +77,13 @@ const ModuleSection = React.memo(() => {
               <div className={styles.buttonGroup}>
                 <Link href={pair.data.register} className={styles.buttonLink}>
                   <button className={styles.button}>
-                    <Image src={pair.button} alt="" width={200} height={50} aria-hidden="true" />
+                    <Image
+                      src={pair.button}
+                      alt=""
+                      width={200}
+                      height={50}
+                      aria-hidden="true"
+                    />
                     <span className={styles.buttonText}>REGISTER</span>
                   </button>
                 </Link>

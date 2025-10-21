@@ -15,14 +15,9 @@ const ModuleHeading: React.FC<ModuleHeadingProps> = ({
   className = "",
   bgImage = "/robotron/modules/moduleheadingbg.min.svg",
 }) => {
-  
-
-
-
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <div className={styles.container}>
-        
         <Image
           src={bgImage}
           alt=""
