@@ -137,9 +137,9 @@ export default function PhotoGallery() {
           <Link href="/gallery" aria-label="View photo gallery">
             <CustomButton
               text="View Gallery"
-              width={isMobile ? 140 : 200}
-              height={isMobile ? 40 : 100}
-              fontSize={isMobile ? 14 : 16}
+              width={isMobile ? 180 : 200}
+              height={isMobile ? 55 : 100}
+              fontSize={isMobile ? 16 : 16}
             />
           </Link>
         </motion.div>
