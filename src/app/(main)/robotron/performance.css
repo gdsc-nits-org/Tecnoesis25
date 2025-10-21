@@ -1,0 +1,117 @@
+/* Performance optimizations for Robotron route */
+
+/* GPU acceleration for animated elements */
+.robotron-animated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Contain layout for sections */
+.robotron-section {
+  contain: layout style paint;
+  content-visibility: auto;
+}
+
+/* Optimize images */
+.robotron-image {
+  content-visibility: auto;
+  contain-intrinsic-size: 500px 500px;
+}
+
+/* Reduce paint areas */
+.robotron-card {
+  contain: layout style;
+  will-change: transform;
+}
+
+/* Optimize scrolling */
+.robotron-scroll-container {
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent layout shifts */
+.robotron-skeleton {
+  min-height: 100vh;
+  contain: strict;
+}
+
+/* Optimize text rendering */
+.robotron-text {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reduce repaints for fixed elements */
+.robotron-fixed {
+  position: fixed;
+  will-change: transform;
+  transform: translateZ(0);
+  contain: layout style paint;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hardware acceleration for carousels */
+.slick-slider {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.slick-track {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Optimize WebGL canvas */
+canvas {
+  will-change: contents;
+  contain: strict;
+}
+
+/* Ensure custom cursor is visible on all sections */
+.custom-cursor {
+  z-index: 99999 !important;
+  opacity: 1 !important;
+}
+
+/* Hide native cursor on desktop, show custom cursor */
+@media (min-width: 768px) {
+  body,
+  body *,
+  .robotron-teams-section,
+  .robotron-teams-section * {
+    cursor: none !important;
+  }
+}
+
+/* Show native cursor on mobile only */
+@media (max-width: 767.98px) {
+  body,
+  body *,
+  .robotron-teams-section,
+  .robotron-teams-section * {
+    cursor: auto !important;
+  }
+}
+
+/* Ensure custom cursor elements are visible */
+.cursor-ring,
+.cursor-dot,
+.cursor-arc {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
