@@ -1,21 +1,25 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
 import RegisterState1 from '../../public/RegisterState1.svg';
 import arrowRight from '../../public/about/arrowR.png'
 
 const Registration = () => {
   const fieldsWithEdit = ["member1", "member2", "member3"];
+  const router = useRouter();
+
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-grid-pattern">
       <div className="absolute inset-0 z-0 fade-mask" />
 
       {/* Register Button Top Right */}
-      <button className="absolute top-6 right-6 z-50">
+      <button className="absolute top-6 right-6 z-50"
+        onClick={() => router.push('/teamDetails')}
+      >
         <Image src={RegisterState1} alt="Register" width={250} height={80} />
       </button>
 
-      {/* Content */}
       <div className="relative z-10 flex flex-col justify-center items-center h-full text-white space-y-4">
         <h1 className="text-6xl font-bankGothik uppercase tracking-widest font-weight: 700">
           Registration Form
@@ -24,9 +28,12 @@ const Registration = () => {
           Event : <span className="text-red-600">ROBOTRON</span>
         </h2>
 
-        {/* Your form fields here */}
-        <form className="space-y-6">
-          {/* Input group helper function style */}
+        <form className="space-y-6"
+          onSubmit={(e) => {
+            e.preventDefault(); 
+            router.push('/teamDetails'); 
+          }}
+        >
           {[
             { label: "Team Name", name: "teamName", type: "text" },
             { label: "Team Leader", name: "teamLeader", type: "text" },
@@ -37,7 +44,6 @@ const Registration = () => {
             { label: "Member 3", name: "member3", type: "text" },
           ].map(({ label, name, type }) => (
             <div key={name} className="flex items-center space-x-2 relative">
-              {/* Label */}
               <label
                 htmlFor={name}
                 className="bg-[#8B75D980] px-6 py-3 uppercase text-md tracking-wide font-semibold flex-shrink-0 w-60 font-bankGothik text-center"
@@ -45,7 +51,6 @@ const Registration = () => {
                 {label}
               </label>
 
-              {/* Arrow - absolutely positioned */}
               <div className="absolute left-[calc(14.35rem)] top-1/2 transform -translate-y-1/2 pointer-events-none">
                 <Image src={arrowRight} alt="Right Arrow" width={15} height={15} />
               </div>
