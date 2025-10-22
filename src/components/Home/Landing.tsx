@@ -19,10 +19,17 @@ const Landing = () => {
 
   return (
     <div
-      className="flex h-screen w-screen cursor-default items-center justify-center bg-black bg-cover bg-center"
-      style={{ backgroundImage: "url('/landing/bg.png')" }}
+      className="relative flex h-screen min-h-screen w-screen cursor-default items-center justify-center overflow-hidden bg-black"
       onClick={() => setIsActivated(true)}
     >
+      {/* Animated SVG background as an <object> so SMIL/filter animations run */}
+      <object
+        data="/landing/bg.svg"
+        type="image/svg+xml"
+        aria-hidden
+        className="pointer-events-none absolute inset-0 h-full min-h-screen w-full object-cover"
+        style={{ minHeight: "100vh", minWidth: "100vw" }}
+      />
       <Canvas
         // FIX: Conditionally set the DPR. Capped at 1.5 on mobile for performance.
         camera={{ position: [0, 0, 100], fov: 50 }}
@@ -31,7 +38,13 @@ const Landing = () => {
         <ambientLight intensity={1.2} />
         <directionalLight position={[2, 2, 2]} intensity={1.5} />
         <Suspense fallback={null}>
-          {isMobile?<SolidModel/>:isActivated ? <ParticleModel /> : <SolidModel />}
+          {isMobile ? (
+            <SolidModel />
+          ) : isActivated ? (
+            <ParticleModel />
+          ) : (
+            <SolidModel />
+          )}
         </Suspense>
       </Canvas>
     </div>

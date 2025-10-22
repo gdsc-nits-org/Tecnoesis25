@@ -5,6 +5,7 @@
 import { useState, useRef, MouseEvent, TouchEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import CustomButton from "./CustomButton";
 import { motion, Transition } from "framer-motion";
 import { useMediaQuery } from "usehooks-ts";
 
@@ -133,26 +134,15 @@ export default function PhotoGallery() {
           transition={springTransition}
           variants={buttonVariants}
         >
-          {/* add the link to gallery page here  */}
-          <Link
-            href="/gallery"
-            className="absolute inset-0 z-10"
-            aria-label="View photo gallery"
-          />
-          <Image
-            src="/view1.png"
-            alt="View details background"
-            fill
-            className="object-cover transition-opacity duration-300 group-hover:opacity-0"
-          />
-          <Image
-            src="/view2.png"
-            alt="View details background hovered"
-            fill
-            className="object-cover opacity-0 transition-all duration-300 group-hover:scale-[1.1] group-hover:opacity-100"
-          />
+          <Link href="/gallery" aria-label="View photo gallery">
+            <CustomButton
+              text="View Gallery"
+              width={isMobile ? 180 : 200}
+              height={isMobile ? 55 : 100}
+              fontSize={isMobile ? 16 : 16}
+            />
+          </Link>
         </motion.div>
-
         <motion.div
           className="pointer-events-none absolute left-1/2 top-1/2 z-10 h-3/4 max-h-[500px] w-3/4 max-w-[500px] -translate-x-1/2 -translate-y-1/2 laptop:max-h-[600px] laptop:max-w-[600px]"
           initial={false}

@@ -4,10 +4,13 @@ import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-// import StyledStarsCanvas from '../Stars';
 import styles from "./Hero.module.css";
+import "./BikePositionConfig.css";
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Memoized motion components for better performance
+const MotionDiv = React.memo(motion.div);
 
 const Hero = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -22,7 +25,7 @@ const Hero = () => {
     gsap.set(robotronChars, { opacity: 1, y: 0 });
 
     // ROBOTRON starts visible, fades out on scroll - optimized with force3D
-    gsap.to(robotronChars, {
+    const scrollAnimation = gsap.to(robotronChars, {
       opacity: 0,
       y: 100,
       stagger: 0.05,
@@ -31,12 +34,14 @@ const Hero = () => {
         trigger: el,
         start: "top top",
         end: "top top-=30%",
-        scrub: 1, // Added smoothing
+        scrub: 1,
+        invalidateOnRefresh: false, // Performance optimization
       },
     });
 
     // Cleanup
     return () => {
+      scrollAnimation.kill();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
@@ -55,7 +60,7 @@ const Hero = () => {
 
         {/* Background Layer 2 - Moving Left (Light Blue - Middle) - Slower - Seamless Loop */}
         <div className={styles.bgLayer2Container}>
-          <motion.div
+          <MotionDiv
             className={styles.bgLayer2}
             animate={{
               x: ["0%", "-100%"],
@@ -68,7 +73,7 @@ const Hero = () => {
             }}
             style={{ willChange: "transform" }}
           />
-          <motion.div
+          <MotionDiv
             className={styles.bgLayer2}
             animate={{
               x: ["0%", "-100%"],
@@ -85,7 +90,7 @@ const Hero = () => {
 
         {/* Background Layer 3 - Moving Left (No Blue Tint - Closest) - Faster */}
         <div className={styles.bgLayer3Container}>
-          <motion.div
+          <MotionDiv
             className={styles.bgLayer3}
             animate={{
               x: ["0%", "-100%"],
@@ -98,7 +103,7 @@ const Hero = () => {
             }}
             style={{ willChange: "transform" }}
           />
-          <motion.div
+          <MotionDiv
             className={styles.bgLayer3}
             animate={{
               x: ["0%", "-100%"],
@@ -115,7 +120,7 @@ const Hero = () => {
 
         {/* Tron Bike Image Layer */}
         <div className={styles.bikeImageLayer}>
-          <motion.div
+          <MotionDiv
             className={styles.bikeImageWrapper}
             initial={{ x: "-150%", scale: 0.5, opacity: 0 }}
             animate={{ x: 0, scale: 1, opacity: 1 }}
@@ -127,19 +132,20 @@ const Hero = () => {
             style={{ willChange: "transform, opacity" }}
           >
             <Image
-              src="/robotron/tron_ares_bike.png"
+              src="/robotron/tron_ares_bike.webp"
               alt="Tron Ares Bike"
               fill
               className={styles.bikeImage}
               priority
-              quality={90}
+              quality={85}
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
-          </motion.div>
+          </MotionDiv>
         </div>
 
         {/* Silhouette Layer - Top layer above everything */}
         <div className={styles.silhouetteContainer}>
-          <motion.div
+          <MotionDiv
             className={styles.silhouette}
             animate={{
               x: ["0%", "-100%"],
@@ -152,7 +158,7 @@ const Hero = () => {
             }}
             style={{ willChange: "transform" }}
           />
-          <motion.div
+          <MotionDiv
             className={styles.silhouette}
             animate={{
               x: ["0%", "-100%"],
@@ -197,4 +203,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default React.memo(Hero);

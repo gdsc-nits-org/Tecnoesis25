@@ -1,38 +1,40 @@
+import React from "react";
 import ModuleHeading from "./ModuleHeading";
 import styles from "./ModuleSection.module.css";
 import modulesData from "./modulesData.json";
 import Link from "next/link";
+import Image from "next/image";
 
-const ModuleSection = () => {
+const ModuleSection = React.memo(() => {
   const colorPairs = [
     {
-      frame: "/robotron/modules/framemodules.svg",
-      button: "/robotron/modules/redbutton.svg",
-      comp: "/robotron/modules/redcomp.svg",
+      frame: "/robotron/modules/framemodules.min.svg",
+      button: "/robotron/modules/redbutton.min.svg",
+      comp: "/robotron/modules/redcomp.min.svg",
       className: styles.redItem,
       data: modulesData["1"],
       headingColor: "#F50000",
     },
     {
-      frame: "/robotron/modules/blueframe.svg",
-      button: "/robotron/modules/bluebutton.svg",
-      comp: "/robotron/modules/bluecomp.svg",
+      frame: "/robotron/modules/blueframe.min.svg",
+      button: "/robotron/modules/bluebutton.min.svg",
+      comp: "/robotron/modules/bluecomp.min.svg",
       className: styles.blueItem,
       data: modulesData["2"],
       headingColor: "#00E5F5",
     },
     {
-      frame: "/robotron/modules/greenframe.svg",
-      button: "/robotron/modules/greenbutton.svg",
-      comp: "/robotron/modules/greencomp.svg",
+      frame: "/robotron/modules/greenframe.min.svg",
+      button: "/robotron/modules/greenbutton.min.svg",
+      comp: "/robotron/modules/greencomp.min.svg",
       className: "",
       data: modulesData["3"],
       headingColor: "#00F500",
     },
     {
-      frame: "/robotron/modules/yellowframe.svg",
-      button: "/robotron/modules/yellowbutton.svg",
-      comp: "/robotron/modules/yellowcomp.svg",
+      frame: "/robotron/modules/yellowframe.min.svg",
+      button: "/robotron/modules/yellowbutton.min.svg",
+      comp: "/robotron/modules/yellowcomp.min.svg",
       className: "",
       data: modulesData["4"],
       headingColor: "#F5D800",
@@ -46,15 +48,19 @@ const ModuleSection = () => {
         {colorPairs.map((pair, index) => (
           <div key={index} className={`${styles.itemGroup} ${pair.className}`}>
             <div className={styles.frameWrapper}>
-              <img
+              <Image
                 src={pair.frame}
                 alt=""
+                width={500}
+                height={300}
                 className={styles.frame}
                 aria-hidden="true"
               />
-              <img
+              <Image
                 src={pair.data.url}
                 alt={pair.data.head}
+                width={500}
+                height={300}
                 className={styles.moduleImage}
               />
               <div className={styles.hoverContent}>
@@ -71,15 +77,23 @@ const ModuleSection = () => {
               <div className={styles.buttonGroup}>
                 <Link href={pair.data.register} className={styles.buttonLink}>
                   <button className={styles.button}>
-                    <img src={pair.button} alt="" aria-hidden="true" />
+                    <Image
+                      src={pair.button}
+                      alt=""
+                      width={200}
+                      height={50}
+                      aria-hidden="true"
+                    />
                     <span className={styles.buttonText}>REGISTER</span>
                   </button>
                 </Link>
               </div>
               <div className={styles.compContainer}>
-                <img
+                <Image
                   src={pair.comp}
                   alt=""
+                  width={100}
+                  height={100}
                   className={styles.comp}
                   aria-hidden="true"
                 />
@@ -90,6 +104,8 @@ const ModuleSection = () => {
       </div>
     </>
   );
-};
+});
+
+ModuleSection.displayName = "ModuleSection";
 
 export default ModuleSection;

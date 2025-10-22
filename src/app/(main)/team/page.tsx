@@ -3,6 +3,7 @@ import { useState } from "react";
 import TeamCard1 from "~/components/Team/TeamCard1";
 import TeamCard2 from "~/components/Team/TeamCard2";
 import Teamdata from "../../../../data/tech.json";
+import CoreData from "../../../../data/core.json";
 
 interface TeamMember {
   name: string;
@@ -17,6 +18,17 @@ const Team = () => {
   const TechLead = Teamdata.techLead as TeamMember[];
   const Head = Teamdata.heads as TeamMember[];
   const CoreTeam = Teamdata.members as TeamMember[];
+
+  // Dynamically get all core teams from core.json
+  const coreTeams = Object.entries(CoreData).map(([key, value]) => ({
+    key,
+    members: value as TeamMember[],
+    displayName: key
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" "),
+  }));
+
   const [selectedTeam, setSelectedTeam] = useState<string | null>("Tech Team");
   const handleTeamClick = (team: string) => {
     setSelectedTeam(team);
@@ -29,7 +41,7 @@ const Team = () => {
         justify-center bg-[#000000] bg-red-grid bg-[length:100%_100%,100%_100%,50px_50px,50px_50px,50px_50px] bg-fixed bg-[position:0_0,0_0,25px_25px,0_0,0_0] pt-28 font-nyxerin text-xl text-[#ffffff] md:pt-32"
     >
       <h1 className="mb-6 text-2xl font-bold mobile:text-3xl tablet:text-4xl laptop:text-7xl fourK:text-7xl">
-        Team Page
+        Our  Team
       </h1>
       <div className="relative left-0 top-0 flex flex-row flex-nowrap items-center justify-center gap-2 md:gap-4">
         <div
@@ -39,7 +51,9 @@ const Team = () => {
             padding: "5px",
             borderRadius: "10px",
             background:
-              "radial-gradient(70% 50% at 50% 50%, rgba(139,117,217,0.32) 0%, rgba(139,117,217,0.14) 25%, rgba(0,0,0,0) 60%)",
+              selectedTeam === "Tech Team"
+                ? "transparent"
+                : "radial-gradient(70% 50% at 50% 50%, rgba(139,117,217,0.32) 0%, rgba(139,117,217,0.14) 25%, rgba(0,0,0,0) 60%)",
             overflow: "visible",
           }}
         >
@@ -47,13 +61,14 @@ const Team = () => {
             style={{
               clipPath:
                 "polygon(0% 70%, 10% 0%, 92% 0%, 100% 30%, 90% 100%, 8% 100%)",
-              backgroundColor: "#cfcdffff",
+              backgroundColor:
+                selectedTeam === "Tech Team" ? "#1a0b3e" : "#cfcdffff",
               overflow: "visible",
             }}
             onClick={() => {
               handleTeamClick("Tech Team");
             }}
-            className="shadow-violet-500/14 hover:shadow-violet-400/16 relative inline-block border border-slate-800 px-2 py-1 text-[10px] font-extrabold tracking-widest text-slate-900 shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl"
+            className={`relative inline-block px-2 py-1 text-[10px] font-extrabold tracking-widest shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl ${selectedTeam === "Tech Team" ? "border-2 border-[#6B5DD3] text-white shadow-[0_0_20px_rgba(107,93,211,0.6)]" : "shadow-violet-500/14 hover:shadow-violet-400/16 border border-slate-800 text-slate-900"}`}
           >
             <span
               style={{
@@ -65,9 +80,13 @@ const Team = () => {
                 minHeight: "80%",
                 height: "80%",
                 boxShadow:
-                  "inset 0 1px 4px rgba(255,255,255,0.45), 0 4px 12px rgba(139,117,217,0.14)",
+                  selectedTeam === "Tech Team"
+                    ? "inset 0 1px 4px rgba(107,93,211,0.3), 0 4px 12px rgba(107,93,211,0.25)"
+                    : "inset 0 1px 4px rgba(255,255,255,0.45), 0 4px 12px rgba(139,117,217,0.14)",
                 background:
-                  "linear-gradient(160deg, rgba(207,205,255,0.95) 0%, rgba(109,24,228,0.9) 100%)",
+                  selectedTeam === "Tech Team"
+                    ? "linear-gradient(160deg, rgba(26,11,62,0.7) 0%, rgba(107,93,211,0.5) 100%)"
+                    : "linear-gradient(160deg, rgba(207,205,255,0.95) 0%, rgba(109,24,228,0.9) 100%)",
                 clipPath:
                   "polygon(0% 70%, 10% 0%, 92% 0%, 100% 30%, 90% 100%, 8% 100%)",
                 filter: "blur(4px) saturate(1.03)",
@@ -89,7 +108,9 @@ const Team = () => {
             padding: "5px",
             borderRadius: "10px",
             background:
-              "radial-gradient(70% 50% at 50% 50%, rgba(139,117,217,0.32) 0%, rgba(139,117,217,0.14) 25%, rgba(0,0,0,0) 60%)",
+              selectedTeam === "Other Teams"
+                ? "transparent"
+                : "radial-gradient(70% 50% at 50% 50%, rgba(139,117,217,0.32) 0%, rgba(139,117,217,0.14) 25%, rgba(0,0,0,0) 60%)",
             overflow: "visible",
           }}
         >
@@ -97,10 +118,11 @@ const Team = () => {
             style={{
               clipPath:
                 "polygon(0% 70%, 10% 0%, 92% 0%, 100% 30%, 90% 100%, 8% 100%)",
-              backgroundColor: "#cfcdffff",
+              backgroundColor:
+                selectedTeam === "Other Teams" ? "#1a0b3e" : "#cfcdffff",
               overflow: "visible",
             }}
-            className="shadow-violet-500/14 hover:shadow-violet-400/16 relative inline-block border border-slate-800 px-2 py-1 text-[10px] font-extrabold tracking-widest text-slate-900 shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl"
+            className={`relative inline-block px-2 py-1 text-[10px] font-extrabold tracking-widest shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md active:scale-100 mobile:px-2 mobile:py-1 mobile:text-xs tablet:px-4 tablet:py-1.5 tablet:text-sm laptop:px-6 laptop:py-2 laptop:text-base xL:text-lg fourK:text-xl ${selectedTeam === "Other Teams" ? "border-2 border-[#6B5DD3] text-white shadow-[0_0_20px_rgba(107,93,211,0.6)]" : "shadow-violet-500/14 hover:shadow-violet-400/16 border border-slate-800 text-slate-900"}`}
             onClick={() => {
               handleTeamClick("Other Teams");
             }}
@@ -115,9 +137,13 @@ const Team = () => {
                 minHeight: "80%",
                 height: "80%",
                 boxShadow:
-                  "inset 0 1px 4px rgba(255,255,255,0.45), 0 4px 12px rgba(139,117,217,0.14)",
+                  selectedTeam === "Other Teams"
+                    ? "inset 0 1px 4px rgba(107,93,211,0.3), 0 4px 12px rgba(107,93,211,0.25)"
+                    : "inset 0 1px 4px rgba(255,255,255,0.45), 0 4px 12px rgba(139,117,217,0.14)",
                 background:
-                  "linear-gradient(160deg, rgba(207,205,255,0.95) 0%, rgba(109,24,228,0.9) 100%)",
+                  selectedTeam === "Other Teams"
+                    ? "linear-gradient(160deg, rgba(26,11,62,0.7) 0%, rgba(107,93,211,0.5) 100%)"
+                    : "linear-gradient(160deg, rgba(207,205,255,0.95) 0%, rgba(109,24,228,0.9) 100%)",
                 clipPath:
                   "polygon(0% 70%, 10% 0%, 92% 0%, 100% 30%, 90% 100%, 8% 100%)",
                 filter: "blur(4px) saturate(1.03)",
@@ -148,7 +174,7 @@ const Team = () => {
                 />
               </div>
               {/* Heads Section */}
-              <div className="flex flex-wrap items-center justify-center gap-4 tablet:gap-8 lg:gap-16">
+              <div className="flex flex-wrap items-center justify-center gap-4 tablet:gap-8 lg:gap-20">
                 {Head.map((head, index) => (
                   <TeamCard2
                     key={index}
@@ -164,29 +190,66 @@ const Team = () => {
             </div>
 
             {/* Core Team Section */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-12">
               <p className="text-center font-nyxerin text-3xl">JUNIOR TEAM</p>
-              <div className="flex flex-row flex-wrap justify-center gap-2 mobile:gap-4 tablet:gap-6 laptop:gap-8 xL:gap-10">
-                {CoreTeam.map((member, index) => (
-                  <TeamCard1
-                    key={index}
-                    photoUrl={member.photoUrl}
-                    name={member.name}
-                    designation={member.designation}
-                  />
-                ))}
+              <div className="flex flex-col gap-12">
+                {/* Web CoHeads and UI/UX CoHeads */}
+                <div className="flex flex-row flex-wrap justify-center gap-2 mobile:gap-4 tablet:gap-6 laptop:gap-8 xL:gap-10">
+                  {CoreTeam.filter(
+                    (member) =>
+                      member.designation === "Web CoHead" ||
+                      member.designation === "UI/Ux CoHead",
+                  ).map((member, index) => (
+                    <TeamCard1
+                      key={index}
+                      photoUrl={member.photoUrl}
+                      name={member.name}
+                      designation={member.designation}
+                    />
+                  ))}
+                </div>
+
+                {/* Web Developers */}
+                <div className="flex flex-row flex-wrap justify-center gap-2 mobile:gap-4 tablet:gap-6 laptop:gap-8 xL:gap-10">
+                  {CoreTeam.filter(
+                    (member) => member.designation === "Web Developer",
+                  ).map((member, index) => (
+                    <TeamCard1
+                      key={index}
+                      photoUrl={member.photoUrl}
+                      name={member.name}
+                      designation={member.designation}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         )}
 
         {selectedTeam === "Other Teams" && (
-          <div className="flex flex-col gap-6">
-            <div className="flex min-h-[400px] items-center justify-center">
-              <p className="text-2xl text-gray-400">
-                Other Teams Coming Soon...
-              </p>
-            </div>
+          <div className="flex flex-col gap-16">
+            {/* Dynamically render all teams from core.json */}
+            {coreTeams.map((team) => (
+              <div key={team.key} className="flex flex-col gap-6">
+                {/* Team Section Title */}
+                <p className="text-center font-nyxerin text-3xl uppercase">
+                  {team.displayName}
+                </p>
+                {team.members.length > 0 && (
+                  <div className="flex flex-wrap items-center justify-center gap-4 tablet:gap-8 lg:gap-20">
+                    {team.members.map((member, index) => (
+                      <TeamCard1
+                        key={index}
+                        photoUrl={member.photoUrl}
+                        name={member.name}
+                        designation={member.designation}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         )}
       </div>
