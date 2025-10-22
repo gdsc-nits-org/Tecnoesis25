@@ -414,16 +414,25 @@ export default function EventPage() {
                 if (el) sectionRefs.current[0] = el;
               }}
               onScrollClick={() => scrollToSection(1)}
-              />
+            />
             <div
               ref={(el) => {
                 if (el) sectionRefs.current[1] = el;
               }}
               className="relative h-screen w-full flex-shrink-0 snap-start bg-cover bg-center"
               style={{ backgroundImage: "url('/grid.png')" }}
-              >
+            >
               <div className="flex h-full w-full flex-col items-center justify-center space-y-4 p-4">
-              <p className="font-mono uppercase text-[0.8rem] tracking-wide text-white ml-3">All photos were taken by <span className="-ml-3"><img src="/Obiettivo.png" alt="obiettivo" className="inline-block h-12 w-auto" /></span></p>
+                <p className="ml-3 font-mono text-[0.8rem] uppercase tracking-wide text-white">
+                  All photos were taken by{" "}
+                  <span className="-ml-3">
+                    <img
+                      src="/Obiettivo.png"
+                      alt="obiettivo"
+                      className="inline-block h-12 w-auto"
+                    />
+                  </span>
+                </p>
                 {/* <h3 className="text-white font-nyxerin tracking-widest text-2xl">SELECT THE EVENT</h3> */}
                 <div
                   ref={mobileScrollRef}

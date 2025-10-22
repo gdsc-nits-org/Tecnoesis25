@@ -18,10 +18,10 @@ const Navbar = () => {
       setIsPageLoading(customEvent.detail.isLoading);
     };
 
-    window.addEventListener('pageLoading', handlePageLoading);
+    window.addEventListener("pageLoading", handlePageLoading);
 
     return () => {
-      window.removeEventListener('pageLoading', handlePageLoading);
+      window.removeEventListener("pageLoading", handlePageLoading);
     };
   }, []);
 

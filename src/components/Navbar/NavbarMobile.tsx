@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import Login from "../GoogleAuth";
 
 const NavDetails = [
   { name: "Home", link: "/home" },
@@ -96,7 +97,15 @@ export default function NavbarMobile() {
                 </button>
               </div>
 
-              <div className="flex flex-col items-center justify-center gap-12 text-lg  font-medium">
+              <div className="flex flex-col items-center justify-center gap-12 text-lg font-medium">
+                <motion.div
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="mb-8"
+                >
+                  <Login />
+                </motion.div>
                 {NavDetails.map((item, index) => {
                   const isActive = index === activeIndex;
 
