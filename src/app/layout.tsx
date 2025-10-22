@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Orbitron } from "next/font/google";
+import { Toaster } from "sonner";
 import CustomCursor from "~/components/CustomCursor";
 import ScrollbarColorController from "~/components/ScrollbarColorController";
 
@@ -49,6 +50,7 @@ export default function RootLayout({
         {/* Global UI helpers mounted once for entire app, including top-level pages and error boundaries */}
         <ScrollbarColorController />
         <CustomCursor />
+        <Toaster />
         {/* Global background music audio element to persist across routes */}
         <audio id="bgm-audio" loop preload="none" />
         {children}

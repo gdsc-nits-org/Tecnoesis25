@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 
 // Type definitions
 export type SizeType = "XS" | "S" | "M" | "L" | "XL" | "XXL";
@@ -38,35 +39,35 @@ function TshirtSectionMobile({
           <img
             src={imageSrc}
             alt={`${title} T-shirt`}
-            className="w-[320px] md:w-[400px] rounded-md shadow-lg"
+            className="w-[320px] rounded-md shadow-lg md:w-[400px]"
           />
           <img
             src="/merch/ConnectorPhone.svg"
             alt="Connector"
-            className="absolute top-[70%] left-[60%] w-[7.5rem] md:w-[80px]"
+            className="absolute left-[60%] top-[70%] w-[7.5rem] md:w-[80px]"
           />
         </div>
       </div>
 
       <div>
-        <div className="flex justify-center items-center">
+        <div className="flex items-center justify-center">
           <img
             src="/merch/Partition.svg"
             alt="Partition"
-            className="block w-[90%] md:hidden pt-5"
+            className="block w-[90%] pt-5 md:hidden"
           />
         </div>
 
-        <div className="flex flex-col justify-center items-center p-6 md:p-8 w-full max-w-lg mx-auto lg:max-w-none lg:mx-0">
-          <h2 className="text-[1.875rem] sm:text-2xl font-bold tracking-wider font-bankGothik">
+        <div className="mx-auto flex w-full max-w-lg flex-col items-center justify-center p-6 md:p-8 lg:mx-0 lg:max-w-none">
+          <h2 className="font-bankGothik text-[1.875rem] font-bold tracking-wider sm:text-2xl">
             {title}
           </h2>
-          <p className="text-[1.125rem] font-bankGothik text-justify">
+          <p className="text-justify font-bankGothik text-[1.125rem]">
             {description}
           </p>
         </div>
 
-        <div className="flex justify-center items-center">
+        <div className="flex items-center justify-center">
           <img
             src="/merch/Partition.svg"
             alt="Partition"
@@ -77,7 +78,7 @@ function TshirtSectionMobile({
         {/* SIZE SECTION */}
         <div className="flex flex-col items-center py-5">
           <div className="flex flex-col items-center">
-            <p className="text-[1.875rem] sm:text-2xl font-bold tracking-wider font-bankGothik">
+            <p className="font-bankGothik text-[1.875rem] font-bold tracking-wider sm:text-2xl">
               SIZE
             </p>
             <div className="flex gap-4">
@@ -87,7 +88,7 @@ function TshirtSectionMobile({
                   <button
                     key={s}
                     onClick={() => onSizeChange(s)}
-                    className="relative w-11 h-11 flex items-center justify-center"
+                    className="relative flex h-11 w-11 items-center justify-center"
                     style={{
                       clipPath:
                         "polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%)",
@@ -96,7 +97,7 @@ function TshirtSectionMobile({
                     }}
                   >
                     <div
-                      className="w-full h-full flex items-center justify-center text-sm font-bankGothik"
+                      className="flex h-full w-full items-center justify-center font-bankGothik text-sm"
                       style={{
                         clipPath:
                           "polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%)",
@@ -114,7 +115,7 @@ function TshirtSectionMobile({
           </div>
         </div>
 
-        <div className="flex justify-center items-center">
+        <div className="flex items-center justify-center">
           <img
             src="/merch/Partition.svg"
             alt="Partition"
@@ -124,7 +125,7 @@ function TshirtSectionMobile({
 
         {/* QUANTITY SECTION */}
         <div className="flex flex-col items-center pt-4">
-          <h2 className="text-[1.875rem] sm:text-2xl font-bold tracking-wider font-bankGothik">
+          <h2 className="font-bankGothik text-[1.875rem] font-bold tracking-wider sm:text-2xl">
             QUANTITY
           </h2>
           <div className="mt-3">
@@ -141,7 +142,7 @@ function TshirtSectionMobile({
               <button
                 type="button"
                 onClick={() => onQuantityChange(Math.max(0, quantity - 1))}
-                className="text-black text-3xl font-bold select-none w-10 h-10 flex items-center justify-center hover:scale-110 transition-transform"
+                className="flex h-10 w-10 select-none items-center justify-center text-3xl font-bold text-black transition-transform hover:scale-110"
               >
                 −
               </button>
@@ -150,12 +151,12 @@ function TshirtSectionMobile({
                 name="quantity"
                 readOnly
                 value={quantity}
-                className="text-black text-3xl font-bold text-center bg-transparent w-12 outline-none"
+                className="w-12 bg-transparent text-center text-3xl font-bold text-black outline-none"
               />
               <button
                 type="button"
                 onClick={() => onQuantityChange(Math.min(1, quantity + 1))}
-                className="text-black text-3xl font-bold select-none w-10 h-10 flex items-center justify-center hover:scale-110 transition-transform"
+                className="flex h-10 w-10 select-none items-center justify-center text-3xl font-bold text-black transition-transform hover:scale-110"
                 disabled={quantity >= 1}
                 style={{ opacity: quantity >= 1 ? 0.5 : 1 }}
               >
@@ -180,7 +181,7 @@ function TshirtSectionDesktop({
   onQuantityChange,
 }: TshirtSectionProps) {
   return (
-    <div className="grid grid-cols-2 gap-80 items-start mb-10">
+    <div className="mb-10 grid grid-cols-2 items-start gap-80">
       {/* LEFT SIDE - Image and Price */}
       <div className="flex flex-col items-center">
         <div className="relative flex items-center justify-center">
@@ -192,15 +193,15 @@ function TshirtSectionDesktop({
           <img
             src="/merch/ConnectorPhone.svg"
             alt="Connector"
-            className="absolute top-[70%] left-[60%] w-[100px]"
+            className="absolute left-[60%] top-[70%] w-[100px]"
           />
         </div>
         {/* Price Card */}
       </div>
 
       {/* RIGHT SIDE - Glassmorphism Panel */}
-      <div 
-        className="rounded-lg p-8 flex flex-col gap-6 max-w-sm"
+      <div
+        className="flex max-w-sm flex-col gap-6 rounded-lg p-8"
         style={{
           background: "rgba(138, 107, 228, 0.08)",
           border: "1px solid rgba(138, 107, 228, 0.25)",
@@ -210,41 +211,47 @@ function TshirtSectionDesktop({
       >
         {/* DETAILS Section */}
         <div>
-          <div className="flex justify-center items-center mb-4">
+          <div className="mb-4 flex items-center justify-center">
             <img
               src="/merch/Partition.svg"
               alt="Partition"
               className="w-full"
             />
           </div>
-          <h3 className="text-2xl font-bold font-bankGothik mb-4 uppercase tracking-wider" style={{ color: "#8A6BE4" }}>
+          <h3
+            className="mb-4 font-bankGothik text-2xl font-bold uppercase tracking-wider"
+            style={{ color: "#8A6BE4" }}
+          >
             DETAILS
           </h3>
-          <p className="text-sm font-bankGothik text-gray-200 leading-relaxed uppercase">
+          <p className="font-bankGothik text-sm uppercase leading-relaxed text-gray-200">
             {description}
           </p>
         </div>
 
         {/* SIZE Section */}
         <div>
-          <div className="flex justify-center items-center mb-4">
+          <div className="mb-4 flex items-center justify-center">
             <img
               src="/merch/Partition.svg"
               alt="Partition"
               className="w-full"
             />
           </div>
-          <h3 className="text-2xl font-bold font-bankGothik mb-4 uppercase tracking-wider" style={{ color: "#8A6BE4" }}>
+          <h3
+            className="mb-4 font-bankGothik text-2xl font-bold uppercase tracking-wider"
+            style={{ color: "#8A6BE4" }}
+          >
             SIZE
           </h3>
-          <div className="flex gap-4 flex-wrap justify-center">
+          <div className="flex flex-wrap justify-center gap-4">
             {(["XS", "S", "M", "L", "XL", "XXL"] as SizeType[]).map((s) => {
               const active = size === s;
               return (
                 <button
                   key={s}
                   onClick={() => onSizeChange(s)}
-                  className="relative w-11 h-11 flex items-center justify-center"
+                  className="relative flex h-11 w-11 items-center justify-center"
                   style={{
                     clipPath:
                       "polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%)",
@@ -253,7 +260,7 @@ function TshirtSectionDesktop({
                   }}
                 >
                   <div
-                    className="w-full h-full flex items-center justify-center text-sm font-bankGothik"
+                    className="flex h-full w-full items-center justify-center font-bankGothik text-sm"
                     style={{
                       clipPath:
                         "polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%)",
@@ -272,7 +279,10 @@ function TshirtSectionDesktop({
 
         {/* QUANTITY Section */}
         <div>
-          <h3 className="text-2xl font-bold font-bankGothik mb-4 uppercase tracking-wider" style={{ color: "#8A6BE4" }}>
+          <h3
+            className="mb-4 font-bankGothik text-2xl font-bold uppercase tracking-wider"
+            style={{ color: "#8A6BE4" }}
+          >
             QUANTITY
           </h3>
           <div
@@ -288,7 +298,7 @@ function TshirtSectionDesktop({
             <button
               type="button"
               onClick={() => onQuantityChange(Math.max(0, quantity - 1))}
-              className="text-black text-3xl font-bold select-none w-10 h-10 flex items-center justify-center hover:scale-110 transition-transform"
+              className="flex h-10 w-10 select-none items-center justify-center text-3xl font-bold text-black transition-transform hover:scale-110"
             >
               −
             </button>
@@ -297,12 +307,12 @@ function TshirtSectionDesktop({
               name="quantity"
               readOnly
               value={quantity}
-              className="text-black text-3xl font-bold text-center bg-transparent w-12 outline-none"
+              className="w-12 bg-transparent text-center text-3xl font-bold text-black outline-none"
             />
             <button
               type="button"
               onClick={() => onQuantityChange(Math.min(1, quantity + 1))}
-              className="text-black text-3xl font-bold select-none w-10 h-10 flex items-center justify-center hover:scale-110 transition-transform"
+              className="flex h-10 w-10 select-none items-center justify-center text-3xl font-bold text-black transition-transform hover:scale-110"
               disabled={quantity >= 1}
               style={{ opacity: quantity >= 1 ? 0.5 : 1 }}
             >
@@ -312,12 +322,8 @@ function TshirtSectionDesktop({
         </div>
 
         {/* Divider */}
-        <div className="flex justify-center items-center">
-          <img
-            src="/merch/Partition.svg"
-            alt="Partition"
-            className="w-full"
-          />
+        <div className="flex items-center justify-center">
+          <img src="/merch/Partition.svg" alt="Partition" className="w-full" />
         </div>
       </div>
     </div>
@@ -326,7 +332,10 @@ function TshirtSectionDesktop({
 
 // Main page component
 export default function TecnoTshirt() {
-  const [tecnoesis, setTecnoesis] = useState<TshirtState>({ size: null, quantity: 0 });
+  const [tecnoesis, setTecnoesis] = useState<TshirtState>({
+    size: null,
+    quantity: 0,
+  });
   const [spark, setSpark] = useState<TshirtState>({ size: null, quantity: 0 });
 
   const updateQuantity = (type: TshirtType, newQuantity: number) => {
@@ -352,43 +361,50 @@ export default function TecnoTshirt() {
 
     if (tecnoesis.quantity > 0) {
       if (!tecnoesis.size) {
-        alert("Please select a size for the Tecnoesis t-shirt");
+        toast.error("Please select a size for the Tecnoesis t-shirt");
         return;
       }
-      items.push({ type: 'Tecnoesis', size: tecnoesis.size, quantity: tecnoesis.quantity });
+      items.push({
+        type: "Tecnoesis",
+        size: tecnoesis.size,
+        quantity: tecnoesis.quantity,
+      });
     }
 
     if (spark.quantity > 0) {
       if (!spark.size) {
-        alert("Please select a size for the Spark t-shirt");
+        toast.error("Please select a size for the Spark t-shirt");
         return;
       }
-      items.push({ type: 'Spark', size: spark.size, quantity: spark.quantity });
+      items.push({ type: "Spark", size: spark.size, quantity: spark.quantity });
     }
 
     if (items.length === 0) {
-      alert("Please select at least one t-shirt");
+      toast.error("Please select at least one t-shirt");
       return;
     }
 
     console.log("Order:", items);
     // Here you would handle the order submission
-    alert(`Order placed successfully!\n${JSON.stringify(items, null, 2)}`);
+    toast.success(`Order placed successfully!\n${JSON.stringify(items, null, 2)}`);
   };
 
   return (
     <>
       {/* DESKTOP VIEW */}
-      <div className="hidden lg:flex flex-col min-h-screen w-full bg-black text-white pt-24 md:pt-32 lg:pt-40" style={{
-        backgroundImage: "url('/merch/merchbg.svg')",
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}>
+      <div
+        className="hidden min-h-screen w-full flex-col bg-black pt-24 text-white md:pt-32 lg:flex lg:pt-40"
+        style={{
+          backgroundImage: "url('/merch/merchbg.svg')",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         {/* TECNOESIS T-SHIRT SECTION */}
         <div className="px-10">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl lg:text-6xl font-bold tracking-wider font-bankGothik">
+          <div className="mb-12 text-center">
+            <h1 className="font-bankGothik text-5xl font-bold tracking-wider lg:text-6xl">
               TECNOESIS TSHIRT
             </h1>
           </div>
@@ -405,8 +421,8 @@ export default function TecnoTshirt() {
 
         {/* SPARK T-SHIRT SECTION */}
         <div className="px-10">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl lg:text-6xl font-bold tracking-wider font-bankGothik">
+          <div className="mb-12 text-center">
+            <h1 className="font-bankGothik text-5xl font-bold tracking-wider lg:text-6xl">
               SPARK TSHIRT
             </h1>
           </div>
@@ -422,11 +438,11 @@ export default function TecnoTshirt() {
         </div>
 
         {/* ORDER NOW BUTTON */}
-        <div className="flex justify-center items-center py-10">
+        <div className="flex items-center justify-center py-10">
           <button
             type="button"
             onClick={handleOrder}
-            className="text-black text-2xl font-bankGothik font-bold tracking-wide transition-transform active:scale-95 hover:scale-105"
+            className="font-bankGothik text-2xl font-bold tracking-wide text-black transition-transform hover:scale-105 active:scale-95"
             style={{
               backgroundColor: "#8A6BE4",
               clipPath:
@@ -441,10 +457,10 @@ export default function TecnoTshirt() {
       </div>
 
       {/* MOBILE VIEW */}
-      <div className="lg:hidden min-h-screen w-full bg-black text-white pt-24 md:pt-32">
+      <div className="min-h-screen w-full bg-black pt-24 text-white md:pt-32 lg:hidden">
         {/* TECNOESIS T-SHIRT SECTION */}
-        <div className="text-center mb-8 md:mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-wider font-bankGothik">
+        <div className="mb-8 text-center md:mb-12">
+          <h1 className="font-bankGothik text-4xl font-bold tracking-wider md:text-5xl">
             TECNOESIS TSHIRT
           </h1>
         </div>
@@ -459,8 +475,8 @@ export default function TecnoTshirt() {
         />
 
         {/* SPARK T-SHIRT SECTION */}
-        <div className="my-16 md:my-20 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-wider font-bankGothik">
+        <div className="my-16 text-center md:my-20">
+          <h1 className="font-bankGothik text-4xl font-bold tracking-wider md:text-5xl">
             SPARK TSHIRT
           </h1>
         </div>
@@ -475,11 +491,11 @@ export default function TecnoTshirt() {
         />
 
         {/* ORDER NOW BUTTON */}
-        <div className="flex justify-center items-center py-10">
+        <div className="flex items-center justify-center py-10">
           <button
             type="button"
             onClick={handleOrder}
-            className="text-black text-2xl font-bankGothik font-bold tracking-wide transition-transform active:scale-95 hover:scale-105"
+            className="font-bankGothik text-2xl font-bold tracking-wide text-black transition-transform hover:scale-105 active:scale-95"
             style={{
               backgroundColor: "#8A6BE4",
               clipPath:
