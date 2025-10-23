@@ -9,20 +9,18 @@ import Link from "next/link";
 import CustomButton from "~/components/CustomButton";
 import EventCard from "~/components/EventCard";
 
+export const runtime = "edge";
+
 interface Eventresponse {
   id: string;
   name: string;
   posterImage: string;
   maxTeamSize: number;
   minTeamSize: number;
-  attendanceIncentive: number;
-  registrationIncentive: number;
   prizeDescription: string;
   stagesDescription: string;
   description: string;
   venue: string;
-  lat: number;
-  lng: number;
   thirdPartyURL: string;
   registrationStartTime: string;
   registrationEndTime: string;

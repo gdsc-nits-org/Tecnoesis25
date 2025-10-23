@@ -5,20 +5,18 @@ import EventCard from "~/components/EventCard";
 import axios from "axios";
 import { env } from "~/env";
 
+export const runtime = "edge";
+
 interface Eventresponse {
   id: string;
   name: string;
   posterImage: string;
   maxTeamSize: number;
   minTeamSize: number;
-  attendanceIncentive: number;
-  registrationIncentive: number;
   prizeDescription: string;
   stagesDescription: string;
   description: string;
   venue: string;
-  lat: number;
-  lng: number;
   registrationStartTime: string;
   registrationEndTime: string;
   extraQuestions: string[];
