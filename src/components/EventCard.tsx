@@ -10,7 +10,7 @@ interface EventCardProps {
 
 function EventCard({ eventPoster, eventName }: EventCardProps) {
   return (
-    <div className="group relative mb-6 h-full">
+    <div className="group relative md:mb-6 h-full">
       <Image
         className="shadow-lgz-200 absolute left-1/2 top-28 sm:top-36 group-hover:z-20 w-44 sm:w-52 -translate-x-1/2 transform transition-all duration-500 group-hover:-translate-y-36"
         src={eventPoster}

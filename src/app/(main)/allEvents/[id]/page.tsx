@@ -70,8 +70,8 @@ function AllEventsPage({ params }: { params: EventParams }) {
   //   }, [params]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-10 overflow-hidden px-4 lg:px-20 pt-20">
-      <h1 className="text-white">{moduleName}</h1>
+    <div className="flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 lg:px-20 pt-24 sm:pt-32">
+      <h1 className="text-[#c00303] font-nyxerin text-4xl sm:text-5xl">{moduleName}</h1>
       <div className="flex flex-col flex-wrap items-center justify-evenly md:flex-row">
         <EventCard eventPoster="/eventCardDemoPhoto.png" eventName="Event 1"/>
         <EventCard eventPoster="/eventCardDemoPhoto.png" eventName="Event 2"/>

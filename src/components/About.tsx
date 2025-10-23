@@ -56,7 +56,7 @@ export default function About() {
                 {data[0]?.secondWord}
               </h1>
             </div>
-            <p className="font-bankGothik mx-auto px-4 pb-6 text-justify text-xs leading-relaxed text-white lg:px-8">
+            <p className="mx-auto px-4 pb-6 text-justify font-bankGothik text-xs leading-relaxed text-white lg:px-8">
               {data[0]?.description}
             </p>
           </div>
@@ -84,7 +84,7 @@ export default function About() {
                 {data[1]?.secondWord}
               </h1>
             </div>
-            <p className="font-bankGothik mx-auto px-4 pb-6 text-justify text-xs leading-relaxed text-white lg:px-8">
+            <p className="mx-auto px-4 pb-6 text-justify font-bankGothik text-xs leading-relaxed text-white lg:px-8">
               {data[1]?.description}
             </p>
           </div>
