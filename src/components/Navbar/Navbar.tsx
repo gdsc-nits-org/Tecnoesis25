@@ -10,6 +10,18 @@ const Navbar = () => {
 
   useEffect(() => {
     setIsMounted(true);
+
+    // Listen for page loading state changes
+    const handlePageLoading = (event: Event) => {
+      const customEvent = event as CustomEvent<{ isLoading: boolean }>;
+      setIsPageLoading(customEvent.detail.isLoading);
+    };
+
+    window.addEventListener("pageLoading", handlePageLoading);
+
+    return () => {
+      window.removeEventListener("pageLoading", handlePageLoading);
+    };
   }, []);
 
   if (!isMounted) {

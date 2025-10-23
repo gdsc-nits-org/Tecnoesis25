@@ -8,6 +8,16 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const [progress, setProgress] = useState(0);
   const pathname = usePathname();
 
+  // Dispatch event when loading state changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const event = new CustomEvent("pageLoading", {
+        detail: { isLoading: isLoading || !minTimeElapsed },
+      });
+      window.dispatchEvent(event);
+    }
+  }, [isLoading, minTimeElapsed]);
+
   useEffect(() => {
     setIsLoading(true);
     setMinTimeElapsed(false);
