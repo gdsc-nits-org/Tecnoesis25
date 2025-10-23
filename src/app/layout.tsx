@@ -13,6 +13,16 @@ const orbitron = Orbitron({
   variable: "--font-orbitron",
 });
 
+const toastOps = {
+  classNames: {
+    title: "text-md md:text-lg font-mono",
+    success: "toast-theme-blue",
+    info: "toast-theme-blue",
+    error: "toast-theme-red",
+    warning: "toast-theme-red",
+  },
+};
+
 export const metadata: Metadata = {
   title: "Tecnoesis 2025",
   description: "The Official Website of Tecnoesis 2025",
@@ -50,7 +60,11 @@ export default function RootLayout({
         {/* Global UI helpers mounted once for entire app, including top-level pages and error boundaries */}
         <ScrollbarColorController />
         <CustomCursor />
-        <Toaster />
+        <Toaster
+          toastOptions={toastOps}
+          visibleToasts={1}
+          position="bottom-center"
+        />
         {/* Global background music audio element to persist across routes */}
         <audio id="bgm-audio" loop preload="none" />
         {children}

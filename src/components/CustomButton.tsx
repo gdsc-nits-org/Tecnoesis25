@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 interface CustomButtonProps {
   text: string;
-  onClick?: () => void;
+  onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   width?: number | "auto";
   height?: number;
