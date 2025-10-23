@@ -6,9 +6,11 @@ import CustomButton from "./CustomButton";
 interface EventCardProps {
   eventPoster: string;
   eventName: string;
+  eventUrl?: string;
+  registrationUrl?: string;
 }
 
-function EventCard({ eventPoster, eventName }: EventCardProps) {
+function EventCard({ eventPoster, eventName, eventUrl, registrationUrl }: EventCardProps) {
   return (
     <div className="group relative md:mb-6 h-full">
       <Image
@@ -45,13 +47,13 @@ function EventCard({ eventPoster, eventName }: EventCardProps) {
       />
       <div className="z-30 hidden sm:flex flex-col items-center justify-center opacity-0 transition-all duration-500  group-hover:opacity-100">
         <h1 className="font-nyxerin text-white">{eventName}</h1>
-        <CustomButton text="Register" width={200} />
-        <CustomButton text="View Details" width={200} />
+        <CustomButton text="Register" width={200} href={registrationUrl} />
+        <CustomButton text="View Details" width={200} href={eventUrl} />
       </div>
       <div className="z-30 flex sm:hidden flex-col items-center justify-center opacity-0 transition-all duration-500  group-hover:opacity-100">
         <h1 className="font-nyxerin text-white">{eventName}</h1>
-        <CustomButton text="Register" width={160} />
-        <CustomButton text="View Details" width={160} />
+        <CustomButton text="Register" width={160} href={registrationUrl} />
+        <CustomButton text="View Details" width={160} href={eventUrl} />
       </div>
     </div>
   );
