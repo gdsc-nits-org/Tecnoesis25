@@ -6,7 +6,7 @@ interface TeamCardProps {
 }
 
 const TeamCard1 = ({ photoUrl, name, designation }: TeamCardProps) => {
-  const displayName = name.length > 15 ? `${name.slice(0, 12)}...` : name;
+  // const displayName = name.length > 15 ? `${name.slice(0, 12)}...` : name;
   return (
     <div className="relative flex flex-col items-center justify-center">
       <div className="relative h-[15.4rem] w-[15.4rem]">
@@ -69,7 +69,7 @@ const TeamCard1 = ({ photoUrl, name, designation }: TeamCardProps) => {
 
       {/* Name and designation */}
       <div className="flex flex-col text-nowrap text-center font-bankGothik text-[.9rem] text-white">
-        <h2>{displayName}</h2>
+        <h2>{name}</h2>
         <h3>{designation}</h3>
       </div>
     </div>
