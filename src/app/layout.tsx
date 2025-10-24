@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 
+
 export const metadata: Metadata = {
   title: "Tecnoesis 2025",
   description: "The Official Website of Tecnoesis 2025",

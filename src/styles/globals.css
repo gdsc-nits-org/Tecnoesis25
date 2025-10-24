@@ -2,7 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Google+Sans:wght@500&display=swap');
+
+
+@font-face {
+  font-family: 'Squarish Sans CT';
+  src: url('/fonts/SquarishSansCTRegular.woff') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Squarish Sans CT';
+  src: url('/fonts/SquarishSansCTRegular.woff2') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 
 .no-scrollbar::-webkit-scrollbar {

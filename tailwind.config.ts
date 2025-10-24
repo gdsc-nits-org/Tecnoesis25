@@ -7,6 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+        squarish: ['"Squarish Sans CT"', 'sans-serif'],
       },
       screens: {
         xs: "450px",
