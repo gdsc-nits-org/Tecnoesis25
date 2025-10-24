@@ -647,7 +647,7 @@
   border: 2px solid #ff4040;
   padding: 16px;
   animation: neon-red-glow 2s infinite alternate;
-}
+
 
 /* Hide scrollbar but keep scroll functionality */
 .scrollbar-hide::-webkit-scrollbar {
@@ -657,3 +657,4 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
