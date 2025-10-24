@@ -8,6 +8,7 @@ export default {
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
         nyxerin: ["Nyxerin", "sans-serif"],
+        squairsh:['"Squarish Sans CT"', 'sans-serif'],
         bankGothik: ["BankGothic", "sans-serif"],
         orbitron: ["Orbitron", "sans-serif"],
       },

@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @font-face {
+  font-family: 'Squarish Sans CT';
+  src: url('/fonts/SquarishSansCTRegular.woff') format('truetype');
+}
+
+@font-face {
   font-family: "nyxerin";
   src: url("/nyxerin.otf") format("opentype");
   font-style: normal;
@@ -647,6 +652,7 @@
   border: 2px solid #ff4040;
   padding: 16px;
   animation: neon-red-glow 2s infinite alternate;
+}
 
 
 /* Hide scrollbar but keep scroll functionality */
