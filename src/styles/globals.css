@@ -596,6 +596,7 @@
   animation: rotateAntiClockwise 20s linear infinite;
 }
 
+
 @keyframes neon-glow-blue {
   0% {
     box-shadow:
@@ -663,3 +664,27 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+
+.bg-grid-pattern {
+  background-image: url('/grid.png');
+  background-repeat: repeat;
+  background-size: auto;
+  background-position: center;
+}
+
+.fade-mask {
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 1) 100%);
+  width: 100%;
+  height: 100%;
+}
+@font-face {
+  font-family: "BankGothic";
+  src: url("/BankGothic Md BT.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
