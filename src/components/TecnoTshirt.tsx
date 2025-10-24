@@ -2,10 +2,29 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../app/utils/firebase";
+import Image from "next/image";
+import axios, { type AxiosError } from "axios";
+import { env } from "~/env";
 
-// Type definitions
 export type SizeType = "XS" | "S" | "M" | "L" | "XL" | "XXL";
-type TshirtType = "tecnoesis" | "spark";
+type TshirtType = "TECNOESIS" | "SPARK";
+
+interface ApiResponse {
+  success: boolean;
+  error?: {
+    message: string;
+  };
+  data?: {
+    orders: Array<{
+      id: string;
+      type: TshirtType;
+      size: SizeType;
+      quantity: number;
+    }>;
+  };
+}
 
 interface TshirtState {
   size: SizeType | null;
@@ -36,14 +55,18 @@ function TshirtSectionMobile({
     <div className="mb-10">
       <div>
         <div className="relative flex items-center justify-center bg-black">
-          <img
+          <Image
             src={imageSrc}
             alt={`${title} T-shirt`}
+            width={400}
+            height={400}
             className="w-[320px] rounded-md shadow-lg md:w-[400px]"
           />
-          <img
+          <Image
             src="/merch/ConnectorPhone.svg"
             alt="Connector"
+            width={80}
+            height={80}
             className="absolute left-[60%] top-[70%] w-[7.5rem] md:w-[80px]"
           />
         </div>
@@ -51,9 +74,11 @@ function TshirtSectionMobile({
 
       <div>
         <div className="flex items-center justify-center">
-          <img
+          <Image
             src="/merch/Partition.svg"
             alt="Partition"
+            width={600}
+            height={2}
             className="block w-[90%] pt-5 md:hidden"
           />
         </div>
@@ -68,9 +93,11 @@ function TshirtSectionMobile({
         </div>
 
         <div className="flex items-center justify-center">
-          <img
+          <Image
             src="/merch/Partition.svg"
             alt="Partition"
+            width={600}
+            height={2}
             className="block w-[90%] md:hidden"
           />
         </div>
@@ -116,9 +143,11 @@ function TshirtSectionMobile({
         </div>
 
         <div className="flex items-center justify-center">
-          <img
+          <Image
             src="/merch/Partition.svg"
             alt="Partition"
+            width={600}
+            height={2}
             className="block w-[90%] md:hidden"
           />
         </div>
@@ -185,14 +214,18 @@ function TshirtSectionDesktop({
       {/* LEFT SIDE - Image and Price */}
       <div className="flex flex-col items-center">
         <div className="relative flex items-center justify-center">
-          <img
+          <Image
             src={imageSrc}
             alt={`${title} T-shirt`}
+            width={500}
+            height={500}
             className="w-[500px] rounded-md shadow-lg"
           />
-          <img
+          <Image
             src="/merch/ConnectorPhone.svg"
             alt="Connector"
+            width={100}
+            height={100}
             className="absolute left-[60%] top-[70%] w-[100px]"
           />
         </div>
@@ -212,9 +245,11 @@ function TshirtSectionDesktop({
         {/* DETAILS Section */}
         <div>
           <div className="mb-4 flex items-center justify-center">
-            <img
+            <Image
               src="/merch/Partition.svg"
               alt="Partition"
+              width={600}
+              height={2}
               className="w-full"
             />
           </div>
@@ -232,9 +267,11 @@ function TshirtSectionDesktop({
         {/* SIZE Section */}
         <div>
           <div className="mb-4 flex items-center justify-center">
-            <img
+            <Image
               src="/merch/Partition.svg"
               alt="Partition"
+              width={600}
+              height={2}
               className="w-full"
             />
           </div>
@@ -323,14 +360,19 @@ function TshirtSectionDesktop({
 
         {/* Divider */}
         <div className="flex items-center justify-center">
-          <img src="/merch/Partition.svg" alt="Partition" className="w-full" />
+          <Image
+            src="/merch/Partition.svg"
+            alt="Partition"
+            width={600}
+            height={2}
+            className="w-full"
+          />
         </div>
       </div>
     </div>
   );
 }
 
-// Main page component
 export default function TecnoTshirt() {
   const [tecnoesis, setTecnoesis] = useState<TshirtState>({
     size: null,
@@ -339,9 +381,8 @@ export default function TecnoTshirt() {
   const [spark, setSpark] = useState<TshirtState>({ size: null, quantity: 0 });
 
   const updateQuantity = (type: TshirtType, newQuantity: number) => {
-    // Max quantity is 1 for each t-shirt
     const clampedQuantity = Math.max(0, Math.min(1, newQuantity));
-    if (type === "tecnoesis") {
+    if (type === "TECNOESIS") {
       setTecnoesis({ ...tecnoesis, quantity: clampedQuantity });
     } else {
       setSpark({ ...spark, quantity: clampedQuantity });
@@ -349,15 +390,27 @@ export default function TecnoTshirt() {
   };
 
   const updateSize = (type: TshirtType, size: SizeType) => {
-    if (type === "tecnoesis") {
+    if (type === "TECNOESIS") {
       setTecnoesis({ ...tecnoesis, size });
     } else {
       setSpark({ ...spark, size });
     }
   };
 
-  const handleOrder = () => {
+  const [user, loading] = useAuthState(auth);
+
+  const handleOrder = async () => {
     const items = [];
+
+    if (loading) {
+      toast.error("Please wait while we fetch your account details");
+      return;
+    }
+
+    if (!user) {
+      toast.error("Please login to place an order");
+      return;
+    }
 
     if (tecnoesis.quantity > 0) {
       if (!tecnoesis.size) {
@@ -365,7 +418,7 @@ export default function TecnoTshirt() {
         return;
       }
       items.push({
-        type: "Tecnoesis",
+        type: "TECNOESIS",
         size: tecnoesis.size,
         quantity: tecnoesis.quantity,
       });
@@ -376,7 +429,7 @@ export default function TecnoTshirt() {
         toast.error("Please select a size for the Spark t-shirt");
         return;
       }
-      items.push({ type: "Spark", size: spark.size, quantity: spark.quantity });
+      items.push({ type: "SPARK", size: spark.size, quantity: spark.quantity });
     }
 
     if (items.length === 0) {
@@ -384,9 +437,31 @@ export default function TecnoTshirt() {
       return;
     }
 
-    console.log("Order:", items);
-    // Here you would handle the order submission
-    toast.success(`Order placed successfully!\n${JSON.stringify(items, null, 2)}`);
+    try {
+      const idToken = await user.getIdToken();
+      const { data } = await axios.post<ApiResponse>(
+        `${env.NEXT_PUBLIC_API_URL}/api/merch/order`,
+        { items },
+        {
+          headers: {
+            'Authorization': `Bearer ${idToken}`
+          }
+        }
+      );
+
+      toast.success('Order placed successfully!');
+      setTecnoesis({ size: null, quantity: 0 });
+      setSpark({ size: null, quantity: 0 });
+      
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage = (error as AxiosError<ApiResponse>).response?.data?.error?.message ?? 'Failed to place order';
+        toast.error(errorMessage);
+      } else {
+        toast.error('An unexpected error occurred');
+      }
+    }
   };
 
   return (
@@ -414,8 +489,8 @@ export default function TecnoTshirt() {
             description="Not just a T-shirt. This is a limited-edition Tron-inspired drop built for comfort, style, and pure futuristic vibes. Glow with the energy of Tecno Fest — once it's gone, it's gone."
             size={tecnoesis.size}
             quantity={tecnoesis.quantity}
-            onSizeChange={(size: SizeType) => updateSize("tecnoesis", size)}
-            onQuantityChange={(qty: number) => updateQuantity("tecnoesis", qty)}
+            onSizeChange={(size: SizeType) => updateSize("TECNOESIS", size)}
+            onQuantityChange={(qty: number) => updateQuantity("TECNOESIS", qty)}
           />
         </div>
 
@@ -432,8 +507,8 @@ export default function TecnoTshirt() {
             description="Ignite your style with the Spark edition. Designed for those who dare to stand out, this t-shirt embodies innovation and energy in every thread."
             size={spark.size}
             quantity={spark.quantity}
-            onSizeChange={(size: SizeType) => updateSize("spark", size)}
-            onQuantityChange={(qty: number) => updateQuantity("spark", qty)}
+            onSizeChange={(size: SizeType) => updateSize("SPARK", size)}
+            onQuantityChange={(qty: number) => updateQuantity("SPARK", qty)}
           />
         </div>
 
@@ -470,8 +545,8 @@ export default function TecnoTshirt() {
           description="Not just a T-shirt. This is a limited-edition Tron-inspired drop built for comfort, style, and pure futuristic vibes. Glow with the energy of Tecno Fest — once it's gone, it's gone."
           size={tecnoesis.size}
           quantity={tecnoesis.quantity}
-          onSizeChange={(size: SizeType) => updateSize("tecnoesis", size)}
-          onQuantityChange={(qty: number) => updateQuantity("tecnoesis", qty)}
+          onSizeChange={(size: SizeType) => updateSize("TECNOESIS", size)}
+          onQuantityChange={(qty: number) => updateQuantity("TECNOESIS", qty)}
         />
 
         {/* SPARK T-SHIRT SECTION */}
@@ -486,8 +561,8 @@ export default function TecnoTshirt() {
           description="Ignite your style with the Spark edition. Designed for those who dare to stand out, this t-shirt embodies innovation and energy in every thread."
           size={spark.size}
           quantity={spark.quantity}
-          onSizeChange={(size: SizeType) => updateSize("spark", size)}
-          onQuantityChange={(qty: number) => updateQuantity("spark", qty)}
+          onSizeChange={(size: SizeType) => updateSize("SPARK", size)}
+          onQuantityChange={(qty: number) => updateQuantity("SPARK", qty)}
         />
 
         {/* ORDER NOW BUTTON */}
