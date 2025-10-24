@@ -1,0 +1,130 @@
+/**
+ * TRON ARES BIKE POSITION CONFIGURATION
+ * =====================================
+ * 
+ * Complete control for bike positioning across ALL devices!
+ * Simply change the values below to move the bike up/down/left/right.
+ * 
+ * TIPS:
+ * - NEGATIVE values move bike UP (e.g., -30rem, -40rem)
+ * - POSITIVE values move bike DOWN (e.g., 5rem, 10rem)
+ * - Increase margin-left to move bike RIGHT
+ * - Decrease margin-left to move bike LEFT
+ * - Adjust width/height to make bike bigger or smaller
+ */
+
+:root {
+  /* ========================================
+     📱 IPHONES
+     ======================================== */
+  
+  /* iPhone SE, iPhone 8 (375px x 667px) */
+  --bike-margin-bottom-iphone-se: -24rem;
+  --bike-margin-left-iphone-se: -2rem;
+  --bike-width-iphone-se: 85%;
+  --bike-height-iphone-se: 85%;
+  
+  /* iPhone 12/13/14 Standard (390px x 844px) */
+  --bike-margin-bottom-iphone-standard: -30rem;
+  --bike-margin-left-iphone-standard: -2rem;
+  --bike-width-iphone-standard: 85%;
+  --bike-height-iphone-standard: 85%;
+  
+  /* iPhone 12/13/14 Pro Max (428px x 926px) */
+  --bike-margin-bottom-iphone-pro-max: -35rem;
+  --bike-margin-left-iphone-pro-max: -2rem;
+  --bike-width-iphone-pro-max: 85%;
+  --bike-height-iphone-pro-max: 85%;
+  
+  
+  /* ========================================
+     📱 SAMSUNG GALAXY
+     ======================================== */
+  
+  /* Samsung Galaxy S20 Ultra (412px x 915px) */
+  --bike-margin-bottom-s20-ultra: -36rem;
+  --bike-margin-left-s20-ultra: -2rem;
+  --bike-width-s20-ultra: 85%;
+  --bike-height-s20-ultra: 85%;
+  
+  /* Samsung Galaxy S21/S22 (360px x 800px) */
+  --bike-margin-bottom-galaxy-standard: -28rem;
+  --bike-margin-left-galaxy-standard: -2rem;
+  --bike-width-galaxy-standard: 85%;
+  --bike-height-galaxy-standard: 85%;
+  
+  /* Samsung Galaxy Note (412px x 915px) */
+  --bike-margin-bottom-galaxy-note: -36rem;
+  --bike-margin-left-galaxy-note: -2rem;
+  --bike-width-galaxy-note: 85%;
+  --bike-height-galaxy-note: 85%;
+  
+  
+  /* ========================================
+     📱 OTHER PHONES
+     ======================================== */
+  
+  /* Google Pixel 5/6 (393px x 851px) */
+  --bike-margin-bottom-pixel: -30rem;
+  --bike-margin-left-pixel: -2rem;
+  --bike-width-pixel: 85%;
+  --bike-height-pixel: 85%;
+  
+  /* Small Phones - Default (< 375px) */
+  --bike-margin-bottom-small-phone: -25rem;
+  --bike-margin-left-small-phone: -2rem;
+  --bike-width-small-phone: 85%;
+  --bike-height-small-phone: 85%;
+  
+  
+  /* ========================================
+     📱 TABLETS
+     ======================================== */
+  
+  /* iPad Mini (768px x 1024px) */
+  --bike-margin-bottom-ipad-mini: -12rem;
+  --bike-margin-left-ipad-mini: -2rem;
+  --bike-width-ipad-mini: 45%;
+  --bike-height-ipad-mini: 45%;
+  
+  /* iPad Air / iPad Pro 11" (820px x 1180px) */
+  --bike-margin-bottom-ipad-air: -16rem;
+  --bike-margin-left-ipad-air: -2rem;
+  --bike-width-ipad-air: 45%;
+  --bike-height-ipad-air: 45%;
+  
+  /* iPad Pro 12.9" (1024px x 1366px) */
+  --bike-margin-bottom-ipad-pro: -10rem;
+  --bike-margin-left-ipad-pro: -2rem;
+  --bike-width-ipad-pro: 45%;
+  --bike-height-ipad-pro: 45%;
+  
+  /* Samsung Galaxy Tab (800px x 1280px) */
+  --bike-margin-bottom-galaxy-tab: -10rem;
+  --bike-margin-left-galaxy-tab: -2rem;
+  --bike-width-galaxy-tab: 45%;
+  --bike-height-galaxy-tab: 45%;
+  
+  /* Generic Small Tablet (600-767px) */
+  --bike-margin-bottom-small-tablet: -6rem;
+  --bike-margin-left-small-tablet: -1.5rem;
+  --bike-width-small-tablet: 55%;
+  --bike-height-small-tablet: 42%;
+  
+  
+  /* ========================================
+     💻 DESKTOP
+     ======================================== */
+  
+  /* Desktop (1024px - 1440px) */
+  --bike-margin-bottom-desktop: -5rem;
+  --bike-margin-left-desktop: -2rem;
+  --bike-width-desktop: 45%;
+  --bike-height-desktop: 45%;
+  
+  /* Large Desktop (1440px+) */
+  --bike-margin-bottom-large-desktop: -5rem;
+  --bike-margin-left-large-desktop: -2rem;
+  --bike-width-large-desktop: 45%;
+  --bike-height-large-desktop: 45%;
+}

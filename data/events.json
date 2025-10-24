@@ -1,0 +1,136 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "name": "Opening Ceremony",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760859284/opening_ceremony_rjnbog.jpg"
+    },
+    {
+      "id": 2,
+      "name": "School Genius",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760861379/school_genius_abnwdn.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Photo Galleria",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760860878/photo_galleria_sp83x5.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Amazers",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760859425/amazers_mlbyxu.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Spark Night",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760865852/spark_night_dz0z3v.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Ec ArQ",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760861652/ec_arq_acfmuf.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Robotron",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760864080/robowar2_a6sxyd.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Bridge it",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760870380/bridge_it_3_onolej.jpg"
+    },
+    {
+      "id": 9,
+      "name": "Electromap",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760859938/electromap_r46ihb.jpg"
+    },
+    {
+      "id": 10,
+      "name": "Spark Night",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760871544/spark_night_2_qj12co.jpg"
+    },
+    {
+      "id": 11,
+      "name": "Nibble Code",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760868952/nibble_code_2_fc6muj.jpg"
+    },
+    {
+      "id": 12,
+      "name": "V warz",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760863561/v_warz_2_wwnmvd.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Bech ke dikhao",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760868000/bech_ke_dikhao_ntfsdw.jpg"
+    },
+    {
+      "id": 14,
+      "name": "Krafton",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760871163/krafton_2_jdvwds.jpg"
+    },
+    {
+      "id": 15,
+      "name": "What if I were a CEO",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760872377/what_if_i_were_a_ceo_4_eiyhvu.jpg"
+    },
+    {
+      "id": 16,
+      "name": "Smart City archinova",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760872096/smart_city_3_i6xlne.jpg"
+    },
+    {
+      "id": 17,
+      "name": "Robotron",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760864086/robowar_ioukie.jpg"
+    },
+    {
+      "id": 18,
+      "name": "Speed Skating",
+      "year": "2023",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760871815/speed_skating_2_kwwzqf.jpg"
+    },
+    {
+      "id": 19,
+      "name": "NITS Hacks",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760872718/nits_hacks-min_tvfaqh.jpg"
+    },
+    {
+      "id": 20,
+      "name": "Nexus",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760871311/nexus_3_ucl7c6.jpg"
+    },
+    {
+      "id": 21,
+      "name": "Quick Twist",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760868551/quick_twist_2_jnhdwt.jpg"
+    },
+    {
+      "id": 22,
+      "name": "Spark Night",
+      "year": "2024",
+      "imageUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1760857650/sparknight2_y9qml4.jpg"
+    }
+  ]
+}
