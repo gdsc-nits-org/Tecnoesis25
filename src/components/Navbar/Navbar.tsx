@@ -29,13 +29,13 @@ const Navbar = () => {
     return null;
   }
 
+  // Hide navbar during page loading
+  if (isPageLoading) {
+    return null;
+  }
+
   return (
     <>
-      {isPageLoading && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-white border-t-transparent"></div>
-        </div>
-      )}
       {bigScreen ? <NavbarDesktop /> : <NavbarMobile />}
     </>
   );
