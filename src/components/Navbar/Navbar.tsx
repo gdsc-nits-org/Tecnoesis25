@@ -18,19 +18,27 @@ const Navbar = () => {
       setIsPageLoading(customEvent.detail.isLoading);
     };
 
-    window.addEventListener('pageLoading', handlePageLoading);
+    window.addEventListener("pageLoading", handlePageLoading);
 
     return () => {
-      window.removeEventListener('pageLoading', handlePageLoading);
+      window.removeEventListener("pageLoading", handlePageLoading);
     };
   }, []);
 
-  // Hide navbar when not mounted or when page is loading
-  if (!isMounted || isPageLoading) {
+  if (!isMounted) {
     return null;
   }
 
-  return <>{bigScreen ? <NavbarDesktop /> : <NavbarMobile />}</>;
+  return (
+    <>
+      {isPageLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-white border-t-transparent"></div>
+        </div>
+      )}
+      {bigScreen ? <NavbarDesktop /> : <NavbarMobile />}
+    </>
+  );
 };
 
 export default Navbar;
