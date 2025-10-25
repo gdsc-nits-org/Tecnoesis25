@@ -28,7 +28,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (href) {
-      window.open(href, '_blank');
+      window.location.href = href
     }
     if (onClick) {
       onClick(event);

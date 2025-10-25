@@ -14,23 +14,12 @@ function EventCard({ eventPoster, eventName, eventUrl, registrationUrl }: EventC
   return (
     <div className="group relative md:mb-6 h-full">
       <Image
-        className="shadow-lgz-200 absolute left-1/2 top-28 sm:top-36 group-hover:z-20 w-44 sm:w-52 -translate-x-1/2 transform transition-all duration-500 group-hover:-translate-y-36"
+        className="shadow-lgz-200 absolute left-1/2 top-28 sm:top-36 group-hover:z-20 w-44 sm:w-52 -translate-x-1/2 transform transition-all duration-500 group-hover:-translate-y-6"
         src={eventPoster}
         alt="Event Poster"
         width={400}
         height={600}
       />
-      {/* <div className="absolute left-1/2 top-36 z-20 w-52 -translate-x-1/2 transform overflow-hidden transition-all duration-500 group-hover:-translate-y-20">
-        <div className="h-72 overflow-hidden transition-all duration-500 group-hover:h-56">
-          <Image
-            className="w-52 object-cover"
-            src={eventPoster}
-            alt="Event Poster"
-            width={400}
-            height={600}
-          />
-        </div>
-      </div> */}
       <Image
         className="w-76 z-100 relative transition-all duration-500 group-hover:blur-sm  hidden  sm:block"
         src="/eventCardBG2.png"
