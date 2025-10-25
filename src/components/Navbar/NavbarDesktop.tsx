@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import RegisterButton from "./RegisterButton";
+import Login from "../GoogleAuth";
 
 const NavbarDesktop = () => {
   const pathname = usePathname();
@@ -114,7 +114,9 @@ const NavbarDesktop = () => {
           })}
         </div>
         {/* right spacer to keep center group truly centered */}
-        <div className="w-[250px]" aria-hidden="true" />
+        <div className="w-[250px]" aria-hidden="true" >
+          <Login />
+        </div>
       </nav>
     </>
   );

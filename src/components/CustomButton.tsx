@@ -3,11 +3,12 @@ import React, { useState } from "react";
 
 interface CustomButtonProps {
   text: string;
-  onClick?: () => void;
+  onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   width?: number | "auto";
   height?: number;
   fontSize?: number;
+  href?: string;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -17,6 +18,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   width = "auto",
   height = 60,
   fontSize = 16,
+  href,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -24,9 +26,18 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   const padding = width === "auto" ? "0 60px" : "0";
   const minWidth = width === "auto" ? "300px" : `${width}px`;
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (href) {
+      window.open(href, '_blank');
+    }
+    if (onClick) {
+      onClick(event);
+    }
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`relative transition-transform duration-300 ease-in-out ${isHovered ? "scale-110" : "scale-100"} ${className}`}

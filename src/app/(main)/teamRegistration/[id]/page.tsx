@@ -1,14 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { env } from "~/env";
-import { z, ZodError } from "zod";
-import CustomButton from "~/components/CustomButton";
+import { ZodError } from "zod";
 import { Command } from "cmdk";
-import RegisterState1 from "../../../../../public/RegisterState1.svg";
-import RegisterState2 from "../../../../../public/RegisterState2.svg";
+import { toast } from "sonner";
+import axios from "axios";
+import { auth } from "~/app/utils/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import CustomButton from "~/components/CustomButton";
 import arrowRight from "../../../../../public/about/arrowR.png";
 import TeamBorder1 from "../../../../../public/teamBorder1.png";
 import TeamBorder2 from "../../../../../public/teamBorder2.png";
@@ -16,7 +18,7 @@ import TeamLogo1 from "../../../../../public/teamLogo1.png";
 import TeamLogo2 from "../../../../../public/teamLogo2.png";
 import Avatar from "../../../../../public/Avatar.png";
 import CongratulationBorder from "../../../../../public/congratulationBorder.png";
-import CrossSign from "../../../../../public/CrossSign.svg";
+import Link from "next/link";
 
 export const runtime = "edge";
 
@@ -47,38 +49,39 @@ const CommandMenu = ({
     <div className="relative w-full">
       {!isOpen && (
         <input
-          className="h-10 w-full rounded-lg border border-red-700 bg-transparent text-center text-white shadow-[0_0_10px_#ff0000] focus:shadow-[0_0_20px_#ff3333] outline-none transition"
+          className="h-7 md:h-10 w-full rounded-lg border border-red-700 bg-transparent text-center text-white shadow-[0_0_10px_#ff0000] focus:shadow-[0_0_20px_#ff3333] outline-none transition text-xs md:text-base"
           onClick={() => setIsOpen(true)}
           placeholder="Search username..."
           value={value}
+          readOnly
         />
       )}
 
       {isOpen && (
         <>
           <div
-            className="fixed left-0 top-0 h-full w-full"
+            className="fixed left-0 top-0 h-full w-full z-[100]"
             onClick={handleBlur}
           ></div>
           <Command
-            className="text-white"
+            className="text-white relative z-[101]"
             label="Command Menu"
             onKeyDown={(e) => e.key === "Escape" && setIsOpen(false)}
           >
             <Command.Input
               autoFocus
               placeholder="Search username..."
-              className="h-10 w-full rounded-lg border border-red-700 bg-transparent text-center text-white shadow-[0_0_10px_#ff0000] focus:shadow-[0_0_20px_#ff3333] outline-none"
+              className="h-7 md:h-10 w-full rounded-lg border border-red-700 bg-black text-center text-white shadow-[0_0_10px_#ff0000] focus:shadow-[0_0_20px_#ff3333] outline-none text-xs md:text-base"
               value={value}
               onValueChange={handleChange}
             />
-            <Command.List className="absolute left-0 top-full mt-2 w-full rounded-lg border border-red-700 bg-black/70 text-center backdrop-blur-md shadow-lg">
-              <Command.Empty>No results found.</Command.Empty>
+            <Command.List className="absolute left-0 top-full mt-2 w-full max-h-60 overflow-y-auto rounded-lg border border-red-700 bg-black/95 text-center backdrop-blur-md shadow-lg z-[102]">
+              <Command.Empty className="py-4 text-gray-400 text-xs md:text-base">No results found.</Command.Empty>
               <Command.Group>
                 {allUsers?.map((user, idx) => (
                   <Command.Item
                     key={idx}
-                    className="cursor-pointer px-6 py-2 hover:bg-red-700/40 transition"
+                    className="cursor-pointer px-6 py-2 hover:bg-red-700/40 transition text-xs md:text-base"
                     onSelect={() => {
                       setSelectedUser(user);
                       handleChange(user.username);
@@ -125,111 +128,78 @@ interface GetEventAPIResponse {
   msg: Event;
 }
 
-const userDataSchema = z.object({
-  teamName: z.string().min(1, "Team name is required"),
-  members: z.array(z.string()),
-});
-
-interface TeamData {
-  teamName: string;
-  members: string[];
-  extraInformation?: string[];
-}
-
 interface EventParams {
   id: string;
 }
 
 /* ---------------------------- Main Component ---------------------------- */
-const RegisterTeam = ({ params }: { params: EventParams }) => {
+const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
+  const { id } = use(params);
   const router = useRouter();
+  const [user, loading] = useAuthState(auth);
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    teamName: string;
+    teamLeader: string;
+    [key: string]: string | string[];
+  }>({
     teamName: "",
     teamLeader: "",
-    member1: "",
-    member2: "",
-    member3: "",
+    members: [] as string[],
   });
-  
-   const teamMembers = [
-    {
-      name: "Candice Wu",
-      username: "@candice",
-      isLeader: true,
-    },
-    {
-      name: "James Li",
-      username: "@jamesli",
-      isLeader: false,
-    },
-    {
-      name: "Sofia Patel",
-      username: "@sofiap",
-      isLeader: false,
-    },
-    {
-      name: "Nate Kim",
-      username: "@natek",
-      isLeader: false,
-    },
-  ];
 
-  const [isSoloEvent, setIsSoloEvent] = useState<boolean>(false);
+
   const [event, setEvent] = useState<Event | null>(null);
-  const [allUsers, setAllUsers] = useState<UserResponse[]>([]);
   const [teamLeader, setTeamLeader] = useState<string>("Loading...");
-  const [members, setMembers] = useState<string[]>([]);
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const fieldsWithEdit = ["member1", "member2", "member3"];
+  const [allUsers, setAllUsers] = useState<UserResponse[]>([]);
 
   /* --------------------------- Fetch event data --------------------------- */
-  // useEffect(() => {
-  //   const fetchEventData = async () => {
-  //     try {
-  //       const { data } = await axios.get<GetEventAPIResponse>(
-  //         `${env.NEXT_PUBLIC_API_URL}/api/event/${params.id}`,
-  //       );
-  //       setEvent(data.msg);
-  //       setIsSoloEvent(data.msg.maxTeamSize == 1);
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
-  //   };
-  //   void fetchEventData();
-  // }, [params.id]);
+  useEffect(() => {
+    const fetchEventData = async () => {
+      try {
+        const { data } = await axios.get<GetEventAPIResponse>(
+          `${env.NEXT_PUBLIC_API_URL}/api/event/${id}`,
+        );
+        setEvent(data.msg);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    void fetchEventData();
+  }, [id]);
 
   /* --------------------------- Fetch all users --------------------------- */
-  // useEffect(() => {
-  //   void (async () => {
-  //     const token = await user?.getIdToken();
-  //     if (!token) return;
-  //     try {
-  //       const { data } = await axios.get<{ msg: UserResponse[] }>(
-  //         `${env.NEXT_PUBLIC_API_URL}/api/user/`,
-  //         { headers: { Authorization: `Bearer ${token}` } },
-  //       );
-  //       setAllUsers(data.msg);
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
-  //   })();
+  useEffect(() => {
+    void (async () => {
+      const token = await user?.getIdToken();
+      if (!token) return;
+      try {
+        const { data } = await axios.get<{ msg: UserResponse[] }>(
+          `${env.NEXT_PUBLIC_API_URL}/api/user/`,
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+        setAllUsers(data.msg);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
 
-  //   void (async () => {
-  //     const token = await user?.getIdToken();
-  //     if (!token) return;
-  //     try {
-  //       const { data } = await axios.get<{ msg: UserResponse }>(
-  //         `${env.NEXT_PUBLIC_API_URL}/api/user/me`,
-  //         { headers: { Authorization: `Bearer ${token}` } },
-  //       );
-  //       setTeamLeader(data.msg.username);
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
-  //   })();
-  // }, [user]);
+    void (async () => {
+      const token = await user?.getIdToken();
+      if (!token) return;
+      try {
+        const { data } = await axios.get<{ msg: UserResponse }>(
+          `${env.NEXT_PUBLIC_API_URL}/api/user/me`,
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+        setTeamLeader(data.msg.username);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /* ----------------------------- Handlers ----------------------------- */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -240,19 +210,15 @@ const RegisterTeam = ({ params }: { params: EventParams }) => {
     }));
   };
 
-  const handleMemberSelect = (username: string, index: number) => {
-    setMembers((prev) => {
-      const updated = [...prev];
-      updated[index] = username;
-      setFormData((prevData) => ({ ...prevData, members: updated }));
-      return updated;
-    });
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormErrors({});
-    setFormData((prevData) => ({ ...prevData, members }));
+
+    // Collect all member usernames from dynamic fields
+    const memberUsernames = Object.entries(formData)
+      .filter(([key, value]) => key.startsWith("member") && typeof value === "string" && value.trim() !== "")
+      .map(([_, username]) => username as string);
+
+    setFormData((prevData) => ({ ...prevData, members: memberUsernames }));
 
     // Move to next step (team preview)
     setStep(2);
@@ -261,197 +227,224 @@ const RegisterTeam = ({ params }: { params: EventParams }) => {
 
 
   const handleConfirm = async () => {
-    // toast.promise(
-    //   (async () => {
-    //     try {
-    //       if (!user) throw new Error("User not authenticated");
-    //       const validatedData = userDataSchema.parse(formData);
-    //       const filteredMembers = validatedData.members.filter(
-    //         (m) => m !== teamLeader,
-    //       );
-    //       const token = await user.getIdToken();
+    toast.promise(
+      (async () => {
+        try {
+          if (!user) throw new Error("User not authenticated");
+          if (!event) throw new Error("Event data not loaded");
 
-    //       await axios.post(
-    //         `${env.NEXT_PUBLIC_API_URL}/api/team/event/${params.id}/add`,
-    //         {
-    //           name: validatedData.teamName,
-    //           members: filteredMembers,
-    //           extraInformation: "Team registered successfully.",
-    //         },
-    //         {
-    //           headers: { Authorization: `Bearer ${token}` },
-    //         },
-    //       );
+          const membersList = Array.isArray(formData.members) ? formData.members : [];
+          const filteredMembers = membersList.filter(
+            (m: string) => m !== teamLeader,
+          );
+          const token = await user.getIdToken();
+
+          // Prepare request body - only include team name for team events
+          const requestBody: {
+            name?: string;
+            members: string[];
+            extraInformation: Record<string, unknown>[];
+          } = {
+            members: filteredMembers,
+            extraInformation: [],
+          };
+
+          // Only add team name for team events (maxTeamSize > 1)
+          if (event.maxTeamSize > 1) {
+            if (!formData.teamName?.trim()) {
+              throw new Error("Team name is required for team events");
+            }
+            requestBody.name = formData.teamName;
+          }
+
+          await axios.post(
+            `${env.NEXT_PUBLIC_API_URL}/api/team/event/${id}/add`,
+            requestBody,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            },
+          );
 
           setStep(3);
-    //     } catch (err) {
-    //       if (err instanceof ZodError) {
-    //         const zodErrors = err.errors.reduce(
-    //           (acc, current) => ({
-    //             ...acc,
-    //             [String(current.path[0])]: current.message,
-    //           }),
-    //           {} as Record<string, string>,
-    //         );
-    //         setFormErrors(zodErrors);
-    //         throw err;
-    //       }
+        } catch (err) {
+          if (err instanceof ZodError) {
+            console.error("Validation errors:", err.errors);
+            throw err;
+          }
 
-    //       if (axios.isAxiosError(err)) {
-    //         const msg = err.response?.data?.msg ?? "Registration failed.";
-    //         throw new Error(msg);
-    //       }
+          if (axios.isAxiosError(err)) {
+            const msg = (err.response?.data as { msg?: string })?.msg ?? "Registration failed.";
+            throw new Error(msg);
+          }
 
-    //       throw new Error("Unexpected error during registration.");
-    //     }
-    //   })(),
-    //   {
-    //     loading: "Registering...",
-    //     success: "Registration successful!",
-    //     error: (e) =>
-    //       e instanceof Error ? e.message : "An unknown error occurred.",
-    //   },
-    // );
+          throw new Error("Unexpected error during registration.");
+        }
+      })(),
+      {
+        loading: "Registering...",
+        success: "Registration successful!",
+        error: (e) =>
+          e instanceof Error ? e.message : "An unknown error occurred.",
+      },
+    );
   };
 
-  // if (loading || !event)
-  //   return (
-  //     <div className="flex h-screen w-screen items-center justify-center text-xl text-white">
-  //       Loading...
-  //     </div>
-  //   );
+  if (loading || !event)
+    return (
+      <div className="flex h-screen w-screen items-center justify-center text-xl text-white">
+        Loading...
+      </div>
+    );
 
-  // if (!user) {
-  //   toast.error("Sign in to register for the event");
-  //   router.push("/home");
-  // }
+  if (!user) {
+    toast.error("Sign in to register for the event");
+    router.push("/home");
+  }
 
   /* Render Steps */
   return (
-    <div className="min-h-screen w-full bg-black bg-[url('/grid-bg.png')] bg-cover bg-center text-white font-[Orbitron] tracking-widest flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen clip-angled w-screen animate-glowMove bg-[#000000] bg-red-grid bg-[length:100%_100%,100%_100%,50px_50px,50px_50px,50px_50px] bg-fixed bg-[position:0_0,0_0,25px_25px,0_0,0_0] text-white font-[Orbitron] tracking-widest flex flex-col items-center justify-center px-6 py-12">
       {/* STEP 1 */}
       {step === 1 && (
-        <div className="relative h-screen w-screen overflow-hidden bg-grid-pattern">
-          <div className="absolute inset-0 z-0 fade-mask" />
-
-          {/* Top Right Register Button */}
-          <button
-            onClick={(e) => handleSubmit(e)}
-            className="absolute top-6 right-6 z-50 group transition-transform duration-300 hover:scale-105 hover:rotate-1"
-          >
-            <div className="relative">
-              <Image
-                src={RegisterState1}
-                alt="Register"
-                width={250}
-                height={80}
-                className="transition duration-300 group-hover:brightness-125 group-hover:drop-shadow-[0_0_20px_#ff0000]"
-              />
-            </div>
-          </button>
-
+        <div className="relative h-screen w-screen overflow-hidden">
           {/* Registration Form */}
-          <div className="relative z-10 flex flex-col justify-center items-center h-full text-white space-y-4">
-            <h1 className="text-6xl font-bankGothik uppercase tracking-widest font-weight: 700">
+          <div className="relative z-10 flex flex-col justify-center items-center h-full text-white space-y-2 md:space-y-4 px-4">
+            <h1 className="text-2xl lg:text-6xl font-bankGothik uppercase tracking-widest font-weight: 700">
               Registration Form
             </h1>
-            <h2 className="text-4xl font-bankGothik font-weight: 700">
-              Event : <span className="text-red-600">ROBOTRON</span>
+            <h2 className="text-xl lg:text-4xl font-bankGothik font-weight: 700">
+              Event : <span className="text-red-600">{event.name}</span>
             </h2>
+            <div className="text-sm lg:text-xl font-bankGothik text-gray-300">
+              Team Size: <span className="text-cyan-400">{event.minTeamSize}</span> - <span className="text-cyan-400">{event.maxTeamSize}</span> members
+            </div>
 
             <form
               onSubmit={handleSubmit}
-              className="space-y-6 mt-8"
+              className="space-y-2 md:space-y-6 mt-4 md:mt-8 w-full max-w-[95%] md:max-w-3xl"
             >
-              {[
-                { label: "Team Name", name: "teamName", type: "text" },
-                { label: "Team Leader", name: "teamLeader", type: "text" },
-                { label: "Member 1", name: "member1", type: "text" },
-                { label: "Member 2", name: "member2", type: "text" },
-                { label: "Member 3", name: "member3", type: "text" },
-              ].map(({ label, name, type }) => (
-                <div key={name} className="flex items-center space-x-2 relative">
+              {/* Team Name field - only show if not solo event */}
+              {event.maxTeamSize > 1 && (
+                <div className="flex items-center space-x-1 md:space-x-2 relative">
                   <label
-                    htmlFor={name}
-                    className="bg-[#8B75D980] px-6 py-3 uppercase text-md tracking-wide font-semibold flex-shrink-0 w-60 font-bankGothik text-center"
+                    htmlFor="teamName"
+                    className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-28 md:w-60 font-bankGothik text-center"
                   >
-                    {label}
+                    Team Name
                   </label>
 
-                  <div className="absolute left-[calc(14.35rem)] top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <Image src={arrowRight} alt="Right Arrow" width={15} height={15} />
+                  <div className="absolute left-[6.8rem] md:left-[calc(14.35rem)] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
+                    <Image src={arrowRight} alt="Right Arrow" width={10} height={10} className="md:w-[15px] md:h-[15px]" />
                   </div>
 
-                  {fieldsWithEdit.includes(name) ? (
-                    <div className="relative flex-grow">
-                      <input
-                        id={name}
-                        name={name}
-                        type={type}
-                        onChange={handleChange}
-                        value={formData[name as keyof typeof formData]}
-                        className="w-full bg-[#A4000040] bg-opacity-70 placeholder-red-400 text-white font-bankGothik py-3 px-4 pl-10 pr-20 focus:outline-none focus:ring-2 focus:ring-red-600 transition"
-                        placeholder={label}
-                        required
-                      />
-                      <button
-                        type="button"
-                        className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-[#26232f] text-[#B5A2FF] px-3 py-1 font-bankGothik font-semibold"
-                      >
-                        Edit
-                      </button>
-                    </div>
-                  ) : (
-                    <input
-                      id={name}
-                      name={name}
-                      type={type}
-                      onChange={handleChange}
-                      value={formData[name as keyof typeof formData]}
-                      className="flex-grow bg-[#A4000040] bg-opacity-70 placeholder-red-400 text-white font-bankGothik py-3 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-red-600 transition"
-                      placeholder={label}
-                      required
-                    />
-                  )}
+                  <input
+                    id="teamName"
+                    name="teamName"
+                    type="text"
+                    onChange={handleChange}
+                    value={formData.teamName}
+                    className="flex-grow bg-[#A4000040] bg-opacity-70 placeholder-red-400 text-white font-bankGothik py-1.5 md:py-3 px-2 pl-4 md:px-4 md:pl-10 text-xs md:text-base focus:outline-none focus:ring-2 focus:ring-red-600 transition"
+                    placeholder="Team Name"
+                    required
+                  />
                 </div>
-              ))}
+              )}
+
+              {/* Team Leader field - auto-filled, read-only */}
+              <div className="flex items-center space-x-1 md:space-x-2 relative">
+                <label
+                  htmlFor="teamLeader"
+                  className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-28 md:w-60 font-bankGothik text-center"
+                >
+                  Team Leader
+                </label>
+
+                <div className="absolute left-[6.8rem] md:left-[calc(14.35rem)] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
+                  <Image src={arrowRight} alt="Right Arrow" width={10} height={10} className="md:w-[15px] md:h-[15px]" />
+                </div>
+
+                <input
+                  id="teamLeader"
+                  name="teamLeader"
+                  type="text"
+                  value={teamLeader}
+                  className="flex-grow bg-[#A4000040] bg-opacity-70 placeholder-red-400 text-white font-bankGothik py-1.5 md:py-3 px-2 pl-4 md:px-4 md:pl-10 text-xs md:text-base focus:outline-none focus:ring-2 focus:ring-red-600 transition cursor-not-allowed"
+                  placeholder="Team Leader"
+                  readOnly
+                  required
+                />
+              </div>
+
+              {/* Dynamic member fields based on maxTeamSize - 1 (excluding leader) */}
+              {Array.from({ length: event.maxTeamSize - 1 }, (_, index) => {
+                const memberNum = index + 1;
+                const fieldName = `member${memberNum}`;
+                return (
+                  <div key={fieldName} className="flex items-center space-x-1 md:space-x-2 relative">
+                    <label
+                      htmlFor={fieldName}
+                      className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-28 md:w-60 font-bankGothik text-center"
+                    >
+                      Member {memberNum}
+                    </label>
+
+                    <div className="absolute left-[6.8rem] md:left-[calc(14.35rem)] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
+                      <Image src={arrowRight} alt="Right Arrow" width={10} height={10} className="md:w-[15px] md:h-[15px]" />
+                    </div>
+
+                    <div className="relative flex-grow">
+                      <CommandMenu
+                        allUsers={allUsers}
+                        value={String(formData[fieldName] ?? "")}
+                        setValue={(username: string) => {
+                          setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: username,
+                          }));
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </form>
+            <CustomButton
+              text="Register"
+              onClick={() => {
+                const form = document.querySelector('form');
+                if (form) {
+                  form.requestSubmit();
+                }
+              }}
+              className="mt-6"
+              width={150}
+              height={50}
+              fontSize={18}
+            />
           </div>
         </div>
       )}
 
       {step === 2 && (
-        <div className="relative h-screen w-screen overflow-hidden bg-grid-pattern">
-          {/* Register Button Top Right */}
-          <button
-            onClick={() => handleConfirm()}
-            className="absolute top-6 right-6 z-50 group transition-transform duration-300 hover:scale-105 hover:rotate-1"
-          >
-            <div className="relative">
-              <Image
-                src={RegisterState2}
-                alt="Confirm"
-                width={250}
-                height={80}
-                className="transition duration-300 group-hover:brightness-125 group-hover:drop-shadow-[0_0_20px_#ff0000]"
-              />
-            </div>
-          </button>
-
-          <div className="relative z-10 flex flex-col justify-center items-center h-full text-white space-y-6">
-            <h1 className="text-6xl uppercase tracking-widest font-bold">
+        <div className="relative h-screen w-screen overflow-hidden">
+          <div className="relative z-10 flex flex-col justify-center items-center h-full text-white space-y-3 md:space-y-6 px-4">
+            <h1 className="text-2xl md:text-6xl uppercase tracking-widest font-bold">
               TEAM DETAILS
             </h1>
-            <h2 className="text-4xl font-bold">
-              Team Name : <span className="text-red-600">{formData.teamName || "CRUSHERS"}</span>
+            <h2 className="text-lg md:text-4xl font-bold">
+              Team Name : <span className="text-red-600">{formData.teamName || teamLeader}</span>
             </h2>
+            <div className="text-xs md:text-xl font-bankGothik text-gray-300">
+              Team Size Requirements: <span className="text-cyan-400">{event.minTeamSize}</span> - <span className="text-cyan-400">{event.maxTeamSize}</span> members
+            </div>
 
-            <div className="bg-black bg-opacity-30 p-6 rounded-md space-y-4">
-              {teamMembers.map((member, index) => (
-                <div key={index} className="flex items-center space-x-4 relative">
-                  <div className="relative w-14 h-14">
+            <div className="bg-black bg-opacity-30 p-3 md:p-6 rounded-md space-y-2 md:space-y-4 w-full max-w-[95%] md:max-w-2xl">
+              {/* Team Leader */}
+              {teamLeader && (
+                <div className="flex items-center space-x-2 md:space-x-4 relative">
+                  <div className="relative w-10 h-10 md:w-14 md:h-14 flex-shrink-0">
                     <Image
-                      src={member.isLeader ? TeamLogo2 : TeamLogo1}
+                      src={TeamLogo2}
                       alt="Border"
                       fill
                       className="object-contain"
@@ -466,59 +459,107 @@ const RegisterTeam = ({ params }: { params: EventParams }) => {
                     </div>
                   </div>
 
-                  <div className="relative w-72 h-20">
+                  <div className="relative w-52 h-14 md:w-72 md:h-20 flex-shrink-0">
                     <Image
-                      src={member.isLeader ? TeamBorder2 : TeamBorder1}
+                      src={TeamBorder2}
                       alt="Border"
                       fill
                       className="object-contain"
                     />
-                    <div className="absolute top-1/2 left-6 transform -translate-y-1/2">
-                      <p className="text-lg font-semibold">{member.name}</p>
-                      <p className="text-sm text-blue-400">{member.username}</p>
+                    <div className="absolute top-1/2 left-3 md:left-6 transform -translate-y-1/2">
+                      <p className="text-sm md:text-lg font-semibold truncate max-w-[120px] md:max-w-none">{allUsers.find(u => u.username === teamLeader)?.firstName ?? teamLeader}</p>
+                      <p className="text-xs md:text-sm text-blue-400 truncate max-w-[120px] md:max-w-none">@{teamLeader}</p>
                     </div>
-                    {member.isLeader && (
-                      <span className="absolute top-7 right-6 text-red-500 font-bold text-sm">
-                        LEADER
-                      </span>
-                    )}
+                    <span className="absolute top-4 md:top-7 right-3 md:right-6 text-red-500 font-bold text-[10px] md:text-sm">
+                      LEADER
+                    </span>
                   </div>
                 </div>
-              ))}
+              )}
+
+              {/* Team Members */}
+              {Object.entries(formData)
+                .filter(([key, value]) => key.startsWith("member") && typeof value === "string" && value.trim() !== "")
+                .map(([key, username]) => {
+                  const user = allUsers.find(u => u.username === username);
+                  return (
+                    <div key={key} className="flex items-center space-x-2 md:space-x-4 relative">
+                      <div className="relative w-10 h-10 md:w-14 md:h-14 flex-shrink-0">
+                        <Image
+                          src={TeamLogo1}
+                          alt="Border"
+                          fill
+                          className="object-contain"
+                        />
+                        <div className="absolute inset-0 rounded-full overflow-hidden">
+                          <Image
+                            src={Avatar}
+                            alt="Avatar"
+                            fill
+                            className="object-cover rounded-full"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="relative w-52 h-14 md:w-72 md:h-20 flex-shrink-0">
+                        <Image
+                          src={TeamBorder1}
+                          alt="Border"
+                          fill
+                          className="object-contain"
+                        />
+                        <div className="absolute top-1/2 left-3 md:left-6 transform -translate-y-1/2">
+                          <p className="text-sm md:text-lg font-semibold truncate max-w-[180px] md:max-w-none">{user?.firstName ?? username}</p>
+                          <p className="text-xs md:text-sm text-blue-400 truncate max-w-[180px] md:max-w-none">@{username}</p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
+
+            {/* Register Button Below Team Details */}
+            <CustomButton
+              text="Confirm"
+              onClick={() => handleConfirm()}
+              className="mt-8"
+              width={200}
+              height={50}
+              fontSize={18}
+            />
           </div>
         </div>
       )}
 
       {/* STEP 3: CONGRATULATIONS POPUP */}
-      {step === 3 && (
-        <>
-          <div className="absolute inset-0 bg-black bg-opacity-50 z-20" />
-          <div className="absolute z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[58rem] h-[36rem]">
-            <div className="relative w-full h-full">
-              <Image
-                src={CongratulationBorder}
-                alt="Congratulation Border"
-                fill
-                className="object-contain absolute inset-0"
-              />
-
-              <button
-                onClick={() => router.push("/dashboard")}
-                className="absolute top-3 right-0 z-40"
-              >
-              </button>
-
-              <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white space-y-2">
-                <h1 className="text-4xl font-bold">Congratulations!</h1>
-                <p className="text-2xl font-semibold">
-                  You have successfully registered for the event.
-                </p>
-                <p className="text-2xl text-[#F40004] font-semibold">ROBOTRON</p>
-              </div>
+      {step == 3 && (
+        <div className="absolute z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[90%] md:w-[58rem] h-[600px] sm:h-[500px] md:h-[36rem] px-4">
+          <div className="relative w-full h-full scale-[0.9] md:scale-[.75]">
+            <Image
+              src={CongratulationBorder}
+              alt="Congratulation Border"
+              fill
+              className="object-contain"
+              priority
+            />
+            <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white space-y-2 translate-y-6 lg:translate-y-0 md:space-y-4 px-4">
+              <h1 className="text-xl md:text-4xl font-nyxerinfont-bold">Congratulations!</h1>
+              <p className="text-sm md:text-2xl font-bankGothik text-red-600 font-semibold">
+                You have successfully registered for the event.
+              </p>
+              <p className="text-sm md:text-2xl text-[#F40004] font-nyxerin font-semibold">{event.name}</p>
+              <Link href="/dashboard">
+                <CustomButton
+                  text="Go to Dashboard"
+                  height={100}
+                  width={250}
+                  fontSize={14}
+                  className="scale-50 md:scale-75 lg:scale-100 -translate-y-4 lg:-translate-y-0"
+                />
+              </Link>
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
