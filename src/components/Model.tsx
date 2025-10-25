@@ -483,14 +483,10 @@ export default function Model({ onZoomStart, onNavigate }: ModelProps = {}) {
   });
 
   const isDraggingRef = useRef(false);
-  
+
   // Store original camera position and rotation after initial animation
   const originalCameraPosition = useRef(new THREE.Vector3(0, 0, 350));
   const originalCameraRotation = useRef(new THREE.Euler(0, 0, 0));
-
-  // Store original camera position and rotation after initial animation
-  // const originalCameraPosition = useRef(new THREE.Vector3(0, 0, 350));
-  // const originalCameraRotation = useRef(new THREE.Euler(0, 0, 0));
 
   const handleInitialAnimationEnd = () => {
     setIsAnimating(false);

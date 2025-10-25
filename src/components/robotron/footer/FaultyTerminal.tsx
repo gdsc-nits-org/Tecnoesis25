@@ -303,11 +303,11 @@ export default function FaultyTerminal({
     const ctn = containerRef.current;
     if (!ctn) return;
 
-    const renderer = new Renderer({ 
+    const renderer = new Renderer({
       dpr,
       alpha: false,
       antialias: false,
-      powerPreference: "high-performance"
+      powerPreference: "high-performance",
     });
     rendererRef.current = renderer;
     const gl = renderer.gl;
@@ -442,7 +442,7 @@ export default function FaultyTerminal({
         throttleTimeout = null;
       }, 16); // ~60fps
     };
-    
+
     if (mouseReact) ctn.addEventListener("mousemove", throttledMouseMove);
 
     return () => {

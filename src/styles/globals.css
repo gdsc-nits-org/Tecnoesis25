@@ -2,11 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @font-face {
-  font-family: 'nyxerin';
-  src: url('/nyxerin.otf') format('opentype');
+  font-family: "nyxerin";
+  src: url("/nyxerin.otf") format("opentype");
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
@@ -14,7 +12,14 @@
 
 /* helper class to use anywhere */
 .font-nyxerin {
-  font-family: 'nyxerin', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family:
+    "nyxerin",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
 }
 
 /* Import slick carousel styles */
@@ -260,7 +265,6 @@
 }
 
 @keyframes tronGlow {
-
   0%,
   100% {
     box-shadow:
@@ -558,7 +562,6 @@
   /* Firefox */
 }
 
-
 /* Home - Modules Animations */
 
 @keyframes rotateClockwise {
@@ -579,11 +582,79 @@
   }
 }
 #rotating-path {
-  transform-origin: center; 
+  transform-origin: center;
 
-  animation: rotateClockwise 20s linear infinite; 
+  animation: rotateClockwise 20s linear infinite;
 }
 #rotating-path-acw {
-  transform-origin: center; 
-  animation: rotateAntiClockwise 20s linear infinite; 
+  transform-origin: center;
+  animation: rotateAntiClockwise 20s linear infinite;
 }
+
+@keyframes neon-glow-blue {
+  0% {
+    box-shadow:
+      0 0 8px rgba(59, 236, 255, 0.5),
+      0 0 15px rgba(59, 236, 255, 0.3),
+      0 0 20px rgba(59, 236, 255, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(59, 236, 255, 0.7),
+      0 0 20px rgba(59, 236, 255, 0.5),
+      0 0 25px rgba(59, 236, 255, 0.3);
+  }
+  100% {
+    box-shadow:
+      0 0 8px rgba(59, 236, 255, 0.5),
+      0 0 15px rgba(59, 236, 255, 0.3),
+      0 0 20px rgba(59, 236, 255, 0.2);
+  }
+}
+
+.toast-theme-blue {
+  background-color: #1b1f23;
+  color: #3becff;
+  border: 2px solid #3becff;
+  padding: 16px;
+  animation: neon-glow-blue 2s infinite alternate;
+}
+
+@keyframes neon-red-glow {
+  0% {
+    box-shadow:
+      0 0 8px rgba(255, 64, 64, 0.5),
+      0 0 15px rgba(255, 64, 64, 0.3),
+      0 0 20px rgba(255, 64, 64, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(255, 64, 64, 0.7),
+      0 0 20px rgba(255, 64, 64, 0.5),
+      0 0 25px rgba(255, 64, 64, 0.3);
+  }
+  100% {
+    box-shadow:
+      0 0 8px rgba(255, 64, 64, 0.5),
+      0 0 15px rgba(255, 64, 64, 0.3),
+      0 0 20px rgba(255, 64, 64, 0.2);
+  }
+}
+
+.toast-theme-red {
+  background-color: #1b1f23;
+  color: #ff4040;
+  border: 2px solid #ff4040;
+  padding: 16px;
+  animation: neon-red-glow 2s infinite alternate;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+

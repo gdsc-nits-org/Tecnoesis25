@@ -6,7 +6,7 @@ const Footer = React.memo(() => {
   return (
     <div className="relative w-full overflow-hidden bg-black p-0">
       {/* Background Terminal Effect */}
-      <div className="absolute inset-0 z-0" style={{ contain: 'strict' }}>
+      <div className="absolute inset-0 z-0" style={{ contain: "strict" }}>
         <FaultyTerminal
           scale={4}
           gridMul={[2, 1]}

@@ -1,0 +1,28 @@
+{
+  "organising_secretary": [
+    {
+      "name": "Sahin Alam",
+      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761052094/team_photos/kmphiqhudzf7etwhq6wt.webp",
+      "designation": "Organising Secretary",
+      "linkedin": "https://www.linkedin.com/in/sahin-alam-96250324a",
+      "facebook": "https://www.facebook.com/sahin.alam.9216778?mibextid=ZbWKwL",
+      "instagram": "https://www.instagram.com/sahinisboss"
+    }
+  ],
+  "organising_chair": [
+    {
+      "name": "Ayush Mani",
+      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761053371/8bc35850-ade7-41c6-a800-fa6ec7227e23.webp",
+      "designation": "Organising Chair",
+      "linkedin": "https://www.linkedin.com/in/ayush-maniroy-358458258?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      "facebook": "https://www.facebook.com/share/14M4hhZ77QF/",
+      "instagram": "https://www.instagram.com/ayushmaniroy?igsh=MTAzMmdkcXkyMmszMw=="
+    },
+    {
+      "name": "Rajdeep Bezbaruah",
+      "linkedin": "https://www.linkedin.com/in/rajdeep-bezbaruah-a12333258?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      "designation": "Organising Chair",
+      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761079337/22879927-a3dc-4e86-b858-7f0d7a66a99a.webp"
+    }
+  ]
+}
