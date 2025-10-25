@@ -4,7 +4,7 @@ export default function SparkReveal() {
   return (
     <div className="relative w-screen h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/overlay.png')" }}>
 
-      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+      <div className="absolute top-8 left-1/2  transform -translate-x-1/2 flex flex-col items-center">
 
         <div className="flex laptop:flex-row mobile:flex-col text-5xl tablet:text-7xl  laptop:text-6xl laptop:gap-6 mobile:gap-0 items-center justify-center">
           <p className="font-nyxerin bg-gradient-to-r from-[#520095] via-[#B46EFF] to-[#6200A9] bg-clip-text text-transparent mobile2:scale-110 ipadpro:scale-125 laptop:scale-100">

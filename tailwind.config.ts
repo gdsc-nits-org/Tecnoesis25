@@ -10,6 +10,8 @@ export default {
         nyxerin: ["Nyxerin", "sans-serif"],
         bankGothik: ["BankGothic", "sans-serif"],
         orbitron: ["Orbitron", "sans-serif"],
+        sefa: ["sefa", "sans-serif"],              
+        bakbak: ["Bakbak One", "sans-serif"],      
       },
       screens: {
         xs: "450px",
