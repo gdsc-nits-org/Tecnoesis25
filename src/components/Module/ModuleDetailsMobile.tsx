@@ -1,39 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import DecryptedText from "~/components/DecryptedText";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+
+interface Module {
+  id: string;
+  name: string;
+  coverImage: string;
+}
+
+interface ModuleData {
+  name: string;
+  image: string;
+  progressImage: string;
+  year: string;
+}
 
 export default function ModuleDetailsMobile() {
     const router = useRouter();
-    const modulesData = [
-        {
-            name: "TechnoVerse",
-            image: "/Modules/ModulePic.svg",
-            progressImage: "/Modules/ProgreeBar.svg",
-            year: "2025",
-        },
-        {
-            name: "InnoSpark",
-            image: "/Modules/dummy.jpg",
-            progressImage: "/Modules/ProgreeBar.svg",
-            year: "2025",
-        },
-        {
-            name: "CodeRush",
-            image: "/Modules/ModulePic.svg",
-            progressImage: "/Modules/ProgreeBar.svg",
-            year: "2025",
-        },
-    ];
-
+    const [modules, setModules] = useState<Module[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [index, setIndex] = useState(0);
-    const current = modulesData[index]!;
     const [glitchVisible, setGlitchVisible] = useState(false);
 
+    useEffect(() => {
+      const fetchModules = async () => {
+        try {
+          const { data } = await axios.get<{ msg: Module[] }>(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/module`,
+          );
+          setModules(data.msg);
+          setIsLoading(false);
+        } catch (error) {
+          console.error("Error fetching modules:", error);
+          setIsLoading(false);
+        }
+      };
+
+      void fetchModules();
+    }, []);
+
+    // Transform API data to display format
+    const modulesData: ModuleData[] = modules.map((module) => ({
+      name: module.name,
+      image: module.coverImage,
+      progressImage: "/Modules/ProgreeBar.svg",
+      year: "2025",
+    }));
+
+    const current = modulesData[index];
+
     const handleScroll = (e: React.WheelEvent) => {
+        if (modulesData.length === 0) return;
+        
         if (e.deltaX < 0) {
             triggerGlitch(() =>
                 setIndex((prev) => (prev + 1) % modulesData.length)
@@ -52,6 +75,22 @@ export default function ModuleDetailsMobile() {
             setGlitchVisible(false);
         }, 500);
     };
+
+    if (isLoading) {
+        return (
+            <section className="relative flex flex-col items-center justify-center min-h-screen bg-black text-white px-4">
+                <div className="text-white font-nyxerin text-xl">Loading modules...</div>
+            </section>
+        );
+    }
+
+    if (!current || modulesData.length === 0) {
+        return (
+            <section className="relative flex flex-col items-center justify-center min-h-screen bg-black text-white px-4">
+                <div className="text-white font-nyxerin text-xl">No modules available</div>
+            </section>
+        );
+    }
 
     return (
         <section
@@ -149,19 +188,6 @@ export default function ModuleDetailsMobile() {
                             <DecryptedText text={current.name} animateOn="view" />
                         </p>
                     </motion.div>
-
-                    {/* Progress Bar */}
-                    <div className="mt-16 z-20 flex flex-col items-center">
-                        <p className="uppercase text-sm font-nyxerin tracking-widest text-white mb-3">
-                            Scroll Left
-                        </p>
-                        <Image
-                            src={current.progressImage}
-                            alt="Progress"
-                            width={130}
-                            height={40}
-                        />
-                    </div>
                 </motion.div>
             </AnimatePresence>
         </section>
