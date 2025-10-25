@@ -16,7 +16,7 @@ export default function SparkReveal() {
           </p>
         </div>
 
-        <div className="flex laptop:flex-row mobile:flex-col text-4xl tablet:text-7xl mobile2:scale-110 ipadpro:scale-125 ipadpro:pt-10 laptop:scale-100 laptop:text-6xl laptop:gap-6 mobile:gap-0 pt-4 items-center justify-center">
+        <div className="flex laptop:flex-row mobile:flex-col text-4xl tablet:text-7xl mobile2:scale-110 ipadpro:scale-125 ipadpro:pt-10 laptop:pt-2 laptop:scale-100 laptop:text-6xl laptop:gap-6 mobile:gap-0 pt-4 items-center justify-center">
           <p className="font-nyxerin tracking-widest text-transparent" style={{ WebkitTextStroke: "0.5px white", WebkitTextFillColor: "transparent" }}>
             REVEALING
           </p>
