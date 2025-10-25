@@ -1,32 +1,41 @@
+// tt/tailwind.config.ts
+
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
   content: ["./src/**/*.tsx"],
   theme: {
+    // 'screens' is now *outside* 'extend'
+    screens: {
+      ...defaultTheme.screens, //  This keeps all defaults (sm, md, lg)
+      
+      // These are your custom breakpoints being ADDED
+      xs: "450px",
+      xL: "1360px",
+      "4k": "3840px",
+      laptop: "1200px",
+      mobile: "300px",
+      mobile1: "375px",
+      mobile2: "400px",
+      mobile3: "500px",
+      tablet: "750px",
+      tablet2: "900px",
+      ipadpro: "1000px",
+      ipadair: "1180px",
+      fourK: "2000px",
+    },
+
+    // 'extend' is for everything else
     extend: {
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
         nyxerin: ["Nyxerin", "sans-serif"],
-        bankGothik: ["BankGothic", "sans-serif"],
+        bankGothik: ["BankGothic", "sans-serif"], 
         orbitron: ["Orbitron", "sans-serif"],
-        sefa: ["sefa", "sans-serif"],              
-        bakbak: ["Bakbak One", "sans-serif"],      
-      },
-      screens: {
-        xs: "450px",
-        xL: "1360px",
-        "4k": "3840px",
-        laptop: "1200px",
-        mobile: "300px",
-        mobile1: "375px",
-        mobile2: "400px",
-        mobile3: "500px",
-        tablet: "750px",
-        tablet2: "900px",
-        ipadpro: "1000px",
-        ipadair: "1180px",
-        fourK: "2000px",
+        sefa: ["sefa", "sans-serif"],
+        bakbak: ["Bakbak One", "sans-serif"],
       },
       backgroundImage: {
         "red-grid": `

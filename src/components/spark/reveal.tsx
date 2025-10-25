@@ -25,7 +25,7 @@ export default function SparkReveal() {
         </div>
 
         <div className="relative flex flex-col text-9xl tablet:text-[10rem] laptop:text-9xl  ipadpro:-mt-1 laptop:scale-100 items-center -mt-6">
-          <p className="font-sefa rotate-[7.19deg] relative scale-[0.65] mobile2:scale-75 ipadpro:scale-105 left-[-10%] bakbak-one-regular text-white">
+          <p className="font-bakbak rotate-[7.19deg] relative scale-[0.65] mobile2:scale-75 ipadpro:scale-105 left-[-10%] text-white">
             स्पार्क
           </p>
           <p className="font-sefa relative left-[26%] scale-[0.65] mobile2:scale-75 ipadpro:scale-105 bg-gradient-to-r from-[#520095] via-[#B46EFF] to-[#6200A9] bg-clip-text text-transparent -mt-12">
