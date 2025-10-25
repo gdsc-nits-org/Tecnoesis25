@@ -45,7 +45,7 @@ const Login = () => {
             } catch (e) {
                 if (axios.isAxiosError(e)) {
                     if (e.status === 404) {
-                        router.push("/userSignUp");
+                        router.push("/userSignup");
                     }
                 } else {
                     toast.error("Firebase Backend Auth Error");
@@ -181,7 +181,7 @@ const ProfileCard: React.FC<UserCred> = ({
                     )}
                 </div>
                 <div className="flex flex-col gap-0.5">
-                    <h3 className="font-bankGothik text-base tracking-wide text-[#FF9595]">
+                    <h3 className="font-orbitron text-base tracking-wide text-[#FF9595]">
                         {userName}
                     </h3>
                     <span className="font-mono text-sm text-gray-400">
