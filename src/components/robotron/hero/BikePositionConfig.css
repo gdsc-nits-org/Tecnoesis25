@@ -2,102 +2,129 @@
  * TRON ARES BIKE POSITION CONFIGURATION
  * =====================================
  * 
- * Easy-to-adjust configuration for bike positioning across different screen sizes.
+ * Complete control for bike positioning across ALL devices!
  * Simply change the values below to move the bike up/down/left/right.
  * 
  * TIPS:
- * - Increase margin-bottom to move bike DOWN (use positive values like 0rem, 1rem, 2rem)
- * - Decrease margin-bottom to move bike UP (use negative values like -5rem, -10rem)
- * - Increase margin-left to move bike RIGHT (use positive values)
- * - Decrease margin-left to move bike LEFT (use negative values)
+ * - NEGATIVE values move bike UP (e.g., -30rem, -40rem)
+ * - POSITIVE values move bike DOWN (e.g., 5rem, 10rem)
+ * - Increase margin-left to move bike RIGHT
+ * - Decrease margin-left to move bike LEFT
  * - Adjust width/height to make bike bigger or smaller
  */
 
 :root {
   /* ========================================
-     MOBILE (< 640px) - Phones
+     📱 IPHONES
      ======================================== */
-
-  /* Vertical position - CHANGE THIS to move bike up/down on mobile */
-  --bike-margin-bottom-mobile: 6rem; /* Move DOWN: use 0rem, 1rem, 2rem | Move UP: use -3rem, -4rem, -5rem */
-
-  /* Horizontal position */
-  --bike-margin-left-mobile: -1rem;
-
-  /* Size */
-  --bike-width-mobile: 70%;
-  --bike-height-mobile: 40%;
-  --bike-padding-mobile: 1rem;
-
+  
+  /* iPhone SE, iPhone 8 (375px x 667px) */
+  --bike-margin-bottom-iphone-se: -24rem;
+  --bike-margin-left-iphone-se: -2rem;
+  --bike-width-iphone-se: 85%;
+  --bike-height-iphone-se: 85%;
+  
+  /* iPhone 12/13/14 Standard (390px x 844px) */
+  --bike-margin-bottom-iphone-standard: -30rem;
+  --bike-margin-left-iphone-standard: -2rem;
+  --bike-width-iphone-standard: 85%;
+  --bike-height-iphone-standard: 85%;
+  
+  /* iPhone 12/13/14 Pro Max (428px x 926px) */
+  --bike-margin-bottom-iphone-pro-max: -35rem;
+  --bike-margin-left-iphone-pro-max: -2rem;
+  --bike-width-iphone-pro-max: 85%;
+  --bike-height-iphone-pro-max: 85%;
+  
+  
   /* ========================================
-     TABLET (640px - 767px)
+     📱 SAMSUNG GALAXY
      ======================================== */
-
-  /* Vertical position - CHANGE THIS to move bike up/down on tablet */
-  --bike-margin-bottom-tablet: -6rem; /* Move DOWN: use 0rem, 1rem, 2rem | Move UP: use -4rem, -5rem, -6rem */
-
-  /* Horizontal position */
-  --bike-margin-left-tablet: -1.5rem;
-
-  /* Size */
-  --bike-width-tablet: 55%;
-  --bike-height-tablet: 42%;
-  --bike-padding-tablet: 1.5rem;
-
+  
+  /* Samsung Galaxy S20 Ultra (412px x 915px) */
+  --bike-margin-bottom-s20-ultra: -36rem;
+  --bike-margin-left-s20-ultra: -2rem;
+  --bike-width-s20-ultra: 85%;
+  --bike-height-s20-ultra: 85%;
+  
+  /* Samsung Galaxy S21/S22 (360px x 800px) */
+  --bike-margin-bottom-galaxy-standard: -28rem;
+  --bike-margin-left-galaxy-standard: -2rem;
+  --bike-width-galaxy-standard: 85%;
+  --bike-height-galaxy-standard: 85%;
+  
+  /* Samsung Galaxy Note (412px x 915px) */
+  --bike-margin-bottom-galaxy-note: -36rem;
+  --bike-margin-left-galaxy-note: -2rem;
+  --bike-width-galaxy-note: 85%;
+  --bike-height-galaxy-note: 85%;
+  
+  
   /* ========================================
-     DESKTOP (768px - 1023px)
+     📱 OTHER PHONES
      ======================================== */
-
-  /* Vertical position - CHANGE THIS to move bike up/down on desktop */
-  --bike-margin-bottom-desktop: -8rem; /* Move DOWN: use -2rem, 0rem | Move UP: use -6rem, -7rem, -8rem */
-
-  /* Horizontal position */
+  
+  /* Google Pixel 5/6 (393px x 851px) */
+  --bike-margin-bottom-pixel: -30rem;
+  --bike-margin-left-pixel: -2rem;
+  --bike-width-pixel: 85%;
+  --bike-height-pixel: 85%;
+  
+  /* Small Phones - Default (< 375px) */
+  --bike-margin-bottom-small-phone: -25rem;
+  --bike-margin-left-small-phone: -2rem;
+  --bike-width-small-phone: 85%;
+  --bike-height-small-phone: 85%;
+  
+  
+  /* ========================================
+     📱 TABLETS
+     ======================================== */
+  
+  /* iPad Mini (768px x 1024px) */
+  --bike-margin-bottom-ipad-mini: -12rem;
+  --bike-margin-left-ipad-mini: -2rem;
+  --bike-width-ipad-mini: 45%;
+  --bike-height-ipad-mini: 45%;
+  
+  /* iPad Air / iPad Pro 11" (820px x 1180px) */
+  --bike-margin-bottom-ipad-air: -16rem;
+  --bike-margin-left-ipad-air: -2rem;
+  --bike-width-ipad-air: 45%;
+  --bike-height-ipad-air: 45%;
+  
+  /* iPad Pro 12.9" (1024px x 1366px) */
+  --bike-margin-bottom-ipad-pro: -10rem;
+  --bike-margin-left-ipad-pro: -2rem;
+  --bike-width-ipad-pro: 45%;
+  --bike-height-ipad-pro: 45%;
+  
+  /* Samsung Galaxy Tab (800px x 1280px) */
+  --bike-margin-bottom-galaxy-tab: -10rem;
+  --bike-margin-left-galaxy-tab: -2rem;
+  --bike-width-galaxy-tab: 45%;
+  --bike-height-galaxy-tab: 45%;
+  
+  /* Generic Small Tablet (600-767px) */
+  --bike-margin-bottom-small-tablet: -6rem;
+  --bike-margin-left-small-tablet: -1.5rem;
+  --bike-width-small-tablet: 55%;
+  --bike-height-small-tablet: 42%;
+  
+  
+  /* ========================================
+     💻 DESKTOP
+     ======================================== */
+  
+  /* Desktop (1024px - 1440px) */
+  --bike-margin-bottom-desktop: -5rem;
   --bike-margin-left-desktop: -2rem;
-
-  /* Size */
   --bike-width-desktop: 45%;
   --bike-height-desktop: 45%;
-  --bike-padding-desktop: 2rem;
-
-  /* ========================================
-     LARGE DESKTOP (1024px+)
-     ======================================== */
-
-  /* Vertical position - CHANGE THIS to move bike up/down on large screens */
-  --bike-margin-bottom-lg: -5rem; /* Move DOWN: use -2rem, 0rem | Move UP: use -6rem, -7rem, -8rem */
-
-  /* Horizontal position */
-  --bike-margin-left-lg: -2rem;
-
-  /* Size */
-  --bike-width-lg: 45%;
-  --bike-height-lg: 45%;
-  --bike-padding-lg: 2rem;
+  
+  /* Large Desktop (1440px+) */
+  --bike-margin-bottom-large-desktop: -5rem;
+  --bike-margin-left-large-desktop: -2rem;
+  --bike-width-large-desktop: 45%;
+  --bike-height-large-desktop: 45%;
 }
-
-/* ========================================
-   QUICK ADJUSTMENT EXAMPLES
-   ========================================
-   
-   Example 1: Move bike DOWN on mobile
-   --bike-margin-bottom-mobile: 0rem;
-   
-   Example 2: Move bike UP on mobile
-   --bike-margin-bottom-mobile: -6rem;
-   
-   Example 3: Move bike DOWN on tablet
-   --bike-margin-bottom-tablet: -1rem;
-   
-   Example 4: Move bike DOWN on desktop
-   --bike-margin-bottom-desktop: -2rem;
-   
-   Example 5: Make bike bigger on mobile
-   --bike-width-mobile: 80%;
-   --bike-height-mobile: 50%;
-   
-   Example 6: Move bike to the right
-   --bike-margin-left-mobile: 2rem;
-   --bike-margin-left-tablet: 3rem;
-   --bike-margin-left-desktop: 4rem;
-   
-   ======================================== */

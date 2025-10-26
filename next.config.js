@@ -16,6 +16,14 @@ const config = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "tecnoesis-25.s3.ap-south-1.amazonaws.com",
+      },
     ],
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60,
