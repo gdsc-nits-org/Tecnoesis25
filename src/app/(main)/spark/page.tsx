@@ -1,6 +1,7 @@
 "use client";
 import photos from "../../../../data/sparkGallery.json";
 import { useState, useEffect, useRef } from "react";
+import SparkReveal from "~/components/spark/reveal";
 
 interface CardProps {
     url: string;
@@ -133,8 +134,9 @@ const SparkPage = () => {
 
     return (
         <div
-            className="text-[#ffffff] flex justify-center items-center min-h-screen absolute top-0 w-screen overflow-x-hidden mt-5"
+            className="text-[#ffffff] flex mt-10 flex-col justify-center items-center min-h-screen absolute top-0 w-screen overflow-x-hidden"
         >
+            <SparkReveal />
             <div className="relative top-0 flex flex-col items-center justify-center w-full h-[85vh]"
                 style={{
                     backgroundImage: !isMobile ? "radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.95) 100%), url(/spark/bg.gif)" : "none",
