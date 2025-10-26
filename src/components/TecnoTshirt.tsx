@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import type { User } from "firebase/auth";
+import axios from "axios";
+import { env } from "~/env";
 
 // Type definitions
 export type SizeType = "XS" | "S" | "M" | "L" | "XL" | "XXL";
@@ -10,6 +13,10 @@ type TshirtType = "tecnoesis" | "spark";
 interface TshirtState {
   size: SizeType | null;
   quantity: number;
+}
+
+interface TecnoTshirtProps {
+  user: User;
 }
 
 interface TshirtSectionProps {
@@ -331,12 +338,13 @@ function TshirtSectionDesktop({
 }
 
 // Main page component
-export default function TecnoTshirt() {
+export default function TecnoTshirt({ user }: TecnoTshirtProps) {
   const [tecnoesis, setTecnoesis] = useState<TshirtState>({
     size: null,
     quantity: 0,
   });
   const [spark, setSpark] = useState<TshirtState>({ size: null, quantity: 0 });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const updateQuantity = (type: TshirtType, newQuantity: number) => {
     // Max quantity is 1 for each t-shirt
@@ -356,27 +364,41 @@ export default function TecnoTshirt() {
     }
   };
 
-  const handleOrder = () => {
+  const handleOrder = async () => {
     const items = [];
 
+    // Validate Tecnoesis t-shirt selection
     if (tecnoesis.quantity > 0) {
       if (!tecnoesis.size) {
         toast.error("Please select a size for the Tecnoesis t-shirt");
         return;
       }
+      if (tecnoesis.quantity !== 1) {
+        toast.error("Quantity must be exactly 1 for Tecnoesis t-shirt");
+        return;
+      }
       items.push({
         type: "Tecnoesis",
         size: tecnoesis.size,
-        quantity: tecnoesis.quantity,
+        quantity: 1,
       });
     }
 
+    // Validate Spark t-shirt selection
     if (spark.quantity > 0) {
       if (!spark.size) {
         toast.error("Please select a size for the Spark t-shirt");
         return;
       }
-      items.push({ type: "Spark", size: spark.size, quantity: spark.quantity });
+      if (spark.quantity !== 1) {
+        toast.error("Quantity must be exactly 1 for Spark t-shirt");
+        return;
+      }
+      items.push({
+        type: "Spark",
+        size: spark.size,
+        quantity: 1,
+      });
     }
 
     if (items.length === 0) {
@@ -384,9 +406,57 @@ export default function TecnoTshirt() {
       return;
     }
 
-    console.log("Order:", items);
-    // Here you would handle the order submission
-    toast.success(`Order placed successfully!\n${JSON.stringify(items, null, 2)}`);
+    setIsSubmitting(true);
+
+    void toast.promise(
+      (async () => {
+        try {
+          const token = await user.getIdToken();
+          const response = await axios.post(
+            `${env.NEXT_PUBLIC_API_URL}/api/merch/order`,
+            { items },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          
+          // Reset the form after successful order
+          setTecnoesis({ size: null, quantity: 0 });
+          setSpark({ size: null, quantity: 0 });
+          
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return response.data;
+        } catch (err) {
+          if (axios.isAxiosError(err)) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            const responseData = err.response?.data as { msg?: string };
+            throw new Error(
+              responseData?.msg ?? "Failed to place order. Please try again."
+            );
+          }
+          throw new Error("An unexpected error occurred. Please try again.");
+        } finally {
+          setIsSubmitting(false);
+        }
+      })(),
+      {
+        loading: "Placing your order...",
+        success: (data) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          const orderCount: number = (data?.data?.orders?.length as number) ?? items.length;
+          return `Order placed successfully! ${orderCount} item(s) ordered.`;
+        },
+        error: (err) => {
+          if (err instanceof Error) {
+            return err.message;
+          }
+          return "An error occurred while placing the order.";
+        },
+      }
+    );
   };
 
   return (
@@ -442,7 +512,8 @@ export default function TecnoTshirt() {
           <button
             type="button"
             onClick={handleOrder}
-            className="font-bankGothik text-2xl font-bold tracking-wide text-black transition-transform hover:scale-105 active:scale-95"
+            disabled={isSubmitting}
+            className="font-bankGothik text-2xl font-bold tracking-wide text-black transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
               backgroundColor: "#8A6BE4",
               clipPath:
@@ -451,7 +522,7 @@ export default function TecnoTshirt() {
               height: "70px",
             }}
           >
-            ORDER NOW
+            {isSubmitting ? "ORDERING..." : "ORDER NOW"}
           </button>
         </div>
       </div>
@@ -495,7 +566,8 @@ export default function TecnoTshirt() {
           <button
             type="button"
             onClick={handleOrder}
-            className="font-bankGothik text-2xl font-bold tracking-wide text-black transition-transform hover:scale-105 active:scale-95"
+            disabled={isSubmitting}
+            className="font-bankGothik text-2xl font-bold tracking-wide text-black transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
               backgroundColor: "#8A6BE4",
               clipPath:
@@ -504,7 +576,7 @@ export default function TecnoTshirt() {
               height: "70px",
             }}
           >
-            ORDER NOW
+            {isSubmitting ? "ORDERING..." : "ORDER NOW"}
           </button>
         </div>
       </div>
