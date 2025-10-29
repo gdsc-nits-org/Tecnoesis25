@@ -167,6 +167,7 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
       }
     }
     void fetchEventNames(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, token]);
 
   return (

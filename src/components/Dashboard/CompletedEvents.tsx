@@ -281,6 +281,7 @@ const CompletedEvents = ({ data, token }: CompletedEventsProps) => {
       }
     }
     void fetchEventNames(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, token]);
 
   const handleOpen = (index: number) => {

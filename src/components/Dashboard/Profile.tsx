@@ -82,7 +82,7 @@ const Profile = () => {
                         {/* Profile Image */}
                         <div className="relative h-[140px] w-[140px] sm:h-[160px] sm:w-[160px] md:h-[180px] md:w-[180px]">
                             <Image
-                                src={user?.imageUrl || "/Avatar.png"}
+                                src={user?.imageUrl ?? "/Avatar.png"}
                                 alt="Profile"
                                 width={180}
                                 height={180}
@@ -113,7 +113,7 @@ const Profile = () => {
                             <div className="flex w-full items-start gap-2 sm:gap-2.5 md:gap-3">
                                 <GraduationCap className="h-[20px] w-[20px] flex-shrink-0 text-[#F2F2F2] sm:h-[26px] sm:w-[26px] md:h-[29.47px] md:w-[29.47px]" />
                                 <span className="min-w-0 flex-1 break-words font-bankGothik text-[14px] leading-[18px] text-[#F2F2F2] sm:text-[20px] sm:leading-[22px] md:text-[23.08px] md:leading-[24px]">
-                                    {user?.collegeName || "National Institute of Technology, Silchar"}
+                                    {user?.collegeName ?? "National Institute of Technology, Silchar"}
                                 </span>
                             </div>
 
@@ -121,7 +121,7 @@ const Profile = () => {
                             <div className="flex w-full items-start gap-2 sm:gap-2.5 md:gap-3">
                                 <Phone className="h-[20px] w-[20px] flex-shrink-0 text-[#F2F2F2] sm:h-[26px] sm:w-[26px] md:h-[29.47px] md:w-[29.47px]" />
                                 <span className="min-w-0 flex-1 break-words font-outfit text-[14px] leading-[20px] text-[#F2F2F2] sm:text-[20px] sm:leading-[26px] md:text-[23.08px] md:leading-[29px]">
-                                    {user?.phoneNumber || "+91 6942069420"}
+                                    {user?.phoneNumber ?? "+91 6942069420"}
                                 </span>
                             </div>
 
@@ -129,7 +129,7 @@ const Profile = () => {
                             <div className="flex w-full items-start gap-2 sm:gap-2.5 md:gap-3">
                                 <MapPin className="h-[20px] w-[20px] flex-shrink-0 text-[#F2F2F2] sm:h-[26px] sm:w-[26px] md:h-[29.47px] md:w-[29.47px]" />
                                 <span className="min-w-0 flex-1 break-words font-bankGothik text-[14px] leading-[18px] text-[#F2F2F2] sm:text-[20px] sm:leading-[22px] md:text-[23.08px] md:leading-[24px]">
-                                    {user?.email || "Address"}
+                                    {user?.email ?? "Address"}
                                 </span>
                             </div>
                         </div>
