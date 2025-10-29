@@ -1,4 +1,5 @@
 import React from "react";
+import SparkReveal from "~/components/spark/reveal";
 import SparkAbout from "~/components/spark/SparkAbout";
 import SparkFooter from "~/components/spark/SparkFooter";
 import SparkGallery from "~/components/spark/SparkGallery";
@@ -9,6 +10,7 @@ const SparkPage = () => {
     <div className="">
       <SparkLanding/>
       <SparkAbout/>
+      <SparkReveal/>
       <SparkGallery />
       <SparkFooter />
     </div>

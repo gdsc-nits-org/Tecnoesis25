@@ -119,7 +119,7 @@ const SparkGalleryDesktop = () => {
 
       // --- Boundary Check: Start of Scroll ---
       if (newScrollLeft <= 0) {
-        const sparkElement = document.getElementById("spark");
+        const sparkElement = document.getElementById("reveal");
         if (sparkElement) {
           sparkElement.scrollIntoView({ behavior: "smooth" });
         }

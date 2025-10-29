@@ -29,14 +29,8 @@ const SparkAbout = () => {
   return (
     <section
       id="about"
-      className="flex min-h-screen w-screen flex-col items-center overflow-hidden bg-black px-[5vw] pb-20 text-white md:flex-row md:pb-0"
+      className="flex min-h-screen w-screen flex-col items-center overflow-hidden bg-[url('https://res.cloudinary.com/dmezugavw/image/upload/v1761722383/grid_1_ovy88p.png')] px-[5vw] pb-20 text-white md:flex-row md:pb-0"
       style={{ perspective: "1000px" }}
-      onWheel={(e) => {
-        if (e.deltaY > 0) {
-          const gallery = document.getElementById("gallery");
-          gallery?.scrollIntoView({ behavior: "smooth" });
-        }
-      }}
     >
       <div className="max-w-4xl p-8 md:w-[35vw]">
         <div
@@ -78,7 +72,7 @@ const SparkAbout = () => {
             className="mid-right-more-anim relative top-[-3%] z-0 aspect-square h-[100%] object-contain"
           />
         </div>
-        <div className="relative flex aspect-square h-[80vw] flex-col items-end justify-between bg-[url('https://res.cloudinary.com/dmezugavw/image/upload/v1761721549/styleabout_zm6w2p.svg')] bg-cover bg-center md:h-[40vw]">
+        <div className="relative flex aspect-square h-[80vw] flex-col items-end justify-between bg-[url('https://res.cloudinary.com/dmezugavw/image/upload/v1761723060/styleabout_vmwbud.svg')] bg-cover bg-center md:h-[40vw]">
           <Image
             src="https://res.cloudinary.com/dmezugavw/image/upload/v1761721543/sparkt_noj7v7.svg"
             alt="About Spark"

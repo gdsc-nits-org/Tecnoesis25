@@ -45,7 +45,7 @@ const Login = () => {
             } catch (e) {
                 if (axios.isAxiosError(e)) {
                     if (e.status === 404) {
-                        router.push("/userSignUp");
+                        router.push("/userSignup");
                     }
                 } else {
                     toast.error("Firebase Backend Auth Error");
@@ -161,7 +161,8 @@ const ProfileCard: React.FC<UserCred> = ({
     return (
         <section className="flex w-full justify-center">
             <section
-                className="mx-4 flex w-[250px] items-center justify-start gap-3 rounded-2xl bg-black/40 px-4 py-3"
+                onClick={() => router.push("/dashboard")}
+                className="mx-4 flex w-[250px] cursor-pointer items-center justify-start gap-3 rounded-2xl bg-black/40 px-4 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,123,126,0.2)]"
                 style={{
                     background: "rgba(0, 0, 0, 0.7)",
                     border: "1px solid rgba(255, 123, 126, 0.3)",
@@ -181,7 +182,7 @@ const ProfileCard: React.FC<UserCred> = ({
                     )}
                 </div>
                 <div className="flex flex-col gap-0.5">
-                    <h3 className="font-bankGothik text-base tracking-wide text-[#FF9595]">
+                    <h3 className="font-orbitron text-base tracking-wide text-[#FF9595]">
                         {userName}
                     </h3>
                     <span className="font-mono text-sm text-gray-400">
