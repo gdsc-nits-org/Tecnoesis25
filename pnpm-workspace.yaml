@@ -1,6 +1,8 @@
 packages:
   - .
 onlyBuiltDependencies:
-  - "@tailwindcss/oxide"
+  - '@firebase/util'
+  - '@tailwindcss/oxide'
+  - protobufjs
   - sharp
   - unrs-resolver
