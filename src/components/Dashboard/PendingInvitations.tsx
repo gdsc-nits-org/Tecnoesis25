@@ -170,37 +170,28 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
   }, [data, token]);
 
   return (
-    <div className="relative ml-auto mr-8 w-[450px] lg:w-[500px]">
-      {/* Border Image */}
-      <Image
-        src="/dashboard/pending_border.png"
-        alt="Pending Invitations Border"
-        width={500}
-        height={550}
-        className="pointer-events-none absolute inset-0 z-10 h-auto w-full object-contain"
-        priority
-      />
-
+    <div className="relative w-full max-w-[450px] sm:max-w-[500px] lg:ml-auto lg:mr-8 lg:w-[500px]">
       {/* Content with Border */}
       <div
-        className="relative z-0 flex flex-col items-center"
+        className="relative flex flex-col items-center rounded-2xl"
         style={{
-          height: "500px",
+          height: "450px",
           filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-          padding: "40px 25px",
+          padding: "30px 20px",
+          border: "3px solid #D10003",
         }}
       >
         {/* Header */}
-        <div className="mb-6 flex w-full items-center justify-center text-center">
+        <div className="mb-4 flex w-full items-center justify-center text-center sm:mb-6">
           <h1
             className="font-nyxerin uppercase"
             style={{
               width: "100%",
               fontStyle: "normal",
               fontWeight: 400,
-              fontSize: "24px",
-              lineHeight: "28px",
-              letterSpacing: "0.19em",
+              fontSize: "clamp(18px, 4vw, 24px)",
+              lineHeight: "1.2",
+              letterSpacing: "0.15em",
               background:
                 "linear-gradient(137.95deg, #7A96AC 2.28%, #EAEFF3 19.8%, #C2D4E1 32.94%, #FFFFFF 50.16%, #D4DEE5 62.15%, #ABBDC8 78.69%, #BCCAD7 95.24%)",
               WebkitBackgroundClip: "text",
@@ -214,7 +205,7 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
 
         {/* Scrollable Content Container - Max 2 visible */}
         <div
-          className="flex w-full flex-col gap-5 overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-600 hover:scrollbar-thumb-gray-500"
+          className="flex w-full flex-col gap-4 overflow-y-auto pr-2 scrollbar-hide sm:gap-5"
           style={{
             maxHeight: "220px",
           }}
@@ -224,7 +215,7 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
               key={index}
               className="relative w-full flex-shrink-0"
               style={{
-                minHeight: "90px",
+                minHeight: "100px",
               }}
             >
               {/* Parallelogram Border */}
@@ -237,16 +228,16 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
               />
 
               {/* Event Info */}
-              <div className="relative z-10 flex h-full items-center justify-between px-20 py-4">
-                <div className="flex flex-1 flex-col gap-1 pr-8">
+              <div className="relative z-10 flex h-full items-center justify-between px-14 py-4 sm:px-16 sm:py-4 md:px-20">
+                <div className="flex flex-1 flex-col gap-1 pr-4 sm:pr-6 md:pr-8">
                   {/* Event Name */}
                   <div
                     className="break-words font-orbitron text-white"
                     style={{
                       fontStyle: "normal",
                       fontWeight: 700,
-                      fontSize: "15px",
-                      lineHeight: "19px",
+                      fontSize: "clamp(9px, 3vw, 15px)",
+                      lineHeight: "1.3",
                       wordWrap: "break-word",
                       overflowWrap: "break-word",
                     }}
@@ -260,8 +251,8 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
                     style={{
                       fontStyle: "normal",
                       fontWeight: 600,
-                      fontSize: "10px",
-                      lineHeight: "13px",
+                      fontSize: "clamp(7px, 2vw, 10px)",
+                      lineHeight: "1.3",
                       wordWrap: "break-word",
                       overflowWrap: "break-word",
                     }}
@@ -278,9 +269,9 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
                   <Image
                     src="/dashboard/pending_accept.png"
                     alt="Accept"
-                    width={115}
-                    height={40}
-                    className="h-auto w-[115px] transition-all duration-300 group-hover:brightness-110 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
+                    width={135}
+                    height={48}
+                    className="h-auto w-[100px] transition-all duration-300 group-hover:brightness-110 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] sm:w-[120px] md:w-[135px]"
                   />
                 </button>
               </div>

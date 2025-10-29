@@ -97,10 +97,10 @@ const Profile = () => {
 
                         {/* Name and Username */}
                         <div className="flex w-full max-w-[221px] flex-col items-center gap-1 px-4">
-                            <h2 className="flex w-full items-center justify-center text-center font-nyxerin text-[24px] leading-[28px] text-[#F2F2F2] sm:text-[28px] sm:leading-[31px] md:text-[30.55px] md:leading-[33px]">
+                            <h2 className="flex w-full items-center justify-center text-center font-nyxerin text-[20px] leading-[24px] text-[#F2F2F2] sm:text-[28px] sm:leading-[31px] md:text-[30.55px] md:leading-[33px]">
                                 {user?.firstName} {user?.middleName} {user?.lastName}
                             </h2>
-                            <p className="flex w-full items-center justify-center text-center font-nyxerin text-[14px] leading-[13px] text-[#F2F2F2] sm:text-[16px] md:text-[17.48px]">
+                            <p className="flex w-full items-center justify-center text-center font-nyxerin text-[12px] leading-[13px] text-[#F2F2F2] sm:text-[16px] md:text-[17.48px]">
                                 {user?.username}
                             </p>
                         </div>
@@ -111,24 +111,24 @@ const Profile = () => {
                         <div className="flex w-full flex-col justify-center gap-4 py-4 pr-2 sm:gap-5 sm:py-5 md:gap-6 md:py-6">
                             {/* College */}
                             <div className="flex w-full items-start gap-2 sm:gap-2.5 md:gap-3">
-                                <GraduationCap className="h-[24px] w-[24px] flex-shrink-0 text-[#F2F2F2] sm:h-[26px] sm:w-[26px] md:h-[29.47px] md:w-[29.47px]" />
-                                <span className="min-w-0 flex-1 break-words font-bankGothik text-[18px] leading-[20px] text-[#F2F2F2] sm:text-[20px] sm:leading-[22px] md:text-[23.08px] md:leading-[24px]">
+                                <GraduationCap className="h-[20px] w-[20px] flex-shrink-0 text-[#F2F2F2] sm:h-[26px] sm:w-[26px] md:h-[29.47px] md:w-[29.47px]" />
+                                <span className="min-w-0 flex-1 break-words font-bankGothik text-[14px] leading-[18px] text-[#F2F2F2] sm:text-[20px] sm:leading-[22px] md:text-[23.08px] md:leading-[24px]">
                                     {user?.collegeName || "National Institute of Technology, Silchar"}
                                 </span>
                             </div>
 
                             {/* Phone */}
                             <div className="flex w-full items-start gap-2 sm:gap-2.5 md:gap-3">
-                                <Phone className="h-[24px] w-[24px] flex-shrink-0 text-[#F2F2F2] sm:h-[26px] sm:w-[26px] md:h-[29.47px] md:w-[29.47px]" />
-                                <span className="min-w-0 flex-1 break-words font-outfit text-[18px] leading-[24px] text-[#F2F2F2] sm:text-[20px] sm:leading-[26px] md:text-[23.08px] md:leading-[29px]">
+                                <Phone className="h-[20px] w-[20px] flex-shrink-0 text-[#F2F2F2] sm:h-[26px] sm:w-[26px] md:h-[29.47px] md:w-[29.47px]" />
+                                <span className="min-w-0 flex-1 break-words font-outfit text-[14px] leading-[20px] text-[#F2F2F2] sm:text-[20px] sm:leading-[26px] md:text-[23.08px] md:leading-[29px]">
                                     {user?.phoneNumber || "+91 6942069420"}
                                 </span>
                             </div>
 
                             {/* Email */}
                             <div className="flex w-full items-start gap-2 sm:gap-2.5 md:gap-3">
-                                <MapPin className="h-[24px] w-[24px] flex-shrink-0 text-[#F2F2F2] sm:h-[26px] sm:w-[26px] md:h-[29.47px] md:w-[29.47px]" />
-                                <span className="min-w-0 flex-1 break-words font-bankGothik text-[18px] leading-[20px] text-[#F2F2F2] sm:text-[20px] sm:leading-[22px] md:text-[23.08px] md:leading-[24px]">
+                                <MapPin className="h-[20px] w-[20px] flex-shrink-0 text-[#F2F2F2] sm:h-[26px] sm:w-[26px] md:h-[29.47px] md:w-[29.47px]" />
+                                <span className="min-w-0 flex-1 break-words font-bankGothik text-[14px] leading-[18px] text-[#F2F2F2] sm:text-[20px] sm:leading-[22px] md:text-[23.08px] md:leading-[24px]">
                                     {user?.email || "Address"}
                                 </span>
                             </div>
