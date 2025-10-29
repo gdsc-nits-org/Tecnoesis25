@@ -10,7 +10,8 @@ const NavDetails = [
   { name: "Home", link: "/home" },
   { name: "Gallery", link: "/gallery" },
   { name: "Modules", link: "/modules" },
-  { name: "Merchandise", link: "/merch" },
+  { name: "Merch", link: "/merch" },
+  { name: "Spark", link: "/spark" },
   { name: "Team", link: "/team" },
 ];
 
@@ -26,6 +27,20 @@ export default function NavbarMobile() {
     const currentIndex = NavDetails.findIndex((item) => item.link === pathname);
     setActiveIndex(currentIndex);
   }, [pathname]);
+
+  // Prevent scrolling when navbar is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup function to ensure overflow is reset when component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,7 +96,7 @@ export default function NavbarMobile() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.4 }}
-              className="fixed right-0 top-0 z-50 flex h-[100dvh] w-full flex-col items-center justify-center overflow-y-auto overflow-x-hidden bg-[#0a0a0a] p-6 shadow-lg"
+              className="fixed right-0 top-0 z-50 flex h-[100dvh] w-full flex-col items-center justify-between overflow-y-auto overflow-x-hidden bg-[#0a0a0a] p-6 shadow-lg"
             >
               <div className="absolute right-4 top-4">
                 <button
@@ -97,7 +112,7 @@ export default function NavbarMobile() {
                 </button>
               </div>
 
-              <div className="flex flex-col items-center justify-center gap-12 text-lg font-medium">
+              <div className="flex flex-col items-center justify-center gap-6 text-lg font-medium">
                 <motion.div
                   initial={{ opacity: 0, x: 40 }}
                   animate={{ opacity: 1, x: 0 }}

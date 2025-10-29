@@ -7,7 +7,7 @@ import SparkLanding from "~/components/spark/SparkLanding";
 
 const SparkPage = () => {
   return (
-    <div className="">
+    <div className="overflow-x-hidden">
       <SparkLanding/>
       <SparkAbout/>
       <SparkReveal/>
