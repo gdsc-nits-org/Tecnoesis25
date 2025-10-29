@@ -649,6 +649,139 @@
   animation: neon-red-glow 2s infinite alternate;
 }
 
+@keyframes sparkTop {
+  0% {
+    transform: translate(0, 0);
+  }
+  10%{
+    transform: translate(0,0);
+  }
+  20% {
+    transform: translate(0, -30%); 
+  }
+  50% {
+    transform: translate(-50%, -30%);
+  }
+  80% {
+    transform: translate(0, -30%);
+  }
+  90%{
+    transform: translate(0,0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes sparkBottom{
+  0% {
+    transform: translate(0, 0);
+  }
+  10%{
+    transform: translate(0,0);
+  }
+  20% {
+    transform: translate(0, 30%); 
+  }
+  50% {
+    transform: translate(-50%, 30%);
+  }
+  80% {
+    transform: translate(0, 30%);
+  }
+  90%{
+    transform: translate(0,0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.spark-top-anim {
+  animation: sparkTop 6s ease-in-out infinite;
+}
+
+.spark-bot-anim {
+  animation: sparkBottom 6s ease-in-out infinite;
+}
+
+@keyframes midRightMove{
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(30%, 0);
+  }
+  80% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes midRightMoreMove{
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(0, 0)rotate(0deg);
+  }
+  50% {
+    transform: translate(50%, 0)rotate(180deg);
+  }
+  80% {
+    transform: translate(0, 0)rotate(0deg);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.mid-right-anim {
+  animation: midRightMove 6s ease-in-out infinite;
+}
+.mid-right-more-anim {
+  animation: midRightMoreMove 6s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 4px rgba(180, 110, 255, 0.55),
+      0 0 8px rgba(180, 110, 255, 0.35),
+      0 0 12px rgba(180, 110, 255, 0.25);
+  }
+
+  25% {
+    text-shadow:
+      0 0 10px rgba(180, 110, 255, 0.9),
+      0 0 20px rgba(180, 110, 255, 0.6),
+      0 0 30px rgba(180, 110, 255, 0.4);
+  }
+
+  50% {
+    text-shadow:
+      0 0 18px rgba(180, 110, 255, 1),
+      0 0 34px rgba(180, 110, 255, 0.85),
+      0 0 48px rgba(180, 110, 255, 0.6);
+  }
+
+  75% {
+    text-shadow:
+      0 0 10px rgba(180, 110, 255, 0.9),
+      0 0 20px rgba(180, 110, 255, 0.6),
+      0 0 30px rgba(180, 110, 255, 0.4);
+  }
+}
+
+.text-glow-anim {
+  animation: textGlow 3s infinite alternate;
+}
+
 /* Hide scrollbar but keep scroll functionality */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
@@ -657,4 +790,5 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
 

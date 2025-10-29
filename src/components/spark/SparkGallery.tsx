@@ -174,7 +174,7 @@ const SparkGalleryDesktop = () => {
           }}
         >
           {/* Your scrolling content */}
-          <div className="relative flex h-[36rem] gap-24 px-4 w-screen overflow-hidden">
+          <div className="relative flex h-[36rem] gap-24 px-4 w-screen">
             {/* Assuming 'photos' is defined and has a 'photos' array */}
             {photos.photos.map((photo: {id:string,url:string}, idx: number) => {
               const diagonalShift = scrollX * 3.8;
