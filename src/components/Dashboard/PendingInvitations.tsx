@@ -228,15 +228,15 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
               />
 
               {/* Event Info */}
-              <div className="relative z-10 flex h-full items-center justify-between px-14 py-4 sm:px-16 sm:py-4 md:px-20">
-                <div className="flex flex-1 flex-col gap-1 pr-4 sm:pr-6 md:pr-8">
+              <div className="relative z-10 flex h-full items-center justify-between py-4 pl-12 pr-6 sm:px-14 sm:py-4 md:px-20">
+                <div className="flex flex-1 flex-col gap-1 pr-2 sm:pr-4 md:pr-8">
                   {/* Event Name */}
                   <div
                     className="break-words font-orbitron text-white"
                     style={{
                       fontStyle: "normal",
                       fontWeight: 700,
-                      fontSize: "clamp(9px, 3vw, 15px)",
+                      fontSize: "clamp(8px, 2.5vw, 15px)",
                       lineHeight: "1.3",
                       wordWrap: "break-word",
                       overflowWrap: "break-word",
@@ -251,7 +251,7 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
                     style={{
                       fontStyle: "normal",
                       fontWeight: 600,
-                      fontSize: "clamp(7px, 2vw, 10px)",
+                      fontSize: "clamp(6px, 1.8vw, 10px)",
                       lineHeight: "1.3",
                       wordWrap: "break-word",
                       overflowWrap: "break-word",
@@ -264,14 +264,14 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
                 {/* Accept Button */}
                 <button
                   onClick={() => handleAccept(item.team.id)}
-                  className="group relative flex-shrink-0 transition-all duration-300 hover:scale-110 active:scale-95"
+                  className="group relative ml-1 mr-2 flex-shrink-0 transition-all duration-300 hover:scale-110 active:scale-95 sm:ml-2 sm:mr-2"
                 >
                   <Image
                     src="/dashboard/pending_accept.png"
                     alt="Accept"
                     width={135}
                     height={48}
-                    className="h-auto w-[100px] transition-all duration-300 group-hover:brightness-110 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] sm:w-[120px] md:w-[135px]"
+                    className="h-auto w-[85px] transition-all duration-300 group-hover:brightness-110 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] sm:w-[110px] md:w-[135px]"
                   />
                 </button>
               </div>
