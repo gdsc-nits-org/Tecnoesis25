@@ -52,66 +52,6 @@ interface PendingInvitationsProps {
 const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
   const [eventnames, setEventnames] = useState<string[]>([]);
 
-  // TODO: REMOVE - Hardcoded test data
-  const TEST_MODE = true;
-  const mockData: teamResponse[] = [
-    {
-      id: "test-1",
-      role: "MEMBER",
-      registrationStatus: "PENDING",
-      team: {
-        id: "team-1",
-        registrationStatus: "PENDING",
-        teamName: "Code Warriors",
-        extraInformation: [],
-        members: [
-          {
-            id: "member-1",
-            registrationStatus: "PENDING",
-            role: "LEADER",
-            user: {
-              id: "user-1",
-              username: "john_doe",
-              firstName: "John",
-              middleName: "A",
-              lastName: "Doe",
-              imageUrl: "/Avatar.png",
-            },
-          },
-        ],
-      },
-    },
-    {
-      id: "test-2",
-      role: "MEMBER",
-      registrationStatus: "PENDING",
-      team: {
-        id: "team-2",
-        registrationStatus: "PENDING",
-        teamName: "Tech Titans",
-        extraInformation: [],
-        members: [
-          {
-            id: "member-2",
-            registrationStatus: "PENDING",
-            role: "LEADER",
-            user: {
-              id: "user-2",
-              username: "jane_smith",
-              firstName: "Jane",
-              middleName: "B",
-              lastName: "Smith",
-              imageUrl: "/Avatar.png",
-            },
-          },
-        ],
-      },
-    },
-  ];
-  const mockEventNames = ["Hackathon 2025", "Code Sprint Challenge"];
-  const displayData = TEST_MODE ? mockData : data;
-  // END TODO
-
   const handleAccept = (teamid: string) => {
     async function changeStatus() {
       const response = await axios.patch(
@@ -125,7 +65,6 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
           },
         },
       );
-
       return response;
     }
     toast.promise(changeStatus(), {
@@ -139,13 +78,6 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
   };
 
   useEffect(() => {
-    // TODO: REMOVE - Use mock data in test mode
-    if (TEST_MODE) {
-      setEventnames(mockEventNames);
-      return;
-    }
-    // END TODO
-
     async function fetchEventNames(teams: teamResponse[]) {
       try {
         const fetchedEventNames = await Promise.all(
@@ -167,14 +99,13 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
       }
     }
     void fetchEventNames(data);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, token]);
 
   return (
-    <div className="relative w-full max-w-[450px] sm:max-w-[500px] lg:ml-auto lg:mr-8 lg:w-[500px]">
+    <div className="relative w-full max-w-[450px] sm:max-w-[500px] lg:ml-auto lg:mr-8 lg:w-[500px] group animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
       {/* Content with Border */}
       <div
-        className="relative flex flex-col items-center rounded-2xl"
+        className="relative flex flex-col items-center rounded-2xl transition-all duration-500 hover:scale-[1.02]"
         style={{
           height: "450px",
           filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
@@ -182,10 +113,16 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
           border: "3px solid #D10003",
         }}
       >
+        {/* Animated glow effect */}
+        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
+          background: 'radial-gradient(circle at center, rgba(209, 0, 3, 0.2) 0%, transparent 70%)',
+          animation: 'pulse 2s ease-in-out infinite'
+        }} />
+
         {/* Header */}
-        <div className="mb-4 flex w-full items-center justify-center text-center sm:mb-6">
+        <div className="mb-4 flex w-full items-center justify-center text-center sm:mb-6 relative z-10">
           <h1
-            className="font-nyxerin uppercase"
+            className="font-nyxerin uppercase transition-all duration-300 hover:scale-105"
             style={{
               width: "100%",
               fontStyle: "normal",
@@ -200,84 +137,91 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
               backgroundClip: "text",
             }}
           >
-            PENDING REQUESTS [{displayData.length}]
+            PENDING REQUESTS [{data.length}]
           </h1>
         </div>
 
-        {/* Scrollable Content Container - Max 2 visible */}
+        {/* Scrollable Content Container */}
         <div
-          className="flex w-full flex-col gap-4 overflow-y-auto pr-2 scrollbar-hide sm:gap-5"
+          className="flex w-full flex-col gap-4 overflow-y-auto pr-2 scrollbar-hide sm:gap-5 relative z-10"
           style={{
             maxHeight: "220px",
           }}
         >
-          {displayData.map((item, index) => (
-            <div
-              key={index}
-              className="relative w-full flex-shrink-0"
-              style={{
-                minHeight: "100px",
-              }}
-            >
-              {/* Parallelogram Border */}
-              <Image
-                src="/dashboard/pending_event_border.png"
-                alt="Event Border"
-                width={450}
-                height={90}
-                className="pointer-events-none absolute inset-0 z-[5] h-full w-full object-contain"
-              />
-
-              {/* Event Info */}
-              <div className="relative z-10 flex h-full items-center justify-between py-4 pl-12 pr-6 sm:px-14 sm:py-4 md:px-20">
-                <div className="flex flex-1 flex-col gap-1 pr-2 sm:pr-4 md:pr-8">
-                  {/* Event Name */}
-                  <div
-                    className="break-words font-orbitron text-white"
-                    style={{
-                      fontStyle: "normal",
-                      fontWeight: 700,
-                      fontSize: "clamp(8px, 2.5vw, 15px)",
-                      lineHeight: "1.3",
-                      wordWrap: "break-word",
-                      overflowWrap: "break-word",
-                    }}
-                  >
-                    {eventnames[index]}
-                  </div>
-
-                  {/* Team Name */}
-                  <div
-                    className="break-words font-orbitron text-white opacity-80"
-                    style={{
-                      fontStyle: "normal",
-                      fontWeight: 600,
-                      fontSize: "clamp(6px, 1.8vw, 10px)",
-                      lineHeight: "1.3",
-                      wordWrap: "break-word",
-                      overflowWrap: "break-word",
-                    }}
-                  >
-                    Team: {item.team.teamName}
-                  </div>
-                </div>
-
-                {/* Accept Button */}
-                <button
-                  onClick={() => handleAccept(item.team.id)}
-                  className="group relative ml-1 mr-2 flex-shrink-0 transition-all duration-300 hover:scale-110 active:scale-95 sm:ml-2 sm:mr-2"
-                >
-                  <Image
-                    src="/dashboard/pending_accept.png"
-                    alt="Accept"
-                    width={135}
-                    height={48}
-                    className="h-auto w-[85px] transition-all duration-300 group-hover:brightness-110 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] sm:w-[110px] md:w-[135px]"
-                  />
-                </button>
-              </div>
+          {data.length === 0 ? (
+            <div className="flex items-center justify-center h-full text-white/60 font-orbitron text-sm">
+              No pending invitations
             </div>
-          ))}
+          ) : (
+            data.map((item, index) => (
+              <div
+                key={index}
+                className="relative w-full flex-shrink-0 animate-slide-up hover:scale-[1.02] transition-transform duration-300"
+                style={{
+                  minHeight: "100px",
+                  animationDelay: `${index * 0.1}s`
+                }}
+              >
+                {/* Parallelogram Border */}
+                <Image
+                  src="/dashboard/pending_event_border.png"
+                  alt="Event Border"
+                  width={450}
+                  height={90}
+                  className="pointer-events-none absolute inset-0 z-[5] h-full w-full object-contain transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]"
+                />
+
+                {/* Event Info */}
+                <div className="relative z-10 flex h-full items-center justify-between py-4 pl-12 pr-6 sm:px-14 sm:py-4 md:px-20">
+                  <div className="flex flex-1 flex-col gap-1 pr-2 sm:pr-4 md:pr-8">
+                    {/* Event Name */}
+                    <div
+                      className="break-words font-orbitron text-white transition-colors duration-300 hover:text-[#FF4040]"
+                      style={{
+                        fontStyle: "normal",
+                        fontWeight: 700,
+                        fontSize: "clamp(8px, 2.5vw, 15px)",
+                        lineHeight: "1.3",
+                        wordWrap: "break-word",
+                        overflowWrap: "break-word",
+                      }}
+                    >
+                      {eventnames[index] || "Loading..."}
+                    </div>
+
+                    {/* Team Name */}
+                    <div
+                      className="break-words font-orbitron text-white opacity-80 transition-opacity duration-300 hover:opacity-100"
+                      style={{
+                        fontStyle: "normal",
+                        fontWeight: 600,
+                        fontSize: "clamp(6px, 1.8vw, 10px)",
+                        lineHeight: "1.3",
+                        wordWrap: "break-word",
+                        overflowWrap: "break-word",
+                      }}
+                    >
+                      Team: {item.team.teamName}
+                    </div>
+                  </div>
+
+                  {/* Accept Button */}
+                  <button
+                    onClick={() => handleAccept(item.team.id)}
+                    className="group/btn relative ml-1 mr-2 flex-shrink-0 transition-all duration-300 hover:scale-110 active:scale-95 sm:ml-2 sm:mr-2"
+                  >
+                    <Image
+                      src="/dashboard/pending_accept.png"
+                      alt="Accept"
+                      width={135}
+                      height={48}
+                      className="h-auto w-[85px] transition-all duration-300 group-hover/btn:brightness-110 group-hover/btn:drop-shadow-[0_0_12px_rgba(255,255,255,0.6)] sm:w-[110px] md:w-[135px]"
+                    />
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

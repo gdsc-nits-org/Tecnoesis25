@@ -34,11 +34,13 @@ interface teamResponse {
 }
 
 export const runtime = "edge";
+
 const DashBoard = () => {
   const [_user] = useAuthState(auth);
   const [pendinglist, setPendinglist] = useState<teamResponse[]>([]);
   const [allevents, setAllEvents] = useState<teamResponse[]>([]);
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchTeam() {
@@ -54,17 +56,18 @@ const DashBoard = () => {
             },
           },
         );
-        const pending = data.msg.filter((item) => {
-          const isCurrentUserPending = item.team.members.some(
+        const pending = data.msg.filter((item) =>
+          item.team.members.some(
             (member) =>
               member.id === item.id && member.registrationStatus === "PENDING",
-          );
-          return isCurrentUserPending;
-        });
+          ),
+        );
         setAllEvents(data.msg);
         setPendinglist(pending);
       } catch (err) {
-        console.log(err);
+        console.error(err);
+      } finally {
+        setIsLoading(false);
       }
     }
     void fetchTeam();
@@ -72,11 +75,11 @@ const DashBoard = () => {
 
   return (
     <div
-      className="dashboardpage flex min-h-screen w-[100%] flex-col items-center overflow-x-hidden bg-cover bg-center bg-no-repeat pt-32"
+      className="dashboardpage flex min-h-screen w-full flex-col items-center overflow-x-hidden bg-cover bg-center bg-no-repeat pt-32 animate-fade-in"
       style={{ backgroundImage: "url('/dashboard/bg.png')" }}
     >
-      <div
-        className="text-center font-nyxerin text-[36px] font-normal leading-[36px] tracking-[0.08em] capitalize sm:text-[48px] sm:leading-[40px] md:text-[56px] md:leading-[48px] lg:text-[64px] lg:leading-[52px]"
+      <h1
+        className="text-center font-nyxerin text-[36px] font-normal leading-[36px] tracking-[0.08em] uppercase sm:text-[48px] sm:leading-[40px] md:text-[56px] md:leading-[48px] lg:text-[64px] lg:leading-[52px] animate-slide-down"
         style={{
           background: 'linear-gradient(90deg, #950002 0%, #FF1D1D 44.31%, #A90003 100%)',
           WebkitBackgroundClip: 'text',
@@ -85,14 +88,14 @@ const DashBoard = () => {
         }}
       >
         Dashboard
-      </div>
+      </h1>
       <div className="mt-6 flex w-full max-w-[1400px] flex-col gap-6 px-4 sm:mt-8 sm:gap-8 md:mt-10 md:px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-10 lg:px-8 lg:mt-16">
-        <div className="flex w-full flex-row items-center justify-center lg:w-auto lg:justify-start">
+        <div className="flex w-full flex-row items-center justify-center lg:w-auto lg:justify-start animate-slide-right">
           <Profile />
         </div>
-        <div className="flex w-full flex-col items-center gap-4 sm:gap-6 lg:w-auto lg:items-end">
-          {token && <PendingInvitations data={pendinglist} token={token} />}
-          {token && <CompletedEvents data={allevents} token={token} />}
+        <div className="flex w-full flex-col items-center gap-4 sm:gap-6 lg:w-auto lg:items-end animate-slide-left">
+          {!isLoading && token && <PendingInvitations data={pendinglist} token={token} />}
+          {!isLoading && token && <CompletedEvents data={allevents} token={token} />}
         </div>
       </div>
     </div>

@@ -49,6 +49,7 @@ interface EventTableProps {
   index: number;
   opened: boolean;
   item: teamResponse;
+  onClose: () => void;
 }
 
 interface CompletedEventsProps {
@@ -56,7 +57,7 @@ interface CompletedEventsProps {
   token: string;
 }
 
-const EventTable = ({ index, opened, item, onClose }: EventTableProps & { onClose: () => void }) => {
+const EventTable = ({ opened, item, onClose }: EventTableProps) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -70,19 +71,19 @@ const EventTable = ({ index, opened, item, onClose }: EventTableProps & { onClos
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-[9998] bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 z-[9998] bg-black/50 backdrop-blur-sm animate-fade-in"
         onClick={onClose}
         style={{ cursor: 'none' }}
       />
 
       {/* Popup Modal */}
       <div
-        className="fixed left-1/2 top-1/2 z-[9998] w-[90vw] max-w-[600px] -translate-x-1/2 -translate-y-1/2 animate-in fade-in zoom-in-95 duration-300"
+        className="fixed left-1/2 top-1/2 z-[9999] w-[90vw] max-w-[600px] -translate-x-1/2 -translate-y-1/2 animate-scale-in"
         style={{ cursor: 'none' }}
       >
         {/* Modal Border/Background */}
         <div
-          className="rounded-lg p-6"
+          className="rounded-lg p-6 transition-all duration-300 hover:scale-[1.01]"
           style={{
             background:
               "linear-gradient(135deg, rgba(122, 150, 172, 0.25) 0%, rgba(171, 189, 200, 0.2) 50%, rgba(188, 202, 215, 0.25) 100%)",
@@ -94,7 +95,7 @@ const EventTable = ({ index, opened, item, onClose }: EventTableProps & { onClos
         >
           {/* Table Content */}
           <div className="relative" style={{ cursor: 'none' }}>
-            <table key={index} className="w-full table-auto" style={{ cursor: 'none' }}>
+            <table className="w-full table-auto" style={{ cursor: 'none' }}>
               <thead>
                 <tr
                   className="border-b"
@@ -117,10 +118,11 @@ const EventTable = ({ index, opened, item, onClose }: EventTableProps & { onClos
                 {item.team.members.map((member, idx) => (
                   <tr
                     key={idx}
-                    className="border-b transition-colors duration-200 hover:bg-white/5 last:border-b-0"
+                    className="border-b transition-all duration-200 hover:bg-white/5 hover:translate-x-1 last:border-b-0 animate-fade-in-up"
                     style={{
                       borderColor: "rgba(122, 150, 172, 0.2)",
                       cursor: 'none',
+                      animationDelay: `${idx * 0.05}s`
                     }}
                   >
                     <td className="px-3 py-4 font-outfit text-sm text-[#C2D4E1]">
@@ -134,14 +136,14 @@ const EventTable = ({ index, opened, item, onClose }: EventTableProps & { onClos
                       <div className="flex items-center gap-2">
                         {member.registrationStatus === "REGISTERED" ? (
                           <>
-                            <Check className="h-5 w-5 text-green-400" />
+                            <Check className="h-5 w-5 text-green-400 animate-pulse" />
                             <span className="font-outfit text-sm text-green-400">
                               Registered
                             </span>
                           </>
                         ) : (
                           <>
-                            <X className="h-5 w-5 text-amber-400" />
+                            <X className="h-5 w-5 text-amber-400 animate-pulse" />
                             <span className="font-outfit text-sm text-amber-400">
                               Pending
                             </span>
@@ -163,103 +165,10 @@ const EventTable = ({ index, opened, item, onClose }: EventTableProps & { onClos
 };
 
 const CompletedEvents = ({ data, token }: CompletedEventsProps) => {
-  // TODO: REMOVE - Hardcoded test data
-  const TEST_MODE = true;
-  const mockData: teamResponse[] = [
-    {
-      id: "completed-1",
-      role: "LEADER",
-      registrationStatus: "REGISTERED",
-      team: {
-        id: "team-3",
-        registrationStatus: "REGISTERED",
-        teamName: "Debug Dragons",
-        extraInformation: [],
-        members: [
-          {
-            id: "member-3",
-            registrationStatus: "REGISTERED",
-            role: "LEADER",
-            user: {
-              id: "user-3",
-              username: "alice_wonder",
-              firstName: "Alice",
-              middleName: "C",
-              lastName: "Wonder",
-              imageUrl: "/Avatar.png",
-            },
-          },
-          {
-            id: "member-4",
-            registrationStatus: "REGISTERED",
-            role: "MEMBER",
-            user: {
-              id: "user-4",
-              username: "bob_builder",
-              firstName: "Bob",
-              middleName: "D",
-              lastName: "Builder",
-              imageUrl: "/Avatar.png",
-            },
-          },
-        ],
-      },
-    },
-    {
-      id: "completed-2",
-      role: "MEMBER",
-      registrationStatus: "REGISTERED",
-      team: {
-        id: "team-4",
-        registrationStatus: "REGISTERED",
-        teamName: "Binary Beasts",
-        extraInformation: [],
-        members: [
-          {
-            id: "member-5",
-            registrationStatus: "REGISTERED",
-            role: "LEADER",
-            user: {
-              id: "user-5",
-              username: "charlie_dev",
-              firstName: "Charlie",
-              middleName: "E",
-              lastName: "Developer",
-              imageUrl: "/Avatar.png",
-            },
-          },
-          {
-            id: "member-6",
-            registrationStatus: "PENDING",
-            role: "MEMBER",
-            user: {
-              id: "user-6",
-              username: "diana_coder",
-              firstName: "Diana",
-              middleName: "F",
-              lastName: "Coder",
-              imageUrl: "/Avatar.png",
-            },
-          },
-        ],
-      },
-    },
-  ];
-  const mockEventNames = ["AI Workshop", "Web Dev Bootcamp"];
-  const displayData = TEST_MODE ? mockData : data;
-  // END TODO
-
-  const [opened, setOpened] = useState<boolean[]>(Array(displayData.length).fill(false));
+  const [opened, setOpened] = useState<boolean[]>(Array(data.length).fill(false));
   const [eventnames, setEventnames] = useState<string[]>([]);
 
   useEffect(() => {
-    // TODO: REMOVE - Use mock data in test mode
-    if (TEST_MODE) {
-      setEventnames(mockEventNames);
-      return;
-    }
-    // END TODO
-
     async function fetchEventNames(teams: teamResponse[]) {
       try {
         const fetchedEventNames = await Promise.all(
@@ -281,7 +190,6 @@ const CompletedEvents = ({ data, token }: CompletedEventsProps) => {
       }
     }
     void fetchEventNames(data);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, token]);
 
   const handleOpen = (index: number) => {
@@ -293,10 +201,10 @@ const CompletedEvents = ({ data, token }: CompletedEventsProps) => {
   };
 
   return (
-    <div className="relative w-full max-w-[450px] sm:max-w-[500px] lg:ml-auto lg:mr-8 lg:w-[500px]">
+    <div className="relative w-full max-w-[450px] sm:max-w-[500px] lg:ml-auto lg:mr-8 lg:w-[500px] group animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
       {/* Content with Border */}
       <div
-        className="relative flex flex-col items-center rounded-2xl"
+        className="relative flex flex-col items-center rounded-2xl transition-all duration-500 hover:scale-[1.02]"
         style={{
           height: "450px",
           filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
@@ -304,10 +212,16 @@ const CompletedEvents = ({ data, token }: CompletedEventsProps) => {
           border: "3px solid #D10003",
         }}
       >
+        {/* Animated glow effect */}
+        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{
+          background: 'radial-gradient(circle at center, rgba(209, 0, 3, 0.2) 0%, transparent 70%)',
+          animation: 'pulse 2s ease-in-out infinite'
+        }} />
+
         {/* Header */}
-        <div className="mb-4 flex w-full items-center justify-center text-center sm:mb-6">
+        <div className="mb-4 flex w-full items-center justify-center text-center sm:mb-6 relative z-10">
           <h1
-            className="font-nyxerin uppercase"
+            className="font-nyxerin uppercase transition-all duration-300 hover:scale-105"
             style={{
               width: "100%",
               fontStyle: "normal",
@@ -322,93 +236,99 @@ const CompletedEvents = ({ data, token }: CompletedEventsProps) => {
               backgroundClip: "text",
             }}
           >
-            EVENTS REGISTERED [{displayData.length}]
+            EVENTS REGISTERED [{data.length}]
           </h1>
         </div>
 
-        {/* Scrollable Content Container - Max 2 visible */}
+        {/* Scrollable Content Container */}
         <div
-          className="flex w-full flex-col gap-4 overflow-y-auto pr-2 scrollbar-hide sm:gap-5"
+          className="flex w-full flex-col gap-4 overflow-y-auto pr-2 scrollbar-hide sm:gap-5 relative z-10"
           style={{
             maxHeight: "220px",
           }}
         >
-          {displayData.map((item, index) => (
-            <div key={index} className="relative w-full flex-shrink-0">
-              <div
-                className="relative"
-                style={{
-                  minHeight: "100px",
-                }}
-              >
-                {/* Parallelogram Border */}
-                <Image
-                  src="/dashboard/pending_event_border.png"
-                  alt="Event Border"
-                  width={450}
-                  height={90}
-                  className="pointer-events-none absolute inset-0 z-[5] h-full w-full object-contain"
-                />
-
-                {/* Event Info */}
-                <div className="relative z-10 flex h-full items-center justify-between py-8 pl-12 pr-6 sm:px-14 sm:py-4 md:px-20">
-                  <div className="flex flex-1 flex-col gap-1 pr-2 sm:pr-4 md:pr-8">
-                    {/* Event Name */}
-                    <div
-                      className="break-words font-orbitron text-white"
-                      style={{
-                        fontStyle: "normal",
-                        fontWeight: 700,
-                        fontSize: "clamp(8px, 2.5vw, 15px)",
-                        lineHeight: "1.3",
-                        wordWrap: "break-word",
-                        overflowWrap: "break-word",
-                      }}
-                    >
-                      {eventnames[index]}
-                    </div>
-
-                    {/* Team Name */}
-                    <div
-                      className="break-words font-orbitron text-white opacity-80"
-                      style={{
-                        fontStyle: "normal",
-                        fontWeight: 600,
-                        fontSize: "clamp(6px, 1.8vw, 10px)",
-                        lineHeight: "1.3",
-                        wordWrap: "break-word",
-                        overflowWrap: "break-word",
-                      }}
-                    >
-                      Team: {item.team.teamName}
-                    </div>
-                  </div>
-
-                  {/* View Team Button */}
-                  <button
-                    onClick={() => handleOpen(index)}
-                    className="group relative ml-1 mr-2 flex-shrink-0 transition-all duration-300 hover:scale-105 active:scale-95 sm:ml-2 sm:mr-2"
-                  >
-                    <Image
-                      src="/dashboard/viewteam_button.png"
-                      alt="View Team"
-                      width={135}
-                      height={48}
-                      className="h-auto w-[85px] transition-all duration-300 group-hover:brightness-110 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] sm:w-[110px] md:w-[135px]"
-                    />
-                  </button>
-                </div>
-              </div>
-
-              {/* Expandable Team Table */}
-              <EventTable
-                opened={opened[index]!}
-                index={index}
-                item={item}
-                onClose={() => handleOpen(index)}
-              />
+          {data.length === 0 ? (
+            <div className="flex items-center justify-center h-full text-white/60 font-orbitron text-sm">
+              No registered events
             </div>
-          ))}
+          ) : (
+            data.map((item, index) => (
+              <div key={index} className="relative w-full flex-shrink-0 animate-slide-up hover:scale-[1.02] transition-transform duration-300" style={{ animationDelay: `${index * 0.1}s` }}>
+                <div
+                  className="relative"
+                  style={{
+                    minHeight: "100px",
+                  }}
+                >
+                  {/* Parallelogram Border */}
+                  <Image
+                    src="/dashboard/pending_event_border.png"
+                    alt="Event Border"
+                    width={450}
+                    height={90}
+                    className="pointer-events-none absolute inset-0 z-[5] h-full w-full object-contain transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]"
+                  />
+
+                  {/* Event Info */}
+                  <div className="relative z-10 flex h-full items-center justify-between py-8 pl-12 pr-6 sm:px-14 sm:py-4 md:px-20">
+                    <div className="flex flex-1 flex-col gap-1 pr-2 sm:pr-4 md:pr-8">
+                      {/* Event Name */}
+                      <div
+                        className="break-words font-orbitron text-white transition-colors duration-300 hover:text-[#FF4040]"
+                        style={{
+                          fontStyle: "normal",
+                          fontWeight: 700,
+                          fontSize: "clamp(8px, 2.5vw, 15px)",
+                          lineHeight: "1.3",
+                          wordWrap: "break-word",
+                          overflowWrap: "break-word",
+                        }}
+                      >
+                        {eventnames[index] || "Loading..."}
+                      </div>
+
+                      {/* Team Name */}
+                      <div
+                        className="break-words font-orbitron text-white opacity-80 transition-opacity duration-300 hover:opacity-100"
+                        style={{
+                          fontStyle: "normal",
+                          fontWeight: 600,
+                          fontSize: "clamp(6px, 1.8vw, 10px)",
+                          lineHeight: "1.3",
+                          wordWrap: "break-word",
+                          overflowWrap: "break-word",
+                        }}
+                      >
+                        Team: {item.team.teamName}
+                      </div>
+                    </div>
+
+                    {/* View Team Button */}
+                    <button
+                      onClick={() => handleOpen(index)}
+                      className="group/btn relative ml-1 mr-2 flex-shrink-0 transition-all duration-300 hover:scale-110 active:scale-95 sm:ml-2 sm:mr-2"
+                    >
+                      <Image
+                        src="/dashboard/viewteam_button.png"
+                        alt="View Team"
+                        width={135}
+                        height={48}
+                        className="h-auto w-[85px] transition-all duration-300 group-hover/btn:brightness-110 group-hover/btn:drop-shadow-[0_0_12px_rgba(255,255,255,0.6)] sm:w-[110px] md:w-[135px]"
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Expandable Team Table */}
+                <EventTable
+                  opened={opened[index]!}
+                  index={index}
+                  item={item}
+                  onClose={() => handleOpen(index)}
+                />
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>
