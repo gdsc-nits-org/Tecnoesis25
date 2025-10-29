@@ -295,7 +295,7 @@ export default function Modules() {
 
       {/* View Details Button */}
       <CustomButton
-        text="Modules Comming Soon"
+        text="Modules Coming Soon"
         width="auto"
         height={isMobile ? 50 : 70}
         fontSize={isMobile ? 14 : 18}
