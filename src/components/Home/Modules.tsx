@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import CustomButton from "../CustomButton";
+import Link from "next/link";
 
 export default function Modules() {
   const isMobile = false; // You can implement proper mobile detection if needed
@@ -294,12 +295,14 @@ export default function Modules() {
       </div>
 
       {/* View Details Button */}
-      <CustomButton
-        text="Modules Comming Soon"
-        width="auto"
-        height={isMobile ? 50 : 70}
-        fontSize={isMobile ? 14 : 18}
-      />
+      <Link href="/modules" className="z-10">
+        <CustomButton
+          text="View All"
+          width={150}
+          height={isMobile ? 50 : 70}
+          fontSize={isMobile ? 14 : 28}
+        />
+      </Link>
     </section>
   );
 }

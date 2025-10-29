@@ -9,8 +9,8 @@ import Login from "../GoogleAuth";
 const NavDetails = [
   { name: "Home", link: "/home" },
   { name: "Gallery", link: "/gallery" },
-  // { name: "About", link: "/about" },
-  // { name: "Modules", link: "/modules" },
+  { name: "Modules", link: "/modules" },
+  { name: "Merchandise", link: "/merch" },
   { name: "Team", link: "/team" },
 ];
 

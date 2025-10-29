@@ -62,11 +62,10 @@ const NavbarDesktop = () => {
         </div>
 
         <div
-          className={`flex flex-1 items-center justify-center rounded-lg transition-all duration-500 ease-in-out ${
-            isAnyHovered
+          className={`flex flex-1 items-center justify-center rounded-lg transition-all duration-500 ease-in-out ${isAnyHovered
               ? "gap-8 px-4 pt-6 xl:gap-10 "
               : "gap-6 px-2 pt-4 xl:gap-8"
-          }`}
+            }`}
         >
           {NavDetails.map((item, index) => {
             const isActive = index === activeIndex;
@@ -93,19 +92,17 @@ const NavbarDesktop = () => {
                   alt={item.name}
                   width={50}
                   height={50}
-                  className={`transition-transform duration-500 ease-in-out ${
-                    shouldHighlight
+                  className={`transition-transform duration-500 ease-in-out ${shouldHighlight
                       ? "scale-125 opacity-100"
                       : "scale-100 opacity-90"
-                  }`}
+                    }`}
                 />
 
                 <span
-                  className={`mt-2 max-w-[80px] transform text-wrap font-nyxerin text-sm font-semibold text-[#FF9595] transition-all duration-500 ease-in-out ${
-                    shouldHighlight
+                  className={`mt-2 max-w-[80px] transform text-wrap font-nyxerin text-sm font-semibold text-[#FF9595] transition-all duration-500 ease-in-out ${shouldHighlight
                       ? "mt-2 translate-y-0 opacity-100"
                       : "pointer-events-none -translate-y-1 opacity-0"
-                  }`}
+                    }`}
                 >
                   {item.name}
                 </span>
@@ -130,13 +127,7 @@ const NavDetails = [
     hoverImg: "/ItemState2.svg",
     clickedImg: "/ItemState3.svg",
   },
-  // {
-  //   name: "About",
-  //   link: "/home#about",
-  //   defaultImg: "/ItemState1.svg",
-  //   hoverImg: "/ItemState2.svg",
-  //   clickedImg: "/ItemState3.svg",
-  // },
+
   // {
   //   name: "Events",
   //   link: "/events",
@@ -147,6 +138,20 @@ const NavDetails = [
   {
     name: "Gallery",
     link: "/gallery",
+    defaultImg: "/ItemState1.svg",
+    hoverImg: "/ItemState2.svg",
+    clickedImg: "/ItemState3.svg",
+  },
+  {
+    name: "Modules",
+    link: "/modules",
+    defaultImg: "/ItemState1.svg",
+    hoverImg: "/ItemState2.svg",
+    clickedImg: "/ItemState3.svg",
+  },
+  {
+    name: "Merchandise",
+    link: "/merch",
     defaultImg: "/ItemState1.svg",
     hoverImg: "/ItemState2.svg",
     clickedImg: "/ItemState3.svg",
