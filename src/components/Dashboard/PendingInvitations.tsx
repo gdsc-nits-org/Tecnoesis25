@@ -186,7 +186,7 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
                         overflowWrap: "break-word",
                       }}
                     >
-                      {eventnames[index] || "Loading..."}
+                      {eventnames[index] ?? "Loading..."}
                     </div>
 
                     {/* Team Name */}
