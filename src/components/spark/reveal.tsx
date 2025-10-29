@@ -1,8 +1,18 @@
+"use client";
+
 import Image from "next/image";
 
 export default function SparkReveal() {
   return (
-    <div className="relative w-screen h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/overlay.png')" }}>
+    <div id="reveal"
+     className="relative w-screen h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/overlay.png')" }}
+      onWheel={(e) => {
+        if (e.deltaY > 0) {
+          const gallery = document.getElementById("gallery");
+          gallery?.scrollIntoView({ behavior: "smooth" });
+        }
+      }}
+    >
 
       <div className="absolute top-8 left-1/2  transform -translate-x-1/2 flex flex-col items-center">
 
