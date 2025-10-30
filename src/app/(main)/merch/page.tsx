@@ -8,6 +8,7 @@ import axios from "axios";
 import { env } from "~/env";
 import TecnoTshirt from "~/components/TecnoTshirt";
 import MerchOptIn from "~/components/MerchOptIn";
+import Login from "~/components/GoogleAuth";
 
 export default function MerchPage() {
   const [user, loading] = useAuthState(auth);
@@ -33,7 +34,7 @@ export default function MerchPage() {
             },
           }
         );
-        
+
         // Response structure is { msg: { hasOpted: boolean } }
         setHasOptedIn(data.msg.hasOpted);
       } catch (error) {
@@ -59,7 +60,7 @@ export default function MerchPage() {
     );
   }
 
-  // Not authenticated - redirect to login/signup
+  // Not authenticated - show sign-in component
   if (!user) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-black px-6">
@@ -70,19 +71,9 @@ export default function MerchPage() {
           <p className="mb-6 font-bankGothik text-lg text-gray-300">
             Please sign in to access the merchandise store.
           </p>
-          <button
-            onClick={() => router.push("/userSignup")}
-            className="font-bankGothik text-xl font-bold tracking-wide text-black transition-transform hover:scale-105 active:scale-95"
-            style={{
-              backgroundColor: "#8A6BE4",
-              clipPath:
-                "polygon(6% 0%, 38% 0%, 41% 14%, 68% 14%, 71% 0%, 94% 0%, 97% 15%, 100% 50%, 97% 85%, 94% 100%, 71% 100%, 68% 86%, 32% 86%, 29% 100%, 6% 100%, 3% 85%, 0% 50%, 3% 15%)",
-              width: "220px",
-              height: "60px",
-            }}
-          >
-            SIGN IN
-          </button>
+          <div className="flex items-center justify-center">
+            <Login />
+          </div>
         </div>
       </main>
     );
