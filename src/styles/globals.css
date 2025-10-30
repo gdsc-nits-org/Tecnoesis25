@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 @font-face {
   font-family: "nyxerin";
@@ -358,6 +364,8 @@
   font-style: normal;
 }
 
+
+
 .glitch-text {
   position: relative;
   color: white;
@@ -541,6 +549,27 @@
 }
 
 @font-face {
+  font-family: "sefa";
+  src: url("/fonts/sefa.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-sefa {
+  font-family: "sefa", sans-serif;
+}
+
+.bakbak-one-regular {
+  font-family: "Bakbak One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+
+
+
+@font-face {
   font-family: "bankgothic";
   src: url("/fonts/DEMO-bgt45.otf") format("opentype");
   font-weight: normal;
@@ -590,3 +619,320 @@
   transform-origin: center;
   animation: rotateAntiClockwise 20s linear infinite;
 }
+
+
+.bg-grid-pattern {
+  background-image: url('/grid.png');
+  background-repeat: repeat;
+  background-size: auto;
+  background-position: center;
+}
+
+.fade-mask {
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 1) 100%);
+  width: 100%;
+  height: 100%;
+}
+@font-face {
+  font-family: "BankGothic";
+  src: url("/BankGothic Md BT.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@keyframes neon-glow-blue {
+  0% {
+    box-shadow:
+      0 0 8px rgba(59, 236, 255, 0.5),
+      0 0 15px rgba(59, 236, 255, 0.3),
+      0 0 20px rgba(59, 236, 255, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(59, 236, 255, 0.7),
+      0 0 20px rgba(59, 236, 255, 0.5),
+      0 0 25px rgba(59, 236, 255, 0.3);
+  }
+  100% {
+    box-shadow:
+      0 0 8px rgba(59, 236, 255, 0.5),
+      0 0 15px rgba(59, 236, 255, 0.3),
+      0 0 20px rgba(59, 236, 255, 0.2);
+  }
+}
+
+.toast-theme-blue {
+  background-color: #1b1f23;
+  color: #3becff;
+  border: 2px solid #3becff;
+  padding: 16px;
+  animation: neon-glow-blue 2s infinite alternate;
+}
+
+@keyframes neon-red-glow {
+  0% {
+    box-shadow:
+      0 0 8px rgba(255, 64, 64, 0.5),
+      0 0 15px rgba(255, 64, 64, 0.3),
+      0 0 20px rgba(255, 64, 64, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(255, 64, 64, 0.7),
+      0 0 20px rgba(255, 64, 64, 0.5),
+      0 0 25px rgba(255, 64, 64, 0.3);
+  }
+  100% {
+    box-shadow:
+      0 0 8px rgba(255, 64, 64, 0.5),
+      0 0 15px rgba(255, 64, 64, 0.3),
+      0 0 20px rgba(255, 64, 64, 0.2);
+  }
+}
+
+.toast-theme-red {
+  background-color: #1b1f23;
+  color: #ff4040;
+  border: 2px solid #ff4040;
+  padding: 16px;
+  animation: neon-red-glow 2s infinite alternate;
+}
+
+
+@keyframes sparkTop {
+  0% {
+    transform: translate(0, 0);
+  }
+  10%{
+    transform: translate(0,0);
+  }
+  20% {
+    transform: translate(0, -30%); 
+  }
+  50% {
+    transform: translate(-50%, -30%);
+  }
+  80% {
+    transform: translate(0, -30%);
+  }
+  90%{
+    transform: translate(0,0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes sparkBottom{
+  0% {
+    transform: translate(0, 0);
+  }
+  10%{
+    transform: translate(0,0);
+  }
+  20% {
+    transform: translate(0, 30%); 
+  }
+  50% {
+    transform: translate(-50%, 30%);
+  }
+  80% {
+    transform: translate(0, 30%);
+  }
+  90%{
+    transform: translate(0,0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.spark-top-anim {
+  animation: sparkTop 6s ease-in-out infinite;
+}
+
+.spark-bot-anim {
+  animation: sparkBottom 6s ease-in-out infinite;
+}
+
+@keyframes midRightMove{
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(30%, 0);
+  }
+  80% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes midRightMoreMove{
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(0, 0)rotate(0deg);
+  }
+  50% {
+    transform: translate(50%, 0)rotate(180deg);
+  }
+  80% {
+    transform: translate(0, 0)rotate(0deg);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.mid-right-anim {
+  animation: midRightMove 6s ease-in-out infinite;
+}
+.mid-right-more-anim {
+  animation: midRightMoreMove 6s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 4px rgba(180, 110, 255, 0.55),
+      0 0 8px rgba(180, 110, 255, 0.35),
+      0 0 12px rgba(180, 110, 255, 0.25);
+  }
+
+  25% {
+    text-shadow:
+      0 0 10px rgba(180, 110, 255, 0.9),
+      0 0 20px rgba(180, 110, 255, 0.6),
+      0 0 30px rgba(180, 110, 255, 0.4);
+  }
+
+  50% {
+    text-shadow:
+      0 0 18px rgba(180, 110, 255, 1),
+      0 0 34px rgba(180, 110, 255, 0.85),
+      0 0 48px rgba(180, 110, 255, 0.6);
+  }
+
+  75% {
+    text-shadow:
+      0 0 10px rgba(180, 110, 255, 0.9),
+      0 0 20px rgba(180, 110, 255, 0.6),
+      0 0 30px rgba(180, 110, 255, 0.4);
+  }
+}
+
+.text-glow-anim {
+  animation: textGlow 3s infinite alternate;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Dashboard Animations */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.6s ease-out;
+}
+
+.animate-slide-right {
+  animation: slide-right 0.8s ease-out;
+}
+
+.animate-slide-left {
+  animation: slide-left 0.8s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+
