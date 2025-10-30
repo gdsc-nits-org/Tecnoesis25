@@ -79,7 +79,7 @@ export default function MerchOptIn({ user, onOptInSuccess }: MerchOptInProps) {
         >
           {/* Title */}
           <h1 className="text-center font-bankGothik text-4xl font-bold tracking-wider md:text-5xl lg:text-6xl">
-            MERCHANDISE OPT-IN
+            MERCHANDISE OPT IN
           </h1>
 
           {/* Divider */}
@@ -98,16 +98,16 @@ export default function MerchOptIn({ user, onOptInSuccess }: MerchOptInProps) {
             </p>
             <p className="mb-6 font-bankGothik text-base leading-relaxed text-gray-300 md:text-lg">
               To order our exclusive limited-edition merchandise, you need to
-              opt-in for BHM. This allows you to order
-              our premium Tron-inspired merchandise collection.
+              opt in for BHM. This allows you to order
+              our premium Tron inspired merchandise collection.
             </p>
             <div
               className="mb-6 rounded-lg border border-purple-400/30 bg-purple-900/20 p-4 text-left"
             >
-              <p className="font-bankGothik text-sm text-purple-200 md:text-base">
+              <p className="font-orbitron text-sm text-purple-200 md:text-base">
                 Once you opt-in, you&apos;ll get access to:
               </p>
-              <ul className="mt-2 list-disc space-y-1 font-bankGothik text-sm text-purple-200 md:text-base pl-6">
+              <ul className="mt-2 list-disc space-y-1 font-orbitron text-sm text-purple-200 md:text-base pl-6">
                 <li>Exclusive Tecnoesis T-shirts</li>
                 <li>Limited-edition Spark collection</li>
                 <li>Premium quality merchandise</li>
@@ -138,7 +138,7 @@ export default function MerchOptIn({ user, onOptInSuccess }: MerchOptInProps) {
               height: "70px",
             }}
           >
-            {isSubmitting ? "OPTING IN..." : "OPT-IN NOW"}
+            {isSubmitting ? "OPTING IN..." : "OPT IN NOW"}
           </button>
         </div>
       </div>
