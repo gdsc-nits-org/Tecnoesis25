@@ -107,6 +107,7 @@ interface Event {
   name: string;
   maxTeamSize: number;
   minTeamSize: number;
+  registrationFee: number;
 }
 
 interface UserResponse {
@@ -142,12 +143,17 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
   const [formData, setFormData] = useState<{
     teamName: string;
     teamLeader: string;
+    transactionId: string;
     [key: string]: string | string[];
   }>({
     teamName: "",
     teamLeader: "",
     members: [] as string[],
+    transactionId: "",
   });
+
+  const [verificationPhoto, setVerificationPhoto] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
 
   const [event, setEvent] = useState<Event | null>(null);
@@ -210,6 +216,33 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
     }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        toast.error('Please upload a valid image file (JPEG, PNG, or WebP)');
+        return;
+      }
+      
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error('File size must be less than 5MB');
+        return;
+      }
+
+      setVerificationPhoto(file);
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -219,6 +252,18 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
       .map(([_, username]) => username as string);
 
     setFormData((prevData) => ({ ...prevData, members: memberUsernames }));
+
+    // Validate payment fields if registration fee > 0
+    if (event && event.registrationFee > 0) {
+      if (!formData.transactionId?.trim()) {
+        toast.error('Transaction ID is required for paid events');
+        return;
+      }
+      if (!verificationPhoto) {
+        toast.error('Payment verification screenshot is required');
+        return;
+      }
+    }
 
     // Move to next step (team preview)
     setStep(2);
@@ -239,29 +284,43 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
           );
           const token = await user.getIdToken();
 
-          // Prepare request body - only include team name for team events
-          const requestBody: {
-            name?: string;
-            members: string[];
-            extraInformation: Record<string, unknown>[];
-          } = {
-            members: filteredMembers,
-            extraInformation: [],
-          };
+          // Create FormData for multipart/form-data
+          const formDataToSend = new FormData();
+
+          // Add members
+          filteredMembers.forEach((member) => {
+            formDataToSend.append('members', member);
+          });
+
+          // Add extraInformation
+          formDataToSend.append('extraInformation', JSON.stringify([]));
 
           // Only add team name for team events (maxTeamSize > 1)
           if (event.maxTeamSize > 1) {
             if (!formData.teamName?.trim()) {
               throw new Error("Team name is required for team events");
             }
-            requestBody.name = formData.teamName;
+            formDataToSend.append('name', formData.teamName);
+          }
+
+          // Add payment details if registration fee > 0
+          if (event.registrationFee > 0) {
+            if (formData.transactionId?.trim()) {
+              formDataToSend.append('transactionId', formData.transactionId);
+            }
+            if (verificationPhoto) {
+              formDataToSend.append('verificationPhoto', verificationPhoto);
+            }
           }
 
           await axios.post(
             `${env.NEXT_PUBLIC_API_URL}/api/team/event/${id}/add`,
-            requestBody,
+            formDataToSend,
             {
-              headers: { Authorization: `Bearer ${token}` },
+              headers: { 
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+              },
             },
           );
 
@@ -317,6 +376,9 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
             </h2>
             <div className="text-sm lg:text-xl font-bankGothik text-gray-300">
               Team Size: <span className="text-cyan-400">{event.minTeamSize}</span> - <span className="text-cyan-400">{event.maxTeamSize}</span> members
+            </div>
+            <div className="text-sm lg:text-xl font-bankGothik text-gray-300">
+              Registration Fee: <span className="text-white">{event.registrationFee}</span> INR
             </div>
 
             <form
@@ -407,6 +469,105 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
                   </div>
                 );
               })}
+
+              {/* Payment fields - only show if registration fee > 0 */}
+              {event.registrationFee > 0 && (
+                <>
+                  <div className="pt-4 border-t border-red-700/30">
+                    <h3 className="text-center text-lg md:text-2xl font-bankGothik text-red-500 mb-4">
+                      Payment Details
+                    </h3>
+                  </div>
+
+                  {/* Transaction ID */}
+                  <div className="flex items-center space-x-1 md:space-x-2 relative">
+                    <label
+                      htmlFor="transactionId"
+                      className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-28 md:w-60 font-bankGothik text-center"
+                    >
+                      Transaction ID
+                    </label>
+
+                    <div className="absolute left-[6.8rem] md:left-[calc(14.35rem)] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
+                      <Image src={arrowRight} alt="Right Arrow" width={10} height={10} className="md:w-[15px] md:h-[15px]" />
+                    </div>
+
+                    <input
+                      id="transactionId"
+                      name="transactionId"
+                      type="text"
+                      onChange={handleChange}
+                      value={formData.transactionId ?? ""}
+                      className="flex-grow bg-[#A4000040] bg-opacity-70 placeholder-red-400 text-white font-bankGothik py-1.5 md:py-3 px-2 pl-4 md:px-4 md:pl-10 text-xs md:text-base focus:outline-none focus:ring-2 focus:ring-red-600 transition"
+                      placeholder="Enter Transaction ID"
+                      required
+                    />
+                  </div>
+
+                  {/* Payment Screenshot Upload */}
+                  <div className="flex flex-col space-y-2">
+                    <div className="flex items-center space-x-1 md:space-x-2 relative">
+                      <label
+                        htmlFor="verificationPhoto"
+                        className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-28 md:w-60 font-bankGothik text-center cursor-pointer"
+                      >
+                        Payment Proof
+                      </label>
+
+                      <div className="absolute left-[6.8rem] md:left-[calc(14.35rem)] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
+                        <Image src={arrowRight} alt="Right Arrow" width={10} height={10} className="md:w-[15px] md:h-[15px]" />
+                      </div>
+
+                      <div className="flex-grow bg-[#A4000040] bg-opacity-70 py-1.5 md:py-3 px-2 pl-4 md:px-4 md:pl-10">
+                        <input
+                          id="verificationPhoto"
+                          name="verificationPhoto"
+                          type="file"
+                          accept="image/jpeg,image/jpg,image/png,image/webp"
+                          onChange={handleFileChange}
+                          className="hidden"
+                          required
+                        />
+                        <label
+                          htmlFor="verificationPhoto"
+                          className="cursor-pointer text-white font-bankGothik text-xs md:text-base flex items-center justify-between"
+                        >
+                          <span className="text-red-400">
+                            {verificationPhoto ? verificationPhoto.name : "Upload Payment Screenshot"}
+                          </span>
+                          <span className="text-cyan-400 text-xs">
+                            {verificationPhoto ? "✓ Uploaded" : "Max 5MB"}
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Image Preview */}
+                    {photoPreview && (
+                      <div className="flex justify-center mt-4">
+                        <div className="relative w-full max-w-md h-48 md:h-64 border-2 border-red-700 rounded-lg overflow-hidden">
+                          <Image
+                            src={photoPreview}
+                            alt="Payment verification preview"
+                            fill
+                            className="object-contain"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setVerificationPhoto(null);
+                              setPhotoPreview(null);
+                            }}
+                            className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center transition"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
             </form>
             <CustomButton
               text="Register"
@@ -437,6 +598,34 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
             <div className="text-xs md:text-xl font-bankGothik text-gray-300">
               Team Size Requirements: <span className="text-cyan-400">{event.minTeamSize}</span> - <span className="text-cyan-400">{event.maxTeamSize}</span> members
             </div>
+
+            {/* Payment Information Display */}
+            {event.registrationFee > 0 && (
+              <div className="bg-red-900/20 border border-red-700 p-3 md:p-4 rounded-md w-full max-w-[95%] md:max-w-2xl mb-4">
+                <h3 className="text-center text-lg md:text-xl font-bankGothik text-red-400 mb-2">
+                  Payment Information
+                </h3>
+                <div className="space-y-2 text-sm md:text-base">
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Transaction ID:</span>
+                    <span className="text-white font-mono">{formData.transactionId}</span>
+                  </div>
+                  {photoPreview && (
+                    <div className="mt-2">
+                      <p className="text-gray-400 mb-2">Payment Verification:</p>
+                      <div className="relative w-full h-32 md:h-40 border border-red-700 rounded overflow-hidden">
+                        <Image
+                          src={photoPreview}
+                          alt="Payment verification"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             <div className="bg-black bg-opacity-30 p-3 md:p-6 rounded-md space-y-2 md:space-y-4 w-full max-w-[95%] md:max-w-2xl">
               {/* Team Leader */}

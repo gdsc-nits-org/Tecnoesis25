@@ -23,7 +23,7 @@ interface Eventresponse {
   thirdPartyURL: string;
   registrationStartTime: string;
   registrationEndTime: string;
-  extraQuestions: string[];
+  registrationFee: number;
   module: {
     id: number;
     name: string;
@@ -40,19 +40,19 @@ interface EventParams {
 const EventPage = ({ params }: { params: Promise<EventParams> }) => {
   const resolvedParams = use(params);
   const [event, setEvent] = useState<Eventresponse>();
-    useEffect(() => {
-      const fetchEvents = async () => {
-        try {
-          const { data } = await axios.get<{ msg: Eventresponse }>(
-            `${env.NEXT_PUBLIC_API_URL}/api/event/${resolvedParams.id}`,
-          );
-          setEvent(data.msg);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      void fetchEvents();
-    }, [resolvedParams.id]);
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const { data } = await axios.get<{ msg: Eventresponse }>(
+          `${env.NEXT_PUBLIC_API_URL}/api/event/${resolvedParams.id}`,
+        );
+        setEvent(data.msg);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    void fetchEvents();
+  }, [resolvedParams.id]);
 
   return (
     <div>
@@ -66,7 +66,7 @@ const EventPage = ({ params }: { params: Promise<EventParams> }) => {
           <p className="mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-lg">
             {event?.description}
           </p>
-          {event && <CustomButton text="Register Now" width={200} href={`/teamRegistration/${event.id}`}/>}
+          {event && <CustomButton text="Register Now" width={200} href={`/teamRegistration/${event.id}`} />}
         </div>
         <div className="flex h-auto w-[90%] flex-col items-center justify-center pt-16 md:block md:w-[35%] md:flex-row md:pt-0 lg:w-[40%]">
           <div className="mb-4 flex flex-col items-center justify-center md:hidden">
@@ -96,10 +96,11 @@ const EventPage = ({ params }: { params: Promise<EventParams> }) => {
             </div>
           </div>
           <div className="mt-8 flex max-w-[20rem] flex-col items-center justify-center px-4 md:hidden">
-            <p className="leading-justify mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-lg">
+            <p className="leading-justify mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-xl">
               {event?.description}
             </p>
-            {event && <CustomButton text="Register Now" width={200} href={`/teamRegistration/${event.id}`}/>}
+            <p className="leading-justify mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-lg">Registration fee: {event?.registrationFee}</p>
+            {event && <CustomButton text="Register Now" width={200} href={`/teamRegistration/${event.id}`} />}
           </div>
         </div>
       </div>
