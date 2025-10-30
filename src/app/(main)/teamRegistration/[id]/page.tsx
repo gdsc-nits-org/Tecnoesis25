@@ -108,6 +108,7 @@ interface Event {
   maxTeamSize: number;
   minTeamSize: number;
   registrationFee: number;
+  upiQrCode: string;
 }
 
 interface UserResponse {
@@ -362,12 +363,12 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
 
   /* Render Steps */
   return (
-    <div className="min-h-screen clip-angled w-screen animate-glowMove bg-[#000000] bg-red-grid bg-[length:100%_100%,100%_100%,50px_50px,50px_50px,50px_50px] bg-fixed bg-[position:0_0,0_0,25px_25px,0_0,0_0] text-white font-[Orbitron] tracking-widest flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen clip-angled w-screen animate-glowMove bg-[#000000] bg-red-grid bg-[length:100%_100%,100%_100%,50px_50px,50px_50px,50px_50px] bg-fixed bg-[position:0_0,0_0,25px_25px,0_0,0_0] text-white font-[Orbitron] tracking-widest flex flex-col items-center justify-start px-6 py-12 overflow-hidden">
       {/* STEP 1 */}
       {step === 1 && (
-        <div className="relative h-screen w-screen overflow-hidden">
+        <div className="relative w-full max-w-7xl overflow-y-auto">
           {/* Registration Form */}
-          <div className="relative z-10 flex flex-col justify-center items-center h-full text-white space-y-2 md:space-y-4 px-4">
+          <div className="relative z-10 flex flex-col justify-start items-center min-h-screen text-white space-y-2 md:space-y-4 px-4 py-8">
             <h1 className="text-2xl lg:text-6xl font-bankGothik uppercase tracking-widest font-weight: 700">
               Registration Form
             </h1>
@@ -375,9 +376,9 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
               Event : <span className="text-red-600">{event.name}</span>
             </h2>
             <div className="text-sm lg:text-xl font-bankGothik text-gray-300">
-              Team Size: <span className="text-cyan-400">{event.minTeamSize}</span> - <span className="text-cyan-400">{event.maxTeamSize}</span> members
+              Team Size: <span className="text-white text-2xl">{event.minTeamSize}</span> - <span className="text-white text-2xl">{event.maxTeamSize}</span> members
             </div>
-            <div className="text-sm lg:text-xl font-bankGothik text-gray-300">
+            <div className="text-xl lg:text-3xl font-bankGothik text-gray-300">
               Registration Fee: <span className="text-white">{event.registrationFee}</span> INR
             </div>
 
@@ -479,6 +480,26 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
                     </h3>
                   </div>
 
+                  {/* UPI QR Code Display */}
+                  {event.upiQrCode && (
+                    <div className="flex flex-col items-center space-y-2 my-4 p-4 bg-white/10 rounded-lg border border-red-700/50">
+                      <p className="text-sm md:text-base font-bankGothik text-cyan-400">
+                        Scan QR Code to Pay ₹{event.registrationFee}
+                      </p>
+                      <div className="relative w-48 h-48 md:w-64 md:h-64 bg-white rounded-lg p-2">
+                        <Image
+                          src={event.upiQrCode}
+                          alt="UPI QR Code for Payment"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                      <p className="text-xs md:text-sm text-gray-400 text-center">
+                        After payment, enter transaction ID and upload screenshot below
+                      </p>
+                    </div>
+                  )}
+
                   {/* Transaction ID */}
                   <div className="flex items-center space-x-1 md:space-x-2 relative">
                     <label
@@ -533,7 +554,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
                           className="cursor-pointer text-white font-bankGothik text-xs md:text-base flex items-center justify-between"
                         >
                           <span className="text-red-400">
-                            {verificationPhoto ? verificationPhoto.name : "Upload Payment Screenshot"}
+                            {verificationPhoto ? (verificationPhoto.name.length > 20 ? `${verificationPhoto.name.slice(0, 20)}...` : verificationPhoto.name) : "Upload Payment Screenshot"}
                           </span>
                           <span className="text-cyan-400 text-xs">
                             {verificationPhoto ? "✓ Uploaded" : "Max 5MB"}
@@ -587,8 +608,8 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
       )}
 
       {step === 2 && (
-        <div className="relative h-screen w-screen overflow-hidden">
-          <div className="relative z-10 flex flex-col justify-center items-center h-full text-white space-y-3 md:space-y-6 px-4">
+        <div className="relative w-full max-w-7xl overflow-y-auto">
+          <div className="relative z-10 flex flex-col justify-start items-center min-h-screen text-white space-y-3 md:space-y-6 px-4 py-8">
             <h1 className="text-2xl md:text-6xl uppercase tracking-widest font-bold">
               TEAM DETAILS
             </h1>
