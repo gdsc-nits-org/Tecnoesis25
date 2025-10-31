@@ -278,7 +278,7 @@ const CompletedEvents = ({ data, token }: CompletedEventsProps) => {
                         style={{
                           fontStyle: "normal",
                           fontWeight: 700,
-                          fontSize: "clamp(8px, 2.5vw, 15px)",
+                          fontSize: "clamp(7px, 2vw, 12px)",
                           lineHeight: "1.3",
                           wordWrap: "break-word",
                           overflowWrap: "break-word",
@@ -293,7 +293,7 @@ const CompletedEvents = ({ data, token }: CompletedEventsProps) => {
                         style={{
                           fontStyle: "normal",
                           fontWeight: 600,
-                          fontSize: "clamp(6px, 1.8vw, 10px)",
+                          fontSize: "clamp(5px, 1.5vw, 8px)",
                           lineHeight: "1.3",
                           wordWrap: "break-word",
                           overflowWrap: "break-word",
