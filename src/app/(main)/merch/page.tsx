@@ -20,8 +20,8 @@ export default function MerchPage() {
   // Check if user has opted in for merchandise
   useEffect(() => {
     const checkCollegeMail = () => {
-      if (user && user.email) {
-        const emailDomain = user.email.split("@")[1] || "";
+      if (user?.email) {
+        const emailDomain = user.email.split("@")[1] ?? "";
         // Match nits.ac.in and any subdomain like ec.nits.ac.in, ee.nits.ac.in, etc.
         // Regex: start or dot before 'nits.ac.in' at the end of the domain
         const nitsRegex = /(^|\.)nits\.ac\.in$/i;
