@@ -12,12 +12,22 @@ import Login from "~/components/GoogleAuth";
 
 export default function MerchPage() {
   const [user, loading] = useAuthState(auth);
+  const [isCollegeMail,setIsCollegeMail] = useState(true);
   const [hasOptedIn, setHasOptedIn] = useState<boolean | null>(null);
   // const [checkingOptIn, setCheckingOptIn] = useState(true);
   const router = useRouter();
 
   // Check if user has opted in for merchandise
   useEffect(() => {
+    const checkCollegeMail = () => {
+      if (user && user.email) {
+        const emailDomain = user.email.split("@")[1] || "";
+        // Match nits.ac.in and any subdomain like ec.nits.ac.in, ee.nits.ac.in, etc.
+        // Regex: start or dot before 'nits.ac.in' at the end of the domain
+        const nitsRegex = /(^|\.)nits\.ac\.in$/i;
+        setIsCollegeMail(nitsRegex.test(emailDomain));
+      }
+    };
     const checkOptInStatus = async () => {
       if (!user) {
         return;
@@ -43,9 +53,10 @@ export default function MerchPage() {
       }
     };
 
+    // set college mail flag immediately
+    void checkCollegeMail();
     void checkOptInStatus();
   }, [user]);
-
   // Loading state
   if (loading) {
     return (
@@ -82,7 +93,7 @@ export default function MerchPage() {
   if (hasOptedIn === true) {
     return (
       <main className="min-h-screen bg-black">
-        <MerchOptIn user={user} />
+        <MerchOptIn user={user} isCollegeMail={isCollegeMail} />
       </main>
     );
   }

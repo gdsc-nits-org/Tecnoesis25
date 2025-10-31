@@ -8,12 +8,16 @@ import type { User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 interface MerchOptInProps {
   user: User;
+  isCollegeMail: boolean;
 }
 
-export default function MerchOptIn({ user }: MerchOptInProps) {
+export default function MerchOptIn({ user,isCollegeMail }: MerchOptInProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   
+  const warningNotCOllegeMail=()=>{
+    toast.error("Only NIT Silchar college email addresses are allowed to opt out of merchandise ordering.Login with your college email to proceed.");
+  }
 
   const handleOptOut = async () => {
     setIsSubmitting(true);
@@ -56,7 +60,6 @@ export default function MerchOptIn({ user }: MerchOptInProps) {
       }
     );
   };
-
   return (
     <div
       className="flex min-h-screen w-full flex-col items-center justify-center bg-black px-6 pt-24 text-white md:pt-32"
@@ -115,7 +118,7 @@ export default function MerchOptIn({ user }: MerchOptInProps) {
         {/* Opt-In Button */}
         <button
           type="button"
-          onClick={handleOptOut}
+          onClick={isCollegeMail?handleOptOut:warningNotCOllegeMail}
           disabled={isSubmitting}
           className="font-bankGothik text-xl font-bold tracking-wide text-black transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed md:text-2xl"
           style={{
