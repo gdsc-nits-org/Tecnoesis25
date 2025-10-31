@@ -79,7 +79,7 @@ export default function MerchPage() {
             AUTHENTICATION REQUIRED
           </h1>
           <p className="mb-6 font-bankGothik text-lg text-gray-300">
-            Please sign in to access the merchandise store.
+            Please sign in using <span className="font-bold">college mail</span> to access the merchandise store.
           </p>
           <div className="flex items-center justify-center">
             <Login />
