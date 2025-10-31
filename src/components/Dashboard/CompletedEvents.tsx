@@ -201,10 +201,10 @@ const CompletedEvents = ({ data, token }: CompletedEventsProps) => {
   };
 
   return (
-    <div className="relative w-full max-w-[450px] sm:max-w-[500px] lg:ml-auto lg:mr-8 lg:w-[500px] group animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+    <div className="relative w-full max-w-[450px] sm:max-w-[500px] lg:ml-auto lg:mr-8 lg:w-[500px] animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
       {/* Content with Border */}
       <div
-        className="relative flex flex-col items-center rounded-2xl transition-all duration-500 hover:scale-[1.02]"
+        className="relative flex flex-col items-center rounded-2xl transition-all duration-500 group hover:scale-[1.02] hover:z-50"
         style={{
           height: "450px",
           filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
@@ -242,7 +242,7 @@ const CompletedEvents = ({ data, token }: CompletedEventsProps) => {
 
         {/* Scrollable Content Container */}
         <div
-          className="flex w-full flex-col gap-4 overflow-y-auto pr-2 scrollbar-hide sm:gap-5 relative z-10"
+          className="flex w-full flex-col gap-4 pr-2 sm:gap-5 relative z-10 overflow-y-auto scrollbar-hide"
           style={{
             maxHeight: "220px",
           }}
