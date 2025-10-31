@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -9,8 +10,8 @@ import { env } from "~/env";
 import type { User } from "firebase/auth";
 import { z } from "zod";
 import { toast } from "sonner";
-import CustomButton from "~/components/CustomButton";
 import { useMediaQuery } from "usehooks-ts";
+import CustomButton from "../../../components/CustomButton";
 export const runtime = "edge";
 const userDataSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
@@ -88,7 +89,13 @@ const CompleteProfile = () => {
                     if (user) {
                         await createUser(validatedData, user);
                         router.refresh();
-                        router.push("/home");
+                        const prevUrl = (typeof window !== "undefined" && window.sessionStorage.getItem("userSignupReferrer")) ?? document.referrer;
+                        if (prevUrl && prevUrl !== window.location.href && !prevUrl.includes("/userSignup")) {
+                            window.sessionStorage.removeItem("userSignupReferrer");
+                            router.replace(prevUrl);
+                        } else {
+                            router.replace("/home");
+                        }
                     }
                 } catch (err) {
                     if (axios.isAxiosError(err)) {
@@ -135,6 +142,13 @@ const CompleteProfile = () => {
     };
 
     if (loading) {
+        // Store referrer in sessionStorage if coming from another page
+        if (typeof window !== "undefined" && !window.sessionStorage.getItem("userSignupReferrer")) {
+            const referrer = document.referrer;
+            if (referrer && referrer !== window.location.href && !referrer.includes("/userSignup")) {
+                window.sessionStorage.setItem("userSignupReferrer", referrer);
+            }
+        }
         return (
             <div className="flex h-screen w-screen items-center justify-center gap-3">
                 Loading....
@@ -151,6 +165,7 @@ const CompleteProfile = () => {
             </div>
             <form onSubmit={handleSubmit} className="gap-15 flex flex-col">
                 <div className="flex min-w-[90vw] flex-col items-center justify-center gap-7 lg:min-w-[60vw]">
+                    {/* ...existing code for form fields... */}
                     <div className="inline-flex w-full items-center justify-between lg:gap-7">
                         <label
                             htmlFor="firstName"
@@ -168,6 +183,7 @@ const CompleteProfile = () => {
                             className="h-10 w-1/2 origin-top-left rounded-[10.036px] border-[0.627px] border-b-gray-700 border-t-gray-400 bg-transparent text-center text-white backdrop-blur-[9.878px] font-orbitron"
                         />
                     </div>
+                    {/* ...existing code for other fields... */}
                     <div className="inline-flex w-full items-center justify-between lg:gap-7">
                         <label
                             htmlFor="middleName"
@@ -184,6 +200,7 @@ const CompleteProfile = () => {
                             className="h-10 w-1/2 origin-top-left rounded-[10.036px] border-[0.627px] border-b-gray-700 border-t-gray-400 bg-transparent text-center text-white backdrop-blur-[9.878px] font-orbitron"
                         />
                     </div>
+                    {/* ...existing code for other fields... */}
                     <div className="inline-flex w-full items-center justify-between lg:gap-7">
                         <label
                             htmlFor="lastName"
@@ -201,6 +218,7 @@ const CompleteProfile = () => {
                             className="h-10 w-1/2 origin-top-left rounded-[10.036px] border-[0.627px] border-b-gray-700 border-t-gray-400 bg-transparent text-center text-white backdrop-blur-[9.878px] font-orbitron"
                         />
                     </div>
+                    {/* ...existing code for other fields... */}
                     <div className="inline-flex w-full justify-between lg:gap-7">
                         <label
                             htmlFor="phoneNumber"
@@ -218,6 +236,7 @@ const CompleteProfile = () => {
                             className="h-10 w-1/2 origin-top-left rounded-[10.036px] border-[0.627px] border-b-gray-700 border-t-gray-400 bg-transparent text-center text-white backdrop-blur-[9.878px] font-orbitron"
                         />
                     </div>
+                    {/* ...existing code for other fields... */}
                     <div className="inline-flex w-full justify-between lg:gap-7">
                         <label
                             htmlFor="username"
@@ -235,6 +254,7 @@ const CompleteProfile = () => {
                             className="h-10 w-1/2 origin-top-left rounded-[10.036px] border-[0.627px] border-b-gray-700 border-t-gray-400 bg-transparent text-center text-white backdrop-blur-[9.878px] font-orbitron"
                         />
                     </div>
+                    {/* ...existing code for other fields... */}
                     <div className="inline-flex w-full justify-between lg:gap-7">
                         <label
                             htmlFor="collegeName"
@@ -252,6 +272,7 @@ const CompleteProfile = () => {
                             className="h-10 w-1/2 origin-top-left rounded-[10.036px] border-[0.627px] border-b-gray-700 border-t-gray-400 bg-transparent text-center text-white backdrop-blur-[9.878px] font-orbitron"
                         />
                     </div>
+                    {/* ...existing code for other fields... */}
                     <div className="inline-flex w-full justify-between lg:gap-7">
                         <label
                             htmlFor="registrationId"
@@ -283,21 +304,12 @@ const CompleteProfile = () => {
                 ))}
                 <div className="lg:translate-x-25 mt-10 flex w-full items-center justify-around">
                     <div className="w-[60vw] lg:w-[30vw] xl:w-[20vw]">
-                        <CustomButton 
+                        <CustomButton
                             text="Submit"
                             width={isMobile ? 180 : 200}
                             height={isMobile ? 55 : 100}
                             className={isMobile ? "text-sm" : "text-xl"}
-                            onClick={() => {
-                                const formElement = document.querySelector('form');
-                                if (formElement) {
-                                    const event = new Event('submit', {
-                                        bubbles: true,
-                                        cancelable: true
-                                    });
-                                    formElement.dispatchEvent(event);
-                                }
-                            }}
+                            onClick={undefined}
                         />
                     </div>
                 </div>

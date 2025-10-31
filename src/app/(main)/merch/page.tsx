@@ -12,9 +12,9 @@ import Login from "~/components/GoogleAuth";
 
 export default function MerchPage() {
   const [user, loading] = useAuthState(auth);
-  const [isCollegeMail,setIsCollegeMail] = useState(true);
+  const [isCollegeMail, setIsCollegeMail] = useState(true);
   const [hasOptedIn, setHasOptedIn] = useState<boolean | null>(null);
-  // const [checkingOptIn, setCheckingOptIn] = useState(true);
+  const [checkingOptIn, setCheckingOptIn] = useState(false);
   const router = useRouter();
 
   // Check if user has opted in for merchandise
@@ -30,9 +30,11 @@ export default function MerchPage() {
     };
     const checkOptInStatus = async () => {
       if (!user) {
+        setHasOptedIn(null);
+        setCheckingOptIn(false);
         return;
       }
-
+      setCheckingOptIn(true);
       try {
         const token = await user.getIdToken();
         const { data } = await axios.get<{ msg: { hasOpted: boolean } }>(
@@ -43,13 +45,13 @@ export default function MerchPage() {
             },
           }
         );
-
-        // Response structure is { msg: { hasOpted: boolean } }
         setHasOptedIn(data.msg.hasOpted);
-        console.log(data.msg)
+        setCheckingOptIn(false);
+        console.log(data.msg);
       } catch (error) {
         console.error("Error checking opt-in status:", error);
         setHasOptedIn(false);
+        setCheckingOptIn(false);
       }
     };
 
@@ -89,6 +91,18 @@ export default function MerchPage() {
     );
   }
 
+  // Show loading spinner while checking opt-in status
+  if (checkingOptIn) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-black">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-purple-500 border-t-transparent"></div>
+          <p className="font-bankGothik text-lg text-white">Checking your user status...</p>
+        </div>
+      </main>
+    );
+  }
+
   // Show opt-out form if user has opted in
   if (hasOptedIn === true) {
     return (
@@ -101,8 +115,8 @@ export default function MerchPage() {
   // Show merchandise ordering page if user has not opted in (i.e., can order)
   if (hasOptedIn === false) {
     return (
-      <main className="min-h-screen bg-black text-white text-center font-bankGothik px-6 pt-24 md:pt-32 text-2xl">
-       Sorry, you have opted out for merchandise ordering!
+      <main className="min-h-screen bg-black text-white text-center font-orbitron px-6 pt-24 md:pt-32 text-2xl">
+        Sorry, you have opted out for merchandise ordering!
       </main>
     );
   }

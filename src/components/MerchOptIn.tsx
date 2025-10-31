@@ -35,7 +35,6 @@ export default function MerchOptIn({ user, isCollegeMail }: MerchOptInProps) {
               },
             }
           );
-          router.push('/home');
         } catch (err) {
           if (axios.isAxiosError(err)) {
             const responseData = err.response?.data as { msg?: string };
@@ -101,7 +100,7 @@ export default function MerchOptIn({ user, isCollegeMail }: MerchOptInProps) {
               Welcome to the Tecnoesis Merchandise Store!
             </p>
             <p className="mb-6 font-bankGothik text-base leading-relaxed text-gray-300 md:text-lg">
-              Click the opt out button if you no longer wish to order our exclusive limited-edition merchandise by contributing money from BHM.
+              Click the opt out button if you no longer wish to order any of the tshirts by contributing money from BHM.
             </p>
           </div>
           {/* Divider */}
@@ -119,19 +118,23 @@ export default function MerchOptIn({ user, isCollegeMail }: MerchOptInProps) {
         </div>
         <div className="flex gap-10 flex-col md:flex-row items-center justify-center">
           <div className="flex flex-col items-center justify-center">
-            <img src="https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761923315/26f6fda8-a2ea-46e5-aab3-45bb1bf70717.png"
+            <img src="https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761931282/1ffc66d3-a95a-4f7a-86ca-cd75465dc873.png"
               className="h-[15rem] w-[15rem] md:h-[20rem] md:w-[20rem] rounded-md" />
             <p className="text-nowrap text-white text-xl font-orbitron">Tecnoesis T-Shirt</p>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <img src="https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761923348/1c0fd610-0dd9-4dfc-8b7c-acb86e6d9568.png"
+            <img src="https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761931195/53092a19-31a5-4730-aa51-f30b82db75e0.png"
               className="h-[15rem] w-[15rem] md:h-[20rem] md:w-[20rem] rounded-md" />
             <p className="text-nowrap text-white text-xl font-orbitron">Spark T-Shirt</p>
           </div>
         </div>
         <div className="text-center text-xl md:text-2xl font-bankGothik text-gray-200">
+          Don&apos;t opt out if you want to buy atleast one tshirt.
+        </div>
+        <div className="text-center text-xl md:text-2xl font-bankGothik text-gray-200">
           Don&apos;t want to buy merchandise?<br /> Opt out now!
         </div>
+
         {/* Opt-In Button */}
         <button
           type="button"
