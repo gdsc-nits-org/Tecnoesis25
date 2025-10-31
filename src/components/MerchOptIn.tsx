@@ -11,11 +11,11 @@ interface MerchOptInProps {
   isCollegeMail: boolean;
 }
 
-export default function MerchOptIn({ user,isCollegeMail }: MerchOptInProps) {
+export default function MerchOptIn({ user, isCollegeMail }: MerchOptInProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
-  
-  const warningNotCOllegeMail=()=>{
+
+  const warningNotCOllegeMail = () => {
     toast.error("Only NIT Silchar college email addresses are allowed to opt out of merchandise ordering.Login with your college email to proceed.");
   }
 
@@ -70,10 +70,10 @@ export default function MerchOptIn({ user,isCollegeMail }: MerchOptInProps) {
         backgroundPosition: "center",
       }}
     >
-      <div className="max-w-3xl">
+      <div className="md:max-w-3xl max-w-[80vw] flex items-center justify-center flex-col gap-8 mb-10">
         {/* Main Container */}
         <div
-          className="flex flex-col items-center gap-8 rounded-lg p-8 md:p-12"
+          className="flex flex-col items-center justify-center gap-8 rounded-lg p-8 md:p-12 w-full"
           style={{
             background: "rgba(138, 107, 228, 0.08)",
             border: "1px solid rgba(138, 107, 228, 0.25)",
@@ -82,7 +82,7 @@ export default function MerchOptIn({ user,isCollegeMail }: MerchOptInProps) {
           }}
         >
           {/* Title */}
-          <h1 className="text-center font-bankGothik text-4xl font-bold tracking-wider md:text-5xl lg:text-6xl">
+          <h1 className="text-center font-bankGothik text-2xl font-bold tracking-wider md:text-3xl lg:text-6xl">
             MERCHANDISE OPT OUT
           </h1>
 
@@ -104,21 +104,38 @@ export default function MerchOptIn({ user,isCollegeMail }: MerchOptInProps) {
               Click the opt out button if you no longer wish to order our exclusive limited-edition merchandise by contributing money from BHM.
             </p>
           </div>
+          {/* Divider */}
+          <div className="w-full ">
+            <img
+              src="/merch/Partition.svg"
+              alt="Partition"
+              className="w-full"
+            />
+          </div>
         </div>
-
-        {/* Divider */}
-        <div className="w-full">
-          <img
-            src="/merch/Partition.svg"
-            alt="Partition"
-            className="w-full"
-          />
+        {/* Pricing Info */}
+        <div className="text-center text-lg md:text-xl font-bankGothik text-gray-200">
+          Each T-shirt is <span className="font-bold text-white">₹479</span>. Buy both for a special combo offer of <span className="font-bold text-white">₹899</span>!
         </div>
-
+        <div className="flex gap-10 flex-col md:flex-row items-center justify-center">
+          <div className="flex flex-col items-center justify-center">
+            <img src="https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761923315/26f6fda8-a2ea-46e5-aab3-45bb1bf70717.png"
+              className="h-[15rem] w-[15rem] md:h-[20rem] md:w-[20rem] rounded-md" />
+            <p className="text-nowrap text-white text-xl font-orbitron">Tecnoesis T-Shirt</p>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <img src="https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761923315/26f6fda8-a2ea-46e5-aab3-45bb1bf70717.png"
+              className="h-[15rem] w-[15rem] md:h-[20rem] md:w-[20rem] rounded-md" />
+            <p className="text-nowrap text-white text-xl font-orbitron">Spark T-Shirt</p>
+          </div>
+        </div>
+        <div className="text-center text-xl md:text-2xl font-bankGothik text-gray-200">
+          Don&apos;t want to buy merchandise?<br /> Opt out now!
+        </div>
         {/* Opt-In Button */}
         <button
           type="button"
-          onClick={isCollegeMail?handleOptOut:warningNotCOllegeMail}
+          onClick={isCollegeMail ? handleOptOut : warningNotCOllegeMail}
           disabled={isSubmitting}
           className="font-bankGothik text-xl font-bold tracking-wide text-black transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed md:text-2xl"
           style={{
