@@ -114,7 +114,7 @@ export default function MerchOptIn({ user, isCollegeMail }: MerchOptInProps) {
           </div>
         </div>
         {/* Pricing Info */}
-        <div className="text-center text-lg md:text-xl font-bankGothik text-gray-200">
+        <div className="text-center text-lg md:text-xl font-orbitron text-gray-200">
           Each T-shirt is <span className="font-bold text-white">₹479</span>. Buy both for a special combo offer of <span className="font-bold text-white">₹899</span>!
         </div>
         <div className="flex gap-10 flex-col md:flex-row items-center justify-center">
@@ -124,7 +124,7 @@ export default function MerchOptIn({ user, isCollegeMail }: MerchOptInProps) {
             <p className="text-nowrap text-white text-xl font-orbitron">Tecnoesis T-Shirt</p>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <img src="https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761923315/26f6fda8-a2ea-46e5-aab3-45bb1bf70717.png"
+            <img src="https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761923348/1c0fd610-0dd9-4dfc-8b7c-acb86e6d9568.png"
               className="h-[15rem] w-[15rem] md:h-[20rem] md:w-[20rem] rounded-md" />
             <p className="text-nowrap text-white text-xl font-orbitron">Spark T-Shirt</p>
           </div>
