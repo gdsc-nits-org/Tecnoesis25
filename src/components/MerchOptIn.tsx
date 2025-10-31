@@ -5,18 +5,19 @@ import { toast } from "sonner";
 import axios from "axios";
 import { env } from "~/env";
 import type { User } from "firebase/auth";
-
+import { useRouter } from "next/navigation";
 interface MerchOptInProps {
   user: User;
-  onOptInSuccess: () => void;
 }
 
-export default function MerchOptIn({ user, onOptInSuccess }: MerchOptInProps) {
+export default function MerchOptIn({ user }: MerchOptInProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  
 
-  const handleOptIn = async () => {
+  const handleOptOut = async () => {
     setIsSubmitting(true);
-    
+
     toast.promise(
       (async () => {
         try {
@@ -30,12 +31,12 @@ export default function MerchOptIn({ user, onOptInSuccess }: MerchOptInProps) {
               },
             }
           );
-          onOptInSuccess();
+          router.push('/home');
         } catch (err) {
           if (axios.isAxiosError(err)) {
             const responseData = err.response?.data as { msg?: string };
             throw new Error(
-              responseData?.msg ?? "Failed to opt in for merchandise ordering"
+              responseData?.msg ?? "Failed to opt out for merchandise ordering"
             );
           }
           throw err;
@@ -44,13 +45,13 @@ export default function MerchOptIn({ user, onOptInSuccess }: MerchOptInProps) {
         }
       })(),
       {
-        loading: "Opting in for merchandise...",
-        success: "Successfully opted in! You can now order merchandise.",
+        loading: "Opting out for merchandise...",
+        success: "Successfully opted out! You cannot order merchandise now.",
         error: (err) => {
           if (err instanceof Error) {
             return err.message;
           }
-          return "An error occurred while opting in.";
+          return "An error occurred while opting out.";
         },
       }
     );
@@ -79,7 +80,7 @@ export default function MerchOptIn({ user, onOptInSuccess }: MerchOptInProps) {
         >
           {/* Title */}
           <h1 className="text-center font-bankGothik text-4xl font-bold tracking-wider md:text-5xl lg:text-6xl">
-            MERCHANDISE OPT IN
+            MERCHANDISE OPT OUT
           </h1>
 
           {/* Divider */}
@@ -97,50 +98,36 @@ export default function MerchOptIn({ user, onOptInSuccess }: MerchOptInProps) {
               Welcome to the Tecnoesis Merchandise Store!
             </p>
             <p className="mb-6 font-bankGothik text-base leading-relaxed text-gray-300 md:text-lg">
-              To order our exclusive limited-edition merchandise, you need to
-              opt in for BHM. This allows you to order
-              our premium Tron inspired merchandise collection.
+              Click the opt out button if you no longer wish to order our exclusive limited-edition merchandise by contributing money from BHM.
             </p>
-            <div
-              className="mb-6 rounded-lg border border-purple-400/30 bg-purple-900/20 p-4 text-left"
-            >
-              <p className="font-orbitron text-sm text-purple-200 md:text-base">
-                Once you opt-in, you&apos;ll get access to:
-              </p>
-              <ul className="mt-2 list-disc space-y-1 font-orbitron text-sm text-purple-200 md:text-base pl-6">
-                <li>Exclusive Tecnoesis T-shirts</li>
-                <li>Limited-edition Spark collection</li>
-                <li>Premium quality merchandise</li>
-              </ul>
-            </div>
           </div>
-
-          {/* Divider */}
-          <div className="w-full">
-            <img
-              src="/merch/Partition.svg"
-              alt="Partition"
-              className="w-full"
-            />
-          </div>
-
-          {/* Opt-In Button */}
-          <button
-            type="button"
-            onClick={handleOptIn}
-            disabled={isSubmitting}
-            className="font-bankGothik text-xl font-bold tracking-wide text-black transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed md:text-2xl"
-            style={{
-              backgroundColor: "#8A6BE4",
-              clipPath:
-                "polygon(6% 0%, 38% 0%, 41% 14%, 68% 14%, 71% 0%, 94% 0%, 97% 15%, 100% 50%, 97% 85%, 94% 100%, 71% 100%, 68% 86%, 32% 86%, 29% 100%, 6% 100%, 3% 85%, 0% 50%, 3% 15%)",
-              width: "280px",
-              height: "70px",
-            }}
-          >
-            {isSubmitting ? "OPTING IN..." : "OPT IN NOW"}
-          </button>
         </div>
+
+        {/* Divider */}
+        <div className="w-full">
+          <img
+            src="/merch/Partition.svg"
+            alt="Partition"
+            className="w-full"
+          />
+        </div>
+
+        {/* Opt-In Button */}
+        <button
+          type="button"
+          onClick={handleOptOut}
+          disabled={isSubmitting}
+          className="font-bankGothik text-xl font-bold tracking-wide text-black transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed md:text-2xl"
+          style={{
+            backgroundColor: "#8A6BE4",
+            clipPath:
+              "polygon(6% 0%, 38% 0%, 41% 14%, 68% 14%, 71% 0%, 94% 0%, 97% 15%, 100% 50%, 97% 85%, 94% 100%, 71% 100%, 68% 86%, 32% 86%, 29% 100%, 6% 100%, 3% 85%, 0% 50%, 3% 15%)",
+            width: "280px",
+            height: "70px",
+          }}
+        >
+          {isSubmitting ? "OPTING OUT..." : "OPT OUT NOW"}
+        </button>
       </div>
     </div>
   );

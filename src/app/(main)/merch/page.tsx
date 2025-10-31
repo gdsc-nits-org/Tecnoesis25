@@ -13,14 +13,13 @@ import Login from "~/components/GoogleAuth";
 export default function MerchPage() {
   const [user, loading] = useAuthState(auth);
   const [hasOptedIn, setHasOptedIn] = useState<boolean | null>(null);
-  const [checkingOptIn, setCheckingOptIn] = useState(true);
+  // const [checkingOptIn, setCheckingOptIn] = useState(true);
   const router = useRouter();
 
   // Check if user has opted in for merchandise
   useEffect(() => {
     const checkOptInStatus = async () => {
       if (!user) {
-        setCheckingOptIn(false);
         return;
       }
 
@@ -37,11 +36,10 @@ export default function MerchPage() {
 
         // Response structure is { msg: { hasOpted: boolean } }
         setHasOptedIn(data.msg.hasOpted);
+        console.log(data.msg)
       } catch (error) {
         console.error("Error checking opt-in status:", error);
         setHasOptedIn(false);
-      } finally {
-        setCheckingOptIn(false);
       }
     };
 
@@ -49,7 +47,7 @@ export default function MerchPage() {
   }, [user]);
 
   // Loading state
-  if (loading || checkingOptIn) {
+  if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-black">
         <div className="flex flex-col items-center gap-4">
@@ -60,6 +58,7 @@ export default function MerchPage() {
     );
   }
 
+  
   // Not authenticated - show sign-in component
   if (!user) {
     return (
@@ -79,19 +78,21 @@ export default function MerchPage() {
     );
   }
 
-  // Show opt-in form if user hasn't opted in yet
-  if (!hasOptedIn) {
+  // Show opt-out form if user has opted in
+  if (hasOptedIn === true) {
     return (
       <main className="min-h-screen bg-black">
-        <MerchOptIn user={user} onOptInSuccess={() => setHasOptedIn(true)} />
+        <MerchOptIn user={user} />
       </main>
     );
   }
 
-  // Show merchandise ordering page
-  return (
-    <main className="min-h-screen bg-black">
-      <TecnoTshirt user={user} />
-    </main>
-  );
+  // Show merchandise ordering page if user has not opted in (i.e., can order)
+  if (hasOptedIn === false) {
+    return (
+      <main className="min-h-screen bg-black text-white text-center font-bankGothik px-6 pt-24 md:pt-32 text-2xl">
+       Sorry, you have opted out for merchandise ordering!
+      </main>
+    );
+  }
 }
