@@ -255,6 +255,22 @@ const HomePage: NextPage = () => {
           animation: spotifySlideUp 0.8s ease-out forwards;
         }
 
+        /* PA (Parental Advisory) slide down from top with bounce */
+        @keyframes paSlideDown {
+          0% {
+            transform: translateY(-150%);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        .animate-paSlide {
+          animation: paSlideDown 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
         .animate-slideUp {
           animation: slideUpSplit 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
@@ -397,15 +413,8 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
 
       {/* Main Container is now just a wrapper, not the full screen */}
       <main>
-        {/* Section 1: Demo Screen */}
-        <section className="h-screen w-full flex items-center justify-center bg-gray-900 text-white">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold mb-4">Demo Screen</h1>
-            <p className="text-xl text-gray-400">Scroll down to see the animation</p>
-          </div>
-        </section>
 
-        {/* Section 2: Visualizer Screen */}
+        {/*Visualizer Screen */}
         <section
           ref={visualizerRef} // Attach the ref here
           className={`animate-on-load ${isLoaded ? 'loaded' : ''} relative h-screen w-full bg-black overflow-hidden font-sans hidden md:block`}
@@ -640,9 +649,14 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
                   style={{ top: '65%', left: '0%' }}
                 />
               </div>
-            </div>
+            </div>
             {/* ... Parental Advisory ... */}
-            <img src="/PA.png" alt="Parental Advisory" className="absolute top-4 right-4 z-20 h-16 w-auto" />
+            <img 
+              src="/PA.png" 
+              alt="Parental Advisory" 
+              className={`absolute top-4 right-4 z-20 h-16 w-auto ${isMobileVisible ? 'animate-paSlide' : 'opacity-0'}`}
+              style={{ animationDelay: '1.8s', transform: 'translateY(-150%)' }}
+            />
             {/* ... Lyrics Card ... */}
             <div 
               className={`absolute bottom-0 left-0 right-0 z-30 p-6 ${isMobileVisible ? 'animate-spotifySlide' : 'opacity-0'}`}
