@@ -4,20 +4,20 @@ import type { NextPage } from 'next';
 import { useState, useEffect, useRef } from 'react';
 
 const tracklist = [
-  { id: 1, title: "Raat Ki Rani", playing: true },
-  { id: 2, title: "Yeh Haseen Raatein", playing: true },
-  { id: 3, title: "Dil Hai Jawan", playing: true },
-  { id: 4, title: "Tum Ho Kahan", playing: true },
-  { id: 5, title: "Yeh Saare Talk Talk", playing: false },
-  { id: 6, title: "SM Kare Knock Knock", playing: false },
-  { id: 7, title: "Bande Khaate Khauf", playing: false },
-  { id: 8, title: "Khauf", playing: false },
-  { id: 9, title: "Energy Dein Off Off", playing: false },
-  { id: 10, title: "Hum Kare Boss Job", playing: false },
-  { id: 11, title: "Ceo Hain Top Notch", playing: false },
+  { id: 1, title: "Raat Ki Rani", playing: true },
+  { id: 2, title: "Yeh Haseen Raatein", playing: true },
+  { id: 3, title: "Dil Hai Jawan", playing: true },
+  { id: 4, title: "Tum Ho Kahan", playing: true },
+  { id: 5, title: "Yeh Saare Talk Talk", playing: false },
+  { id: 6, title: "SM Kare Knock Knock", playing: false },
+  { id: 7, title: "Bande Khaate Khauf", playing: false },
+  { id: 8, title: "Khauf", playing: false },
+  { id: 9, title: "Energy Dein Off Off", playing: false },
+  { id: 10, title: "Hum Kare Boss Job", playing: false },
+  { id: 11, title: "Ceo Hain Top Notch", playing: false },
 ];
 
-const HomePage: NextPage = () => {
+const ArtistPage: NextPage = () => {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -26,32 +26,32 @@ const HomePage: NextPage = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isCardPlaying, setIsCardPlaying] = useState(false);
 
-  
+
   const [isMobileVisible, setIsMobileVisible] = useState(false);
   const [hasMobileAnimated, setHasMobileAnimated] = useState(false);
-  const mobileVisualizerRef = useRef<HTMLDivElement>(null);  const [showMobileIntro, setShowMobileIntro] = useState(true);
-  const [showMobileBaba, setShowMobileBaba] = useState(false);
-  const [showMobileMain, setShowMobileMain] = useState(false);
+  const mobileVisualizerRef = useRef<HTMLDivElement>(null); const [showMobileIntro, setShowMobileIntro] = useState(true);
+  const [showMobileBaba, setShowMobileBaba] = useState(false);
+  const [showMobileMain, setShowMobileMain] = useState(false);
 
   const [lyrics, setLyrics] = useState(tracklist);
 
- const handleCardPlayToggle = () => {
+  const handleCardPlayToggle = () => {
 
     const newIsPlaying = !isCardPlaying;
     setIsCardPlaying(newIsPlaying);
-    
-    // Act based on the new state
-    if (newIsPlaying) {
-      audioRef.current?.play();
-    } else {
-      audioRef.current?.pause();
-    }
-  };
+
+    // Act based on the new state
+    if (newIsPlaying) {
+      void audioRef.current?.play();
+    } else {
+      audioRef.current?.pause();
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry && entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setIsLoaded(true);
           setHasLoaded(true);
         } else if (entry) {
@@ -79,7 +79,7 @@ const HomePage: NextPage = () => {
   useEffect(() => {
     const mobileObserver = new IntersectionObserver(
       ([entry]) => {
-        if (entry && entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setIsMobileVisible(true);
           setHasMobileAnimated(true);
         } else if (entry) {
@@ -97,28 +97,28 @@ const HomePage: NextPage = () => {
         mobileObserver.unobserve(currentMobileRef);
       }
     };
-  }, []);  useEffect(() => {
+  }, []); useEffect(() => {
     // Check for window width or user agent, or just run it.
     // For this example, we'll assume if it's not a large screen, it's mobile.
     // A better check might be window.innerWidth < 768 on mount.
-    
+
     // 1. Show Intro (default) -> Show Baba
-    const timer1 = setTimeout(() => {
-      setShowMobileIntro(false);
-      setShowMobileBaba(true);
-    }, 3000); // 3 seconds on intro, matches video
+    const timer1 = setTimeout(() => {
+      setShowMobileIntro(false);
+      setShowMobileBaba(true);
+    }, 3000); // 3 seconds on intro, matches video
 
-    // 2. Show Baba -> Show Main
-    const timer2 = setTimeout(() => {
-      setShowMobileMain(true); // This triggers the slide-up animation
-    }, 5000); // 2 more seconds on baba art, matches video (5s total)
+    // 2. Show Baba -> Show Main
+    const timer2 = setTimeout(() => {
+      setShowMobileMain(true); // This triggers the slide-up animation
+    }, 5000); // 2 more seconds on baba art, matches video (5s total)
 
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
-    // Run only once on mount
-  }, []);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+    // Run only once on mount
+  }, []);
 
   // --- Animation logic for split-screen ---
   const getSplitAnimation = (direction: 'left' | 'right') => {
@@ -133,11 +133,11 @@ const HomePage: NextPage = () => {
 
   return (
     <>
-    <audio 
-        ref={audioRef} 
+      <audio
+        ref={audioRef}
         src="https://res.cloudinary.com/dsj9gr1o3/video/upload/v1761826455/Raat_Ki_Rani_-_Seedhe_Maut_pagalall.com_qoz3wo.mp3"
         preload="auto"
-        onEnded={() => setIsCardPlaying(false)} 
+        onEnded={() => setIsCardPlaying(false)}
       />
       <style jsx global>{`
         @keyframes fadeIn {
@@ -417,28 +417,28 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
         {/*Visualizer Screen */}
         <section
           ref={visualizerRef} // Attach the ref here
-          className={`animate-on-load ${isLoaded ? 'loaded' : ''} relative h-screen w-full bg-black overflow-hidden font-sans hidden md:block`}
+          className={`animate-on-load ${isLoaded ? 'loaded' : ''} relative h-screen w-full bg-black overflow-hidden font-sans hidden md:block mt-5`}
         >
           {/* Layer 1: Split Images (The Background) */}
           <div className="absolute inset-0 z-0 flex flex-row">
-              {/* These slide in from the sides to merge in the middle */}
-              <div className="merging-images absolute inset-0 z-[-0] flex flex-row -translate-x-[50%] left-[50%] w-[45%] h-full">
-                <div className="merging-image-left relative w-[50%] h-full overflow-hidden opacity-0 bg-black">
-                  <img
-                    src="/leftshakti.png"
-                    alt="Shakti background left"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div className="merging-image-right relative w-[50%] h-full overflow-hidden opacity-0 bg-black">
-                  <img
-                    src="/rightshakti.png"
-                    alt="Shakti background right"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
+            {/* These slide in from the sides to merge in the middle */}
+            <div className="merging-images absolute inset-0 z-[-0] flex flex-row -translate-x-[50%] left-[50%] w-[45%] h-full">
+              <div className="merging-image-left relative w-[50%] h-full overflow-hidden opacity-0 bg-black">
+                <img
+                  src="/leftshakti.png"
+                  alt="Shakti background left"
+                  className="h-full w-full object-cover"
+                />
               </div>
-              
+              <div className="merging-image-right relative w-[50%] h-full overflow-hidden opacity-0 bg-black">
+                <img
+                  src="/rightshakti.png"
+                  alt="Shakti background right"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </div>
+
             {/* Left Half Container */}
             <div
               className="relative w-1/2 h-full overflow-hidden"
@@ -468,15 +468,15 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
           </div>
 
           {/* Layer 2: Static Flicker Overlay */}
-           <div 
-             className="absolute inset-0 z-10 pointer-events-none"
-             style={{
-               background: 'url(https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2M1OGY0NTIzNWI2YjRhYjJkYmZkY2IzYmNiMmYzYTU5YWY4ZGFjMyZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/TEXTURE/giphy.gif)',
-               backgroundSize: 'cover',
-               animation: 'staticFlicker 0.3s steps(5, end) infinite',
-               opacity: 0.02,
-             }}
-           />
+          <div
+            className="absolute inset-0 z-10 pointer-events-none"
+            style={{
+              background: 'url(https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2M1OGY0NTIzNWI2YjRhYjJkYmZkY2IzYmNiMmYzYTU5YWY4ZGFjMyZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/TEXTURE/giphy.gif)',
+              backgroundSize: 'cover',
+              animation: 'staticFlicker 0.3s steps(5, end) infinite',
+              opacity: 0.02,
+            }}
+          />
 
           {/* Layer 3: Center Content (Artists & Text) */}
           {/* *** CHANGED *** Using flex-col, justify-between, and padding to position items
@@ -525,9 +525,9 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
 
           {/* Layer 4: Left Elements (Logo & Advisory) */}
           <div className="left-elements absolute bottom-8 z-30 left-8 flex flex-col gap-4 opacity-0">
- 	<img 	src="/N.svg" 	alt="Logo"
- 	className="h-60 w-60 z-10 relative animate-pulse"
-                   	/>
+            <img src="/N.svg" alt="Logo"
+              className="h-60 w-60 z-10 relative animate-pulse"
+            />
             <img
               src="/PA.png"
               alt="Parental Advisory"
@@ -535,146 +535,146 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
             />
           </div>
 
-            
+
           {/* Layer 5: Right "Lyrics" Card */}
           <div className="tracklist-container absolute bottom-20 right-12 z-30 w-80 max-w-sm opacity-0">
-           <div className="relative rounded-lg overflow-hidden backdrop-blur-md ring-1 ring-white/10 shadow-2xl">
-              <img 
-                src="bgbg.jpg" 
-                alt="Card background" 
-                className="absolute inset-0 z-0 h-full w-full object-cover" 
+            <div className="relative rounded-lg overflow-hidden backdrop-blur-md ring-1 ring-white/10 shadow-2xl">
+              <img
+                src="bgbg.jpg"
+                alt="Card background"
+                className="absolute inset-0 z-0 h-full w-full object-cover"
               />
-            <div className="rounded-lg  p-6 backdrop-blur-sm ring-1 ring-white/10 shadow-2xl"
-            style={{ backgroundColor: 'rgba(255, 13, 23, 0.6)' }}>
-              {/* Header */}
-              <div className="mb-4 flex items-center gap-3">
-                <img
-                  src="/logogg.png"
-                  alt="Album Art"
-                  className="h-16 w-16 rounded-md shadow-md"
-                />
-                <div>
-                  {/* Hardcoded to match image, but you can use tracklist[0] */}
-                  <h3 className="text-xl font-bold text-white">Raat Ki Rani</h3>
-                  <p className="text-sm text-white/90">Seedhe Maut</p>
-                </div>
-                <img 
-                      src={isCardPlaying ? '/pause.png' : '/play.png'}
-                      alt={isCardPlaying ? 'Pause' : 'Play'}
-                      className="h-24 w-20 cursor-none" // Adjust size as needed
-                      onClick={handleCardPlayToggle}
-                    />
-              </div>
-              
-              <div className="mt-6 flex flex-col gap-2">
-	{/* --- CHANGED: Modified Lyric Map --- */}
-                {lyrics.map((track) => (
-                  <div key={track.id}>
-                    <p
-                      className={`text-2xl font-bold transition-colors ${
-                        // If card is playing, ALL are white.
-                        // If not, use the track's individual 'playing' status.
-                        isCardPlaying ? 'text-white' : (track.playing ? 'text-white' : 'text-black') 
-                      }`}
-                    >
-                      {track.title}
-                    </p>
+              <div className="rounded-lg  p-6 backdrop-blur-sm ring-1 ring-white/10 shadow-2xl"
+                style={{ backgroundColor: 'rgba(255, 13, 23, 0.6)' }}>
+                {/* Header */}
+                <div className="mb-4 flex items-center gap-3">
+                  <img
+                    src="/logogg.png"
+                    alt="Album Art"
+                    className="h-16 w-16 rounded-md shadow-md"
+                  />
+                  <div>
+                    {/* Hardcoded to match image, but you can use tracklist[0] */}
+                    <h3 className="text-xl font-bold text-white">Raat Ki Rani</h3>
+                    <p className="text-sm text-white/90">Seedhe Maut</p>
                   </div>
-                ))}
- 	</div>
+                  <img
+                    src={isCardPlaying ? '/pause.png' : '/play.png'}
+                    alt={isCardPlaying ? 'Pause' : 'Play'}
+                    className="h-24 w-20 cursor-pointer absolute right-2 z-20" // Adjust size as needed
+                    onClick={handleCardPlayToggle}
+                  />
+                </div>
 
-              {/* Spotify Logo Footer */}
-              <div className="mt-8 flex items-center gap-2 text-black">
-                <svg fill="currentColor" viewBox="0 0 16 16" className="h-6 w-6">
-                  <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.669 11.538a.498.498 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.5.5 0 0 1-.582-.495c-.038-.28.192-.505.47-.543 3.03-.69 5.662-.393 7.77.892a.5.5 0 0 1 .166.686zm.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-8.005-.93a.625.625 0 0 1-.72-.609c-.043-.33.24-.622.568-.667 2.872-.81 6.522-.36 8.943 1.12a.625.625 0 0 1 .206.858zm.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.75.75 0 0 1-.825-.67c-.05-3.63 3.14-1.003 6.363-1.662C13.312 3.61 14.135 5.36 12.75 6.81a.75.75 0 0 1-1.002.085z"/>
-                </svg>
-                <span className="text-lg font-bold">Spotify</span>
+                <div className="mt-6 flex flex-col gap-2">
+                  {/* --- CHANGED: Modified Lyric Map --- */}
+                  {lyrics.map((track) => (
+                    <div key={track.id}>
+                      <p
+                        className={`text-2xl font-bold transition-colors ${
+                          // If card is playing, ALL are white.
+                          // If not, use the track's individual 'playing' status.
+                          isCardPlaying ? 'text-white' : (track.playing ? 'text-white' : 'text-black')
+                          }`}
+                      >
+                        {track.title}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Spotify Logo Footer */}
+                <div className="mt-8 flex items-center gap-2 text-black">
+                  <svg fill="currentColor" viewBox="0 0 16 16" className="h-6 w-6">
+                    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.669 11.538a.498.498 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.5.5 0 0 1-.582-.495c-.038-.28.192-.505.47-.543 3.03-.69 5.662-.393 7.77.892a.5.5 0 0 1 .166.686zm.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-8.005-.93a.625.625 0 0 1-.72-.609c-.043-.33.24-.622.568-.667 2.872-.81 6.522-.36 8.943 1.12a.625.625 0 0 1 .206.858zm.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.75.75 0 0 1-.825-.67c-.05-3.63 3.14-1.003 6.363-1.662C13.312 3.61 14.135 5.36 12.75 6.81a.75.75 0 0 1-1.002.085z" />
+                  </svg>
+                  <span className="text-lg font-bold">Spotify</span>
+                </div>
               </div>
-            </div>
             </div>
           </div>
           <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-20 h-40 bg-gradient-to-t from-black from-45% to-transparent" />
         </section>
-        
+
         {/* =================================================================== */}
-        {/* Section 3: MOBILE Visualizer (Visible on mobile only)              */}
-        {/* =================================================================== */}
-        <section 
-          ref={mobileVisualizerRef} // <-- ATTACHED REF
-          className={`animate-on-load ${isMobileVisible ? 'loaded' : ''} relative h-screen w-full bg-black overflow-hidden font-sans block md:hidden`} // <-- ADDED STATE
-        >
-          
-          {/* --- MOBILE Layer 1: Main Content (Final Screen) --- */}
-          {/* This is the base layer (z-0) that is revealed */}
-          <div className="absolute inset-0 z-0">
+        {/* Section 3: MOBILE Visualizer (Visible on mobile only)              */}
+        {/* =================================================================== */}
+        <section
+          ref={mobileVisualizerRef} // <-- ATTACHED REF
+          className={`animate-on-load ${isMobileVisible ? 'loaded' : ''} relative h-screen w-full bg-black overflow-hidden font-sans block md:hidden`} // <-- ADDED STATE
+        >
+
+          {/* --- MOBILE Layer 1: Main Content (Final Screen) --- */}
+          {/* This is the base layer (z-0) that is revealed */}
+          <div className="absolute inset-0 z-0">
             {/* New Gold/Yellow Background */}
-            <img 
+            <img
               src="/mobilebg.jpg"
-              alt="Background" 
+              alt="Background"
               className={`h-screen w-full object-cover ${isMobileVisible ? 'animate-bgFade' : ''}`}
               style={{ animationDelay: '2s' }}
             />            {/* (All your existing main content: artists, logos, lyrics card) */}
-            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center -translate-y-[10%]">
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center -translate-y-[10%]">
               {/* ... Artists ... */}
-              <div 
+              <div
                 className={`flex flex-col relative ${isMobileVisible ? 'animate-artistSlide' : 'opacity-0'}`}
                 style={{ animationDelay: '1.8s', transform: 'translateY(-150vh)' }}
               >
                 {/* Background intersect image */}
-                <img 
-                  src="/intersect.png" 
-                  alt="Background" 
+                <img
+                  src="/intersect.png"
+                  alt="Background"
                   className="absolute inset-0 w-[75vw] h-[75vw] object-contain -z-10 -top-[40%] mx-auto"
                 />
-                <img 
-                  src="/SM.png" 
-                  alt="Artists" 
+                <img
+                  src="/SM.png"
+                  alt="Artists"
                   className="w-[90vw] max-w-sm mx-auto"
                 />
-                <img 
-                  src="/SEEDHE.png" 
-                  alt="Seedhe" 
+                <img
+                  src="/SEEDHE.png"
+                  alt="Seedhe"
                   className="w-[90vw] max-w-md -mt-1"
                 />
-                <img 
-                  src="/Maut.png" 
-                  alt="Maut" 
+                <img
+                  src="/Maut.png"
+                  alt="Maut"
                   className={`w-[30vw] absolute ${isMobileVisible ? 'animate-mautRotate' : ''}`}
-                  style={{ top: '87%', left: '58%',  animationDelay: '2s', transform: 'rotate(45deg)' }}
+                  style={{ top: '87%', left: '58%', animationDelay: '2s', transform: 'rotate(45deg)' }}
                 />
-                <img 
-                  src="/BHAI.png" 
-                  alt="Tera Bhai" 
+                <img
+                  src="/BHAI.png"
+                  alt="Tera Bhai"
                   className="w-[20vw] absolute -mt-1"
                   style={{ top: '65%', left: '0%' }}
                 />
               </div>
             </div>
             {/* ... Parental Advisory ... */}
-            <img 
-              src="/PA.png" 
-              alt="Parental Advisory" 
+            <img
+              src="/PA.png"
+              alt="Parental Advisory"
               className={`absolute top-4 right-4 z-20 h-16 w-auto ${isMobileVisible ? 'animate-paSlide' : 'opacity-0'}`}
               style={{ animationDelay: '1.8s', transform: 'translateY(-150%)' }}
             />
             {/* ... Lyrics Card ... */}
-            <div 
+            <div
               className={`absolute bottom-0 left-0 right-0 z-30 p-6 ${isMobileVisible ? 'animate-spotifySlide' : 'opacity-0'}`}
               style={{ animationDelay: '1.5s', transform: 'translateY(100%)' }}
             >
               <div className="relative rounded-2xl overflow-visible backdrop-blur-md ring-1 ring-white/10 shadow-2xl max-w-md mx-auto">
                 {/* Play/Pause Button - Outside to bulge out */}
-                <img 
+                <img
                   src={isCardPlaying ? '/pause.png' : '/play.png'}
                   alt={isCardPlaying ? 'Pause' : 'Play'}
-                  className="absolute h-28 w-24 cursor-pointer z-20" 
+                  className="absolute h-28 w-24 cursor-pointer z-20"
                   style={{ top: '-2rem', right: '-1rem' }}
                   onClick={handleCardPlayToggle}
                 />
-                <img 
-                  src="bgbg.jpg" 
-                  alt="Card background" 
-                  className="absolute inset-0 z-0 h-full w-full object-cover rounded-2xl" 
+                <img
+                  src="bgbg.jpg"
+                  alt="Card background"
+                  className="absolute inset-0 z-0 h-full w-full object-cover rounded-2xl"
                 />
                 <div className="rounded-lg p-6 backdrop-blur-sm ring-1 ring-white/10 shadow-2xl relative overflow-hidden"
                   style={{ backgroundColor: 'rgba(255, 13, 23, 0.6)' }}>
@@ -690,7 +690,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
                       <p className="text-sm text-white/90">Seedhe Maut</p>
                     </div>
                   </div>
-                  
+
                   {/* Lyrics Section */}
                   <div className="mt-6 flex flex-col gap-1">
                     {lyrics.filter(track => track.playing).map((track) => (
@@ -699,19 +699,19 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
                           className={`text-2xl font-bold transition-colors ${
                             // If card is playing, ALL are white.
                             // If not, use the track's individual 'playing' status.
-                            isCardPlaying ? 'text-white' : (track.playing ? 'text-white' : 'text-black') 
-                          }`}
+                            isCardPlaying ? 'text-white' : (track.playing ? 'text-white' : 'text-black')
+                            }`}
                         >
                           {track.title}
                         </p>
                       </div>
                     ))}
                   </div>
-                  
+
                   {/* Spotify Logo Footer */}
                   <div className="mt-4 flex items-center gap-2 text-black">
                     <svg fill="currentColor" viewBox="0 0 16 16" className="h-6 w-6">
-                      <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.669 11.538a.498.498 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.5.5 0 0 1-.582-.495c-.038-.28.192-.505.47-.543 3.03-.69 5.662-.393 7.77.892a.5.5 0 0 1 .166.686zm.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-8.005-.93a.625.625 0 0 1-.72-.609c-.043-.33.24-.622.568-.667 2.872-.81 6.522-.36 8.943 1.12a.625.625 0 0 1 .206.858zm.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.75.75 0 0 1-.825-.67c-.05-3.63 3.14-1.003 6.363-1.662C13.312 3.61 14.135 5.36 12.75 6.81a.75.75 0 0 1-1.002.085z"/>
+                      <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.669 11.538a.498.498 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.5.5 0 0 1-.582-.495c-.038-.28.192-.505.47-.543 3.03-.69 5.662-.393 7.77.892a.5.5 0 0 1 .166.686zm.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-8.005-.93a.625.625 0 0 1-.72-.609c-.043-.33.24-.622.568-.667 2.872-.81 6.522-.36 8.943 1.12a.625.625 0 0 1 .206.858zm.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.75.75 0 0 1-.825-.67c-.05-3.63 3.14-1.003 6.363-1.662C13.312 3.61 14.135 5.36 12.75 6.81a.75.75 0 0 1-1.002.085z" />
                     </svg>
                     <span className="text-lg font-bold">Spotify</span>
                   </div>
@@ -720,58 +720,56 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
             </div>
           </div>          {/* --- MOBILE Layer 2: Centered Seedhe Maut Logo (Stays visible during reveal) --- */}
           <div className="absolute inset-0 z-5 flex items-center justify-center pointer-events-none">
-            <img 
-              src="/LOGOS.png" 
-              alt="Seedhe Maut Logo" 
+            <img
+              src="/LOGOS.png"
+              alt="Seedhe Maut Logo"
               className={`w-32 h-32 object-contain ${isMobileVisible ? 'animate-logoSlide' : ''}`}
               style={{ animationDelay: '1.5s' }}
             />
           </div>
 
           {/* --- MOBILE Layer 3: Intro Screen (NOW SPLITS ON SCROLL) --- */}
-          <div 
-  className={`absolute inset-0 z-10 pointer-events-none overflow-hidden`}
->
-  {/* Top Half */}
-  <div 
-    className={`absolute top-0 left-0 w-full h-1/2 bg-black ${
-      isMobileVisible 
-        ? 'animate-slideUp' 
-        : hasMobileAnimated 
-          ? 'animate-slideUpReverse' 
-          : ''
-    }`}
-  >
-    <img 
-      src="/mob.png" 
-      alt="Intro top" 
-      className="h-full w-full object-cover" 
-    />
-  </div>
-  
-  {/* Bottom Half (Flipped) */}
-  <div 
-    className={`absolute bottom-0 left-0 w-full h-1/2 bg-black ${
-      isMobileVisible 
-        ? 'animate-slideDown' 
-        : hasMobileAnimated 
-          ? 'animate-slideDownReverse' 
-          : ''
-    }`}
-  >
-    <img 
-      src="/mob2.png" 
-      alt="Intro bottom mirror" 
-      className="h-full w-full object-cover"
-    />
-  </div>
-</div>
+          <div
+            className={`absolute inset-0 z-10 pointer-events-none overflow-hidden`}
+          >
+            {/* Top Half */}
+            <div
+              className={`absolute top-0 left-0 w-full h-1/2 bg-black ${isMobileVisible
+                  ? 'animate-slideUp'
+                  : hasMobileAnimated
+                    ? 'animate-slideUpReverse'
+                    : ''
+                }`}
+            >
+              <img
+                src="/mob.png"
+                alt="Intro top"
+                className="h-full w-full object-cover"
+              />
+            </div>
 
-        </section>
+            {/* Bottom Half (Flipped) */}
+            <div
+              className={`absolute bottom-0 left-0 w-full h-1/2 bg-black ${isMobileVisible
+                  ? 'animate-slideDown'
+                  : hasMobileAnimated
+                    ? 'animate-slideDownReverse'
+                    : ''
+                }`}
+            >
+              <img
+                src="/mob2.png"
+                alt="Intro bottom mirror"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+
+        </section>
       </main>
     </>
   );
 };
 
-export default HomePage;
+export default ArtistPage;
 
