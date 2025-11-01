@@ -61,7 +61,7 @@ export default function RootLayout({
         <meta property="og:type" content="website" />
       </head>
   <body className="no-scrollbar hide-horizontal-scrollbar flex min-h-screen flex-col overflow-x-hidden bg-black max-w-[100vw]">
-        <LenisProvider>
+        {/* <LenisProvider> */}
           {/* Global UI helpers mounted once for entire app, including top-level pages and error boundaries */}
           <ScrollbarColorController />
           <CustomCursor />
@@ -73,7 +73,7 @@ export default function RootLayout({
           {/* Global background music audio element to persist across routes */}
           <audio id="bgm-audio" loop preload="none" />
           {children}
-        </LenisProvider>
+        {/* </LenisProvider> */}
       </body>
       {process.env.NODE_ENV == "production" && (
         <GoogleAnalytics gaId="G-69XDYH0DYC" />
