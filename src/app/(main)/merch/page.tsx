@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "../../utils/firebase";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -10,6 +10,7 @@ import { env } from "~/env";
 import TecnoTshirt from "~/components/TecnoTshirt";
 import MerchOptIn from "~/components/MerchOptIn";
 import Login from "~/components/GoogleAuth";
+import { toast } from "sonner";
 
 export default function MerchPage() {
   const [user, loading] = useAuthState(auth);
@@ -18,6 +19,13 @@ export default function MerchPage() {
   const [checkingOptIn, setCheckingOptIn] = useState(false);
   const [missingProfile, setMissingProfile] = useState(false);
   const router = useRouter();
+
+  const [signOut] = useSignOut(auth);
+
+
+  useEffect(() => {
+    console.log("Has opted in:", hasOptedIn);
+  }, [hasOptedIn]);
 
   // Check if user has opted in for merchandise
   useEffect(() => {
@@ -52,17 +60,18 @@ export default function MerchPage() {
         setHasOptedIn(data.msg.hasOpted);
         setMissingProfile(false);
         setCheckingOptIn(false);
-        console.log(data.msg);
       } catch (error) {
         // If error is 404, user profile is missing (not signed up)
         if (axios.isAxiosError(error) && error.response?.status === 404) {
           setMissingProfile(true);
           setHasOptedIn(null);
         } else {
-          setHasOptedIn(false);
+          toast.error("Error checking user status. Sign back in.");
+          await signOut();
+          setHasOptedIn(null);
         }
-        setCheckingOptIn(false);
       }
+      setCheckingOptIn(false);
     };
 
     // set college mail flag immediately
@@ -138,4 +147,5 @@ export default function MerchPage() {
       </main>
     );
   }
+
 }
