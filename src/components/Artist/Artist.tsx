@@ -458,7 +458,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
         {/*Visualizer Screen */}
         <section
           ref={visualizerRef} // Attach the ref here
-          className={`animate-on-load ${isLoaded ? 'loaded' : ''} relative h-screen w-full bg-black overflow-hidden font-sans hidden md:block mt-5`}
+          className={`animate-on-load ${isLoaded ? 'loaded' : ''} relative h-screen w-full bg-black overflow-hidden font-sans hidden xl:block xl:mt-5`}
         >
           {/* Layer 1: Split Images (The Background) */}
           <div className="absolute inset-0 z-0 flex flex-row">
@@ -522,7 +522,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
           {/* Layer 3: Center Content (Artists & Text) */}
           {/* *** CHANGED *** Using flex-col, justify-between, and padding to position items
           */}
-          <div className="center-content absolute inset-0 z-20 flex flex-col items-center justify-between pt-24 pb-0 opacity-0">
+          <div className="center-content absolute  inset-0 z-20 flex flex-col items-center justify-between pt-24 pb-0 opacity-0">
             {/* *** CHANGED *** Replaced text with image stack */}
             <div className="logo-stack relative w-full max-w-2xl h-64 flex items-center justify-center z-30">
               {/* BHAI.png - Small text "TERA BHAI" */}
@@ -555,7 +555,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
               />
             </div>
             {/* This container will be pushed to the bottom by justify-between */}
-            <div className="artist-image relative w-[60vw]"> {/* Constrained width */}
+            <div className="artist-image relative w-[60vw] "> {/* Constrained width */}
               <img
                 src="/SM.png"
                 alt="Main artist"
@@ -642,7 +642,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
         {/* =================================================================== */}
         <section
           ref={mobileVisualizerRef}
-          className={`animate-on-load ${isMobileVisible ? 'loaded' : ''} relative h-screen w-full bg-black overflow-hidden font-sans block md:hidden`} // <-- ADDED STATE
+          className={`animate-on-load ${isMobileVisible ? 'loaded' : ''} relative h-screen w-full bg-black overflow-hidden font-sans block xl:hidden`} // <-- ADDED STATE
         >
 
           {/* --- MOBILE Layer 1: Main Content (Final Screen) --- */}
@@ -655,7 +655,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
               className={`h-screen w-full object-cover ${isMobileVisible ? 'animate-bgFade' : ''}`}
               style={{ animationDelay: '2s' }}
             />            {/* (All your existing main content: artists, logos, lyrics card) */}
-            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center -translate-y-[10%]">
+            <div className="absolute inset-0 z-10 scale-[.8] mobile4:scale-100 flex flex-col items-center justify-center -translate-y-[9rem]">
               {/* ... Artists ... */}
               <div
                 className={`flex flex-col relative ${isMobileVisible ? 'animate-artistSlide' : 'opacity-0'}`}
@@ -669,23 +669,23 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
                 <img
                   src="/SM.png"
                   alt="Artists"
-                  className="w-[90vw] max-w-sm mx-auto"
+                  className="w-[90vw] max-w-sm mx-auto lg:translate-y-[26rem] lg:scale-110"
                 />
                 <img
                   src="/SEEDHE.png"
                   alt="Seedhe"
-                  className="w-[90vw] max-w-md -mt-1"
+                  className="w-[90vw] max-w-md -mt-1 lg:-translate-y-[2rem]"
                 />
                 <img
                   src="/Maut.png"
                   alt="Maut"
                   className={`w-[30vw] absolute ${isMobileVisible ? 'animate-mautRotate' : ''}`}
-                  style={{ top: '87%', left: '58%', animationDelay: '2s', transform: 'rotate(45deg)' }}
+                  style={{ top: '87%', left: '54%', animationDelay: '2s', transform: 'rotate(45deg)' }}
                 />
                 <img
                   src="/BHAI.png"
                   alt="Tera Bhai"
-                  className="w-[20vw] absolute -mt-1"
+                  className="w-[20vw] absolute -mt-1 lg:-translate-y-[6rem]"
                   style={{ top: '65%', left: '0%' }}
                 />
               </div>
@@ -699,7 +699,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
             />
             {/* ... Lyrics Card ... */}
             <div
-              className={`absolute bottom-0 left-0 right-0 z-30 p-6 ${isMobileVisible ? 'animate-spotifySlide' : 'opacity-0'}`}
+              className={`absolute bottom-0  left-0 right-0 z-30 p-6 ${isMobileVisible ? 'animate-spotifySlide' : 'opacity-0'}`}
               style={{ animationDelay: '1.5s', transform: 'translateY(100%)' }}
             >
               <div className="relative rounded-2xl overflow-visible backdrop-blur-md ring-1 ring-white/10 shadow-2xl max-w-md mx-auto">
