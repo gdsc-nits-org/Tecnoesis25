@@ -6,6 +6,7 @@ import { auth } from "../../utils/firebase";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { env } from "~/env";
+
 import TecnoTshirt from "~/components/TecnoTshirt";
 import MerchOptIn from "~/components/MerchOptIn";
 import Login from "~/components/GoogleAuth";
@@ -16,6 +17,7 @@ export default function MerchPage() {
   const [isCollegeMail, setIsCollegeMail] = useState(true);
   const [hasOptedIn, setHasOptedIn] = useState<boolean | null>(null);
   const [checkingOptIn, setCheckingOptIn] = useState(false);
+  const [missingProfile, setMissingProfile] = useState(false);
   const router = useRouter();
 
   const [signOut] = useSignOut(auth);
@@ -36,10 +38,12 @@ export default function MerchPage() {
         setIsCollegeMail(nitsRegex.test(emailDomain));
       }
     };
+
     const checkOptInStatus = async () => {
       if (!user) {
         setHasOptedIn(null);
         setCheckingOptIn(false);
+        setMissingProfile(false);
         return;
       }
       setCheckingOptIn(true);
@@ -54,14 +58,20 @@ export default function MerchPage() {
           }
         );
         setHasOptedIn(data.msg.hasOpted);
+        setMissingProfile(false);
         setCheckingOptIn(false);
       } catch (error) {
-        console.error("Error checking opt-in status:", error);
-        toast.error("Error checking user status. Sign back in.");
-        await signOut();
-        setHasOptedIn(null);
-        setCheckingOptIn(false);
+        // If error is 404, user profile is missing (not signed up)
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
+          setMissingProfile(true);
+          setHasOptedIn(null);
+        } else {
+          toast.error("Error checking user status. Sign back in.");
+          await signOut();
+          setHasOptedIn(null);
+        }
       }
+      setCheckingOptIn(false);
     };
 
     // set college mail flag immediately
@@ -121,8 +131,16 @@ export default function MerchPage() {
     );
   }
 
+  // If user is missing profile (not signed up), redirect to /userSignup
+  if (missingProfile && user) {
+    if (typeof window !== "undefined") {
+      window.location.replace("/userSignup");
+    }
+    return null;
+  }
+
   // Show merchandise ordering page if user has not opted in (i.e., can order)
-  if (hasOptedIn === false) {
+  if (user && hasOptedIn === false) {
     return (
       <main className="min-h-screen bg-black text-white text-center font-orbitron px-6 pt-24 md:pt-32 text-2xl">
         Sorry, you have opted out for merchandise ordering!
