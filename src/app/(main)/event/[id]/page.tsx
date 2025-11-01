@@ -57,7 +57,7 @@ const EventPage = ({ params }: { params: Promise<EventParams> }) => {
   return (
     <div>
       <div
-        className="flex min-h-screen w-screen flex-col items-center justify-center gap-12 bg-cover bg-center pt-8 md:flex-row lg:gap-20 lg:px-16"
+        className="flex min-h-screen w-screen mt-[5rem] flex-col items-center justify-center gap-12 bg-cover bg-center pt-8 md:flex-row lg:gap-20 lg:px-16"
         style={{ backgroundImage: "url('/about/bg.png')" }}
       >
         <div className="hidden max-w-[50%] md:block">

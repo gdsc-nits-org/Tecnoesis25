@@ -7,7 +7,7 @@ import { Toaster } from "sonner";
 
 
 
-import LenisProvider from "~/components/LenisProvider";
+
 import CustomCursor from "~/components/CustomCursor";
 import ScrollbarColorController from "~/components/ScrollbarColorController";
 
@@ -60,20 +60,20 @@ export default function RootLayout({
         <meta property="og:website" content="https://tecnoesis25.pages.dev/" />
         <meta property="og:type" content="website" />
       </head>
-  <body className="no-scrollbar hide-horizontal-scrollbar flex min-h-screen flex-col overflow-x-hidden bg-black max-w-[100vw]">
-        {/* <LenisProvider> */}
-          {/* Global UI helpers mounted once for entire app, including top-level pages and error boundaries */}
-          <ScrollbarColorController />
-          <CustomCursor />
-          <Toaster
-            toastOptions={toastOps}
-            visibleToasts={1}
-            position="bottom-center"
-          />
-          {/* Global background music audio element to persist across routes */}
-          <audio id="bgm-audio" loop preload="none" />
-          {children}
-        {/* </LenisProvider> */}
+      <body className="no-scrollbar hide-horizontal-scrollbar flex min-h-screen flex-col overflow-x-hidden bg-black max-w-[100vw]">
+
+        {/* Global UI helpers mounted once for entire app, including top-level pages and error boundaries */}
+        <ScrollbarColorController />
+        <CustomCursor />
+        <Toaster
+          toastOptions={toastOps}
+          visibleToasts={1}
+          position="bottom-center"
+        />
+        {/* Global background music audio element to persist across routes */}
+        <audio id="bgm-audio" loop preload="none" />
+  {children}
+
       </body>
       {process.env.NODE_ENV == "production" && (
         <GoogleAnalytics gaId="G-69XDYH0DYC" />

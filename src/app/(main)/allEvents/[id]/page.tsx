@@ -73,13 +73,14 @@ function AllEventsPage({ params }: { params: Promise<EventParams> }) {
       <h1 className="text-[#c00303] font-nyxerin text-4xl sm:text-5xl">{moduleName}</h1>
       <div className="flex flex-col flex-wrap items-center justify-evenly gap-8 md:flex-row">
         {events.map((event) => (
-          <EventCard
-            key={event.id}
-            eventPoster={event.posterImage}
-            eventName={event.name}
-            registrationUrl={`/teamRegistration/${event.id}` || event.thirdPartyURL}
-            eventUrl={`/event/${event.id}`}
-          />
+          <div key={event.id} className="mb-20">{/* Added margin-bottom to fix button visibility */}
+            <EventCard
+              eventPoster={event.posterImage}
+              eventName={event.name}
+              registrationUrl={`/teamRegistration/${event.id}` || event.thirdPartyURL}
+              eventUrl={`/event/${event.id}`}
+            />
+          </div>
         ))}
       </div>
     </div>
