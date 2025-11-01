@@ -1,8 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect } from "react";
 
-export default function SparkReveal() {
+type SparkRevealProps = {
+  onReady?: () => void;
+};
+
+export default function SparkReveal({ onReady }: SparkRevealProps) {
+  useEffect(() => {
+    if (onReady) onReady();
+  }, [onReady]);
   return (
     <div id="reveal"
      className="relative w-screen h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/overlay.png')" }}

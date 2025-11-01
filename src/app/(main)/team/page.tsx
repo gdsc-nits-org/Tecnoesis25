@@ -38,7 +38,7 @@ const Team = () => {
     <div
       className="clip-angled flex min-h-screen w-screen animate-glowMove
         flex-col items-center
-        justify-center bg-[#000000] bg-red-grid bg-[length:100%_100%,100%_100%,50px_50px,50px_50px,50px_50px] bg-fixed bg-[position:0_0,0_0,25px_25px,0_0,0_0] pt-28 font-nyxerin text-xl text-[#ffffff] md:pt-32"
+        justify-center bg-[#000000] bg-red-grid bg-[length:100%_100%,100%_100%,50px_50px,50px_50px,50px_50px] bg-fixed bg-[position:0_0,0_0,25px_25px,0_0,0_0] pt-28 font-nyxerin text-xl text-[#ffffff] md:pt-32 overflow-x-hidden]"
     >
       <h1 className="mb-6 text-2xl font-bold mobile:text-3xl tablet:text-4xl laptop:text-7xl fourK:text-7xl">
         Our Team

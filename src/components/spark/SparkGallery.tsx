@@ -8,7 +8,7 @@ interface CardProps {
 
 const Card = ({ url }: CardProps) => {
   return (
-    <div className="h-[23rem] w-[70vw] flex-shrink-0  rounded-md border-[1px]  border-[#B050FF] bg-gradient-to-r from-[#520095] via-[#B46EFF] to-[#6200A9] p-[15px] transition-transform duration-300 md:h-[20rem] md:w-[32rem]">
+    <div className="h-[20rem] w-[70vw] flex-shrink-0  rounded-md border-[1px]  border-[#B050FF] bg-gradient-to-r from-[#520095] via-[#B46EFF] to-[#6200A9] p-[15px] transition-transform duration-300 md:h-[20rem] md:w-[32rem]">
       <img src={url} className="h-full w-full rounded-md object-cover" />
     </div>
   );
@@ -212,15 +212,20 @@ const SparkGalleryDesktop = () => {
     </div>
   );
 };
-const SparkGallery = () => {
+type SparkGalleryProps = {
+  onReady?: () => void;
+};
+
+const SparkGallery = ({ onReady }: SparkGalleryProps) => {
   const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
     const checkScreenSize = () => setIsMobile(window.innerWidth < 768);
     checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
+    if (onReady) onReady();
     return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
+  }, [onReady]);
 
   return (
     <div className="flex min-h-screen w-screen items-center justify-center overflow-x-hidden text-[#ffffff]">

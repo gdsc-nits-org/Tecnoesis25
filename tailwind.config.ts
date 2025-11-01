@@ -23,6 +23,7 @@ export default {
         mobile1: "375px",
         mobile2: "400px",
         mobile3: "500px",
+        mobile4: "380px",
         tablet: "750px",
         tablet2: "900px",
         ipadpro: "1000px",
