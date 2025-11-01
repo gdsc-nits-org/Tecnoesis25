@@ -212,15 +212,20 @@ const SparkGalleryDesktop = () => {
     </div>
   );
 };
-const SparkGallery = () => {
+type SparkGalleryProps = {
+  onReady?: () => void;
+};
+
+const SparkGallery = ({ onReady }: SparkGalleryProps) => {
   const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
     const checkScreenSize = () => setIsMobile(window.innerWidth < 768);
     checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
+    if (onReady) onReady();
     return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
+  }, [onReady]);
 
   return (
     <div className="flex min-h-screen w-screen items-center justify-center overflow-x-hidden text-[#ffffff]">

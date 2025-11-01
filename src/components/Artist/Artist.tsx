@@ -18,7 +18,12 @@ const tracklist = [
   { id: 11, title: "Ceo Hain Top Notch", playing: false },
 ];
 
-const ArtistPage: NextPage = () => {
+
+type ArtistPageProps = {
+  onReady?: () => void;
+};
+
+const ArtistPage: NextPage<ArtistPageProps> = ({ onReady }) => {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -69,12 +74,14 @@ const ArtistPage: NextPage = () => {
       observer.observe(currentRef);
     }
 
+    if (onReady) onReady();
+
     return () => {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, [onReady]);
 
   // --- NEW: MOBILE Effect (Scroll-based) ---
   useEffect(() => {
@@ -150,7 +157,7 @@ const ArtistPage: NextPage = () => {
     "/play.png",
     "/bgbg.jpg",
     "/mobilebg.jpg",
-    "/intersect.png",
+    "/Intersect.png",
     "/mob.png",
     "/mob2.png",
     // Audio
@@ -634,7 +641,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
         {/* Section 3: MOBILE Visualizer (Visible on mobile only)              */}
         {/* =================================================================== */}
         <section
-          ref={mobileVisualizerRef} // <-- ATTACHED REF
+          ref={mobileVisualizerRef}
           className={`animate-on-load ${isMobileVisible ? 'loaded' : ''} relative h-screen w-full bg-black overflow-hidden font-sans block md:hidden`} // <-- ADDED STATE
         >
 
@@ -654,9 +661,8 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
                 className={`flex flex-col relative ${isMobileVisible ? 'animate-artistSlide' : 'opacity-0'}`}
                 style={{ animationDelay: '1.8s', transform: 'translateY(-150vh)' }}
               >
-                {/* Background intersect image */}
                 <img
-                  src="/intersect.png"
+                  src="/Intersect.png"
                   alt="Background"
                   className="absolute inset-0 w-[75vw] h-[75vw] object-contain -z-10 -top-[40%] mx-auto"
                 />
