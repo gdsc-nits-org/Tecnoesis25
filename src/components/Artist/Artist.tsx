@@ -481,7 +481,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
           {/* Layer 3: Center Content (Artists & Text) */}
           {/* *** CHANGED *** Using flex-col, justify-between, and padding to position items
           */}
-          <div className="center-content absolute inset-0 z-40 flex flex-col items-center justify-between pt-24 pb-0 opacity-0">
+          <div className="center-content absolute inset-0 z-20 flex flex-col items-center justify-between pt-24 pb-0 opacity-0">
             {/* *** CHANGED *** Replaced text with image stack */}
             <div className="logo-stack relative w-full max-w-2xl h-64 flex items-center justify-center z-30">
               {/* BHAI.png - Small text "TERA BHAI" */}
