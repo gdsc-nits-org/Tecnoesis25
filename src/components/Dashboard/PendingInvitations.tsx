@@ -102,10 +102,10 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
   }, [data, token]);
 
   return (
-    <div className="relative w-full max-w-[450px] sm:max-w-[500px] lg:ml-auto lg:mr-8 lg:w-[500px] group animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+    <div className="relative w-full max-w-[450px] sm:max-w-[500px] lg:ml-auto lg:mr-8 lg:w-[500px] animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
       {/* Content with Border */}
       <div
-        className="relative flex flex-col items-center rounded-2xl transition-all duration-500 hover:scale-[1.02]"
+        className="relative flex flex-col items-center rounded-2xl transition-all duration-500 group hover:scale-[1.02] hover:z-50"
         style={{
           height: "450px",
           filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
@@ -143,7 +143,7 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
 
         {/* Scrollable Content Container */}
         <div
-          className="flex w-full flex-col gap-4 overflow-y-auto pr-2 scrollbar-hide sm:gap-5 relative z-10"
+          className="flex w-full flex-col gap-4 pr-2 sm:gap-5 relative z-10 overflow-y-auto scrollbar-hide"
           style={{
             maxHeight: "220px",
           }}
@@ -180,7 +180,7 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
                       style={{
                         fontStyle: "normal",
                         fontWeight: 700,
-                        fontSize: "clamp(8px, 2.5vw, 15px)",
+                        fontSize: "clamp(7px, 2vw, 12px)",
                         lineHeight: "1.3",
                         wordWrap: "break-word",
                         overflowWrap: "break-word",
@@ -195,7 +195,7 @@ const PendingInvitations = ({ data, token }: PendingInvitationsProps) => {
                       style={{
                         fontStyle: "normal",
                         fontWeight: 600,
-                        fontSize: "clamp(6px, 1.8vw, 10px)",
+                        fontSize: "clamp(5px, 1.5vw, 8px)",
                         lineHeight: "1.3",
                         wordWrap: "break-word",
                         overflowWrap: "break-word",

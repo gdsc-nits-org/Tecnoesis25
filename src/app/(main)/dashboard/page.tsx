@@ -93,7 +93,7 @@ const DashBoard = () => {
         <div className="flex w-full flex-row items-center justify-center lg:w-auto lg:justify-start animate-slide-right">
           <Profile />
         </div>
-        <div className="flex w-full flex-col items-center gap-4 sm:gap-6 lg:w-auto lg:items-end animate-slide-left overflow-x-hidden">
+        <div className="flex w-full flex-col items-center gap-4 sm:gap-6 lg:w-auto lg:items-end animate-slide-left">
           {!isLoading && token && <PendingInvitations data={pendinglist} token={token} />}
           {!isLoading && token && <CompletedEvents data={allevents} token={token} />}
         </div>
