@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect, use } from "react";
-import { useRouter } from "next/navigation";
+
 import { env } from "~/env";
 import { ZodError } from "zod";
 import { Command } from "cmdk";
@@ -19,6 +19,7 @@ import TeamLogo2 from "../../../../../public/teamLogo2.png";
 import Avatar from "../../../../../public/Avatar.png";
 import CongratulationBorder from "../../../../../public/congratulationBorder.png";
 import Link from "next/link";
+import Login from "~/components/GoogleAuth";
 
 export const runtime = "edge";
 
@@ -135,11 +136,10 @@ interface EventParams {
 }
 
 /* ---------------------------- Main Component ---------------------------- */
+
 const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
   const { id } = use(params);
-  const router = useRouter();
   const [user, loading] = useAuthState(auth);
-
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [formData, setFormData] = useState<{
     teamName: string;
@@ -152,14 +152,14 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
     members: [] as string[],
     transactionId: "",
   });
-
   const [verificationPhoto, setVerificationPhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-
-
   const [event, setEvent] = useState<Event | null>(null);
   const [teamLeader, setTeamLeader] = useState<string>("Loading...");
   const [allUsers, setAllUsers] = useState<UserResponse[]>([]);
+
+  // Early authentication check (after hooks)
+  const showAuthRequired = !user && !loading;
 
   /* --------------------------- Fetch event data --------------------------- */
   useEffect(() => {
@@ -226,7 +226,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
         toast.error('Please upload a valid image file (JPEG, PNG, or WebP)');
         return;
       }
-      
+
       // Validate file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
         toast.error('File size must be less than 5MB');
@@ -234,7 +234,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
       }
 
       setVerificationPhoto(file);
-      
+
       // Create preview
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -318,7 +318,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
             `${env.NEXT_PUBLIC_API_URL}/api/team/event/${id}/add`,
             formDataToSend,
             {
-              headers: { 
+              headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data',
               },
@@ -349,17 +349,31 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
     );
   };
 
-  if (loading || !event)
+
+
+
+  if (loading || showAuthRequired)
     return (
-      <div className="flex h-screen w-screen items-center justify-center text-xl text-white">
-        Loading...
+      <div className="flex h-screen font-bankGothik w-screen items-center justify-center text-xl text-white">
+        {loading ? (
+          "Loading..."
+        ) : (
+          <main className="flex min-h-screen items-center justify-center bg-black px-6">
+            <div className="max-w-md text-center">
+              <h1 className="mb-4 font-bankGothik text-3xl font-bold text-white">
+                AUTHENTICATION REQUIRED
+              </h1>
+              <p className="mb-6 font-bankGothik text-lg text-gray-300">
+                Please sign in.
+              </p>
+              <div className="flex items-center justify-center">
+                <Login />
+              </div>
+            </div>
+          </main>
+        )}
       </div>
     );
-
-  if (!user) {
-    toast.error("Sign in to register for the event");
-    router.push("/home");
-  }
 
   /* Render Steps */
   return (
@@ -373,13 +387,13 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
               Registration Form
             </h1>
             <h2 className="text-xl lg:text-4xl font-bankGothik font-weight: 700">
-              Event : <span className="text-red-600">{event.name}</span>
+              Event : <span className="text-red-600">{event?.name}</span>
             </h2>
             <div className="text-sm lg:text-xl font-bankGothik text-gray-300">
-              Team Size: <span className="text-white text-2xl">{event.minTeamSize}</span> - <span className="text-white text-2xl">{event.maxTeamSize}</span> members
+              Team Size: <span className="text-white text-2xl">{event?.minTeamSize}</span> - <span className="text-white text-2xl">{event?.maxTeamSize}</span> members
             </div>
             <div className="text-xl lg:text-3xl font-bankGothik text-gray-300">
-              Registration Fee: <span className="text-white">{event.registrationFee}</span> INR
+              Registration Fee: <span className="text-white">{event?.registrationFee}</span> INR
             </div>
 
             <form
@@ -387,7 +401,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
               className="space-y-2 md:space-y-6 mt-4 md:mt-8 w-full max-w-[95%] md:max-w-3xl"
             >
               {/* Team Name field - only show if not solo event */}
-              {event.maxTeamSize > 1 && (
+              {event && event.maxTeamSize > 1 && (
                 <div className="flex items-center space-x-1 md:space-x-2 relative">
                   <label
                     htmlFor="teamName"
@@ -439,7 +453,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
               </div>
 
               {/* Dynamic member fields based on maxTeamSize - 1 (excluding leader) */}
-              {Array.from({ length: event.maxTeamSize - 1 }, (_, index) => {
+              {event && Array.from({ length: event.maxTeamSize - 1 }, (_, index) => {
                 const memberNum = index + 1;
                 const fieldName = `member${memberNum}`;
                 return (
@@ -472,7 +486,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
               })}
 
               {/* Payment fields - only show if registration fee > 0 */}
-              {event.registrationFee > 0 && (
+              {event && event.registrationFee > 0 && (
                 <>
                   <div className="pt-4 border-t border-red-700/30">
                     <h3 className="text-center text-lg md:text-2xl font-bankGothik text-red-500 mb-4">
@@ -481,14 +495,14 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
                   </div>
 
                   {/* UPI QR Code Display */}
-                  {event.upiQrCode && (
+                  {event?.upiQrCode && (
                     <div className="flex flex-col items-center space-y-2 my-4 p-4 bg-white/10 rounded-lg border border-red-700/50">
                       <p className="text-sm md:text-base font-bankGothik text-cyan-400">
-                        Scan QR Code to Pay ₹{event.registrationFee}
+                        Scan QR Code to Pay ₹{event?.registrationFee}
                       </p>
                       <div className="relative w-48 h-48 md:w-64 md:h-64 bg-white rounded-lg p-2">
                         <Image
-                          src={event.upiQrCode}
+                          src={event?.upiQrCode}
                           alt="UPI QR Code for Payment"
                           fill
                           className="object-contain"
@@ -617,11 +631,11 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
               Team Name : <span className="text-red-600">{formData.teamName || teamLeader}</span>
             </h2>
             <div className="text-xs md:text-xl font-bankGothik text-gray-300">
-              Team Size Requirements: <span className="text-cyan-400">{event.minTeamSize}</span> - <span className="text-cyan-400">{event.maxTeamSize}</span> members
+              Team Size Requirements: <span className="text-cyan-400">{event?.minTeamSize}</span> - <span className="text-cyan-400">{event?.maxTeamSize}</span> members
             </div>
 
             {/* Payment Information Display */}
-            {event.registrationFee > 0 && (
+            {event && event.registrationFee > 0 && (
               <div className="bg-red-900/20 border border-red-700 p-3 md:p-4 rounded-md w-full max-w-[95%] md:max-w-2xl mb-4">
                 <h3 className="text-center text-lg md:text-xl font-bankGothik text-red-400 mb-2">
                   Payment Information
@@ -757,7 +771,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
               <p className="text-sm md:text-2xl font-bankGothik text-red-600 font-semibold">
                 You have successfully registered for the event.
               </p>
-              <p className="text-sm md:text-2xl text-[#F40004] font-nyxerin font-semibold">{event.name}</p>
+              <p className="text-sm md:text-2xl text-[#F40004] font-nyxerin font-semibold">{event?.name}</p>
               <Link href="/dashboard">
                 <CustomButton
                   text="Go to Dashboard"
