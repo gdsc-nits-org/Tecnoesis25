@@ -1,4 +1,5 @@
-"use client";
+
+import Head from "next/head";
 
 import type { NextPage } from 'next';
 import { useState, useEffect, useRef } from 'react';
@@ -17,7 +18,12 @@ const tracklist = [
   { id: 11, title: "Ceo Hain Top Notch", playing: false },
 ];
 
-const ArtistPage: NextPage = () => {
+
+type ArtistPageProps = {
+  onReady?: () => void;
+};
+
+const ArtistPage: NextPage<ArtistPageProps> = ({ onReady }) => {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -68,12 +74,14 @@ const ArtistPage: NextPage = () => {
       observer.observe(currentRef);
     }
 
+    if (onReady) onReady();
+
     return () => {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, [onReady]);
 
   // --- NEW: MOBILE Effect (Scroll-based) ---
   useEffect(() => {
@@ -131,8 +139,41 @@ const ArtistPage: NextPage = () => {
     return 'none';
   };
 
+  const preloadAssets = [
+    // Desktop and mobile images
+    "/leftshakti.png",
+    "/rightshakti.png",
+    "/leftbaba.png",
+    "/rightbaba.png",
+    "/BHAI.png",
+    "/LOGOS.png",
+    "/SEEDHE.png",
+    "/Maut.png",
+    "/SM.png",
+    "/N.svg",
+    "/PA.png",
+    "/logogg.png",
+    "/pause.png",
+    "/play.png",
+    "/bgbg.jpg",
+    "/mobilebg.jpg",
+    "/Intersect.png",
+    "/mob.png",
+    "/mob2.png",
+    // Audio
+    "https://res.cloudinary.com/dsj9gr1o3/video/upload/v1761826455/Raat_Ki_Rani_-_Seedhe_Maut_pagalall.com_qoz3wo.mp3"
+  ];
   return (
     <>
+      <Head>
+        {preloadAssets.map((src) =>
+          src.endsWith('.mp3') ? (
+            <link key={src} rel="preload" as="audio" href={src} />
+          ) : (
+            <link key={src} rel="preload" as="image" href={src} />
+          )
+        )}
+      </Head>
       <audio
         ref={audioRef}
         src="https://res.cloudinary.com/dsj9gr1o3/video/upload/v1761826455/Raat_Ki_Rani_-_Seedhe_Maut_pagalall.com_qoz3wo.mp3"
@@ -481,7 +522,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
           {/* Layer 3: Center Content (Artists & Text) */}
           {/* *** CHANGED *** Using flex-col, justify-between, and padding to position items
           */}
-          <div className="center-content absolute inset-0 z-40 flex flex-col items-center justify-between pt-24 pb-0 opacity-0">
+          <div className="center-content absolute inset-0 z-20 flex flex-col items-center justify-between pt-24 pb-0 opacity-0">
             {/* *** CHANGED *** Replaced text with image stack */}
             <div className="logo-stack relative w-full max-w-2xl h-64 flex items-center justify-center z-30">
               {/* BHAI.png - Small text "TERA BHAI" */}

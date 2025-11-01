@@ -1,8 +1,16 @@
 "use client";
 import Dither from "~/components/dither";
 import Image from "next/image";
+import { useEffect } from "react";
 
-export default function SparkFooter() {
+type SparkFooterProps = {
+  onReady?: () => void;
+};
+
+export default function SparkFooter({ onReady }: SparkFooterProps) {
+  useEffect(() => {
+    if (onReady) onReady();
+  }, [onReady]);
   return (
     <div className="relative w-full overflow-hidden bg-black p-0" id="foot">
       <div className="absolute inset-0 z-0">
