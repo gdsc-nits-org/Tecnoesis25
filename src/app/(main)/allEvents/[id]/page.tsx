@@ -38,7 +38,7 @@ interface EventParams {
 function AllEventsPage({ params }: { params: Promise<EventParams> }) {
   const resolvedParams = use(params);
   const [events, setEvents] = useState<Eventresponse[]>([]);
-  const [moduleName, setModuleName] = useState<string>("ROBOTRON");
+  const [moduleName, setModuleName] = useState<string>("");
 
      useEffect(() => {
       const fetchEvent = async () => {

@@ -179,13 +179,13 @@ const EventCard: React.FC<EventCardProps> = ({ event, position }) => {
       onClick={() => router.push(`/allEvents/${event.id}`)}
       className={`small-bounce absolute w-[40%] cursor-pointer transition-transform duration-1000 hover:scale-105 ${position === "top-left" ? "left-[8%] top-[10%]" : "bottom-[10%] right-[8%]"}`}
     >
-      <div className="relative">
+      <div className="relative lg:scale-75 fourK:scale-100 ">
         <Image
           src={event.imageUrl}
           alt={`${event.name} Visual`}
           width={1200}
           height={1200}
-          className="rounded-lg border border-gray-800"
+          className="rounded-lg border border-gray-800 "
         />
         <Image
           src="/Subtract.png"
@@ -195,10 +195,9 @@ const EventCard: React.FC<EventCardProps> = ({ event, position }) => {
           className={`absolute -top-12 ${position === "top-left" ? "-left-7 fourK:scale-125" : "-right-7 scale-x-[-1] fourK:scale-125 fourK:scale-x-[-1]"}`}
         />
         <div
-          className={`absolute -top-6 font-nyxerin text-xs text-white  fourK:scale-125 ${position === "top-left" ? "left-16" : "right-16 text-right"}`}
+          className={`absolute -top-6 font-orbitron text-xl text-white  fourK:scale-125 ${position === "top-left" ? "left-16" : "right-16 text-right"}`}
         >
           <p>{event.name}</p>
-          <p>{event.year}</p>
         </div>
       </div>
     </div>
@@ -233,39 +232,6 @@ const MobileEventCard: React.FC<MobileEventCardProps> = ({ event }) => {
   );
 };
 
-const MobileProgressBar: React.FC<MobileProgressBarProps> = ({ progress }) => {
-  const totalSegments = 12;
-  const filledSegments = Math.round((progress / 100) * totalSegments);
-  const clipPathValue =
-    'path("M28.88 1L10.88 16L28.88 31H163.12L181.12 16L163.12 1H18.88Z")';
-
-  return (
-    <div className="relative my-2 h-8 w-48">
-      <Image
-        src="/pbar.svg"
-        alt="Progress bar border"
-        layout="fill"
-        className="pointer-events-none absolute inset-0 z-20"
-      />
-      <div
-        className="absolute inset-0 flex justify-center overflow-hidden"
-        style={{ clipPath: clipPathValue, WebkitClipPath: clipPathValue }}
-      >
-        <div className="flex h-full w-[93%] items-center space-x-[0.12rem] px-3">
-          {Array.from({ length: totalSegments }).map((_, i) => (
-            <div
-              key={i}
-              className={`h-[55%] w-full transition-colors duration-150 ease-in-out ${
-                i < filledSegments ? "bg-[#F40004]" : "bg-red-900/40"
-              }`}
-              style={{ transform: "skewX(-45deg)" }}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const CustomScrollbar: React.FC<CustomScrollbarProps> = ({
   pairsCount,
@@ -497,7 +463,6 @@ export default function EventPage() {
                 <p className="font-mono text-xs tracking-widest text-white/50">
                   ⟵ SCROLL SIDEWAYS ⟶
                 </p>
-                <MobileProgressBar progress={scrollProgress} />
               </div>
             </div>
           </>
@@ -528,20 +493,6 @@ export default function EventPage() {
           </>
         )}
       </div>
-
-      {!isMobile && (
-        <div
-          className={`transition-opacity duration-500 ${activeIndex > 0 ? "opacity-100" : "pointer-events-none opacity-0"}`}
-        >
-          {eventPairs.length > 0 && (
-            <CustomScrollbar
-              pairsCount={eventPairs.length}
-              activeIndex={activeIndex - 1}
-              onSelect={(index) => scrollToSection(index + 1)}
-            />
-          )}
-        </div>
-      )}
     </main>
   );
 }

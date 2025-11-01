@@ -377,22 +377,22 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
 
   /* Render Steps */
   return (
-    <div className="min-h-screen clip-angled w-screen animate-glowMove bg-[#000000] bg-red-grid bg-[length:100%_100%,100%_100%,50px_50px,50px_50px,50px_50px] bg-fixed bg-[position:0_0,0_0,25px_25px,0_0,0_0] text-white font-[Orbitron] tracking-widest flex flex-col items-center justify-start px-6 py-12 overflow-hidden">
+    <div className="min-h-screen clip-angled w-screen animate-glowMove bg-[#000000] bg-red-grid bg-[length:100%_100%,100%_100%,50px_50px,50px_50px,50px_50px] bg-fixed bg-[position:0_0,0_0,25px_25px,0_0,0_0] text-white font-[Orbitron] tracking-widest flex flex-col items-center justify-start px-6 py-12 overflow-hidden pt-[5rem]">
       {/* STEP 1 */}
       {step === 1 && (
         <div className="relative w-full max-w-7xl overflow-y-auto">
           {/* Registration Form */}
-          <div className="relative z-10 flex flex-col justify-start items-center min-h-screen text-white space-y-2 md:space-y-4 px-4 py-8">
-            <h1 className="text-2xl lg:text-6xl font-bankGothik uppercase tracking-widest font-weight: 700">
+          <div className="relative z-10 flex flex-col justify-start items-center min-h-screen text-white space-y-2 md:space-y-4 px-4 text-left py-8">
+            <h1 className="text-xl lg:text-6xl font-bankGothik uppercase tracking-widest font-weight: 700 text-nowrap">
               Registration Form
             </h1>
             <h2 className="text-xl lg:text-4xl font-bankGothik font-weight: 700">
               Event : <span className="text-red-600">{event?.name}</span>
             </h2>
-            <div className="text-sm lg:text-xl font-bankGothik text-gray-300">
+            <div className="text-base lg:text-xl text-left font-bankGothik text-gray-300">
               Team Size: <span className="text-white text-2xl">{event?.minTeamSize}</span> - <span className="text-white text-2xl">{event?.maxTeamSize}</span> members
             </div>
-            <div className="text-xl lg:text-3xl font-bankGothik text-gray-300">
+            <div className="text-base lg:text-3xl font-bankGothik text-gray-300">
               Registration Fee: <span className="text-white">{event?.registrationFee}</span> INR
             </div>
 
@@ -402,25 +402,23 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
             >
               {/* Team Name field - only show if not solo event */}
               {event && event.maxTeamSize > 1 && (
-                <div className="flex items-center space-x-1 md:space-x-2 relative">
+                <div className="flex items-center gap-2 md:gap-4 relative w-full">
                   <label
                     htmlFor="teamName"
-                    className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-28 md:w-60 font-bankGothik text-center"
+                    className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-36 md:w-56 font-bankGothik text-center"
                   >
                     Team Name
                   </label>
-
-                  <div className="absolute left-[6.8rem] md:left-[calc(14.35rem)] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
+                  <div className="absolute left-[9.2rem] md:left-[14.5rem] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
                     <Image src={arrowRight} alt="Right Arrow" width={10} height={10} className="md:w-[15px] md:h-[15px]" />
                   </div>
-
                   <input
                     id="teamName"
                     name="teamName"
                     type="text"
                     onChange={handleChange}
                     value={formData.teamName}
-                    className="flex-grow bg-[#A4000040] bg-opacity-70 placeholder-red-400 text-white font-bankGothik py-1.5 md:py-3 px-2 pl-4 md:px-4 md:pl-10 text-xs md:text-base focus:outline-none focus:ring-2 focus:ring-red-600 transition"
+                    className="flex-grow min-w-0 bg-[#A4000040] bg-opacity-70 placeholder-red-400 text-white font-bankGothik py-1.5 md:py-3 px-2 pl-4 md:px-4 md:pl-10 text-xs md:text-base focus:outline-none focus:ring-2 focus:ring-red-600 transition"
                     placeholder="Team Name"
                     required
                   />
@@ -428,24 +426,22 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
               )}
 
               {/* Team Leader field - auto-filled, read-only */}
-              <div className="flex items-center space-x-1 md:space-x-2 relative">
+              <div className="flex items-center gap-2 md:gap-4 relative w-full">
                 <label
                   htmlFor="teamLeader"
-                  className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-28 md:w-60 font-bankGothik text-center"
+                  className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-36 md:w-56 font-bankGothik text-center"
                 >
                   Team Leader
                 </label>
-
-                <div className="absolute left-[6.8rem] md:left-[calc(14.35rem)] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
+                <div className="absolute left-[9.2rem] md:left-[14.5rem] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
                   <Image src={arrowRight} alt="Right Arrow" width={10} height={10} className="md:w-[15px] md:h-[15px]" />
                 </div>
-
                 <input
                   id="teamLeader"
                   name="teamLeader"
                   type="text"
                   value={teamLeader}
-                  className="flex-grow bg-[#A4000040] bg-opacity-70 placeholder-red-400 text-white font-bankGothik py-1.5 md:py-3 px-2 pl-4 md:px-4 md:pl-10 text-xs md:text-base focus:outline-none focus:ring-2 focus:ring-red-600 transition cursor-not-allowed"
+                  className="flex-grow min-w-0 bg-[#A4000040] bg-opacity-70 placeholder-red-400 text-white font-bankGothik py-1.5 md:py-3 px-2 pl-4 md:px-4 md:pl-10 text-xs md:text-base focus:outline-none focus:ring-2 focus:ring-red-600 transition cursor-not-allowed"
                   placeholder="Team Leader"
                   readOnly
                   required
@@ -457,19 +453,17 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
                 const memberNum = index + 1;
                 const fieldName = `member${memberNum}`;
                 return (
-                  <div key={fieldName} className="flex items-center space-x-1 md:space-x-2 relative">
+                  <div key={fieldName} className="flex items-center gap-2 md:gap-4 relative w-full">
                     <label
                       htmlFor={fieldName}
-                      className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-28 md:w-60 font-bankGothik text-center"
+                      className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-36 md:w-56 font-bankGothik text-center"
                     >
                       Member {memberNum}
                     </label>
-
-                    <div className="absolute left-[6.8rem] md:left-[calc(14.35rem)] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
+                    <div className="absolute left-[9.2rem] md:left-[14.5rem] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
                       <Image src={arrowRight} alt="Right Arrow" width={10} height={10} className="md:w-[15px] md:h-[15px]" />
                     </div>
-
-                    <div className="relative flex-grow">
+                    <div className="relative flex-grow min-w-0">
                       <CommandMenu
                         allUsers={allUsers}
                         value={String(formData[fieldName] ?? "")}
