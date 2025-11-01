@@ -1,4 +1,5 @@
-"use client";
+
+import Head from "next/head";
 
 import type { NextPage } from 'next';
 import { useState, useEffect, useRef } from 'react';
@@ -131,8 +132,41 @@ const ArtistPage: NextPage = () => {
     return 'none';
   };
 
+  const preloadAssets = [
+    // Desktop and mobile images
+    "/leftshakti.png",
+    "/rightshakti.png",
+    "/leftbaba.png",
+    "/rightbaba.png",
+    "/BHAI.png",
+    "/LOGOS.png",
+    "/SEEDHE.png",
+    "/Maut.png",
+    "/SM.png",
+    "/N.svg",
+    "/PA.png",
+    "/logogg.png",
+    "/pause.png",
+    "/play.png",
+    "/bgbg.jpg",
+    "/mobilebg.jpg",
+    "/intersect.png",
+    "/mob.png",
+    "/mob2.png",
+    // Audio
+    "https://res.cloudinary.com/dsj9gr1o3/video/upload/v1761826455/Raat_Ki_Rani_-_Seedhe_Maut_pagalall.com_qoz3wo.mp3"
+  ];
   return (
     <>
+      <Head>
+        {preloadAssets.map((src) =>
+          src.endsWith('.mp3') ? (
+            <link key={src} rel="preload" as="audio" href={src} />
+          ) : (
+            <link key={src} rel="preload" as="image" href={src} />
+          )
+        )}
+      </Head>
       <audio
         ref={audioRef}
         src="https://res.cloudinary.com/dsj9gr1o3/video/upload/v1761826455/Raat_Ki_Rani_-_Seedhe_Maut_pagalall.com_qoz3wo.mp3"
