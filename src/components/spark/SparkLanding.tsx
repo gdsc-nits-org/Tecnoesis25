@@ -3,7 +3,11 @@
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 
-const SparkLanding = () => {
+type SparkLandingProps = {
+  onReady?: () => void;
+};
+
+const SparkLanding = ({ onReady }: SparkLandingProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
 
@@ -16,8 +20,9 @@ const SparkLanding = () => {
     );
 
     if (ref.current) observer.observe(ref.current);
+    if (onReady) onReady();
     return () => observer.disconnect();
-  }, []);
+  }, [onReady]);
   return (
     <section
       id="spark"

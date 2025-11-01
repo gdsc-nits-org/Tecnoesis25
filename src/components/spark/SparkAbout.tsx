@@ -1,9 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
-const SparkAbout = () => {
+type SparkAboutProps = {
+  onReady?: () => void;
+};
+
+const SparkAbout = ({ onReady }: SparkAboutProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -26,6 +30,9 @@ const SparkAbout = () => {
     const card = cardRef.current;
     if (card) card.style.transform = "rotateX(0deg) rotateY(0deg)";
   };
+  useEffect(() => {
+    if (onReady) onReady();
+  }, [onReady]);
   return (
     <section
       id="about"
