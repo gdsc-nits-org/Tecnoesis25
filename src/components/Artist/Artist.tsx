@@ -655,7 +655,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
               className={`h-screen w-full object-cover ${isMobileVisible ? 'animate-bgFade' : ''}`}
               style={{ animationDelay: '2s' }}
             />            {/* (All your existing main content: artists, logos, lyrics card) */}
-            <div className="absolute inset-0 z-10 scale-[.8] mobile4:scale-100 flex flex-col items-center justify-center -translate-y-[9rem]">
+            <div className="absolute inset-0 z-10 scale-[.8] mobile2:scale-[.7] flex flex-col items-center justify-center -translate-y-[9rem]">
               {/* ... Artists ... */}
               <div
                 className={`flex flex-col relative ${isMobileVisible ? 'animate-artistSlide' : 'opacity-0'}`}
