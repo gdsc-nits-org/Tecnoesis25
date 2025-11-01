@@ -600,7 +600,7 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
         {/* Section 3: MOBILE Visualizer (Visible on mobile only)              */}
         {/* =================================================================== */}
         <section
-          ref={mobileVisualizerRef} // <-- ATTACHED REF
+          ref={mobileVisualizerRef}
           className={`animate-on-load ${isMobileVisible ? 'loaded' : ''} relative h-screen w-full bg-black overflow-hidden font-sans block md:hidden`} // <-- ADDED STATE
         >
 
@@ -620,9 +620,8 @@ animation: slideInFromRight 0.7s 0s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94
                 className={`flex flex-col relative ${isMobileVisible ? 'animate-artistSlide' : 'opacity-0'}`}
                 style={{ animationDelay: '1.8s', transform: 'translateY(-150vh)' }}
               >
-                {/* Background intersect image */}
                 <img
-                  src="/intersect.png"
+                  src="/Intersect.png"
                   alt="Background"
                   className="absolute inset-0 w-[75vw] h-[75vw] object-contain -z-10 -top-[40%] mx-auto"
                 />
