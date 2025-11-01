@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "../../utils/firebase";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { env } from "~/env";
 import TecnoTshirt from "~/components/TecnoTshirt";
 import MerchOptIn from "~/components/MerchOptIn";
 import Login from "~/components/GoogleAuth";
+import { toast } from "sonner";
 
 export default function MerchPage() {
   const [user, loading] = useAuthState(auth);
@@ -16,6 +17,13 @@ export default function MerchPage() {
   const [hasOptedIn, setHasOptedIn] = useState<boolean | null>(null);
   const [checkingOptIn, setCheckingOptIn] = useState(false);
   const router = useRouter();
+
+  const [signOut] = useSignOut(auth);
+
+
+  useEffect(() => {
+    console.log("Has opted in:", hasOptedIn);
+  }, [hasOptedIn]);
 
   // Check if user has opted in for merchandise
   useEffect(() => {
@@ -47,10 +55,11 @@ export default function MerchPage() {
         );
         setHasOptedIn(data.msg.hasOpted);
         setCheckingOptIn(false);
-        console.log(data.msg);
       } catch (error) {
         console.error("Error checking opt-in status:", error);
-        setHasOptedIn(false);
+        toast.error("Error checking user status. Sign back in.");
+        await signOut();
+        setHasOptedIn(null);
         setCheckingOptIn(false);
       }
     };
@@ -120,4 +129,5 @@ export default function MerchPage() {
       </main>
     );
   }
+
 }
