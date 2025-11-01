@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { GraduationCap, Phone, MapPin, Camera } from "lucide-react";
+import { GraduationCap, Phone, MapPin } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -88,11 +88,6 @@ const Profile = () => {
                                 height={180}
                                 className="h-full w-full rounded-sm object-cover transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,0,0,0.4)]"
                             />
-
-                            {/* Camera Icon Button */}
-                            <button className="absolute bottom-[-6px] right-[-6px] flex h-[38px] w-[38px] items-center justify-center rounded-[9.73px] border border-white bg-[#061433]/20 backdrop-blur-[14.98px] transition-all duration-300 hover:bg-[#061433]/60 hover:scale-110 sm:h-[42px] sm:w-[42px] md:bottom-[-8px] md:right-[-8px] md:h-[48px] md:w-[48px]">
-                                <Camera className="h-4 w-4 text-white sm:h-5 sm:w-5 md:h-6 md:w-6" />
-                            </button>
                         </div>
 
                         {/* Name and Username */}
