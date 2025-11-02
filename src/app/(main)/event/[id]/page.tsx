@@ -63,9 +63,51 @@ const EventPage = ({ params }: { params: Promise<EventParams> }) => {
         <div className="hidden max-w-[50%] md:block">
           <h1 className="font-nyxerin text-5xl text-[#c00303]">{event?.module.name}</h1>
           <h1 className="mb-2 font-nyxerin text-2xl text-white">{event?.name}</h1>
-          <p className="mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-lg">
-            {event?.description}
-          </p>
+          <div className="mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-lg">
+            {event?.description.includes('Registration Fee: Variable') ? (
+              (() => {
+                const lines = event.description.split(/\r?\n|(?=o\s*₹)/g);
+                const noteIndex = lines.findIndex(line => line.includes('Registration Fee: Variable'));
+                // Main content before NOTE
+                const mainContent = lines.slice(0, noteIndex).join(' ');
+                // Find NOTE and Registration Fee line
+                const noteLine = lines[noteIndex] ?? '';
+                let notePart = '';
+                let regFeePart = '';
+                if (noteLine.includes('NOTE:')) {
+                  const split = noteLine.split('NOTE:');
+                  notePart = 'NOTE:';
+                  regFeePart = split[1]?.trim() ?? '';
+                } else {
+                  regFeePart = noteLine;
+                }
+                // If regFeePart contains 'Registration Fee', split it out
+                let regFeeLabel = '';
+                let regFeeRest = '';
+                if (regFeePart.includes('Registration Fee')) {
+                  const feeSplit = regFeePart.split('Registration Fee:');
+                  regFeeLabel = 'Registration Fee:';
+                  regFeeRest = feeSplit[1]?.trim() ?? '';
+                } else {
+                  regFeeRest = regFeePart;
+                }
+                const fees = lines.slice(noteIndex + 1).filter(line => /₹\d+/.test(line));
+                return <>
+                  <span>{mainContent}</span>
+                  {notePart && <><br /><span>{notePart}</span></>}
+                  {regFeeLabel && <><br /><span>{regFeeLabel}</span></>}
+                  {regFeeRest && <><br /><span>{regFeeRest}</span></>}
+                  <ul className="list-disc ml-6 mt-2">
+                    {fees.map((fee, idx) => <li key={idx}>{fee.replace(/^o\s*/, '')}</li>)}
+                  </ul>
+                </>;
+              })()
+            ) : event?.description}
+           <div className="mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-lg flex flex-col">
+              <p>Prizes: {event?.prizeDescription}</p>
+              <p>VENUE: {event?.venue}</p>
+            </div>
+          </div>
           {event && <CustomButton text="Register Now" width={200} href={`/teamRegistration/${event.id}`} />}
         </div>
         <div className="flex h-auto w-[90%] flex-col items-center justify-center pt-16 md:block md:w-[35%] md:flex-row md:pt-0 lg:w-[40%]">
@@ -96,10 +138,51 @@ const EventPage = ({ params }: { params: Promise<EventParams> }) => {
             </div>
           </div>
           <div className="mt-8 flex max-w-[20rem] flex-col items-center justify-center px-4 md:hidden">
-            <p className="leading-justify mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-xl">
-              {event?.description}
-            </p>
-            <p className="leading-justify mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-lg">Registration fee: {event?.registrationFee}</p>
+            <div className="leading-justify mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-xl">
+              {event?.description.includes('Registration Fee: Variable') ? (
+                (() => {
+                  const lines = event.description.split(/\r?\n|(?=o\s*₹)/g);
+                  const noteIndex = lines.findIndex(line => line.includes('Registration Fee: Variable'));
+                  // Main content before NOTE
+                  const mainContent = lines.slice(0, noteIndex).join(' ');
+                  // Find NOTE and Registration Fee line
+                  const noteLine = lines[noteIndex] ?? '';
+                  let notePart = '';
+                  let regFeePart = '';
+                  if (noteLine.includes('NOTE:')) {
+                    const split = noteLine.split('NOTE:');
+                    notePart = 'NOTE:';
+                    regFeePart = split[1]?.trim() ?? '';
+                  } else {
+                    regFeePart = noteLine;
+                  }
+                  // If regFeePart contains 'Registration Fee', split it out
+                  let regFeeLabel = '';
+                  let regFeeRest = '';
+                  if (regFeePart.includes('Registration Fee')) {
+                    const feeSplit = regFeePart.split('Registration Fee:');
+                    regFeeLabel = 'Registration Fee:';
+                    regFeeRest = feeSplit[1]?.trim() ?? '';
+                  } else {
+                    regFeeRest = regFeePart;
+                  }
+                  const fees = lines.slice(noteIndex + 1).filter(line => /₹\d+/.test(line));
+                  return <>
+                    <span>{mainContent}</span>
+                    {notePart && <><br /><span>{notePart}</span></>}
+                    {regFeeLabel && <><br /><span>{regFeeLabel}</span></>}
+                    {regFeeRest && <><br /><span>{regFeeRest}</span></>}
+                    <ul className="list-disc ml-6 mt-2">
+                      {fees.map((fee, idx) => <li key={idx}>{fee.replace(/^o\s*/, '')}</li>)}
+                    </ul>
+                  </>;
+                })()
+              ) : event?.description}
+            </div>
+            <div className="mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-lg flex flex-col">
+              <p>Prizes: {event?.prizeDescription}</p>
+              <p>VENUE: {event?.venue}</p>
+            </div>
             {event && <CustomButton text="Register Now" width={200} href={`/teamRegistration/${event.id}`} />}
           </div>
         </div>

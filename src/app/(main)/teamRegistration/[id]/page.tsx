@@ -106,6 +106,7 @@ const CommandMenu = ({
 interface Event {
   id: string;
   name: string;
+  description: string;
   maxTeamSize: number;
   minTeamSize: number;
   registrationFee: number;
@@ -392,8 +393,31 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
             <div className="text-base lg:text-xl text-left font-bankGothik text-gray-300">
               Team Size: <span className="text-white text-2xl">{event?.minTeamSize}</span> - <span className="text-white text-2xl">{event?.maxTeamSize}</span> members
             </div>
+            
+            {/* Registration Fee Display - Variable or Fixed */}
             <div className="text-base lg:text-3xl font-bankGothik text-gray-300">
-              Registration Fee: <span className="text-white">{event?.registrationFee}</span> INR
+              {event?.description?.includes('Registration Fee: Variable') ? (
+                (() => {
+                  const lines = event.description.split(/\r?\n|(?=o\s*₹)/g);
+                  const noteIndex = lines.findIndex(line => line.includes('Registration Fee: Variable'));
+                  const fees = lines.slice(noteIndex + 1).filter(line => /₹\d+/.test(line));
+                  
+                  return (
+                    <div className="flex flex-col space-y-2">
+                      <span>Registration Fee: <span className="text-white">Variable</span></span>
+                      <ul className="list-disc ml-6 text-sm lg:text-xl text-white">
+                        {fees.map((fee, idx) => (
+                          <li key={idx}>{fee.replace(/^o\s*/, '')}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })()
+              ) : (
+                <>
+                  Registration Fee: <span className="text-white">{event?.registrationFee}</span> INR
+                </>
+              )}
             </div>
 
             <form
