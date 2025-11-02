@@ -160,6 +160,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
   const [event, setEvent] = useState<Event | null>(null);
   const [teamLeader, setTeamLeader] = useState<string>("Loading...");
   const [allUsers, setAllUsers] = useState<UserResponse[]>([]);
+  const [codeforcesID, setCodeforcesID] = useState<string>("");
 
   // Early authentication check (after hooks)
   const showAuthRequired = !user && !loading;
@@ -298,6 +299,11 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
 
           // Add extraInformation
           formDataToSend.append('extraInformation', JSON.stringify([]));
+
+          // Add Codeforces ID if event is Nibble Code
+          if (event.name === "Nibble Code" && codeforcesID.trim()) {
+            formDataToSend.append('codeforcesId', codeforcesID.trim());
+          }
 
           // Only add team name for team events (maxTeamSize > 1)
           if (event.maxTeamSize > 1) {
@@ -508,6 +514,31 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
                   required
                 />
               </div>
+
+              {/* Codeforces ID field - only show for Nibble Code event */}
+              {event?.name === "Nibble Code" && (
+                <div className="flex items-center gap-2 md:gap-4 relative w-full">
+                  <label
+                    htmlFor="codeforcesID"
+                    className="bg-[#8B75D980] px-2 md:px-6 py-1.5 md:py-3 uppercase text-[10px] md:text-md tracking-wide font-semibold flex-shrink-0 w-36 md:w-56 font-bankGothik text-center"
+                  >
+                    Codeforces ID
+                  </label>
+                  <div className="absolute left-[9.2rem] md:left-[14.5rem] top-1/2 transform -translate-y-1/2 pointer-events-none z-10">
+                    <Image src={arrowRight} alt="Right Arrow" width={10} height={10} className="md:w-[15px] md:h-[15px]" />
+                  </div>
+                  <input
+                    id="codeforcesID"
+                    name="codeforcesID"
+                    type="text"
+                    value={codeforcesID}
+                    onChange={(e) => setCodeforcesID(e.target.value)}
+                    className="flex-grow min-w-0 bg-[#A4000040] bg-opacity-70 placeholder-red-400 text-white font-bankGothik py-1.5 md:py-3 px-2 pl-4 md:px-4 md:pl-10 text-xs md:text-base focus:outline-none focus:ring-2 focus:ring-red-600 transition"
+                    placeholder="Enter Codeforces ID"
+                    required
+                  />
+                </div>
+              )}
 
               {/* Dynamic member fields based on maxTeamSize - 1 (excluding leader) */}
               {event && Array.from({ length: event.maxTeamSize - 1 }, (_, index) => {
