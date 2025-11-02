@@ -103,7 +103,43 @@ const EventPage = ({ params }: { params: Promise<EventParams> }) => {
                 </>;
               })()
             ) : event?.description}
-           <div className="mb-8 text-justify font-orbitron text-sm text-white lg:text-[1rem] xl:text-lg flex flex-col">
+            <div className="flex flex-col pt-5 pb-5 text-base lg:text-xl font-orbitron text-gray-300">
+              <span>
+                Registration Start:{" "}
+                <span className="text-white">
+                  {event?.registrationStartTime ? new Date(event.registrationStartTime).toLocaleString(
+                    "en-US",
+                    {
+                      weekday: "short",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      timeZone: "UTC",
+                    },
+                  ) : "N/A"}{" "}
+                </span>
+              </span>
+              <span>
+                Registration End:{" "}
+                <span className="text-white">
+                  {event?.registrationEndTime ? new Date(event.registrationEndTime).toLocaleString(
+                    "en-US",
+                    {
+                      weekday: "short",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      timeZone: "UTC",
+                    },
+                  ) : "N/A"}{" "}
+                </span>
+              </span>
+            </div>
+            <div className="mb-8 text-justify font-orbitron text-sm text-white lg:text-[1rem] xl:text-lg flex flex-col">
               <p>Prizes: {event?.prizeDescription}</p>
               <p>VENUE: {event?.venue}</p>
             </div>
@@ -178,6 +214,42 @@ const EventPage = ({ params }: { params: Promise<EventParams> }) => {
                   </>;
                 })()
               ) : event?.description}
+            </div>
+            <div className="flex flex-col pt-4 pb-4 text-base lg:text-xl font-orbitron text-gray-300">
+              <span>
+                Registration Start:{" "}
+                <span className="text-white">
+                  {event?.registrationStartTime ? new Date(event.registrationStartTime).toLocaleString(
+                    "en-US",
+                    {
+                      weekday: "short",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      timeZone: "UTC",
+                    },
+                  ) : "N/A"}{" "}
+                </span>
+              </span>
+              <span>
+                Registration End:{" "}
+                <span className="text-white">
+                  {event?.registrationEndTime ? new Date(event.registrationEndTime).toLocaleString(
+                    "en-US",
+                    {
+                      weekday: "short",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      timeZone: "UTC",
+                    },
+                  ) : "N/A"}{" "}
+                </span>
+              </span>
             </div>
             <div className="mb-8 text-justify font-orbitron text-sm text-white lg:text-[1rem] xl:text-lg flex flex-col">
               <p>Prizes: {event?.prizeDescription}</p>

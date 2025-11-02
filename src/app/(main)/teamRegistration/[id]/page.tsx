@@ -111,6 +111,8 @@ interface Event {
   minTeamSize: number;
   registrationFee: number;
   upiQrCode: string;
+  registrationStartTime: string;
+  registrationEndTime: string;
 }
 
 interface UserResponse {
@@ -387,13 +389,48 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
             <h1 className="text-xl lg:text-6xl font-bankGothik uppercase tracking-widest font-weight: 700 text-nowrap">
               Registration Form
             </h1>
-            <h2 className="text-xl lg:text-4xl font-bankGothik font-weight: 700">
+            <h2 className="text-xl lg:text-4xl font-orbitron font-weight: 700">
               Event : <span className="text-red-600">{event?.name}</span>
             </h2>
-            <div className="text-base lg:text-xl text-left font-bankGothik text-gray-300">
+            <div className="text-base lg:text-xl text-left font-orbitron text-gray-300">
               Team Size: <span className="text-white text-2xl">{event?.minTeamSize}</span> - <span className="text-white text-2xl">{event?.maxTeamSize}</span> members
             </div>
-            
+            <div className="flex flex-col text-base lg:text-xl font-orbitron text-gray-300">
+              <span>
+                Registration Start:{" "}
+                <span className="text-white">
+                  {event?.registrationStartTime ? new Date(event.registrationStartTime).toLocaleString(
+                    "en-US",
+                    {
+                      weekday: "short",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      timeZone: "UTC",
+                    },
+                  ) : "N/A"}{" "}
+                </span>
+              </span>
+              <span>
+                Registration End:{" "}
+                <span className="text-white">
+                  {event?.registrationEndTime ? new Date(event.registrationEndTime).toLocaleString(
+                    "en-US",
+                    {
+                      weekday: "short",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      timeZone: "UTC",
+                    },
+                  ) : "N/A"}{" "}
+                </span>
+              </span>
+            </div>
             {/* Registration Fee Display - Variable or Fixed */}
             <div className="text-base lg:text-3xl font-orbitron text-gray-300">
               {event?.description?.includes('Registration Fee: Variable') ? (
@@ -401,7 +438,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
                   const lines = event.description.split(/\r?\n|(?=o\s*₹)/g);
                   const noteIndex = lines.findIndex(line => line.includes('Registration Fee: Variable'));
                   const fees = lines.slice(noteIndex + 1).filter(line => /₹\d+/.test(line));
-                  
+
                   return (
                     <div className="flex flex-col space-y-2">
                       <span>Registration Fee: <span className="text-white">Variable</span></span>
