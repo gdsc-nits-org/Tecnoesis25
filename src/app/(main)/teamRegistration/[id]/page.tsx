@@ -395,7 +395,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
             </div>
             
             {/* Registration Fee Display - Variable or Fixed */}
-            <div className="text-base lg:text-3xl font-bankGothik text-gray-300">
+            <div className="text-base lg:text-3xl font-orbitron text-gray-300">
               {event?.description?.includes('Registration Fee: Variable') ? (
                 (() => {
                   const lines = event.description.split(/\r?\n|(?=o\s*₹)/g);

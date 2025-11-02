@@ -63,7 +63,7 @@ const EventPage = ({ params }: { params: Promise<EventParams> }) => {
         <div className="hidden max-w-[50%] md:block">
           <h1 className="font-nyxerin text-5xl text-[#c00303]">{event?.module.name}</h1>
           <h1 className="mb-2 font-nyxerin text-2xl text-white">{event?.name}</h1>
-          <div className="mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-lg">
+          <div className="mb-8 text-justify font-orbitron text-sm text-white lg:text-[1rem] xl:text-lg">
             {event?.description.includes('Registration Fee: Variable') ? (
               (() => {
                 const lines = event.description.split(/\r?\n|(?=o\s*₹)/g);
@@ -103,7 +103,7 @@ const EventPage = ({ params }: { params: Promise<EventParams> }) => {
                 </>;
               })()
             ) : event?.description}
-           <div className="mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-lg flex flex-col">
+           <div className="mb-8 text-justify font-orbitron text-sm text-white lg:text-[1rem] xl:text-lg flex flex-col">
               <p>Prizes: {event?.prizeDescription}</p>
               <p>VENUE: {event?.venue}</p>
             </div>
@@ -138,7 +138,7 @@ const EventPage = ({ params }: { params: Promise<EventParams> }) => {
             </div>
           </div>
           <div className="mt-8 flex max-w-[20rem] flex-col items-center justify-center px-4 md:hidden">
-            <div className="leading-justify mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-xl">
+            <div className="leading-justify mb-8 text-justify font-orbitron text-sm text-white lg:text-[1rem] xl:text-xl">
               {event?.description.includes('Registration Fee: Variable') ? (
                 (() => {
                   const lines = event.description.split(/\r?\n|(?=o\s*₹)/g);
@@ -179,7 +179,7 @@ const EventPage = ({ params }: { params: Promise<EventParams> }) => {
                 })()
               ) : event?.description}
             </div>
-            <div className="mb-8 text-justify font-bankGothik text-sm text-white lg:text-[1rem] xl:text-lg flex flex-col">
+            <div className="mb-8 text-justify font-orbitron text-sm text-white lg:text-[1rem] xl:text-lg flex flex-col">
               <p>Prizes: {event?.prizeDescription}</p>
               <p>VENUE: {event?.venue}</p>
             </div>
