@@ -290,7 +290,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
 
           // Create FormData for multipart/form-data
           const formDataToSend = new FormData();
-
+       
           // Add members
           filteredMembers.forEach((member) => {
             formDataToSend.append('members', member);
@@ -316,7 +316,7 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
               formDataToSend.append('verificationPhoto', verificationPhoto);
             }
           }
-
+          
           await axios.post(
             `${env.NEXT_PUBLIC_API_URL}/api/team/event/${id}/add`,
             formDataToSend,
