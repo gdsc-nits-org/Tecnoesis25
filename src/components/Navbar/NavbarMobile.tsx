@@ -10,7 +10,7 @@ const NavDetails = [
   { name: "Home", link: "/home" },
   { name: "Gallery", link: "/gallery" },
   { name: "Modules", link: "/modules" },
-  { name: "Merch", link: "/merch" },
+  // { name: "Merch", link: "/merch" },
   { name: "Spark", link: "/spark" },
   { name: "Team", link: "/team" },
 ];
