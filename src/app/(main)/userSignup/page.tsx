@@ -20,7 +20,7 @@ const userDataSchema = z.object({
     phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
     username: z.string().min(3, "Username must be at least 3 characters"),
     collegeName: z.string().min(1, "College name is required"),
-    registrationId: z.string().min(1, "Registration ID is required"),
+    registrationId: z.string().optional(),
 });
 
 interface UserData {
@@ -30,7 +30,7 @@ interface UserData {
     phoneNumber: string;
     username: string;
     collegeName: string;
-    registrationId: string;
+    registrationId?: string;
 }
 
 async function createUser(data: UserData, user: User) {
@@ -278,7 +278,7 @@ const CompleteProfile = () => {
                             htmlFor="registrationId"
                             className="w-3/10 text-wrap font-bankGothik text-sm font-normal text-white md:text-xl lg:text-nowrap lg:text-2xl"
                         >
-                            REGISTRATION ID:
+                            REGISTRATION ID (Only for NIT Students):
                         </label>
                         <input
                             type="text"
@@ -286,7 +286,6 @@ const CompleteProfile = () => {
                             name="registrationId"
                             value={formData.registrationId}
                             onChange={handleChange}
-                            required
                             className="h-10 w-1/2 origin-top-left rounded-[10.036px] border-[0.627px] border-b-gray-700 border-t-gray-400 bg-transparent text-center text-white backdrop-blur-[9.878px] font-orbitron"
                         />
                     </div>
