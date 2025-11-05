@@ -113,6 +113,7 @@ interface Event {
   upiQrCode: string;
   registrationStartTime: string;
   registrationEndTime: string;
+  thirdPartyURL: string;
 }
 
 interface UserResponse {
@@ -858,6 +859,21 @@ const RegisterTeam = ({ params }: { params: Promise<EventParams> }) => {
                 You have successfully registered for the event.
               </p>
               <p className="text-sm md:text-2xl text-[#F40004] font-nyxerin font-semibold">{event?.name}</p>
+              {event?.thirdPartyURL && (
+                <div className="space-y-2 mb-4">
+                  <p className="text-sm md:text-xl font-bankGothik text-cyan-400">
+                    Join this WhatsApp group for more updates
+                  </p>
+                  <Link 
+                    href={event.thirdPartyURL} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-block text-sm md:text-lg text-green-500 hover:text-green-400 underline transition-colors"
+                  >
+                    Join WhatsApp Group
+                  </Link>
+                </div>
+              )}
               <Link href="/dashboard">
                 <CustomButton
                   text="Go to Dashboard"

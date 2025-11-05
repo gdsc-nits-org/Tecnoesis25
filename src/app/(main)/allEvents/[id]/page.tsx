@@ -77,7 +77,7 @@ function AllEventsPage({ params }: { params: Promise<EventParams> }) {
             <EventCard
               eventPoster={event.posterImage}
               eventName={event.name}
-              registrationUrl={`/teamRegistration/${event.id}` || event.thirdPartyURL}
+              registrationUrl={`/teamRegistration/${event.id}`}
               eventUrl={`/event/${event.id}`}
             />
           </div>
