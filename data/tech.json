@@ -162,6 +162,41 @@
       "linkedin": "https://www.linkedin.com/in/dhruvkdev/",
       "facebook": "https://www.facebook.com/profile.php?id=61568146734706",
       "instagram": "https://www.instagram.com/dhruv_mseth/"
-    }
+    },
+    {
+      "name": "Kallul Gogoi",
+      "photoUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1762832632/kallul_gogoi_xnxdbh.jpg",
+      "designation": "UI/UX Designer"
+    },
+    {
+      "name": "Mayur Kalita",
+      "photoUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1762832687/Mayur_Kalita_yh0nyy.jpg",
+      "designation": "UI/UX Designer"
+    },
+    {
+      "name": "Priyadarkshina Khamon",
+      "photoUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1762833015/Priyadarkshina_Khamon_page-0001_t9eeo8.jpg",
+      "designation": "UI/UX Designer"
+    },
+    {
+      "name": "Abhijnyan Saikia",
+      "photoUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1762832720/Abhijnyan_Saikia_rek1dm.jpg",
+      "designation": "UI/UX Designer"
+    },
+    {
+      "name": "Sristi Disha Bhuyan",
+      "photoUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1762832731/Srishti_Disha_ggfebe.jpg",
+      "designation": "UI/UX Designer"
+    },
+    {
+      "name": "Debasish Borah",
+      "photoUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1762832739/Debasish_Borah_mi2xaw.jpg",
+      "designation": "UI/UX Designer"
+    },
+    {
+      "name": "Samadrita Sarmah",
+      "photoUrl": "https://res.cloudinary.com/dsvz13cjb/image/upload/v1762832754/Samadrita_Sarmah_t5bads.jpg",
+      "designation": "UI/UX Designer"
+    }   
   ]
 }
