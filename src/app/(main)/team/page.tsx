@@ -222,6 +222,19 @@ const Team = () => {
                     />
                   ))}
                 </div>
+                {/* UI/UX Designers */}
+                <div className="flex flex-row flex-wrap justify-center gap-2 mobile:gap-4 tablet:gap-6 laptop:gap-8 xL:gap-10">
+                  {CoreTeam.filter(
+                    (member) => member.designation === "UI/UX Designer",
+                  ).map((member, index) => (
+                    <TeamCard1
+                      key={index}
+                      photoUrl={member.photoUrl}
+                      name={member.name}
+                      designation={member.designation}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
