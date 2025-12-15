@@ -9,7 +9,7 @@ import { isMobile } from "react-device-detect";
 const tron = localFont({ src: "../../public/tron.ttf" });
 const digits = Orbitron({ subsets: ["latin"], weight: ["400", "700"] });
 
-const targetDate = new Date(2025, 10, 20, 17, 0, 0, 0);
+const targetDate = new Date(2026, 0, 15, 17, 0, 0, 0);
 
 function two(n: number) {
   return String(n).padStart(2, "0");

@@ -94,8 +94,8 @@ const SparkLanding = ({ onReady }: SparkLandingProps) => {
           height={600}
         />
         <div className="flex h-[17rem] w-[9rem] flex-col items-center justify-center border border-[#B050FF77] bg-[url('https://res.cloudinary.com/dmezugavw/image/upload/v1761399357/9ea5e0244489e06e51c100d06e8ad957cc5e1b87_qsg5rb.jpg')] bg-cover bg-center pt-20 font-nyxerin text-4xl md:h-[34rem] md:w-[18rem] md:pt-40 md:text-6xl">
-          <h2>23</h2>
-          <h2>NOV</h2>
+          <h2>18</h2>
+          <h2>Jan</h2>
         </div>
 
         <Image

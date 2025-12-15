@@ -82,7 +82,7 @@ const Profile = () => {
                         {/* Profile Image */}
                         <div className="relative h-[140px] w-[140px] sm:h-[160px] sm:w-[160px] md:h-[180px] md:w-[180px] animate-scale-in">
                             <Image
-                                src={user?.imageUrl ?? "/Avatar.png"}
+                                src={user!.imageUrl}
                                 alt="Profile"
                                 width={180}
                                 height={180}

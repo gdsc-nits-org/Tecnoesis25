@@ -2,7 +2,7 @@
   "techLead": [
     {
       "name": "Rishi Raj Saha",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1761037096/Screenshot_2025-10-19_230423_gspyiq.webp",
+      "photoUrl":"https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808822/Screenshot_2025-10-19_230423_oexvns.webp",
       "designation": "Technical Head",
       "instagram": "https://www.instagram.com/rishi_raj_saha/",
       "facebook": "https://www.facebook.com/rishiraj.saha.353",
@@ -12,7 +12,7 @@
   "heads": [
     {
       "name": "Barnil Sarma",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687345/team_photos/zlmfdbybnxrm5q1cafwe.webp",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808675/team_photos/o0znda7amhjhq6baae0p.webp",
       "designation": "Web Head",
       "linkedin": "https://www.linkedin.com/in/barnil-sarma-34383a255/",
       "facebook": "https://www.facebook.com/barnil.sarma.3",
@@ -62,7 +62,7 @@
   "members": [
     {
       "name": "Anirban Bora",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687325/team_photos/bfbceoybizspc6alnosq.webp",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808653/team_photos/zho7jkkkcv66qbc6u6ag.webp",
       "designation": "Web CoHead",
       "linkedin": "https://www.linkedin.com/in/anirban-bora-432b2a280",
       "facebook": "https://www.facebook.com/profile.php?id=61553104123672",
@@ -70,7 +70,7 @@
     },
     {
       "name": "Mriganka Dey",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687328/team_photos/zgqyjox1vbprl7dfa7vc.webp",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808656/team_photos/aqdgvmga3i8yy2b6tndv.webp",
       "designation": "Web CoHead",
       "linkedin": "https://www.linkedin.com/in/mrigankadey/",
       "facebook": "https://www.facebook.com/profile.php?id=100092640578033",
@@ -78,7 +78,7 @@
     },
     {
       "name": "Hirak Rajbonshi",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687330/team_photos/siifclnlxggyembiqrsg.webp",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808659/team_photos/trgnrbkvhs5yipywdfft.webp",
       "designation": "Web CoHead",
       "linkedin": "https://www.linkedin.com/in/hirak-rajbonshi-baa6a628a/",
       "facebook": "https://www.facebook.com/hirak.rajbonshi.7",
@@ -86,23 +86,47 @@
     },
     {
       "name": "Priyanshu Kashyap",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687336/team_photos/muopmiadjlyswah8c6h5.webp",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808662/team_photos/lgezhbjiaeacpcj6wqp3.webp",
       "designation": "Web CoHead",
       "linkedin": "https://www.linkedin.com/in/priyanshu-kashyap-8196a928a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       "facebook": "https://www.facebook.com/people/Priyanshu-Kashyap/pfbid0e4MiAXNGzW6znXGFsvoJCcPFE8cv3zPifJdZDgPwj8FcLWvE9ynuv7ZVFLcBbhEMl/",
       "instagram": "https://www.instagram.com/priyanshu._.kashyap_/"
     },
     {
+      "name": "Sivangi Kashyap",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808667/team_photos/d1rv3vrvaebuul8qdsl8.webp",
+      "designation": "Web Developer",
+      "linkedin": "https://www.linkedin.com/in/sivangi-kashyap-391895332?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      "facebook": "https://www.facebook.com/share/19t7SLppEj/",
+      "instagram": "https://www.instagram.com/sivangi_kashyap_11?igsh=MW4wbHRmZHB3ejlzOQ=="
+    },
+    {
+      "name": "Jitamanyu Phukan",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808670/team_photos/j4lrnspq91cyhadcccvh.webp",
+      "designation": "UI/UX CoHead",
+      "linkedin": "https://www.linkedin.com/in/jitamanyu-phukan-562728280?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      "facebook": "https://www.facebook.com/profile.php?id=100070630387563",
+      "instagram": "https://www.instagram.com/procoast63?igsh=emh0ZXBqa2Y2bHp2"
+    },
+    {
       "name": "Manash Pratim Goswami",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687343/team_photos/t1frfhyzccdefgdrbctr.webp",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808673/team_photos/qpsqo6sxnfsiagk3f5yw.webp",
       "designation": "Web CoHead",
       "linkedin": "https://www.linkedin.com/in/manash-pratim-goswami-477352289?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       "facebook": "https://www.facebook.com/share/1BieDvkZB4/",
       "instagram": "https://www.instagram.com/manashgoswamii?igsh=MXJraTA5NXlrcG05Nw=="
     },
     {
+      "name": "Harshit Agarwal",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808677/team_photos/w1nfwogbophipkzlez35.webp",
+      "designation": "Web Developer",
+      "linkedin": "https://www.linkedin.com/in/harshit-agarwal-a119a4332/",
+      "facebook": "https://www.facebook.com/harshit.agarwal.905220",
+      "instagram": "https://www.instagram.com/harshitaga_01/"
+    },
+    {
       "name": "Anmol Swarup Sahoo",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687354/team_photos/zdyulbtcautf9jvgdyjo.webp",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808686/team_photos/kstmkea6cqc8axhoijbt.webp",
       "designation": "Web CoHead",
       "linkedin": "https://www.linkedin.com/in/anmol77/",
       "facebook": "https://www.facebook.com/profile.php?id=61550888831171",
@@ -110,7 +134,7 @@
     },
     {
       "name": "Subrata Lodh",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687356/team_photos/tl6w4r9rpllfnf76uwn7.webp",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808690/team_photos/sdkowchpb0tcnfa5e8dp.webp",
       "designation": "Web CoHead",
       "linkedin": "https://www.linkedin.com/in/subrata-lodh-45541328a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       "facebook": "https://www.facebook.com/share/14NmoPiLN3s/",
@@ -118,50 +142,26 @@
     },
     {
       "name": "Manisha Saloi",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687360/team_photos/vsxvexjqsgyn1pr2wugr.webp",
-      "designation": "UI/Ux CoHead",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808694/team_photos/ewk7lfav1qaco9idvulz.webp",
+      "designation": "UI/UX CoHead",
       "linkedin": "https://www.linkedin.com/in/manisha-saloi-aa564228a/",
       "facebook": "https://www.facebook.com/share/1MSrwsjUSY/",
       "instagram": "https://www.instagram.com/manisha_saloi?igsh=MnNrbjg2bjU0bHBp"
     },
     {
-      "name": "Jitamanyu Phukan ",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687341/team_photos/aa0gklauuml8fnbqnx3y.webp",
-      "designation": "UI/Ux CoHead",
-      "linkedin": "https://www.linkedin.com/in/jitamanyu-phukan-562728280?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-      "facebook": "https://www.facebook.com/profile.php?id=100070630387563",
-      "instagram": "https://www.instagram.com/procoast63?igsh=emh0ZXBqa2Y2bHp2"
-    },
-    {
-      "name": "Piyush Chatterjee",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687365/team_photos/ojnjq7q601mhs7ewzndt.webp",
-      "designation": "UI/Ux CoHead",
-      "linkedin": "www.linkedin.com/in/piyush-chatterjee64",
-      "facebook": "https://www.facebook.com/profile.php?id=61551008331160"
-    },
-    {
-      "name": "Sivangi Kashyap ",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687339/team_photos/y1xoy57c7z3js2xri9p0.webp",
-      "designation": "Web Developer",
-      "linkedin": "https://www.linkedin.com/in/sivangi-kashyap-391895332?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-      "facebook": "https://www.facebook.com/share/19t7SLppEj/",
-      "instagram": "https://www.instagram.com/sivangi_kashyap_11?igsh=MW4wbHRmZHB3ejlzOQ=="
-    },
-    {
-      "name": "Harshit Agarwal",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687347/team_photos/ew5wnlnk6hrrgkaimkio.webp",
-      "designation": "Web Developer",
-      "linkedin": "https://www.linkedin.com/in/harshit-agarwal-a119a4332/",
-      "facebook": "https://www.facebook.com/harshit.agarwal.905220",
-      "instagram": "https://www.instagram.com/harshitaga_01/"
-    },
-    {
       "name": "Dhruv Kumar",
-      "photoUrl": "https://res.cloudinary.com/dgnlmdkyq/image/upload/v1760687362/team_photos/vncsozfoek9eprx0nbiw.webp",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808697/team_photos/z0ykucfjr5b3y0lgmgmh.webp",
       "designation": "Web Developer",
       "linkedin": "https://www.linkedin.com/in/dhruvkdev/",
       "facebook": "https://www.facebook.com/profile.php?id=61568146734706",
       "instagram": "https://www.instagram.com/dhruv_mseth/"
+    },
+    {
+      "name": "Piyush Chatterjee",
+      "photoUrl": "https://res.cloudinary.com/dm74yd2j9/image/upload/v1765808700/team_photos/kbzgnmqdllb3zv0x3aiy.webp",
+      "designation": "UI/UX CoHead",
+      "linkedin": "www.linkedin.com/in/piyush-chatterjee64",
+      "facebook": "https://www.facebook.com/profile.php?id=61551008331160"
     }
   ]
 }
