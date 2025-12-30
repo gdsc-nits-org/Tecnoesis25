@@ -25,7 +25,7 @@ interface UserResponse {
 
 const Profile = () => {
     const router = useRouter();
-    const [_user] = useAuthState(auth);
+    const [_user, loading] = useAuthState(auth);
     const [signOut] = useSignOut(auth);
     const [user, setUser] = useState<UserResponse>();
 
@@ -57,9 +57,20 @@ const Profile = () => {
         })();
     }, [_user]);
 
+    if (loading) return null;
+
     if (!_user) {
         toast.error("User not SignedIn")
         router.push('/home')
+        return null;
+    }
+
+    if (!user) {
+        return (
+            <div className="relative w-[95vw] max-w-[550px] sm:w-[85vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] group flex items-center justify-center h-[400px]">
+                <div className="text-white font-nyxerin animate-pulse">Loading Profile...</div>
+            </div>
+        )
     }
 
     return (
@@ -82,7 +93,7 @@ const Profile = () => {
                         {/* Profile Image */}
                         <div className="relative h-[140px] w-[140px] sm:h-[160px] sm:w-[160px] md:h-[180px] md:w-[180px] animate-scale-in">
                             <Image
-                                src={user!.imageUrl}
+                                src={user.imageUrl}
                                 alt="Profile"
                                 width={180}
                                 height={180}
