@@ -46,7 +46,7 @@ export default function SparkFooter({ onReady }: SparkFooterProps) {
             Tecnoesis
           </div>
           <div className="pointer-events-none absolute right-[1.5rem] top-[-1rem] -translate-y-[20%] translate-x-[20%] select-none font-nyxerin text-[clamp(2rem,6vw,4rem)] text-white md:right-[2.4rem] lg:right-[3rem]">
-            2025
+            2026
           </div>
         </div>
 
