@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import Landing from "~/components/Home/Landing";
 import { RobotronHero } from "~/components/RobotronHero";
+import { EmpresarioHero } from "~/components/EmpresarioHero";
 const SnakeMatrix = dynamic(() => import("~/components/SnakeMatrix"), {
   ssr: false,
 });
@@ -36,6 +37,7 @@ const Home = () => {
       <Modules />
       <Gallery />
       <RobotronHero />
+      <EmpresarioHero />
       <PreviousSponsors />
       <Footer />
     </div>
