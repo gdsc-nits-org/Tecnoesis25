@@ -147,7 +147,7 @@ export const EmpresarioHero: React.FC<EmpresarioHeroProps> = ({
               className="mb-6 flex items-center gap-4"
             >
               <div className="h-[1px] w-12 bg-[#FF4500]"></div>
-              <span className="text-sm font-bold tracking-[0.2em] text-[#FF4500] md:text-base">
+              <span className="text-base font-bold tracking-[0.2em] text-[#FF4500] md:text-xl">
                 E-CELL PRESENTS
               </span>
               <div className="h-[1px] w-12 bg-[#FF4500]"></div>
@@ -158,7 +158,7 @@ export const EmpresarioHero: React.FC<EmpresarioHeroProps> = ({
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="glitch-text mb-4 text-5xl font-black uppercase tracking-tighter text-white md:text-7xl lg:text-8xl"
+              className="glitch-text mb-4 pb-4 text-3xl font-black uppercase tracking-tighter text-white md:text-7xl lg:text-8xl"
               data-text="EMPRESARIO"
             >
               EMPRESARIO
@@ -196,7 +196,7 @@ export const EmpresarioHero: React.FC<EmpresarioHeroProps> = ({
                 onClick={handleClick}
                 className="group relative flex items-center gap-4 overflow-hidden bg-[#FF4500] px-8 py-4 font-bold text-black transition-all hover:bg-white hover:text-[#FF4500]"
               >
-                <span className="z-10 tracking-widest">ENTER TO REGISTER</span>
+                <span className="z-10 tracking-widest font-bankGothik">ENTER TO REGISTER</span>
                 <ChevronRight className="z-10 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 
                 {/* Button Scan Effect */}
